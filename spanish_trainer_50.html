@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тренажёр А1: 50 глаголов — Math Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
+    --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280;
+    --card: #ffffff; --border: #e5e0d5;
+    --correct: #2a9d8f; --wrong: #e63946;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+
+  .hero { background: var(--accent); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: #ffb3b3; margin-bottom: 12px; }
+  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; }
+  .hero p { color: rgba(255,255,255,.8); font-size: 15px; max-width: 500px; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 32px; margin-bottom: 16px; }
+  .exercise-set-header { padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); background: #fafafa; }
+  .exercise-set-header h3 { font-size: 16px; font-weight: 600; }
+  .exercise-list { padding: 16px 24px; }
+  .exercise-item { border-bottom: 1px dashed var(--border); padding: 16px 0; display: flex; gap: 16px; align-items: flex-start; }
+  .exercise-item:last-child { border-bottom: none; }
+  .ex-num { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); min-width: 28px; padding-top: 4px; }
+  .ex-body { flex: 1; }
+  .ex-problem { font-size: 15px; padding: 10px 14px; background: #fafafa; border-radius: 8px; margin-bottom: 10px; }
+  
+  .answer-box { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .answer-input { border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px; font-family: 'DM Mono', monospace; font-size: 14px; width: 160px; outline: none; transition: border-color .2s; }
+  .answer-input:focus { border-color: var(--accent); }
+  .answer-input.correct { border-color: var(--correct); background: #f0faf8; color: var(--correct); }
+  .answer-input.wrong { border-color: var(--wrong); background: #fff5f5; color: var(--wrong); }
+  .check-btn { background: var(--ink); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background .2s; }
+  .check-btn:hover { background: #2d2d4e; }
+  .feedback { display: none; margin-top: 6px; font-size: 13px; font-weight: 500; }
+  .feedback.correct { color: var(--correct); } .feedback.wrong { color: var(--wrong); }
+
+  .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+  .toc a:hover { background: var(--accent); color: white; }
+  
+  .progress-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; margin-top: 24px; position: sticky; top: 20px; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.05);}
+  .progress-bar-wrap { background: #e5e7eb; border-radius: 10px; height: 10px; margin: 6px 0 0; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 10px; width: 0%; transition: width .4s ease; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">🇪🇸 Хардкор Тренажёр</div>
+  <h1>50 глаголов<br>на выживание</h1>
+  <p>Чтобы больше никогда не путаться в окончаниях -AR, -ER, -IR. Вбивай глаголы строчными буквами, не думай — делай на автоматизме!</p>
+</div>
+
+<div class="container">
+
+  <nav class="toc">
+    <a href="index.html">← На главную</a>
+    <a href="spanish_verbs.html">← Вернуться к Уроку 4 (Теория)</a>
+  </nav>
+
+  <div class="progress-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <span style="font-weight:600;font-size:15px;">Твой прогресс в Тренажёре</span>
+      <span class="score-display" id="scoreText">0 / 50 правильно</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="exercise-set">
+    <div class="exercise-list">
+
+      <div class="exercise-item">
+        <div class="ex-num">1.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (estudiar - учиться)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="estudia">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">2.</div><div class="ex-body">
+          <div class="ex-problem">________. (мы - cantar, петь)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="cantamos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">3.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (beber - пить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="bebo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">4.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (vivir - жить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="vive">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">5.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (escribir - писать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="escribe">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">6.</div><div class="ex-body">
+          <div class="ex-problem">Nosotros ________. (correr - бегать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="corremos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">7.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (recibir - получать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="recibo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">8.</div><div class="ex-body">
+          <div class="ex-problem">Ellos/Uds. ________. (vender - продавать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="venden">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">9.</div><div class="ex-body">
+          <div class="ex-problem">Ellos/Uds. ________. (caminar - гулять)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="caminan">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">10.</div><div class="ex-body">
+          <div class="ex-problem">Ellos/Uds. ________. (hablar - говорить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="hablan">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">11.</div><div class="ex-body">
+          <div class="ex-problem">________. (я - vender, продавать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="vendo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">12.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (comer - есть)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="como">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">13.</div><div class="ex-body">
+          <div class="ex-problem">Ellos/Uds. ________. (estudiar - учиться)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="estudian">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">14.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (comer - есть)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="como">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">15.</div><div class="ex-body">
+          <div class="ex-problem">Ellos/Uds. ________. (escuchar - слушать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="escuchan">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">16.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________. (creer - верить/думать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="crees">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">17.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________. (leer - читать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="lees">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">18.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________. (escribir - писать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="escribes">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">19.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________. (vender - продавать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="vendes">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">20.</div><div class="ex-body">
+          <div class="ex-problem">Ellos/Uds. ________. (comprender - понимать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="comprenden">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">21.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (beber - пить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="bebe">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">22.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________. (escribir - писать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="escribes">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">23.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (comprar - покупать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="compra">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">24.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (descansar - отдыхать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="descanso">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">25.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (bailar - танцевать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="baila">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">26.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (cantar - петь)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="canto">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">27.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (recibir - получать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="recibo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">28.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (hablar - говорить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="hablo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">29.</div><div class="ex-body">
+          <div class="ex-problem">Nosotros ________. (hablar - говорить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="hablamos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">30.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (trabajar - работать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="trabaja">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">31.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (hablar - говорить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="habla">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">32.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________. (descansar - отдыхать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="descansas">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">33.</div><div class="ex-body">
+          <div class="ex-problem">Ellos/Uds. ________. (bailar - танцевать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="bailan">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">34.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (escribir - писать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="escribo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">35.</div><div class="ex-body">
+          <div class="ex-problem">Ellos/Uds. ________. (caminar - гулять)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="caminan">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">36.</div><div class="ex-body">
+          <div class="ex-problem">________. (ты - descansar, отдыхать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="descansas">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">37.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (cantar - петь)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="canta">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">38.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (beber - пить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="bebe">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">39.</div><div class="ex-body">
+          <div class="ex-problem">________. (мы - cantar, петь)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="cantamos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">40.</div><div class="ex-body">
+          <div class="ex-problem">Nosotros ________. (descansar - отдыхать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="descansamos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">41.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (descansar - отдыхать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="descansa">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">42.</div><div class="ex-body">
+          <div class="ex-problem">Nosotros ________. (abrir - открывать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="abrimos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">43.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________. (trabajar - работать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="trabajo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">44.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________. (beber - пить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="bebes">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">45.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (recibir - получать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="recibe">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">46.</div><div class="ex-body">
+          <div class="ex-problem">Nosotros ________. (cantar - петь)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="cantamos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">47.</div><div class="ex-body">
+          <div class="ex-problem">________. (ты - preguntar, спрашивать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="preguntas">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">48.</div><div class="ex-body">
+          <div class="ex-problem">Él/Ella/Ud. ________. (bailar - танцевать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="baila">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">49.</div><div class="ex-body">
+          <div class="ex-problem">Nosotros ________. (bailar - танцевать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="bailamos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+      <div class="exercise-item">
+        <div class="ex-num">50.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________. (comprender - понимать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="comprendes">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let correct = 0;
+  const attempted = new Set();
+  const total = 50;
+
+  function normalize(s){ return s.toLowerCase().replace(/\s+/g,' ').trim(); }
+  function checkAnswer(btn){
+    const box = btn.closest('.answer-box');
+    const input = box.querySelector('.answer-input');
+    const feedback = btn.closest('.ex-body').querySelector('.feedback');
+    const exNum = btn.closest('.exercise-item').querySelector('.ex-num').textContent.trim();
+    
+    const userAns = normalize(input.value);
+    const correctAns = normalize(input.dataset.answer);
+    const isCorrect = userAns === correctAns && userAns !== '';
+    
+    input.classList.remove('correct','wrong');
+    feedback.classList.remove('correct','wrong');
+    feedback.style.display = 'block';
+    
+    if(isCorrect){
+      input.classList.add('correct');
+      feedback.classList.add('correct');
+      feedback.textContent = '✓ ¡Perfecto!';
+      if(!attempted.has(exNum)){ 
+        attempted.add(exNum); correct++; updateProgress(); 
+      }
+    } else {
+      input.classList.add('wrong');
+      feedback.classList.add('wrong');
+      feedback.textContent = '✗ Неверно. Правильный ответ: ' + correctAns;
+    }
+  }
+  
+  // Добавим возможность проверять по Enter
+  document.querySelectorAll('.answer-input').forEach(input => {
+    input.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        const btn = this.parentElement.querySelector('.check-btn');
+        checkAnswer(btn);
+        
+        // Фокус на следующий инпут
+        const items = Array.from(document.querySelectorAll('.answer-input'));
+        const index = items.indexOf(this);
+        if(index > -1 && index < items.length - 1) {
+            items[index+1].focus();
+        }
+      }
+    });
+  });
+  
+  function updateProgress(){
+    const pct = (correct / total) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('scoreText').textContent = correct + ' / ' + total + ' правильно';
+  }
+</script>
+</body>
+</html>
