@@ -46,47 +46,102 @@
  .status { font-size: 12px; font-weight: 600; color: var(--muted); background: #f3f4f6; padding: 4px 10px; border-radius: 20px; }
  .btn { background: var(--ink); color: white; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px; transition: background 0.2s; }
  .card:hover .btn { background: var(--teal); }
+
+ /* TOAST NOTIFICATION (Для кнопки Войти) */
+ .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: var(--ink); color: white; padding: 12px 24px; border-radius: 30px; font-size: 14px; font-weight: 500; transition: bottom 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); z-index: 1000; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+ .toast.show { bottom: 40px; }
 </style>
 </head>
 <body>
 
-<div class="top-nav">
-    <div class="logo">Math<span>Platform</span></div>
-    <button class="login-btn">Войти</button>
-</div>
+<!-- НАВИГАЦИЯ С ЗАДЕЛОМ НА БУДУЩЕЕ -->
+<nav class="top-nav">
+ <div class="logo">Math<span>Platform</span></div>
+ <button class="login-btn" onclick="showToast()">Войти в кабинет</button>
+</nav>
 
 <div class="header">
-    <h1>Интерактивные уроки</h1>
-    <p>Твоя персональная платформа для подготовки</p>
+ <h1>Интерактивные уроки</h1>
+ <p>Выбери тему для сегодняшнего занятия</p>
 </div>
 
 <div class="container">
-    <div class="course-grid">
-        
-        <!-- Карточка твоего первого урока -->
-        <a href="HM_10.1.html" class="card">
-            <span class="card-tag ege">ЕГЭ ПРОФИЛЬ</span>
-            <h2>Задание 10: Движение по прямой</h2>
-            <p>Текстовые задачи на движение. Классная работа, теория и домашнее задание.</p>
-            <div class="card-footer">
-                <span class="status">Доступно</span>
-                <span class="btn">Открыть урок</span>
-            </div>
-        </a>
+ <div class="course-grid">
 
-        <!-- Карточка-заглушка для будущих уроков -->
-        <div class="card" style="opacity: 0.6; pointer-events: none;">
-            <span class="card-tag algebra">АЛГЕБРА</span>
-            <h2>Алгебраические дроби</h2>
-            <p>Материал находится в разработке...</p>
-            <div class="card-footer">
-                <span class="status">Скоро</span>
-                <span class="btn" style="background: var(--muted)">Ждем</span>
-            </div>
-        </div>
+ <a href="algebraic_fractions.html" class="card">
+ <span class="card-tag algebra">Алгебра</span>
+ <h2>Algebraic Fractions</h2>
+ <p>Упрощение, умножение, деление и сложение алгебраических дробей.</p>
+ <div class="card-footer">
+ <span class="status">12 заданий</span>
+ <span class="btn">Открыть</span>
+ </div>
+ </a>
 
-    </div>
+ <a href="quadratic_equations.html" class="card">
+ <span class="card-tag algebra">Алгебра</span>
+ <h2>Quadratic Equations</h2>
+ <p>Квадратные уравнения, дискриминант, теорема Виета и неполные уравнения.</p>
+ <div class="card-footer">
+ <span class="status">6 заданий</span>
+ <span class="btn">Открыть</span>
+ </div>
+ </a>
+
+ <a href="factorised_equations.html" class="card">
+ <span class="card-tag algebra">Алгебра</span>
+ <h2>Factorised Equations</h2>
+ <p>Уравнения высших степеней, разложенные на множители. Свойство нулевого произведения.</p>
+ <div class="card-footer">
+ <span class="status">32 задания</span>
+ <span class="btn">Открыть</span>
+ </div>
+ </a>
+
+ <a href="nonlinear_systems.html" class="card">
+ <span class="card-tag algebra">Алгебра</span>
+ <h2>Non-linear Systems</h2>
+ <p>Системы нелинейных уравнений. Решение методом подстановки.</p>
+ <div class="card-footer">
+ <span class="status">14 заданий</span>
+ <span class="btn">Открыть</span>
+ </div>
+ </a>
+
+ <a href="inequalities.html" class="card">
+ <span class="card-tag algebra">Алгебра</span>
+ <h2>Inequalities</h2>
+ <p>Неравенства с одним неизвестным. Метод интервалов и графический метод.</p>
+ <div class="card-footer">
+ <span class="status">14 заданий</span>
+ <span class="btn">Открыть</span>
+ </div>
+ </a>
+
+ <a href="ege_task10_motion.html" class="card">
+ <span class="card-tag ege">ЕГЭ Профиль</span>
+ <h2>Задание №10: Движение</h2>
+ <p>Текстовые задачи на движение по прямой. Составление таблиц и уравнений.</p>
+ <div class="card-footer">
+ <span class="status">20 заданий</span>
+ <span class="btn">Открыть</span>
+ </div>
+ </a>
+
+ </div>
 </div>
 
+<!-- Всплывающее уведомление -->
+<div id="toast" class="toast">🚀 Личные кабинеты находятся в разработке! Скоро здесь появится авторизация.</div>
+
+<script>
+ function showToast() {
+ const toast = document.getElementById('toast');
+ toast.classList.add('show');
+ setTimeout(() => {
+ toast.classList.remove('show');
+ }, 3000);
+ }
+</script>
 </body>
 </html>
