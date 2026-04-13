@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанский А1: Правильные глаголы — Math Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
+    --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280;
+    --card: #ffffff; --border: #e5e0d5;
+    --correct: #2a9d8f; --wrong: #e63946;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+
+  .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
+  .hero::before { content: '-AR-ER-IR'; position: absolute; right: 20px; top: -20px; font-size: 100px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 em { color: var(--gold); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; }
+  .badges { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,.7); }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 48px 0 20px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+  h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
+
+  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 16px; position: relative; }
+  .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--accent); }
+  .theory-card.gold .stripe { background: var(--gold); }
+  .theory-card.teal .stripe { background: var(--teal); }
+  .theory-card h3 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 12px; }
+  .theory-card p { color: #374151; font-size: 15px; margin-bottom: 10px; }
+  
+  .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
+  .rule-box strong { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .conj-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+  .conj-table th, .conj-table td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; }
+  .conj-table th { background: #f9fafb; font-weight: 600; color: var(--ink); }
+  .conj-table td:first-child { font-weight: 600; color: var(--accent); width: 25%; }
+
+  .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+  .exercise-set-header { padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+  .difficulty-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .easy { background: var(--teal); } .medium { background: var(--gold); } .hard { background: var(--accent); }
+  .exercise-set-header h3 { font-size: 16px; font-weight: 600; }
+  .exercise-list { padding: 16px 24px; }
+  .exercise-item { border-bottom: 1px dashed var(--border); padding: 16px 0; display: flex; gap: 16px; align-items: flex-start; }
+  .exercise-item:last-child { border-bottom: none; }
+  .ex-num { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); min-width: 28px; padding-top: 4px; }
+  .ex-body { flex: 1; }
+  .ex-problem { font-size: 15px; padding: 10px 14px; background: #fafafa; border-radius: 8px; margin-bottom: 10px; }
+  
+  .answer-box { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .answer-input { border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px; font-family: 'DM Mono', monospace; font-size: 14px; width: 160px; outline: none; transition: border-color .2s; }
+  .answer-input:focus { border-color: var(--accent); }
+  .answer-input.correct { border-color: var(--correct); background: #f0faf8; color: var(--correct); }
+  .answer-input.wrong { border-color: var(--wrong); background: #fff5f5; color: var(--wrong); }
+  .check-btn { background: var(--ink); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background .2s; }
+  .check-btn:hover { background: #2d2d4e; }
+  .hint-text { display: none; margin-top: 10px; padding: 10px 14px; background: #fff8f0; border-radius: 8px; font-size: 13px; color: #7c4a00; border-left: 3px solid var(--gold); }
+  .feedback { display: none; margin-top: 6px; font-size: 13px; font-weight: 500; }
+  .feedback.correct { color: var(--correct); } .feedback.wrong { color: var(--wrong); }
+
+  .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+  .toc a:hover { background: var(--accent); color: white; }
+  
+  .progress-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; margin-top: 24px; }
+  .progress-bar-wrap { background: #e5e7eb; border-radius: 10px; height: 6px; margin: 6px 0 0; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 10px; width: 0%; transition: width .4s ease; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">🇪🇸 Урок 4 · Грамматика A1</div>
+  <h1>Правильные<br><em>глаголы</em></h1>
+  <p>Как сказать "я говорю", "мы едим", "они живут". Поняв эту систему один раз, ты выучишь тысячи испанских глаголов.</p>
+  <div class="badges">
+    <span class="badge">Глаголы на -AR</span>
+    <span class="badge">Глаголы на -ER</span>
+    <span class="badge">Глаголы на -IR</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <nav class="toc">
+    <a href="spanish_intro.html">← Введение</a>
+    <a href="spanish_estar.html">← Урок 3</a>
+    <a href="#theory">📖 Теория</a>
+    <a href="#exercises-ar">🎯 Блок 1: -AR</a>
+    <a href="#exercises-erir">🎯 Блок 2: -ER/-IR</a>
+    <a href="#exercises-mix">🎯 Блок 3: Микс</a>
+  </nav>
+
+  <!-- THEORY -->
+  <div id="theory">
+    <div class="section-label">Теория</div>
+    <h2>Три кита испанских действий</h2>
+
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Как это работает?</h3>
+      <p>В испанском языке <strong>все глаголы</strong> в начальной форме (что делать?) заканчиваются либо на <strong>-AR</strong>, либо на <strong>-ER</strong>, либо на <strong>-IR</strong>. Третьего не дано.</p>
+      <p>Чтобы сказать "я говорю" или "мы едим", мы просто <strong>отрываем хвостик</strong> (-ar, -er, -ir) и приклеиваем новое окончание в зависимости от того, КТО делает действие.</p>
+    </div>
+
+    <div class="theory-card gold">
+      <div class="stripe"></div>
+      <h3>Группа 1: Глаголы на -AR</h3>
+      <p>Самая большая группа. Пример: <strong>HABL<span style="color:var(--accent)">AR</span></strong> (говорить), <strong>TRABAJ<span style="color:var(--accent)">AR</span></strong> (работать), <strong>ESTUDI<span style="color:var(--accent)">AR</span></strong> (учиться).</p>
+      
+      <table class="conj-table">
+        <tr><th>Местоимение</th><th>Окончание</th><th>habl-ar (говорить)</th></tr>
+        <tr><td>Yo (Я)</td><td>-o</td><td>habl<strong>o</strong></td></tr>
+        <tr><td>Tú (Ты)</td><td>-as</td><td>habl<strong>as</strong></td></tr>
+        <tr><td>Él/Ella/Usted</td><td>-a</td><td>habl<strong>a</strong></td></tr>
+        <tr><td>Nosotros (Мы)</td><td>-amos</td><td>habl<strong>amos</strong></td></tr>
+        <tr><td>Ellos/Ustedes (Они/Вы)</td><td>-an</td><td>habl<strong>an</strong></td></tr>
+      </table>
+      <p style="font-size: 13px; color: var(--muted);"><i>* Форму Vosotros (sois/habláis) пока пропустим, её используют только в Испании, для A1 важнее понять базу.</i></p>
+    </div>
+    
+    <div class="theory-card teal">
+      <div class="stripe"></div>
+      <h3>Группы 2 и 3: Глаголы на -ER и -IR</h3>
+      <p>Они спрягаются почти одинаково! Разница только в форме "Мы" (nosotros).</p>
+      <p>Примеры: <strong>COM<span style="color:var(--teal)">ER</span></strong> (есть/кушать), <strong>BEB<span style="color:var(--teal)">ER</span></strong> (пить), <strong>VIV<span style="color:var(--teal)">IR</span></strong> (жить), <strong>ESCRIB<span style="color:var(--teal)">IR</span></strong> (писать).</p>
+
+      <table class="conj-table">
+        <tr><th>Кто?</th><th>com-er (кушать)</th><th>viv-ir (жить)</th></tr>
+        <tr><td>Yo (Я)</td><td>com<strong>o</strong></td><td>viv<strong>o</strong></td></tr>
+        <tr><td>Tú (Ты)</td><td>com<strong>es</strong></td><td>viv<strong>es</strong></td></tr>
+        <tr><td>Él/Ella/Ud.</td><td>com<strong>e</strong></td><td>viv<strong>e</strong></td></tr>
+        <tr><td>Nosotros (Мы)</td><td>com<strong>emos</strong></td><td>viv<strong>imos</strong> (Тут разница!)</td></tr>
+        <tr><td>Ellos/Uds.</td><td>com<strong>en</strong></td><td>viv<strong>en</strong></td></tr>
+      </table>
+
+      <div class="rule-box">
+        <strong>💡 Закономерность (Лайфхак):</strong><br>
+        • Форма "Я" (Yo) <strong>всегда</strong> заканчивается на <strong>-o</strong> (hablo, como, vivo).<br>
+        • Форма "Ты" (Tú) всегда заканчивается на <strong>-s</strong> (hablas, comes, vives).<br>
+        • Форма "Они" (Ellos) всегда заканчивается на <strong>-n</strong> (hablan, comen, viven).
+      </div>
+    </div>
+  </div>
+
+  <!-- EXERCISES -->
+  <div class="section-label">Большая практика (15 заданий)</div>
+  <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">
+    Отрывай концовку инфинитива и приклеивай нужную! Пиши глагол маленькими буквами.
+  </p>
+
+  <!-- BLOCK 1 -->
+  <div id="exercises-ar" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot easy"></div>
+      <h3>Блок 1: Глаголы на -AR</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">hablar, trabajar, estudiar</span>
+    </div>
+    <div class="exercise-list">
+      <div class="exercise-item">
+        <div class="ex-num">1.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________ español. (hablar)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="hablo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">2.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________ mucho. (trabajar - работать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="trabajas">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+            <button class="check-btn" style="background:none; color:var(--muted); border:1px solid #ccc;" onclick="toggleHint(this)">Подсказка</button>
+          </div>
+          <div class="hint-text" style="display:none; margin-top:8px;">Для "Tú" окончание -as. Trabaj + as.</div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">3.</div><div class="ex-body">
+          <div class="ex-problem">Juan ________ en la universidad. (estudiar)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="estudia">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">4.</div><div class="ex-body">
+          <div class="ex-problem">Nosotros ________ música. (escuchar - слушать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="escuchamos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">5.</div><div class="ex-body">
+          <div class="ex-problem">Ellos ________ por la calle. (caminar - гулять)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="caminan">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCK 2 -->
+  <div id="exercises-erir" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot medium"></div>
+      <h3>Блок 2: Глаголы на -ER и -IR</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">comer, beber, vivir</span>
+    </div>
+    <div class="exercise-list">
+      <div class="exercise-item">
+        <div class="ex-num">6.</div><div class="ex-body">
+          <div class="ex-problem">Yo ________ agua. (beber - пить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="bebo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">7.</div><div class="ex-body">
+          <div class="ex-problem">Tú ________ pan. (comer - есть/кушать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="comes">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">8.</div><div class="ex-body">
+          <div class="ex-problem">María ________ en Madrid. (vivir - жить)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="vive">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">9.</div><div class="ex-body">
+          <div class="ex-problem">Nosotros ________ libros. (escribir - писать)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="escribimos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+            <button class="check-btn" style="background:none; color:var(--muted); border:1px solid #ccc;" onclick="toggleHint(this)">Подсказка</button>
+          </div>
+          <div class="hint-text" style="display:none; margin-top:8px;">Escribir кончается на -IR. Значит для Nosotros будет -imos.</div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">10.</div><div class="ex-body">
+          <div class="ex-problem">Ellos ________ mucho. (comer)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="comen">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCK 3 -->
+  <div id="exercises-mix" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot hard"></div>
+      <h3>Блок 3: Скрытые местоимения</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Местоимения нет, ориентируйся на смысл!</span>
+    </div>
+    <div class="exercise-list">
+      <div class="exercise-item">
+        <div class="ex-num">11.</div><div class="ex-body">
+          <div class="ex-problem">¿Dónde ________? (vivir). — Где <b>ты</b> живешь?</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="vives">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">12.</div><div class="ex-body">
+          <div class="ex-problem">________ en un hospital. (trabajar). — <b>Я</b> работаю в больнице.</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="trabajo">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">13.</div><div class="ex-body">
+          <div class="ex-problem">¿Qué ________? (comer). — Что <b>вы (ellos/ustedes)</b> едите?</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="comen">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+            <button class="check-btn" style="background:none; color:var(--muted); border:1px solid #ccc;" onclick="toggleHint(this)">Подсказка</button>
+          </div>
+          <div class="hint-text" style="display:none; margin-top:8px;">Для Они/Вы(мн.ч.) окончание -en.</div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">14.</div><div class="ex-body">
+          <div class="ex-problem">________ español todos los días. (estudiar). — <b>Мы</b> изучаем испанский каждый день.</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="estudiamos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">15.</div><div class="ex-body">
+          <div class="ex-problem">Ana ________ un libro. (escribir). — Ана <b>(она)</b> пишет книгу.</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="escribe">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <span style="font-weight:600;font-size:15px;">Твой прогресс в Уроке 4</span>
+      <span class="score-display" id="scoreText">0 / 15 правильно</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+
+</div>
+
+<script>
+  let correct = 0;
+  const attempted = new Set();
+  const total = 15;
+
+  function normalize(s){ return s.toLowerCase().replace(/\s+/g,'').trim(); }
+  function checkAnswer(btn){
+    const box = btn.closest('.answer-box');
+    const input = box.querySelector('.answer-input');
+    const feedback = btn.closest('.ex-body').querySelector('.feedback');
+    const exNum = btn.closest('.exercise-item').querySelector('.ex-num').textContent.trim();
+    
+    const userAns = normalize(input.value);
+    const correctAns = normalize(input.dataset.answer);
+    const isCorrect = userAns === correctAns && userAns !== '';
+    
+    input.classList.remove('correct','wrong');
+    feedback.classList.remove('correct','wrong');
+    feedback.style.display = 'block';
+    
+    if(isCorrect){
+      input.classList.add('correct');
+      feedback.classList.add('correct');
+      feedback.textContent = '✓ ¡Exacto!';
+      if(!attempted.has(exNum)){ 
+        attempted.add(exNum); correct++; updateProgress(); 
+      }
+    } else {
+      input.classList.add('wrong');
+      feedback.classList.add('wrong');
+      feedback.textContent = '✗ Ошибка. Проверь окончание в таблице!';
+    }
+  }
+  
+  function toggleHint(btn){
+    const hint = btn.closest('.ex-body').querySelector('.hint-text');
+    if(hint) {
+      hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+      btn.textContent = hint.style.display === 'block' ? 'Скрыть' : 'Подсказка';
+    }
+  }
+  
+  function updateProgress(){
+    const pct = (correct / total) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('scoreText').textContent = correct + ' / ' + total + ' правильно';
+  }
+</script>
+</body>
+</html>
