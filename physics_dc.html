@@ -52,7 +52,8 @@
   .math-block.gold { background: #fffdf5; border-color: #fcebbb; }
   
   .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
-  .rule-box strong { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .rule-box > strong:first-child { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .rule-box strong:not(:first-child) { display: inline; color: inherit; font-weight: 700; text-transform: none; letter-spacing: normal; font-size: inherit; margin-bottom: 0; }
 
   /* IMAGE WRAPPER */
   .theory-image { display: block; max-width: 100%; height: auto; border-radius: 12px; margin: 20px auto; border: 1px solid var(--border); }
