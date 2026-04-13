@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанский А1: Местоимения и глагол SER — Math Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
+    --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280;
+    --card: #ffffff; --border: #e5e0d5;
+    --correct: #2a9d8f; --wrong: #e63946;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+
+  /* HERO */
+  .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
+  .hero::before { content: 'SER'; position: absolute; right: 20px; top: -20px; font-size: 150px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 em { color: var(--gold); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; }
+  .badges { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,.7); }
+
+  /* LAYOUT */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 48px 0 20px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+  h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
+
+  /* THEORY */
+  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 16px; position: relative; }
+  .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--accent); }
+  .theory-card.gold .stripe { background: var(--gold); }
+  .theory-card.teal .stripe { background: var(--teal); }
+  .theory-card h3 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 12px; }
+  .theory-card p { color: #374151; font-size: 15px; margin-bottom: 10px; }
+  
+  .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
+  .rule-box strong { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* TABLES */
+  .conj-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+  .conj-table th, .conj-table td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; }
+  .conj-table th { background: #f9fafb; font-weight: 600; color: var(--ink); }
+  .conj-table td:first-child { font-weight: 600; color: var(--accent); width: 40%; }
+  .conj-table td:nth-child(2) { font-family: 'DM Mono', monospace; font-weight: 600; font-size: 16px; color: var(--teal); }
+
+  /* EXERCISES */
+  .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+  .exercise-set-header { padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+  .difficulty-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .easy { background: var(--teal); } .medium { background: var(--gold); } .hard { background: var(--accent); }
+  .exercise-set-header h3 { font-size: 16px; font-weight: 600; }
+  .exercise-list { padding: 16px 24px; }
+  .exercise-item { border-bottom: 1px dashed var(--border); padding: 16px 0; display: flex; gap: 16px; align-items: flex-start; }
+  .exercise-item:last-child { border-bottom: none; }
+  .ex-num { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); min-width: 28px; padding-top: 4px; }
+  .ex-body { flex: 1; }
+  .ex-problem { font-size: 15px; padding: 10px 14px; background: #fafafa; border-radius: 8px; margin-bottom: 10px; }
+  
+  .answer-box { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .answer-input { border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px; font-family: 'DM Mono', monospace; font-size: 14px; width: 160px; outline: none; transition: border-color .2s; }
+  .answer-input:focus { border-color: var(--accent); }
+  .answer-input.correct { border-color: var(--correct); background: #f0faf8; color: var(--correct); }
+  .answer-input.wrong { border-color: var(--wrong); background: #fff5f5; color: var(--wrong); }
+  .check-btn { background: var(--ink); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background .2s; }
+  .check-btn:hover { background: #2d2d4e; }
+  .hint-text { display: none; margin-top: 10px; padding: 10px 14px; background: #fff8f0; border-radius: 8px; font-size: 13px; color: #7c4a00; border-left: 3px solid var(--gold); }
+  .feedback { display: none; margin-top: 6px; font-size: 13px; font-weight: 500; }
+  .feedback.correct { color: var(--correct); } .feedback.wrong { color: var(--wrong); }
+
+  /* TOC */
+  .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+  .toc a:hover { background: var(--accent); color: white; }
+  
+  .progress-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; margin-top: 24px; }
+  .progress-bar-wrap { background: #e5e7eb; border-radius: 10px; height: 6px; margin: 6px 0 0; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 10px; width: 0%; transition: width .4s ease; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">🇪🇸 Урок 1 · Грамматика A1</div>
+  <h1>Местоимения<br>и <em>глагол SER</em></h1>
+  <p>Фундамент испанского языка. Кто мы такие, откуда и кем работаем.</p>
+  <div class="badges">
+    <span class="badge">Местоимения</span>
+    <span class="badge">Спряжение SER</span>
+    <span class="badge">Базовая лексика</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <nav class="toc">
+    <a href="spanish_intro.html">← Назад к Введению</a>
+    <a href="#theory">📖 Теория</a>
+    <a href="#exercises-pronouns">🎯 Упражнения 1</a>
+    <a href="#exercises-ser">🎯 Упражнения 2</a>
+  </nav>
+
+  <!-- THEORY -->
+  <div id="theory">
+    <div class="section-label">Теория</div>
+    <h2>1. Личные местоимения</h2>
+
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Кто есть кто (Pronombres personales)</h3>
+      <p>В испанском языке местоимения имеют <strong>род</strong> даже во множественном числе!</p>
+      
+      <table class="conj-table">
+        <tr><th>Местоимение</th><th>Перевод</th><th>Особенности</th></tr>
+        <tr><td>Yo</td><td>Я</td><td></td></tr>
+        <tr><td>Tú</td><td>Ты</td><td>Всегда с ударением (tú). Без ударения tu = твой.</td></tr>
+        <tr><td>Él / Ella / Usted</td><td>Он / Она / Вы (вежливо)</td><td>Usted (Вы на "Вы" к одному человеку) спрягается как он/она.</td></tr>
+        <tr><td>Nosotros / Nosotras</td><td>Мы (муж.) / Мы (жен.)</td><td>Если в группе из 100 женщин есть 1 мужчина, группа становится <i>Nosotros</i>.</td></tr>
+        <tr><td>Vosotros / Vosotras</td><td>Вы (ребята)</td><td>Используется только в Испании. В Латинской Америке говорят <i>Ustedes</i>.</td></tr>
+        <tr><td>Ellos / Ellas / Ustedes</td><td>Они (муж.) / Они (жен.) / Вы (группа)</td><td>Ustedes = Вы ко многим людям с уважением (или просто "вы ребята" в Лат. Америке).</td></tr>
+      </table>
+      
+    </div>
+
+    <div class="theory-card gold">
+      <div class="stripe"></div>
+      <h3>2. Глагол SER (Быть)</h3>
+      <p>В русском языке мы часто пропускаем глагол "быть" в настоящем времени. Мы говорим: "Я студент", "Он умный". В испанском <strong>обязательно</strong> нужен глагол-связка: "Я ЕСТЬ студент", "Он ЕСТЬ умный".</p>
+      <p>Это самый неправильный глагол в языке, его нужно заучить как таблицу умножения:</p>
+      
+      <table class="conj-table">
+        <tr><th>Местоимение</th><th>Глагол SER</th><th>Пример</th></tr>
+        <tr><td>Yo</td><td>soy</td><td>(Yo) soy de Rusia. — Я из России.</td></tr>
+        <tr><td>Tú</td><td>eres</td><td>¿(Tú) eres estudiante? — Ты студент?</td></tr>
+        <tr><td>Él / Ella / Usted</td><td>es</td><td>Ella es profesora. — Она преподаватель.</td></tr>
+        <tr><td>Nosotros / Nosotras</td><td>somos</td><td>Somos amigos. — Мы друзья.</td></tr>
+        <tr><td>Vosotros / Vosotras</td><td>sois</td><td>Sois altos. — Вы высокие.</td></tr>
+        <tr><td>Ellos / Ellas / Ustedes</td><td>son</td><td>Ellos son listos. — Они умные.</td></tr>
+      </table>
+
+      <div class="rule-box">
+        <strong>⚡ Главный лайфхак A1:</strong><br>
+        Испанцы в 90% случаев <strong>не говорят местоимения</strong> (yo, tú, nosotros). Форма глагола (soy, eres, somos) уже кричит о том, КТО совершает действие.<br>
+        Поэтому вместо <i>"Yo soy Alex"</i> говори просто <i>"Soy Alex"</i>.
+      </div>
+    </div>
+    
+    <div class="theory-card teal">
+      <div class="stripe"></div>
+      <h3>Когда мы используем SER? (Уловка DOCTOR)</h3>
+      <p>В испанском два глагола "быть". Глагол <strong>SER</strong> используется для <strong>постоянных свойств</strong> (которые нельзя легко изменить). Запомни слово <strong>DOCTOR</strong>:</p>
+      <ul style="margin-left: 20px; line-height: 1.8;">
+        <li><strong>D</strong>escription (Описание внешности и характера): <i>Soy alto</i> (Я высокий).</li>
+        <li><strong>O</strong>ccupation (Профессия): <i>Es doctor</i> (Он врач).</li>
+        <li><strong>C</strong>haracteristic (Суть предмета): <i>El hielo es frío</i> (Лёд холодный).</li>
+        <li><strong>T</strong>ime (Время / Дата / День недели): <i>Son las dos</i> (Сейчас 2 часа). <i>Es lunes</i> (Сегодня понедельник).</li>
+        <li><strong>O</strong>rigin (Происхождение, национальность): <i>Soy de Moscú</i> (Я из Москвы). <i>Eres ruso</i> (Ты русский).</li>
+        <li><strong>R</strong>elation (Родственные/социальные связи): <i>Ella es mi hermana</i> (Она моя сестра).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EXERCISES -->
+  <div class="section-label">Практика: Тренировка до автоматизма</div>
+  <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">
+    Введи правильное слово в поле (строчными буквами). Если застрял — жми "Подсказка", я объясню!
+  </p>
+
+  <div id="exercises-pronouns" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot easy"></div>
+      <h3>Блок 1: Личные местоимения</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Введи местоимение (yo, tú, ella...)</span>
+    </div>
+    <div class="exercise-list">
+      <div class="exercise-item">
+        <div class="ex-num">1.</div><div class="ex-body">
+          <div class="ex-problem">Как сказать <b>"Мы"</b>, если речь идет о группе только из девочек?</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="nosotras">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">2.</div><div class="ex-body">
+          <div class="ex-problem">Как сказать <b>"Вы" (вежливо одному человеку)</b>?</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="usted">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">3.</div><div class="ex-body">
+          <div class="ex-problem">Как сказать <b>"Они"</b>, если в группе 5 девушек и 1 парень?</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="ellos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+            <button class="check-btn" style="background:none; color:var(--muted); border:1px solid #ccc;" onclick="toggleHint(this)">Подсказка</button>
+          </div>
+          <div class="hint-text" style="display:none; margin-top:8px;">Даже один мужчина превращает всю группу в мужской род (ellos)!</div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="exercises-ser" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot medium"></div>
+      <h3>Блок 2: Спряжение глагола SER</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Вставь правильную форму SER</span>
+    </div>
+    <div class="exercise-list">
+      <div class="exercise-item">
+        <div class="ex-num">4.</div><div class="ex-body">
+          <div class="ex-problem">Yo _______ de Rusia. (Я из России)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="soy">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">5.</div><div class="ex-body">
+          <div class="ex-problem">¿De dónde _______ tú? (Откуда ты?)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="eres">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">6.</div><div class="ex-body">
+          <div class="ex-problem">María y Juan _______ amigos. (Они друзья)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="son">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+            <button class="check-btn" style="background:none; color:var(--muted); border:1px solid #ccc;" onclick="toggleHint(this)">Подсказка</button>
+          </div>
+          <div class="hint-text" style="display:none; margin-top:8px;">Мария и Хуан — это ОНИ (Ellos). Посмотри в таблицу, какая форма SER нужна для Ellos!</div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">7.</div><div class="ex-body">
+          <div class="ex-problem">Mi coche _______ muy rápido. (Моя машина очень быстрая)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="es">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">8.</div><div class="ex-body">
+          <div class="ex-problem">Nosotros _______ estudiantes de español. (Мы студенты)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="somos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="exercises-mix" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot hard"></div>
+      <h3>Блок 3: Пропущенные местоимения</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Угадай, кто это делает?</span>
+    </div>
+    <div class="exercise-list">
+      <div class="exercise-item">
+        <div class="ex-num">9.</div><div class="ex-body">
+          <div class="ex-problem">_______ es doctora. (Она врач)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="ella">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <div class="ex-num">10.</div><div class="ex-body">
+          <div class="ex-problem">_______ son mis padres. (Они мои родители)</div>
+          <div class="answer-box">
+            <input class="answer-input" type="text" data-answer="ellos">
+            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+          </div>
+          <div class="feedback"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <span style="font-weight:600;font-size:15px;">Твой прогресс в Уроке 1</span>
+      <span class="score-display" id="scoreText">0 / 10 правильно</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+
+</div>
+
+<script>
+  let correct = 0;
+  const attempted = new Set();
+  const total = 10;
+
+  function normalize(s){
+    return s.toLowerCase().replace(/\s+/g,'').trim();
+  }
+  function checkAnswer(btn){
+    const box = btn.closest('.answer-box');
+    const input = box.querySelector('.answer-input');
+    const feedback = btn.closest('.ex-body').querySelector('.feedback');
+    const exNum = btn.closest('.exercise-item').querySelector('.ex-num').textContent.trim();
+    
+    const userAns = normalize(input.value);
+    const correctAns = normalize(input.dataset.answer);
+    
+    const isCorrect = userAns === correctAns && userAns !== '';
+    
+    input.classList.remove('correct','wrong');
+    feedback.classList.remove('correct','wrong');
+    feedback.style.display = 'block';
+    
+    if(isCorrect){
+      input.classList.add('correct');
+      feedback.classList.add('correct');
+      feedback.textContent = '✓ ¡Muy bien! (Очень хорошо!)';
+      if(!attempted.has(exNum)){ 
+        attempted.add(exNum); 
+        correct++; 
+        updateProgress(); 
+      }
+    } else {
+      input.classList.add('wrong');
+      feedback.classList.add('wrong');
+      feedback.textContent = '✗ Неверно. Попробуй ещё раз!';
+    }
+  }
+  
+  function toggleHint(btn){
+    const hint = btn.closest('.ex-body').querySelector('.hint-text');
+    if(hint) {
+      hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+      btn.textContent = hint.style.display === 'block' ? 'Скрыть' : 'Подсказка';
+    }
+  }
+  
+  function updateProgress(){
+    const pct = (correct / total) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('scoreText').textContent = correct + ' / ' + total + ' правильно';
+  }
+</script>
+</body>
+</html>
