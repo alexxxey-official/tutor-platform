@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang=\"ru\">
+<html lang="ru">
 <head>
-<meta charset=\"UTF-8\">
-<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inequalities — Patric's Tutoring Session</title>
-<link href=\"https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap\" rel=\"stylesheet\">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script>
   window.MathJax = {
-    tex: { inlineMath: [['\\\\(','\\\\)']], displayMath: [['\\\\[','\\\\]']] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
     options: { skipHtmlTags:['script','noscript','style','textarea','pre'] },
     startup: { typeset: true }
   };
 </script>
-<script src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js\" async></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 <style>
   :root {
     --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
@@ -129,145 +129,145 @@
 </head>
 <body>
 
-<div class=\"hero\">
-  <div class=\"label\">Репетиторское занятие · Патрик Уильям · YR10</div>
+<div class="hero">
+  <div class="label">Репетиторское занятие · Патрик Уильям · YR10</div>
   <h1>Inequalities<br><em>Неравенства</em></h1>
   <p>Неравенства с одним неизвестным. Графический и алгебраический методы (стр. 94–96) · Mathematics 4 Anaya</p>
-  <div class=\"badges\">
-    <span class=\"badge\">Unit 4 · Equations & Inequations</span>
-    <span class=\"badge\">Метод интервалов</span>
+  <div class="badges">
+    <span class="badge">Unit 4 · Equations & Inequations</span>
+    <span class="badge">Метод интервалов</span>
   </div>
 </div>
 
-<div class=\"container\">
+<div class="container">
 
-  <div class=\"tabs-nav\">
-    <button class=\"tab-btn active\" onclick=\"switchTab('classwork')\">📝 Классная работа</button>
-    <button class=\"tab-btn\" onclick=\"switchTab('homework')\">🏠 Домашнее задание</button>
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('classwork')">📝 Классная работа</button>
+    <button class="tab-btn" onclick="switchTab('homework')">🏠 Домашнее задание</button>
   </div>
 
-  <div id=\"tab-classwork\" class=\"tab-content active\">
+  <div id="tab-classwork" class="tab-content active">
     
-    <nav class=\"toc\">
+    <nav class="toc">
       <span>Разделы</span>
-      <a href=\"#theory\">📖 Теория</a>
-      <a href=\"#examples\">✏️ Разбор</a>
-      <a href=\"#exercises-easy\">🟢 Базовые</a>
-      <a href=\"#exercises-med\">🟡 Средние</a>
-      <a href=\"#exercises-hard\">🔴 Сложные</a>
-      <a href=\"#cheatsheet\">📋 Шпаргалка</a>
+      <a href="#theory">📖 Теория</a>
+      <a href="#examples">✏️ Разбор</a>
+      <a href="#exercises-easy">🟢 Базовые</a>
+      <a href="#exercises-med">🟡 Средние</a>
+      <a href="#exercises-hard">🔴 Сложные</a>
+      <a href="#cheatsheet">📋 Шпаргалка</a>
     </nav>
 
-    <div id=\"theory\">
-      <div class=\"section-label\">Теория</div>
+    <div id="theory">
+      <div class="section-label">Теория</div>
       <h2>Как решать неравенства?</h2>
 
-      <div class=\"theory-card\">
-        <div class=\"stripe\"></div>
+      <div class="theory-card">
+        <div class="stripe"></div>
         <h3>Основы и запись ответа</h3>
         <p>Ответом в неравенстве является не одно число, а целый <strong>интервал</strong> (промежуток). Важно правильно ставить скобки:</p>
-        <ul style=\"margin-left: 20px; color: #374151; font-size: 15px; margin-bottom: 10px;\">
-          <li><strong>Строгие (\\(<\\) или \\(>\\)):</strong> Точки выколотые \\(\\circ\\). Скобки круглые <code>( )</code>.</li>
-          <li><strong>Нестрогие (\\(\\le\\) или \\(\\ge\\)):</strong> Точки закрашенные \\(\\bullet\\). Скобки квадратные <code>[ ]</code>.</li>
-          <li>Бесконечность (\\(-\\infty\\) или \\(+\\infty\\)) <strong>всегда</strong> пишется с круглой скобкой!</li>
+        <ul style="margin-left: 20px; color: #374151; font-size: 15px; margin-bottom: 10px;">
+          <li><strong>Строгие (\(<\) или \(>\)):</strong> Точки выколотые \(\circ\). Скобки круглые <code>( )</code>.</li>
+          <li><strong>Нестрогие (\(\le\) или \(\ge\)):</strong> Точки закрашенные \(\bullet\). Скобки квадратные <code>[ ]</code>.</li>
+          <li>Бесконечность (\(-\infty\) или \(+\infty\)) <strong>всегда</strong> пишется с круглой скобкой!</li>
         </ul>
-        <div class=\"rule-box\">
+        <div class="rule-box">
           <strong>⚠️ Главное правило неравенств</strong>
-          Если ты умножаешь или делишь обе части неравенства на <strong>отрицательное число</strong>, знак неравенства переворачивается! (Например: \\(-2x > 4 \\implies x < -2\\)).
+          Если ты умножаешь или делишь обе части неравенства на <strong>отрицательное число</strong>, знак неравенства переворачивается! (Например: \(-2x > 4 \implies x < -2\)).
         </div>
       </div>
 
-      <div class=\"theory-card\">
-        <div class=\"stripe\" style=\"background:var(--accent)\"></div>
+      <div class="theory-card">
+        <div class="stripe" style="background:var(--accent)"></div>
         <h3>Алгебраический метод (Метод интервалов)</h3>
         <p>Идеально подходит для любых неравенств, которые можно разложить на множители.</p>
-        <ol style=\"margin-left: 20px; color: #374151; font-size: 15px;\">
-          <li>Перенеси всё в левую часть, чтобы справа остался \\(0\\).</li>
+        <ol style="margin-left: 20px; color: #374151; font-size: 15px;">
+          <li>Перенеси всё в левую часть, чтобы справа остался \(0\).</li>
           <li>Приравняй левую часть к нулю и найди корни (нули функции).</li>
           <li>Отметь корни на числовой прямой (выколотые или закрашенные).</li>
-          <li>Определи знак (\\(+\\) или \\(-\\)) на каждом интервале, подставив любое число из него.</li>
-          <li>Заштрихуй нужные интервалы (если \\(> 0\\), то плюсы; если \\(< 0\\), то минусы).</li>
+          <li>Определи знак (\(+\) или \(-\)) на каждом интервале, подставив любое число из него.</li>
+          <li>Заштрихуй нужные интервалы (если \(> 0\), то плюсы; если \(< 0\), то минусы).</li>
         </ol>
       </div>
 
-      <div class=\"theory-card\">
-        <div class=\"stripe\" style=\"background:var(--gold)\"></div>
+      <div class="theory-card">
+        <div class="stripe" style="background:var(--gold)"></div>
         <h3>Графический метод</h3>
-        <p>Отлично работает для квадратных неравенств вида \\(ax^2 + bx + c > 0\\).</p>
-        <ol style=\"margin-left: 20px; color: #374151; font-size: 15px;\">
-          <li>Найди корни уравнения \\(ax^2 + bx + c = 0\\) (это точки пересечения с осью X).</li>
+        <p>Отлично работает для квадратных неравенств вида \(ax^2 + bx + c > 0\).</p>
+        <ol style="margin-left: 20px; color: #374151; font-size: 15px;">
+          <li>Найди корни уравнения \(ax^2 + bx + c = 0\) (это точки пересечения с осью X).</li>
           <li>Нарисуй ось X и отметь на ней корни.</li>
-          <li>Схематично нарисуй параболу: если \\(a > 0\\) — ветви вверх \\(\\cup\\), если \\(a < 0\\) — ветви вниз \\(\\cap\\).</li>
-          <li>Всё, что выше оси X — это \\(+\\). Всё, что ниже — это \\(-\\).</li>
+          <li>Схематично нарисуй параболу: если \(a > 0\) — ветви вверх \(\cup\), если \(a < 0\) — ветви вниз \(\cap\).</li>
+          <li>Всё, что выше оси X — это \(+\). Всё, что ниже — это \(-\).</li>
         </ol>
       </div>
     </div>
 
-    <div id=\"examples\">
-      <div class=\"section-label\">Разбор</div>
+    <div id="examples">
+      <div class="section-label">Разбор</div>
       <h2>Решённые примеры</h2>
-      <div class=\"example-grid\">
+      <div class="example-grid">
 
-        <div class=\"example-card\">
-          <div class=\"example-header\">
-            <span>Пример 1 · Линейное неравенство</span><span class=\"tag\">Алгебра</span>
+        <div class="example-card">
+          <div class="example-header">
+            <span>Пример 1 · Линейное неравенство</span><span class="tag">Алгебра</span>
           </div>
-          <div class=\"example-body\">
-            <div class=\"problem-statement\">
-              Решить неравенство: \\(5 - 2x \\ge 11\\)
+          <div class="example-body">
+            <div class="problem-statement">
+              Решить неравенство: \(5 - 2x \ge 11\)
             </div>
-            <div class=\"step-row\">
-              <div class=\"step-num\">1</div>
-              <div class=\"step-content\">Переносим числа вправо:
-                <div class=\"step-math\">\\(-2x \\ge 11 - 5 \\implies -2x \\ge 6\\)</div>
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-content">Переносим числа вправо:
+                <div class="step-math">\(-2x \ge 11 - 5 \implies -2x \ge 6\)</div>
               </div>
             </div>
-            <div class=\"step-row\">
-              <div class=\"step-num\">2</div>
-              <div class=\"step-content\">Делим на \\(-2\\). <strong>Внимание:</strong> знак неравенства меняется на противоположный!
-                <div class=\"step-math\">\\(x \\le -3\\)</div>
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-content">Делим на \(-2\). <strong>Внимание:</strong> знак неравенства меняется на противоположный!
+                <div class="step-math">\(x \le -3\)</div>
               </div>
             </div>
-            <div class=\"rule-box\"><strong>Ответ</strong>\\(\\;(-\\infty; -3]\\)</div>
+            <div class="rule-box"><strong>Ответ</strong>\(\;(-\infty; -3]\)</div>
           </div>
         </div>
 
-        <div class=\"example-card\">
-          <div class=\"example-header\">
-            <span>Пример 2 · Квадратное неравенство</span><span class=\"tag\">Графический метод</span>
+        <div class="example-card">
+          <div class="example-header">
+            <span>Пример 2 · Квадратное неравенство</span><span class="tag">Графический метод</span>
           </div>
-          <div class=\"example-body\">
-            <div class=\"problem-statement\">
-              Решить неравенство: \\(x^2 - 4x - 5 < 0\\)
+          <div class="example-body">
+            <div class="problem-statement">
+              Решить неравенство: \(x^2 - 4x - 5 < 0\)
             </div>
-            <div class=\"step-row\">
-              <div class=\"step-num\">1</div>
-              <div class=\"step-content\">Найдём корни уравнения \\(x^2 - 4x - 5 = 0\\). По теореме Виета:
-                <div class=\"step-math\">\\(x_1 = 5, \\quad x_2 = -1\\)</div>
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-content">Найдём корни уравнения \(x^2 - 4x - 5 = 0\). По теореме Виета:
+                <div class="step-math">\(x_1 = 5, \quad x_2 = -1\)</div>
               </div>
             </div>
-            <div class=\"step-row\">
-              <div class=\"step-num\">2</div>
-              <div class=\"step-content\">Коэффициент \\(a = 1 > 0\\), значит ветви параболы направлены <strong>вверх</strong>.
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-content">Коэффициент \(a = 1 > 0\), значит ветви параболы направлены <strong>вверх</strong>.
               </div>
             </div>
-            <div class=\"step-row\">
-              <div class=\"step-num\">3</div>
-              <div class=\"step-content\">Парабола пересекает ось в точках \\(-1\\) и \\(5\\). Часть графика, которая находится <strong>ниже</strong> оси X (так как \\(< 0\\)), расположена между корнями.
+            <div class="step-row">
+              <div class="step-num">3</div>
+              <div class="step-content">Парабола пересекает ось в точках \(-1\) и \(5\). Часть графика, которая находится <strong>ниже</strong> оси X (так как \(< 0\)), расположена между корнями.
               </div>
             </div>
-            <div class=\"rule-box\"><strong>Ответ</strong>\\(\\;(-1; 5)\\)</div>
+            <div class="rule-box"><strong>Ответ</strong>\(\;(-1; 5)\)</div>
           </div>
         </div>
 
       </div>
     </div>
 
-    <div id=\"exercises-easy\">
-      <div class=\"section-label\">Задания</div>
+    <div id="exercises-easy">
+      <div class="section-label">Задания</div>
       <h2>Упражнения для занятия</h2>
 
-      <div class=\"instruction-box\">
+      <div class="instruction-box">
         💡 <strong>Как вводить ответы (Интервалы):</strong><br><br>
         • Используй круглые <code>( )</code> или квадратные <code>[ ]</code> скобки.<br>
         • Бесконечность пиши как <code>-inf</code> или <code>inf</code>.<br>
@@ -275,176 +275,176 @@
         • <em>Пример сложного ответа:</em> <code>(-inf; -2] U (5; inf)</code>
       </div>
 
-      <div class=\"exercise-set\">
-        <div class=\"exercise-set-header\">
-          <div class=\"difficulty-dot easy\"></div>
+      <div class="exercise-set">
+        <div class="exercise-set-header">
+          <div class="difficulty-dot easy"></div>
           <h3>Уровень 1 — Базовые</h3>
           <span>Линейные неравенства</span>
         </div>
-        <div class=\"exercise-list\">
+        <div class="exercise-list">
 
-          <div class=\"exercise-item\">
-            <div class=\"ex-num\">1.</div>
-            <div class=\"ex-body\">
-              <div class=\"ex-problem\">Решить: \\(3x - 6 > 0\\)</div>
-              <div class=\"answer-box\">
-                <input class=\"answer-input\" type=\"text\" placeholder=\"Например: (2; inf)\" data-answer=\"(2;inf)\">
-                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
+          <div class="exercise-item">
+            <div class="ex-num">1.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(3x - 6 > 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Например: (2; inf)" data-answer="(2;inf)">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
               </div>
-              <div class=\"feedback\"></div>
+              <div class="feedback"></div>
             </div>
           </div>
 
-          <div class=\"exercise-item\">
-            <div class=\"ex-num\">2.</div>
-            <div class=\"ex-body\">
-              <div class=\"ex-problem\">Решить: \\(4 - 2x \\ge 0\\)</div>
-              <div class=\"answer-box\">
-                <input class=\"answer-input\" type=\"text\" placeholder=\"Интервал\" data-answer=\"(-inf;2]\">
-                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
-                <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+          <div class="exercise-item">
+            <div class="ex-num">2.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(4 - 2x \ge 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Интервал" data-answer="(-inf;2]">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
               </div>
-              <div class=\"hint-text\">Перенеси 4 вправо: \\(-2x \\ge -4\\). При делении на \\(-2\\) знак перевернется: \\(x \\le 2\\).</div>
-              <div class=\"feedback\"></div>
+              <div class="hint-text">Перенеси 4 вправо: \(-2x \ge -4\). При делении на \(-2\) знак перевернется: \(x \le 2\).</div>
+              <div class="feedback"></div>
             </div>
           </div>
 
         </div>
       </div>
 
-      <div id=\"exercises-med\" class=\"exercise-set\">
-        <div class=\"exercise-set-header\">
-          <div class=\"difficulty-dot medium\"></div>
+      <div id="exercises-med" class="exercise-set">
+        <div class="exercise-set-header">
+          <div class="difficulty-dot medium"></div>
           <h3>Уровень 2 — Средние</h3>
           <span>Квадратные неравенства</span>
         </div>
-        <div class=\"exercise-list\">
+        <div class="exercise-list">
 
-          <div class=\"exercise-item\">
-            <div class=\"ex-num\">3.</div>
-            <div class=\"ex-body\">
-              <div class=\"ex-problem\">Решить: \\((x - 1)(x - 5) < 0\\)</div>
-              <div class=\"answer-box\">
-                <input class=\"answer-input\" type=\"text\" placeholder=\"Интервал\" data-answer=\"(1;5)\">
-                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
-                <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+          <div class="exercise-item">
+            <div class="ex-num">3.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \((x - 1)(x - 5) < 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Интервал" data-answer="(1;5)">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
               </div>
-              <div class=\"hint-text\">Корни: 1 и 5. Парабола ветвями вверх. Нам нужно то, что меньше нуля (ниже оси X), то есть между корнями.</div>
-              <div class=\"feedback\"></div>
+              <div class="hint-text">Корни: 1 и 5. Парабола ветвями вверх. Нам нужно то, что меньше нуля (ниже оси X), то есть между корнями.</div>
+              <div class="feedback"></div>
             </div>
           </div>
 
-          <div class=\"exercise-item\">
-            <div class=\"ex-num\">4.</div>
-            <div class=\"ex-body\">
-              <div class=\"ex-problem\">Решить: \\(x^2 - 16 \\ge 0\\)</div>
-              <div class=\"answer-box\">
-                <input class=\"answer-input\" type=\"text\" placeholder=\"Пример: (-inf;-4] U[4;inf)\" data-answer=\"(-inf;-4]U[4;inf)\">
-                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
+          <div class="exercise-item">
+            <div class="ex-num">4.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(x^2 - 16 \ge 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Пример: (-inf;-4] U[4;inf)" data-answer="(-inf;-4]U[4;inf)">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
               </div>
-              <div class=\"feedback\"></div>
+              <div class="feedback"></div>
             </div>
           </div>
 
-          <div class=\"exercise-item\">
-            <div class=\"ex-num\">5.</div>
-            <div class=\"ex-body\">
-              <div class=\"ex-problem\">Решить: \\(x^2 - 7x + 10 \\le 0\\)</div>
-              <div class=\"answer-box\">
-                <input class=\"answer-input\" type=\"text\" placeholder=\"Интервал\" data-answer=\"[2;5]\">
-                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
+          <div class="exercise-item">
+            <div class="ex-num">5.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(x^2 - 7x + 10 \le 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Интервал" data-answer="[2;5]">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
               </div>
-              <div class=\"feedback\"></div>
+              <div class="feedback"></div>
             </div>
           </div>
 
         </div>
       </div>
 
-      <div id=\"exercises-hard\" class=\"exercise-set\">
-        <div class=\"exercise-set-header\">
-          <div class=\"difficulty-dot hard\"></div>
+      <div id="exercises-hard" class="exercise-set">
+        <div class="exercise-set-header">
+          <div class="difficulty-dot hard"></div>
           <h3>Уровень 3 — Сложные</h3>
           <span>Дробно-рациональные (Метод интервалов)</span>
         </div>
-        <div class=\"exercise-list\">
+        <div class="exercise-list">
 
-          <div class=\"exercise-item\">
-            <div class=\"ex-num\">6.</div>
-            <div class=\"ex-body\">
-              <div class=\"ex-problem\">Решить: \\(\\dfrac{x - 3}{x + 1} < 0\\)</div>
-              <div class=\"answer-box\">
-                <input class=\"answer-input\" type=\"text\" placeholder=\"Интервал\" data-answer=\"(-1;3)\">
-                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
-                <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+          <div class="exercise-item">
+            <div class="ex-num">6.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(\dfrac{x - 3}{x + 1} < 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Интервал" data-answer="(-1;3)">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
               </div>
-              <div class=\"hint-text\">Нуль числителя: \\(x=3\\). Нуль знаменателя: \\(x=-1\\) (всегда выколотая точка!). Отметь их на оси и расставь знаки: \\(+\\) \\(-\\) \\(+\\). Нам нужен минус.</div>
-              <div class=\"feedback\"></div>
+              <div class="hint-text">Нуль числителя: \(x=3\). Нуль знаменателя: \(x=-1\) (всегда выколотая точка!). Отметь их на оси и расставь знаки: \(+\) \(-\) \(+\). Нам нужен минус.</div>
+              <div class="feedback"></div>
             </div>
           </div>
 
         </div>
       </div>
 
-      <div class=\"progress-card\">
-        <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;\">
-          <span style=\"font-weight:600;font-size:15px;\">Прогресс классной работы</span>
-          <span class=\"score-display\" id=\"scoreText-class\">0 / 6 правильно</span>
+      <div class="progress-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span style="font-weight:600;font-size:15px;">Прогресс классной работы</span>
+          <span class="score-display" id="scoreText-class">0 / 6 правильно</span>
         </div>
-        <div class=\"progress-bar-wrap\"><div class=\"progress-bar-fill\" id=\"progressFill-class\"></div></div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill-class"></div></div>
       </div>
     </div>
 
-    <div id=\"cheatsheet\">
-      <div class=\"section-label\">Справочник</div>
-      <div class=\"cheatsheet\">
+    <div id="cheatsheet">
+      <div class="section-label">Справочник</div>
+      <div class="cheatsheet">
         <h2>📋 Шпаргалка — Неравенства</h2>
-        <div class=\"cheat-grid\">
-          <div class=\"cheat-item\">
+        <div class="cheat-grid">
+          <div class="cheat-item">
             <h4>Типы скобок</h4>
-            <p>\\(<\\) или \\(>\\) \\(\\implies\\) <code>( )</code> выколотые<br>\\(\\le\\) или \\(\\ge\\) \\(\\implies\\) <code>[ ]</code> закрашенные<br>\\(\\pm\\infty\\) \\(\\implies\\) всегда <code>( )</code></p>
+            <p>\(<\) или \(>\) \(\implies\) <code>( )</code> выколотые<br>\(\le\) или \(\ge\) \(\implies\) <code>[ ]</code> закрашенные<br>\(\pm\infty\) \(\implies\) всегда <code>( )</code></p>
           </div>
-          <div class=\"cheat-item\">
+          <div class="cheat-item">
             <h4>Деление на минус</h4>
-            <p>Если \\(-3x > 9\\)<br>Делим на \\(-3\\)<br>Знак меняется: \\(x < -3\\)</p>
+            <p>Если \(-3x > 9\)<br>Делим на \(-3\)<br>Знак меняется: \(x < -3\)</p>
           </div>
-          <div class=\"cheat-item\">
-            <h4>Парабола \\(ax^2+bx+c\\)</h4>
-            <p>\\(a > 0\\) \\(\\implies\\) ветви вверх \\(\\cup\\)<br>\\(a < 0\\) \\(\\implies\\) ветви вниз \\(\\cap\\)<br>Выше оси X — это \\(+\\), ниже — это \\(-\\).</p>
+          <div class="cheat-item">
+            <h4>Парабола \(ax^2+bx+c\)</h4>
+            <p>\(a > 0\) \(\implies\) ветви вверх \(\cup\)<br>\(a < 0\) \(\implies\) ветви вниз \(\cap\)<br>Выше оси X — это \(+\), ниже — это \(-\).</p>
           </div>
-          <div class=\"cheat-item\">
-            <h4>Дроби \\(\\frac{A}{B} \\ge 0\\)</h4>
-            <p>Знаменатель \\(B\\) <strong>никогда не равен нулю</strong>. Точки из знаменателя всегда выколотые (круглые скобки), даже если неравенство нестрогое (\\(\\ge\\)).</p>
+          <div class="cheat-item">
+            <h4>Дроби \(\frac{A}{B} \ge 0\)</h4>
+            <p>Знаменатель \(B\) <strong>никогда не равен нулю</strong>. Точки из знаменателя всегда выколотые (круглые скобки), даже если неравенство нестрогое (\(\ge\)).</p>
           </div>
         </div>
       </div>
     </div>
 
-  </div><div id=\"tab-homework\" class=\"tab-content\">
+  </div><div id="tab-homework" class="tab-content">
     
-    <div class=\"section-label\">Самостоятельная отработка</div>
+    <div class="section-label">Самостоятельная отработка</div>
     <h2>Домашнее задание</h2>
-    <p style=\"color:var(--muted); margin-bottom: 24px;\">Реши эти 8 неравенств. Помни про правила ввода интервалов: <code>( )</code>, <code>[ ]</code>, <code>inf</code>, <code>U</code>.</p>
+    <p style="color:var(--muted); margin-bottom: 24px;">Реши эти 8 неравенств. Помни про правила ввода интервалов: <code>( )</code>, <code>[ ]</code>, <code>inf</code>, <code>U</code>.</p>
 
-    <div class=\"exercise-set hw-grid\">
-      <div class=\"exercise-list\" id=\"hw-list\">
-        <div class=\"exercise-item\"><div class=\"ex-num\">1.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(5x - 15 < 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-inf;3)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
-        <div class=\"exercise-item\"><div class=\"ex-num\">2.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(7 - x \\le 2\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"[5;inf)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
-        <div class=\"exercise-item\"><div class=\"ex-num\">3.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\((x + 2)(x - 4) \\le 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"[-2;4]\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
-        <div class=\"exercise-item\"><div class=\"ex-num\">4.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(x^2 - 25 > 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-inf;-5)U(5;inf)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
-        <div class=\"exercise-item\"><div class=\"ex-num\">5.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(x(x - 6) \\ge 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-inf;0]U[6;inf)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
-        <div class=\"exercise-item\"><div class=\"ex-num\">6.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(x^2 + 4x + 3 < 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-3;-1)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
-        <div class=\"exercise-item\"><div class=\"ex-num\">7.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(\\dfrac{x}{x - 2} \\le 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"[0;2)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
-        <div class=\"exercise-item\"><div class=\"ex-num\">8.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(-x^2 + 4x - 3 < 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-inf;1)U(3;inf)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
+    <div class="exercise-set hw-grid">
+      <div class="exercise-list" id="hw-list">
+        <div class="exercise-item"><div class="ex-num">1.</div><div class="ex-body"><div class="ex-problem">\(5x - 15 < 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-inf;3)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">2.</div><div class="ex-body"><div class="ex-problem">\(7 - x \le 2\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="[5;inf)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">3.</div><div class="ex-body"><div class="ex-problem">\((x + 2)(x - 4) \le 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="[-2;4]"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">4.</div><div class="ex-body"><div class="ex-problem">\(x^2 - 25 > 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-inf;-5)U(5;inf)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">5.</div><div class="ex-body"><div class="ex-problem">\(x(x - 6) \ge 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-inf;0]U[6;inf)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">6.</div><div class="ex-body"><div class="ex-problem">\(x^2 + 4x + 3 < 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-3;-1)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">7.</div><div class="ex-body"><div class="ex-problem">\(\dfrac{x}{x - 2} \le 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="[0;2)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">8.</div><div class="ex-body"><div class="ex-problem">\(-x^2 + 4x - 3 < 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-inf;1)U(3;inf)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
       </div>
     </div>
 
-    <div class=\"progress-card\">
-      <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;\">
-        <span style=\"font-weight:600;font-size:15px;\">Прогресс домашнего задания</span>
-        <span class=\"score-display\" id=\"scoreText-hw\">0 / 8 правильно</span>
+    <div class="progress-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-weight:600;font-size:15px;">Прогресс домашнего задания</span>
+        <span class="score-display" id="scoreText-hw">0 / 8 правильно</span>
       </div>
-      <div class=\"progress-bar-wrap\"><div class=\"progress-bar-fill\" id=\"progressFill-hw\"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill-hw"></div></div>
     </div>
 
   </div></div>
@@ -467,11 +467,11 @@
   // Умная нормализация для интервалов
   function normalizeInterval(s) {
     let res = s.toLowerCase();
-    res = res.replace(/\\s+/g, ''); // Удаляем все пробелы
+    res = res.replace(/\s+/g, ''); // Удаляем все пробелы
     res = res.replace(/,/g, ';'); // Заменяем запятые на точки с запятой
-    res = res.replace(/\\+?inf(inity)?/g, 'inf'); // Нормализуем бесконечность (убираем +, понимаем infinity)
+    res = res.replace(/\+?inf(inity)?/g, 'inf'); // Нормализуем бесконечность (убираем +, понимаем infinity)
     res = res.replace(/бесконечность/g, 'inf');
-    res = res.replace(/[-\\u2013\\u2014]/g, '-'); // Нормализуем разные виды тире в обычный минус
+    res = res.replace(/[-\u2013\u2014]/g, '-'); // Нормализуем разные виды тире в обычный минус
     res = res.replace(/[u∪vи]/g, 'U'); // Нормализуем знак объединения (U, u, ∪, v, или русская 'и')
     return res;
   }

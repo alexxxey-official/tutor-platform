@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang=\"ru\">
+<html lang="ru">
 <head>
-<meta charset=\"UTF-8\">
-<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quadratic Equations — Patric's Tutoring Session</title>
-<link href=\"https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap\" rel=\"stylesheet\">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script>
   window.MathJax = {
-    tex: { inlineMath: [['\\\\(','\\\\)']], displayMath: [['\\\\[','\\\\]']] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
     options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
     startup: { typeset: true }
   };
 </script>
-<script src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js\" async></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 <style>
   :root {
     --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
@@ -109,126 +109,126 @@
 </head>
 <body>
 
-<div class=\"hero\">
-  <div class=\"label\">Репетиторское занятие · Патрик Уильям · YR10</div>
+<div class="hero">
+  <div class="label">Репетиторское занятие · Патрик Уильям · YR10</div>
   <h1>Quadratic<br><em>Equations</em></h1>
   <p>Квадратные уравнения и их корни — страницы 84–86 · Mathematics 4 Anaya</p>
-  <div class=\"badges\">
-    <span class=\"badge\">Unit 4 · Equations</span>
-    <span class=\"badge\">Текущая тема · 16 апреля</span>
+  <div class="badges">
+    <span class="badge">Unit 4 · Equations</span>
+    <span class="badge">Текущая тема · 16 апреля</span>
   </div>
 </div>
 
-<div class=\"container\">
+<div class="container">
 
-  <nav class=\"toc\">
+  <nav class="toc">
     <span>Разделы</span>
-    <a href=\"#theory\">📖 Теория</a>
-    <a href=\"#examples\">✏️ Примеры</a>
-    <a href=\"#exercises-easy\">🟢 Базовые</a>
-    <a href=\"#exercises-med\">🟡 Средние</a>
-    <a href=\"#exercises-hard\">🔴 Сложные</a>
-    <a href=\"#cheatsheet\">📋 Шпаргалка</a>
+    <a href="#theory">📖 Теория</a>
+    <a href="#examples">✏️ Примеры</a>
+    <a href="#exercises-easy">🟢 Базовые</a>
+    <a href="#exercises-med">🟡 Средние</a>
+    <a href="#exercises-hard">🔴 Сложные</a>
+    <a href="#cheatsheet">📋 Шпаргалка</a>
   </nav>
 
   <!-- ═══ THEORY ═══ -->
-  <div id=\"theory\">
-    <div class=\"section-label\">Теория</div>
+  <div id="theory">
+    <div class="section-label">Теория</div>
     <h2>Что такое квадратные уравнения?</h2>
 
-    <div class=\"theory-card\">
-      <div class=\"stripe\"></div>
+    <div class="theory-card">
+      <div class="stripe"></div>
       <h3>Стандартный вид</h3>
       <p>Квадратное уравнение — это уравнение, старшая степень неизвестной в котором равна 2. Его общий вид:</p>
-      <div class=\"math-block\">
-        \\[ax^2 + bx + c = 0\\]
+      <div class="math-block">
+        \[ax^2 + bx + c = 0\]
       </div>
-      <p>Где \\(a\\neq 0\\), а коэффициенты \\(a, b, c\\) — любые действительные числа.</p>
+      <p>Где \(a\neq 0\), а коэффициенты \(a, b, c\) — любые действительные числа.</p>
     </div>
 
-    <div class=\"theory-card\">
-      <div class=\"stripe\" style=\"background:var(--accent)\"></div>
+    <div class="theory-card">
+      <div class="stripe" style="background:var(--accent)"></div>
       <h3>Формула Дискриминанта</h3>
-      <p>Универсальный способ найти корни — посчитать дискриминант \\(D\\).</p>
-      <div class=\"math-block\">
-        \\[D = b^2 - 4ac\\]
-        \\[x_{1,2} = \\frac{-b \\pm \\sqrt{D}}{2a}\\]
+      <p>Универсальный способ найти корни — посчитать дискриминант \(D\).</p>
+      <div class="math-block">
+        \[D = b^2 - 4ac\]
+        \[x_{1,2} = \frac{-b \pm \sqrt{D}}{2a}\]
       </div>
-      <div class=\"rule-box\">
+      <div class="rule-box">
         <strong>⚠️ Сколько корней?</strong><br>
-        Если <strong>\\(D > 0\\)</strong> — 2 корня.<br>
-        Если <strong>\\(D = 0\\)</strong> — 1 корень (или 2 совпадающих).<br>
-        Если <strong>\\(D < 0\\)</strong> — действительных корней нет.
+        Если <strong>\(D > 0\)</strong> — 2 корня.<br>
+        Если <strong>\(D = 0\)</strong> — 1 корень (или 2 совпадающих).<br>
+        Если <strong>\(D < 0\)</strong> — действительных корней нет.
       </div>
     </div>
 
-    <div class=\"theory-card\">
-      <div class=\"stripe\" style=\"background:var(--gold)\"></div>
+    <div class="theory-card">
+      <div class="stripe" style="background:var(--gold)"></div>
       <h3>Теорема Виета</h3>
-      <p>Для <em>приведённого</em> уравнения (где \\(a = 1\\)), то есть \\(x^2 + px + q = 0\\), справедливы формулы:</p>
-      <div class=\"math-block\">
-        \\[x_1 + x_2 = -p \\qquad \\text{и} \\qquad x_1 \\cdot x_2 = q\\]
+      <p>Для <em>приведённого</em> уравнения (где \(a = 1\)), то есть \(x^2 + px + q = 0\), справедливы формулы:</p>
+      <div class="math-block">
+        \[x_1 + x_2 = -p \qquad \text{и} \qquad x_1 \cdot x_2 = q\]
       </div>
-      <p>Это позволяет находить корни устно, подбирая множители числа \\(q\\), дающие в сумме \\(-p\\).</p>
+      <p>Это позволяет находить корни устно, подбирая множители числа \(q\), дающие в сумме \(-p\).</p>
     </div>
   </div>
 
   <!-- ═══ WORKED EXAMPLES ═══ -->
-  <div id=\"examples\">
-    <div class=\"section-label\">Разборы</div>
+  <div id="examples">
+    <div class="section-label">Разборы</div>
     <h2>Решённые примеры</h2>
-    <div class=\"example-grid\">
+    <div class="example-grid">
 
-      <div class=\"example-card\">
-        <div class=\"example-header\">
-          <span>Пример 1 · Через дискриминант</span><span class=\"tag\">Шаг за шагом</span>
+      <div class="example-card">
+        <div class="example-header">
+          <span>Пример 1 · Через дискриминант</span><span class="tag">Шаг за шагом</span>
         </div>
-        <div class=\"example-body\">
-          <div class=\"problem-statement\">Решить уравнение: \\(2x^2 - 5x + 3 = 0\\)</div>
-          <div class=\"step-row\">
-            <div class=\"step-num\">1</div>
-            <div class=\"step-content\">Выпишем коэффициенты
-              <div class=\"step-math\">\\(a = 2,\\; b = -5,\\; c = 3\\)</div>
+        <div class="example-body">
+          <div class="problem-statement">Решить уравнение: \(2x^2 - 5x + 3 = 0\)</div>
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-content">Выпишем коэффициенты
+              <div class="step-math">\(a = 2,\; b = -5,\; c = 3\)</div>
             </div>
           </div>
-          <div class=\"step-row\">
-            <div class=\"step-num\">2</div>
-            <div class=\"step-content\">Вычислим дискриминант \\(D = b^2 - 4ac\\)
-              <div class=\"step-math\">\\(D = (-5)^2 - 4 \\cdot 2 \\cdot 3 = 25 - 24 = 1\\)</div>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-content">Вычислим дискриминант \(D = b^2 - 4ac\)
+              <div class="step-math">\(D = (-5)^2 - 4 \cdot 2 \cdot 3 = 25 - 24 = 1\)</div>
             </div>
           </div>
-          <div class=\"step-row\">
-            <div class=\"step-num\">3</div>
-            <div class=\"step-content\">Найдём корни по формуле \\(x = \\frac{-b \\pm \\sqrt{D}}{2a}\\)
-              <div class=\"step-math\">
-                \\(x_1 = \\frac{5 + 1}{4} = \\frac{6}{4} = 1.5\\)<br>
-                \\(x_2 = \\frac{5 - 1}{4} = \\frac{4}{4} = 1\\)
+          <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-content">Найдём корни по формуле \(x = \frac{-b \pm \sqrt{D}}{2a}\)
+              <div class="step-math">
+                \(x_1 = \frac{5 + 1}{4} = \frac{6}{4} = 1.5\)<br>
+                \(x_2 = \frac{5 - 1}{4} = \frac{4}{4} = 1\)
               </div>
             </div>
           </div>
-          <div class=\"rule-box\"><strong>Ответ</strong>\\(\\; x_1 = 1.5,\\; x_2 = 1\\)</div>
+          <div class="rule-box"><strong>Ответ</strong>\(\; x_1 = 1.5,\; x_2 = 1\)</div>
         </div>
       </div>
 
-      <div class=\"example-card\">
-        <div class=\"example-header\">
-          <span>Пример 2 · Неполное квадратное (c=0)</span><span class=\"tag\">Шаг за шагом</span>
+      <div class="example-card">
+        <div class="example-header">
+          <span>Пример 2 · Неполное квадратное (c=0)</span><span class="tag">Шаг за шагом</span>
         </div>
-        <div class=\"example-body\">
-          <div class=\"problem-statement\">Решить уравнение: \\(x^2 - 7x = 0\\)</div>
-          <div class=\"step-row\">
-            <div class=\"step-num\">1</div>
-            <div class=\"step-content\">Вынесем общий множитель \\(x\\) за скобку
-              <div class=\"step-math\">\\(x(x - 7) = 0\\)</div>
+        <div class="example-body">
+          <div class="problem-statement">Решить уравнение: \(x^2 - 7x = 0\)</div>
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-content">Вынесем общий множитель \(x\) за скобку
+              <div class="step-math">\(x(x - 7) = 0\)</div>
             </div>
           </div>
-          <div class=\"step-row\">
-            <div class=\"step-num\">2</div>
-            <div class=\"step-content\">Произведение равно нулю, когда хотя бы один из множителей равен нулю
-              <div class=\"step-math\">\\(x = 0 \\quad \\text{или} \\quad x - 7 = 0\\)</div>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-content">Произведение равно нулю, когда хотя бы один из множителей равен нулю
+              <div class="step-math">\(x = 0 \quad \text{или} \quad x - 7 = 0\)</div>
             </div>
           </div>
-          <div class=\"rule-box\"><strong>Ответ</strong>\\(\\; x_1 = 0,\\; x_2 = 7\\)</div>
+          <div class="rule-box"><strong>Ответ</strong>\(\; x_1 = 0,\; x_2 = 7\)</div>
         </div>
       </div>
 
@@ -236,47 +236,47 @@
   </div>
 
   <!-- ═══ EXERCISES ═══ -->
-  <div id=\"exercises-easy\">
-    <div class=\"section-label\">Задания</div>
+  <div id="exercises-easy">
+    <div class="section-label">Задания</div>
     <h2>Упражнения для занятия</h2>
-    <p style=\"font-size:14px; color:var(--muted); margin-bottom:20px;\">
+    <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">
       ℹ️ Вводи корни <strong>через запятую</strong> без пробелов (например: <code>2,-5</code>). Если корень один, введи только его (например: <code>3</code>). Порядок ввода корней не важен.
     </p>
 
     <!-- LEVEL 1 -->
-    <div class=\"exercise-set\">
-      <div class=\"exercise-set-header\">
-        <div class=\"difficulty-dot easy\"></div>
+    <div class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot easy"></div>
         <h3>Уровень 1 — Неполные и простые</h3>
         <span>Без дискриминанта</span>
       </div>
-      <div class=\"exercise-list\">
+      <div class="exercise-list">
 
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">1.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">Решить уравнение: \\(x^2 - 9 = 0\\)</div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Пример: 3,-3\" data-answer=\"3,-3\" data-alt=\"-3,3\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this)\">Проверить</button>
-              <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+        <div class="exercise-item">
+          <div class="ex-num">1.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(x^2 - 9 = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Пример: 3,-3" data-answer="3,-3" data-alt="-3,3">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
             </div>
-            <div class=\"hint-text\">Перенеси 9 вправо: \\(x^2 = 9\\). Какое число в квадрате даёт 9? Не забудь про минус!</div>
-            <div class=\"feedback\"></div>
+            <div class="hint-text">Перенеси 9 вправо: \(x^2 = 9\). Какое число в квадрате даёт 9? Не забудь про минус!</div>
+            <div class="feedback"></div>
           </div>
         </div>
 
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">2.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">Решить уравнение: \\(x^2 + 5x = 0\\)</div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Корни через запятую\" data-answer=\"0,-5\" data-alt=\"-5,0\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this)\">Проверить</button>
-              <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+        <div class="exercise-item">
+          <div class="ex-num">2.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(x^2 + 5x = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Корни через запятую" data-answer="0,-5" data-alt="-5,0">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
             </div>
-            <div class=\"hint-text\">Вынеси \\(x\\) за скобку: \\(x(x+5)=0\\). Приравняй каждый множитель к нулю.</div>
-            <div class=\"feedback\"></div>
+            <div class="hint-text">Вынеси \(x\) за скобку: \(x(x+5)=0\). Приравняй каждый множитель к нулю.</div>
+            <div class="feedback"></div>
           </div>
         </div>
 
@@ -284,39 +284,39 @@
     </div>
 
     <!-- LEVEL 2 -->
-    <div id=\"exercises-med\" class=\"exercise-set\">
-      <div class=\"exercise-set-header\">
-        <div class=\"difficulty-dot medium\"></div>
+    <div id="exercises-med" class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot medium"></div>
         <h3>Уровень 2 — Полные уравнения</h3>
         <span>Дискриминант или Виет</span>
       </div>
-      <div class=\"exercise-list\">
+      <div class="exercise-list">
 
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">3.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">Решить уравнение: \\(x^2 - 7x + 10 = 0\\)</div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Корни\" data-answer=\"2,5\" data-alt=\"5,2\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this)\">Проверить</button>
-              <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+        <div class="exercise-item">
+          <div class="ex-num">3.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(x^2 - 7x + 10 = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Корни" data-answer="2,5" data-alt="5,2">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
             </div>
-            <div class=\"hint-text\">По теореме Виета: сумма равна \\(7\\), произведение \\(10\\). Какие это два числа?</div>
-            <div class=\"feedback\"></div>
+            <div class="hint-text">По теореме Виета: сумма равна \(7\), произведение \(10\). Какие это два числа?</div>
+            <div class="feedback"></div>
           </div>
         </div>
 
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">4.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">Решить уравнение: \\(x^2 + 6x + 9 = 0\\)</div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Корень\" data-answer=\"-3\" data-alt=\"\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this)\">Проверить</button>
-              <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+        <div class="exercise-item">
+          <div class="ex-num">4.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(x^2 + 6x + 9 = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Корень" data-answer="-3" data-alt="">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
             </div>
-            <div class=\"hint-text\">Здесь \\(D=0\\) или используй формулу квадрата суммы: \\((x+3)^2 = 0\\).</div>
-            <div class=\"feedback\"></div>
+            <div class="hint-text">Здесь \(D=0\) или используй формулу квадрата суммы: \((x+3)^2 = 0\).</div>
+            <div class="feedback"></div>
           </div>
         </div>
 
@@ -324,39 +324,39 @@
     </div>
 
     <!-- LEVEL 3 -->
-    <div id=\"exercises-hard\" class=\"exercise-set\">
-      <div class=\"exercise-set-header\">
-        <div class=\"difficulty-dot hard\"></div>
+    <div id="exercises-hard" class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot hard"></div>
         <h3>Уровень 3 — Более сложные</h3>
-        <span>Коэффициент \\(a \\neq 1\\)</span>
+        <span>Коэффициент \(a \neq 1\)</span>
       </div>
-      <div class=\"exercise-list\">
+      <div class="exercise-list">
 
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">5.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">Решить уравнение: \\(2x^2 - 3x - 5 = 0\\)</div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Пример: 2.5,-1\" data-answer=\"2.5,-1\" data-alt=\"-1,2.5\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this)\">Проверить</button>
-              <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+        <div class="exercise-item">
+          <div class="ex-num">5.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(2x^2 - 3x - 5 = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Пример: 2.5,-1" data-answer="2.5,-1" data-alt="-1,2.5">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
             </div>
-            <div class=\"hint-text\">\\(D = (-3)^2 - 4(2)(-5) = 9 + 40 = 49\\). Корень из \\(D\\) равен \\(7\\).</div>
-            <div class=\"feedback\"></div>
+            <div class="hint-text">\(D = (-3)^2 - 4(2)(-5) = 9 + 40 = 49\). Корень из \(D\) равен \(7\).</div>
+            <div class="feedback"></div>
           </div>
         </div>
 
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">6.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">★ Привести к квадратному и решить: \\(x + \\dfrac{4}{x} = 5\\)</div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Корни\" data-answer=\"1,4\" data-alt=\"4,1\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this)\">Проверить</button>
-              <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+        <div class="exercise-item">
+          <div class="ex-num">6.</div>
+          <div class="ex-body">
+            <div class="ex-problem">★ Привести к квадратному и решить: \(x + \dfrac{4}{x} = 5\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Корни" data-answer="1,4" data-alt="4,1">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
             </div>
-            <div class=\"hint-text\">Умножь всё уравнение на \\(x\\) (при условии \\(x \\neq 0\\)). Получишь \\(x^2 - 5x + 4 = 0\\).</div>
-            <div class=\"feedback\"></div>
+            <div class="hint-text">Умножь всё уравнение на \(x\) (при условии \(x \neq 0\)). Получишь \(x^2 - 5x + 4 = 0\).</div>
+            <div class="feedback"></div>
           </div>
         </div>
 
@@ -364,36 +364,36 @@
     </div>
 
     <!-- PROGRESS -->
-    <div style=\"background:white;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;\">
-      <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;\">
-        <span style=\"font-weight:600;font-size:15px;\">Прогресс занятия</span>
-        <span class=\"score-display\" id=\"scoreText\">0 / 6 правильно</span>
+    <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-weight:600;font-size:15px;">Прогресс занятия</span>
+        <span class="score-display" id="scoreText">0 / 6 правильно</span>
       </div>
-      <div class=\"progress-bar-wrap\"><div class=\"progress-bar-fill\" id=\"progressFill\"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
     </div>
   </div>
 
   <!-- ═══ CHEATSHEET ═══ -->
-  <div id=\"cheatsheet\">
-    <div class=\"section-label\">Справочник</div>
-    <div class=\"cheatsheet\">
+  <div id="cheatsheet">
+    <div class="section-label">Справочник</div>
+    <div class="cheatsheet">
       <h2>📋 Шпаргалка — Квадратные уравнения</h2>
-      <div class=\"cheat-grid\">
-        <div class=\"cheat-item\">
+      <div class="cheat-grid">
+        <div class="cheat-item">
           <h4>Дискриминант</h4>
-          <p>\\(D = b^2 - 4ac\\)<br><br>\\(x_{1,2} = \\dfrac{-b \\pm \\sqrt{D}}{2a}\\)</p>
+          <p>\(D = b^2 - 4ac\)<br><br>\(x_{1,2} = \dfrac{-b \pm \sqrt{D}}{2a}\)</p>
         </div>
-        <div class=\"cheat-item\">
+        <div class="cheat-item">
           <h4>Теорема Виета</h4>
-          <p>Для \\(x^2 + px + q = 0\\):<br>\\(x_1 + x_2 = -p\\)<br>\\(x_1 \\cdot x_2 = q\\)</p>
+          <p>Для \(x^2 + px + q = 0\):<br>\(x_1 + x_2 = -p\)<br>\(x_1 \cdot x_2 = q\)</p>
         </div>
-        <div class=\"cheat-item\">
-          <h4>Неполное: \\(c = 0\\)</h4>
-          <p>\\(ax^2 + bx = 0\\)<br>\\(x(ax + b) = 0\\)<br>Корни: \\(x=0\\) и \\(x = -b/a\\)</p>
+        <div class="cheat-item">
+          <h4>Неполное: \(c = 0\)</h4>
+          <p>\(ax^2 + bx = 0\)<br>\(x(ax + b) = 0\)<br>Корни: \(x=0\) и \(x = -b/a\)</p>
         </div>
-        <div class=\"cheat-item\">
-          <h4>Неполное: \\(b = 0\\)</h4>
-          <p>\\(ax^2 + c = 0\\)<br>\\(ax^2 = -c\\)<br>Извлекаем корень: \\(x = \\pm \\sqrt{-c/a}\\)</p>
+        <div class="cheat-item">
+          <h4>Неполное: \(b = 0\)</h4>
+          <p>\(ax^2 + c = 0\)<br>\(ax^2 = -c\)<br>Извлекаем корень: \(x = \pm \sqrt{-c/a}\)</p>
         </div>
       </div>
     </div>
@@ -407,7 +407,7 @@
   const total = 6; // Количество заданий обновлено
 
   function normalize(s){
-    return s.replace(/\\s+/g,'').toLowerCase()
+    return s.replace(/\s+/g,'').toLowerCase()
             .replace(/[·×]/g,'*').replace(/÷/g,'/');
   }
   function checkAnswer(btn){
@@ -419,7 +419,7 @@
     const userAns = normalize(input.value);
     const correctAns = normalize(input.dataset.answer);
     
-    // Поддержка альтернативных вариантов ответов (data-alt=\"...\")
+    // Поддержка альтернативных вариантов ответов (data-alt="...")
     const alts = (input.dataset.alt || '').split(',').map(normalize).filter(Boolean);
     
     // Проверка совпадения с главным или альтернативным ответом

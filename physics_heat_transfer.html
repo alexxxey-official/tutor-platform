@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang=\"ru\">
+<html lang="ru">
 <head>
-<meta charset=\"UTF-8\">
-<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Heat Transfer — Patric's Physics Session</title>
-<link href=\"https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap\" rel=\"stylesheet\">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script>
   window.MathJax = {
-    tex: { inlineMath: [['\\\\(','\\\\)']], displayMath: [['\\\\[','\\\\]']] },
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
     options: { skipHtmlTags:['script','noscript','style','textarea','pre'] },
     startup: { typeset: true }
   };
 </script>
-<script src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js\" async></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 <style>
   :root {
     --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
@@ -122,106 +122,106 @@
 </head>
 <body>
 
-<div class=\"hero\">
-  <div class=\"label\">Physics Session · Patric William · British School</div>
+<div class="hero">
+  <div class="label">Physics Session · Patric William · British School</div>
   <h1>Heat<br><em>Transfer</em></h1>
   <p>Теплопередача, удельная теплоемкость и расчет энергии.</p>
-  <div class=\"badges\">
-    <span class=\"badge\">IGCSE Physics</span>
-    <span class=\"badge\">Thermal Physics</span>
-    <span class=\"badge\">Bilingual</span>
+  <div class="badges">
+    <span class="badge">IGCSE Physics</span>
+    <span class="badge">Thermal Physics</span>
+    <span class="badge">Bilingual</span>
   </div>
 </div>
 
-<div class=\"container\">
+<div class="container">
 
-  <div class=\"tabs-nav\">
-    <button class=\"tab-btn active\" onclick=\"switchTab('classwork')\">📝 Classwork</button>
-    <button class=\"tab-btn\" onclick=\"switchTab('homework')\">🏠 Homework</button>
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('classwork')">📝 Classwork</button>
+    <button class="tab-btn" onclick="switchTab('homework')">🏠 Homework</button>
   </div>
 
-  <div id=\"tab-classwork\" class=\"tab-content active\">
+  <div id="tab-classwork" class="tab-content active">
     
-    <div id=\"theory\">
-      <div class=\"section-label\">Theory & Vocabulary</div>
+    <div id="theory">
+      <div class="section-label">Theory & Vocabulary</div>
       <h2>Основы теплопередачи</h2>
 
-      <div class=\"theory-card\">
-        <div class=\"stripe\"></div>
+      <div class="theory-card">
+        <div class="stripe"></div>
         <h3>Словарь терминов (Vocabulary)</h3>
         <p>В британской школе задачи формулируются на английском. Вот главные слова, которые нужно знать, чтобы понять условие:</p>
-        <div class=\"vocab-grid\">
-          <div class=\"vocab-item\"><span class=\"vocab-en\">Heat / Thermal Energy</span><span class=\"vocab-ru\">Теплота / Тепловая энергия</span></div>
-          <div class=\"vocab-item\"><span class=\"vocab-en\">Amount of heat (Q)</span><span class=\"vocab-ru\">Количество теплоты</span></div>
-          <div class=\"vocab-item\"><span class=\"vocab-en\">Specific heat capacity (c)</span><span class=\"vocab-ru\">Удельная теплоемкость</span></div>
-          <div class=\"vocab-item\"><span class=\"vocab-en\">Density (ρ)</span><span class=\"vocab-ru\">Плотность</span></div>
-          <div class=\"vocab-item\"><span class=\"vocab-en\">Initial temperature</span><span class=\"vocab-ru\">Начальная температура</span></div>
-          <div class=\"vocab-item\"><span class=\"vocab-en\">Final temperature</span><span class=\"vocab-ru\">Конечная температура</span></div>
-          <div class=\"vocab-item\"><span class=\"vocab-en\">Sample</span><span class=\"vocab-ru\">Образец (кусок материала)</span></div>
-          <div class=\"vocab-item\"><span class=\"vocab-en\">Supply / Transfer</span><span class=\"vocab-ru\">Передать (энергию)</span></div>
+        <div class="vocab-grid">
+          <div class="vocab-item"><span class="vocab-en">Heat / Thermal Energy</span><span class="vocab-ru">Теплота / Тепловая энергия</span></div>
+          <div class="vocab-item"><span class="vocab-en">Amount of heat (Q)</span><span class="vocab-ru">Количество теплоты</span></div>
+          <div class="vocab-item"><span class="vocab-en">Specific heat capacity (c)</span><span class="vocab-ru">Удельная теплоемкость</span></div>
+          <div class="vocab-item"><span class="vocab-en">Density (ρ)</span><span class="vocab-ru">Плотность</span></div>
+          <div class="vocab-item"><span class="vocab-en">Initial temperature</span><span class="vocab-ru">Начальная температура</span></div>
+          <div class="vocab-item"><span class="vocab-en">Final temperature</span><span class="vocab-ru">Конечная температура</span></div>
+          <div class="vocab-item"><span class="vocab-en">Sample</span><span class="vocab-ru">Образец (кусок материала)</span></div>
+          <div class="vocab-item"><span class="vocab-en">Supply / Transfer</span><span class="vocab-ru">Передать (энергию)</span></div>
         </div>
       </div>
 
-      <div class=\"theory-card\">
-        <div class=\"stripe\" style=\"background:var(--accent)\"></div>
-        <h3>Главная формула: \\(Q = mc\\Delta T\\)</h3>
+      <div class="theory-card">
+        <div class="stripe" style="background:var(--accent)"></div>
+        <h3>Главная формула: \(Q = mc\Delta T\)</h3>
         <p>Чтобы нагреть тело, ему нужно передать энергию (Heat). Количество этой энергии зависит от массы тела, материала и того, на сколько градусов мы его греем.</p>
-        <div class=\"math-block\">
-          \\[ Q = m \\cdot c \\cdot \\Delta T \\]
+        <div class="math-block">
+          \[ Q = m \cdot c \cdot \Delta T \]
         </div>
-        <ul style=\"margin-left: 20px; color: #374151; font-size: 14px;\">
-          <li><strong>\\(Q\\)</strong> — Amount of heat (Энергия в Джоулях, <strong>J</strong>)</li>
-          <li><strong>\\(m\\)</strong> — Mass (Масса в килограммах, <strong>kg</strong>)</li>
-          <li><strong>\\(c\\)</strong> — Specific heat capacity (Удельная теплоемкость, <strong>J/(kg·K)</strong> или <strong>J/(kg·°C)</strong>)</li>
-          <li><strong>\\(\\Delta T\\)</strong> — Change in temperature (Изменение температуры: \\(T_{final} - T_{initial}\\))</li>
+        <ul style="margin-left: 20px; color: #374151; font-size: 14px;">
+          <li><strong>\(Q\)</strong> — Amount of heat (Энергия в Джоулях, <strong>J</strong>)</li>
+          <li><strong>\(m\)</strong> — Mass (Масса в килограммах, <strong>kg</strong>)</li>
+          <li><strong>\(c\)</strong> — Specific heat capacity (Удельная теплоемкость, <strong>J/(kg·K)</strong> или <strong>J/(kg·°C)</strong>)</li>
+          <li><strong>\(\Delta T\)</strong> — Change in temperature (Изменение температуры: \(T_{final} - T_{initial}\))</li>
         </ul>
-        <div class=\"rule-box\">
+        <div class="rule-box">
           <strong>⚠️ Внимание на единицы измерения!</strong>
-          В британских задачах удельную теплоемкость (\\(c\\)) часто дают в <strong>J/(kg·K)</strong>. Это значит, что массу для формулы <strong>обязательно нужно переводить в килограммы</strong>! (1 грамм = 0.001 кг).
+          В британских задачах удельную теплоемкость (\(c\)) часто дают в <strong>J/(kg·K)</strong>. Это значит, что массу для формулы <strong>обязательно нужно переводить в килограммы</strong>! (1 грамм = 0.001 кг).
         </div>
       </div>
 
-      <div class=\"theory-card\">
-        <div class=\"stripe\" style=\"background:var(--gold)\"></div>
+      <div class="theory-card">
+        <div class="stripe" style="background:var(--gold)"></div>
         <h3>Если дана плотность (Density)</h3>
-        <p>Иногда в задаче дают не массу, а объем (Volume, \\(V\\)) и плотность (Density, \\(\\rho\\)). Массу легко найти:</p>
-        <div class=\"math-block\">
-          \\[ m = \\rho \\cdot V \\]
+        <p>Иногда в задаче дают не массу, а объем (Volume, \(V\)) и плотность (Density, \(\rho\)). Массу легко найти:</p>
+        <div class="math-block">
+          \[ m = \rho \cdot V \]
         </div>
-        <p style=\"font-size: 14px;\"><em>Например:</em> Плотность воды \\(1 \\text{ g/cm}^3\\). Значит \\(120 \\text{ mL}\\) (это то же самое, что \\(120 \\text{ cm}^3\\)) весят ровно \\(120 \\text{ g}\\).</p>
+        <p style="font-size: 14px;"><em>Например:</em> Плотность воды \(1 \text{ g/cm}^3\). Значит \(120 \text{ mL}\) (это то же самое, что \(120 \text{ cm}^3\)) весят ровно \(120 \text{ g}\).</p>
       </div>
     </div>
 
-    <div id=\"examples\">
-      <div class=\"section-label\">Worked Examples</div>
+    <div id="examples">
+      <div class="section-label">Worked Examples</div>
       <h2>Разбор задач</h2>
-      <div class=\"example-grid\">
+      <div class="example-grid">
 
-        <div class=\"example-card\">
-          <div class=\"example-header\">
-            <span>Example 1 · Нахождение конечной температуры</span><span class=\"tag\">Step-by-step</span>
+        <div class="example-card">
+          <div class="example-header">
+            <span>Example 1 · Нахождение конечной температуры</span><span class="tag">Step-by-step</span>
           </div>
-          <div class=\"example-body\">
-            <div class=\"problem-statement\">
+          <div class="example-body">
+            <div class="problem-statement">
               A 120 g sample of lead is at an initial temperature of 25°C and we transfer 200 J of energy to it. Calculate the final temperature. <br>
-              <em>Data: specific heat of lead \\(c = 130 \\text{ J/(kg·K)}\\).</em>
+              <em>Data: specific heat of lead \(c = 130 \text{ J/(kg·K)}\).</em>
             </div>
-            <div class=\"step-row\">
-              <div class=\"step-num\">1</div>
-              <div class=\"step-content\">Переводим массу в килограммы:
-                <div class=\"step-math\">\\(m = 120 \\text{ g} = 0.12 \\text{ kg}\\)</div>
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-content">Переводим массу в килограммы:
+                <div class="step-math">\(m = 120 \text{ g} = 0.12 \text{ kg}\)</div>
               </div>
             </div>
-            <div class=\"step-row\">
-              <div class=\"step-num\">2</div>
-              <div class=\"step-content\">Используем формулу \\(Q = mc\\Delta T\\) и выражаем \\(\\Delta T\\):
-                <div class=\"step-math\">\\(\\Delta T = \\frac{Q}{m \\cdot c} = \\frac{200}{0.12 \\cdot 130} = \\frac{200}{15.6} \\approx 12.82 \\text{ °C}\\)</div>
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-content">Используем формулу \(Q = mc\Delta T\) и выражаем \(\Delta T\):
+                <div class="step-math">\(\Delta T = \frac{Q}{m \cdot c} = \frac{200}{0.12 \cdot 130} = \frac{200}{15.6} \approx 12.82 \text{ °C}\)</div>
               </div>
             </div>
-            <div class=\"step-row\">
-              <div class=\"step-num\">3</div>
-              <div class=\"step-content\">Находим конечную температуру (Final temperature):
-                <div class=\"step-math\">\\(T_{final} = T_{initial} + \\Delta T = 25 + 12.82 = 37.82 \\text{ °C}\\)</div>
+            <div class="step-row">
+              <div class="step-num">3</div>
+              <div class="step-content">Находим конечную температуру (Final temperature):
+                <div class="step-math">\(T_{final} = T_{initial} + \Delta T = 25 + 12.82 = 37.82 \text{ °C}\)</div>
               </div>
             </div>
           </div>
@@ -230,103 +230,103 @@
       </div>
     </div>
 
-    <div id=\"exercises-easy\">
-      <div class=\"section-label\">Practice</div>
+    <div id="exercises-easy">
+      <div class="section-label">Practice</div>
       <h2>Упражнения (Classwork)</h2>
 
-      <div class=\"instruction-box\">
+      <div class="instruction-box">
         <span>💡 <strong>Как вводить ответы:</strong> Вводи только число. Можно использовать точку или запятую для десятичных дробей. Система засчитает ответ, даже если ты слегка округлишь его (например, 5.77 или 5.78).</span>
       </div>
 
-      <div class=\"exercise-set\">
-        <div class=\"exercise-set-header\">
-          <div class=\"difficulty-dot easy\"></div>
+      <div class="exercise-set">
+        <div class="exercise-set-header">
+          <div class="difficulty-dot easy"></div>
           <h3>Задачи с урока</h3>
           <span>Отработка формулы Q = mcΔT</span>
         </div>
-        <div class=\"exercise-list\">
+        <div class="exercise-list">
 
-          <div class=\"exercise-item\">
-            <div class=\"ex-num\">58.</div>
-            <div class=\"ex-body\">
-              <div class=\"ex-problem\">Calculate the amount of heat required to heat 1 g of copper from 20°C to 35°C.<br>
+          <div class="exercise-item">
+            <div class="ex-num">58.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Calculate the amount of heat required to heat 1 g of copper from 20°C to 35°C.<br>
               <em>Data: the specific heat of copper is 385 J/(kg·K)</em></div>
-              <div class=\"answer-box\">
-                <input class=\"answer-input\" type=\"text\" placeholder=\"Ответ (J)\" data-answer=\"5.775\">
-                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Check</button>
-                <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Hint</button>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Ответ (J)" data-answer="5.775">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Check</button>
+                <button class="hint-btn" onclick="toggleHint(this)">Hint</button>
               </div>
-              <div class=\"hint-text\">1. Переведи массу в кг: \\(m = 0.001 \\text{ kg}\\).<br>2. Найди разницу температур: \\(\\Delta T = 35 - 20 = 15\\).<br>3. Умножь: \\(Q = 0.001 \\cdot 385 \\cdot 15\\).</div>
-              <div class=\"feedback\"></div>
+              <div class="hint-text">1. Переведи массу в кг: \(m = 0.001 \text{ kg}\).<br>2. Найди разницу температур: \(\Delta T = 35 - 20 = 15\).<br>3. Умножь: \(Q = 0.001 \cdot 385 \cdot 15\).</div>
+              <div class="feedback"></div>
             </div>
           </div>
 
-          <div class=\"exercise-item\">
-            <div class=\"ex-num\">57.</div>
-            <div class=\"ex-body\">
-              <div class=\"ex-problem\">A 120 g sample of iron is at an initial temperature of 25°C and we transfer 200 J of energy to it. Calculate the final temperature of the sample.<br>
+          <div class="exercise-item">
+            <div class="ex-num">57.</div>
+            <div class="ex-body">
+              <div class="ex-problem">A 120 g sample of iron is at an initial temperature of 25°C and we transfer 200 J of energy to it. Calculate the final temperature of the sample.<br>
               <em>Data: the specific heat of iron is 443 J/(kg·K)</em></div>
-              <div class=\"answer-box\">
-                <input class=\"answer-input\" type=\"text\" placeholder=\"Ответ (°C)\" data-answer=\"28.76\">
-                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Check</button>
-                <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Hint</button>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Ответ (°C)" data-answer="28.76">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Check</button>
+                <button class="hint-btn" onclick="toggleHint(this)">Hint</button>
               </div>
-              <div class=\"hint-text\">Сначала найди, на сколько градусов нагреется железо: \\(\\Delta T = \\frac{200}{0.12 \\cdot 443}\\). Затем прибавь это к начальным 25°C.</div>
-              <div class=\"feedback\"></div>
+              <div class="hint-text">Сначала найди, на сколько градусов нагреется железо: \(\Delta T = \frac{200}{0.12 \cdot 443}\). Затем прибавь это к начальным 25°C.</div>
+              <div class="feedback"></div>
             </div>
           </div>
 
-          <div class=\"exercise-item\">
-            <div class=\"ex-num\">56.</div>
-            <div class=\"ex-body\">
-              <div class=\"rule-box\" style=\"margin-top:0; margin-bottom:12px; padding: 10px;\">
+          <div class="exercise-item">
+            <div class="ex-num">56.</div>
+            <div class="ex-body">
+              <div class="rule-box" style="margin-top:0; margin-bottom:12px; padding: 10px;">
                 <strong>⚠️ Заметка для Патрика</strong>
                 В оригинальной задаче учителя была опечатка (120 mL). Чтобы сошелся ответ учителя (342.72 J), объем ртути должен быть <strong>10 mL</strong>. Мы исправили это в условии ниже!
               </div>
-              <div class=\"ex-problem\">Calculate the amount of heat we need to supply to <strong>10 mL</strong> of mercury so that its temperature increases from 20°C to 38°C.<br>
+              <div class="ex-problem">Calculate the amount of heat we need to supply to <strong>10 mL</strong> of mercury so that its temperature increases from 20°C to 38°C.<br>
               <em>Data: the density of mercury is 13.6 g/cm³, specific heat of mercury is 140 J/(kg·K).</em></div>
-              <div class=\"answer-box\">
-                <input class=\"answer-input\" type=\"text\" placeholder=\"Ответ (J)\" data-answer=\"342.72\">
-                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Check</button>
-                <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Hint</button>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Ответ (J)" data-answer="342.72">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Check</button>
+                <button class="hint-btn" onclick="toggleHint(this)">Hint</button>
               </div>
-              <div class=\"hint-text\">1. Найди массу в граммах: \\(m = \\rho \\cdot V = 13.6 \\cdot 10 = 136 \\text{ g}\\).<br>2. Переведи в кг: \\(0.136 \\text{ kg}\\).<br>3. Посчитай теплоту: \\(Q = 0.136 \\cdot 140 \\cdot (38 - 20)\\).</div>
-              <div class=\"feedback\"></div>
+              <div class="hint-text">1. Найди массу в граммах: \(m = \rho \cdot V = 13.6 \cdot 10 = 136 \text{ g}\).<br>2. Переведи в кг: \(0.136 \text{ kg}\).<br>3. Посчитай теплоту: \(Q = 0.136 \cdot 140 \cdot (38 - 20)\).</div>
+              <div class="feedback"></div>
             </div>
           </div>
 
         </div>
       </div>
 
-      <div class=\"progress-card\">
-        <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;\">
-          <span style=\"font-weight:600;font-size:15px;\">Classwork Progress</span>
-          <span class=\"score-display\" id=\"scoreText-class\">0 / 3 correct</span>
+      <div class="progress-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span style="font-weight:600;font-size:15px;">Classwork Progress</span>
+          <span class="score-display" id="scoreText-class">0 / 3 correct</span>
         </div>
-        <div class=\"progress-bar-wrap\"><div class=\"progress-bar-fill\" id=\"progressFill-class\"></div></div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill-class"></div></div>
       </div>
     </div>
 
-    <div id=\"cheatsheet\">
-      <div class=\"section-label\">Reference</div>
-      <div class=\"cheatsheet\">
+    <div id="cheatsheet">
+      <div class="section-label">Reference</div>
+      <div class="cheatsheet">
         <h2>📋 Physics Cheatsheet</h2>
-        <div class=\"cheat-grid\">
-          <div class=\"cheat-item\">
+        <div class="cheat-grid">
+          <div class="cheat-item">
             <h4>Heat Formula</h4>
-            <p>\\(Q = m \\cdot c \\cdot \\Delta T\\)<br><br>Q = Heat Energy (Joules)<br>m = Mass (kg)<br>c = Specific Heat Capacity</p>
+            <p>\(Q = m \cdot c \cdot \Delta T\)<br><br>Q = Heat Energy (Joules)<br>m = Mass (kg)<br>c = Specific Heat Capacity</p>
           </div>
-          <div class=\"cheat-item\">
+          <div class="cheat-item">
             <h4>Temperature Change</h4>
-            <p>\\(\\Delta T = T_{final} - T_{initial}\\)<br><br>If heating up: \\(\\Delta T\\) is positive.<br>If cooling down: \\(\\Delta T\\) is negative.</p>
+            <p>\(\Delta T = T_{final} - T_{initial}\)<br><br>If heating up: \(\Delta T\) is positive.<br>If cooling down: \(\Delta T\) is negative.</p>
           </div>
-          <div class=\"cheat-item\">
+          <div class="cheat-item">
             <h4>Density Formula</h4>
-            <p>\\(\\rho = \\frac{m}{V} \\implies m = \\rho \\cdot V\\)<br><br>1 mL = 1 cm³<br>1000 g = 1 kg</p>
+            <p>\(\rho = \frac{m}{V} \implies m = \rho \cdot V\)<br><br>1 mL = 1 cm³<br>1000 g = 1 kg</p>
           </div>
-          <div class=\"cheat-item\">
+          <div class="cheat-item">
             <h4>Finding Final Temp</h4>
-            <p>1. Find \\(\\Delta T = \\frac{Q}{mc}\\)<br>2. \\(T_{final} = T_{initial} + \\Delta T\\)</p>
+            <p>1. Find \(\Delta T = \frac{Q}{mc}\)<br>2. \(T_{final} = T_{initial} + \Delta T\)</p>
           </div>
         </div>
       </div>
@@ -334,79 +334,79 @@
 
   </div>
   
-  <div id=\"tab-homework\" class=\"tab-content\">
+  <div id="tab-homework" class="tab-content">
     
-    <div class=\"section-label\">Independent Practice</div>
+    <div class="section-label">Independent Practice</div>
     <h2>Домашнее задание (Homework)</h2>
-    <p style=\"color:var(--muted); margin-bottom: 24px;\">Реши эти 4 задачи. Они очень похожи на те, что мы разбирали в классе. Не забывай переводить граммы в килограммы!</p>
+    <p style="color:var(--muted); margin-bottom: 24px;">Реши эти 4 задачи. Они очень похожи на те, что мы разбирали в классе. Не забывай переводить граммы в килограммы!</p>
 
-    <div class=\"exercise-set\">
-      <div class=\"exercise-list\" id=\"hw-list\">
+    <div class="exercise-set">
+      <div class="exercise-list" id="hw-list">
         
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">1.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">Calculate the amount of heat required to heat 250 g of water from 10°C to 80°C.<br>
+        <div class="exercise-item">
+          <div class="ex-num">1.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Calculate the amount of heat required to heat 250 g of water from 10°C to 80°C.<br>
             <em>Data: specific heat of water is 4180 J/(kg·K).</em></div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Ответ (J)\" data-answer=\"73150\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">Check</button>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Ответ (J)" data-answer="73150">
+              <button class="check-btn" onclick="checkAnswer(this, 'hw')">Check</button>
             </div>
-            <div class=\"feedback\"></div>
+            <div class="feedback"></div>
           </div>
         </div>
 
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">2.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">A 200 g sample of Aluminum is at an initial temperature of 15°C. We transfer 5000 J of energy to it. Calculate the final temperature.<br>
+        <div class="exercise-item">
+          <div class="ex-num">2.</div>
+          <div class="ex-body">
+            <div class="ex-problem">A 200 g sample of Aluminum is at an initial temperature of 15°C. We transfer 5000 J of energy to it. Calculate the final temperature.<br>
             <em>Data: specific heat of Aluminum is 900 J/(kg·K).</em></div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Ответ (°C)\" data-answer=\"42.78\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">Check</button>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Ответ (°C)" data-answer="42.78">
+              <button class="check-btn" onclick="checkAnswer(this, 'hw')">Check</button>
             </div>
-            <div class=\"feedback\"></div>
+            <div class="feedback"></div>
           </div>
         </div>
 
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">3.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">Calculate the amount of heat we need to supply to 50 mL of Gold so that its temperature increases from 20°C to 50°C.<br>
+        <div class="exercise-item">
+          <div class="ex-num">3.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Calculate the amount of heat we need to supply to 50 mL of Gold so that its temperature increases from 20°C to 50°C.<br>
             <em>Data: density of Gold is 19.3 g/cm³, specific heat of Gold is 129 J/(kg·K).</em></div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Ответ (J)\" data-answer=\"3734.55\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">Check</button>
-              <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Hint</button>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Ответ (J)" data-answer="3734.55">
+              <button class="check-btn" onclick="checkAnswer(this, 'hw')">Check</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Hint</button>
             </div>
-            <div class=\"hint-text\">Сначала найди массу: \\(m = 50 \\cdot 19.3 = 965 \\text{ g}\\). Переведи в кг (\\(0.965\\)) и подставь в формулу.</div>
-            <div class=\"feedback\"></div>
+            <div class="hint-text">Сначала найди массу: \(m = 50 \cdot 19.3 = 965 \text{ g}\). Переведи в кг (\(0.965\)) и подставь в формулу.</div>
+            <div class="feedback"></div>
           </div>
         </div>
 
-        <div class=\"exercise-item\">
-          <div class=\"ex-num\">4.</div>
-          <div class=\"ex-body\">
-            <div class=\"ex-problem\">We supply 3000 J of heat to a 500 g sample of an unknown metal. Its temperature increases from 20°C to 35°C. Calculate the specific heat capacity (c) of this metal.</div>
-            <div class=\"answer-box\">
-              <input class=\"answer-input\" type=\"text\" placeholder=\"Ответ\" data-answer=\"400\">
-              <button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">Check</button>
-              <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Hint</button>
+        <div class="exercise-item">
+          <div class="ex-num">4.</div>
+          <div class="ex-body">
+            <div class="ex-problem">We supply 3000 J of heat to a 500 g sample of an unknown metal. Its temperature increases from 20°C to 35°C. Calculate the specific heat capacity (c) of this metal.</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Ответ" data-answer="400">
+              <button class="check-btn" onclick="checkAnswer(this, 'hw')">Check</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Hint</button>
             </div>
-            <div class=\"hint-text\">Из формулы \\(Q = mc\\Delta T\\) вырази \\(c\\): \\(c = \\frac{Q}{m \\cdot \\Delta T}\\). Масса должна быть в кг (\\(0.5\\)).</div>
-            <div class=\"feedback\"></div>
+            <div class="hint-text">Из формулы \(Q = mc\Delta T\) вырази \(c\): \(c = \frac{Q}{m \cdot \Delta T}\). Масса должна быть в кг (\(0.5\)).</div>
+            <div class="feedback"></div>
           </div>
         </div>
 
       </div>
     </div>
 
-    <div class=\"progress-card\">
-      <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;\">
-        <span style=\"font-weight:600;font-size:15px;\">Homework Progress</span>
-        <span class=\"score-display\" id=\"scoreText-hw\">0 / 4 correct</span>
+    <div class="progress-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-weight:600;font-size:15px;">Homework Progress</span>
+        <span class="score-display" id="scoreText-hw">0 / 4 correct</span>
       </div>
-      <div class=\"progress-bar-wrap\"><div class=\"progress-bar-fill\" id=\"progressFill-hw\"></div></div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill-hw"></div></div>
     </div>
 
   </div>
@@ -430,7 +430,7 @@
   // Умная проверка чисел (допускает небольшую погрешность округления)
   function checkNumericAnswer(userStr, correctStr) {
     // Заменяем запятую на точку и убираем пробелы
-    let uStr = userStr.replace(',', '.').replace(/\\s/g, '');
+    let uStr = userStr.replace(',', '.').replace(/\s/g, '');
     let u = parseFloat(uStr);
     let c = parseFloat(correctStr);
     
