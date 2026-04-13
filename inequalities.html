@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang=\"ru\">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ЕГЭ Задание 10: Движение — Patric's Tutoring Session</title>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset=\"UTF-8\">
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+<title>Inequalities — Patric's Tutoring Session</title>
+<link href=\"https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap\" rel=\"stylesheet\">
 <script>
   window.MathJax = {
-    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    tex: { inlineMath: [['\\\\(','\\\\)']], displayMath: [['\\\\[','\\\\]']] },
     options: { skipHtmlTags:['script','noscript','style','textarea','pre'] },
     startup: { typeset: true }
   };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<script src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js\" async></script>
 <style>
   :root {
     --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
@@ -25,7 +25,7 @@
 
   /* HERO */
   .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
-  .hero::before { content: 'S=vt'; position: absolute; right: 20px; top: -20px; font-size: 180px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; }
+  .hero::before { content: '< >'; position: absolute; right: 30px; top: -30px; font-size: 180px; color: rgba(255,255,255,.04); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -10px; }
   .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
   .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; }
   .hero h1 em { color: var(--gold); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
@@ -70,7 +70,8 @@
   .step-math { background: #f8f8f8; border-radius: 8px; padding: 10px 14px; margin-top: 8px; overflow-x: auto; }
 
   /* EXERCISES */
-  .instruction-box { background: #f3f4f6; border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; font-size: 14px; color: var(--muted); margin-bottom: 20px; display: flex; gap: 10px; align-items: center; }
+  .instruction-box { background: #f3f4f6; border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; font-size: 14px; color: var(--ink); margin-bottom: 20px; }
+  .instruction-box code { background: #e5e7eb; padding: 2px 6px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); }
   .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
   .exercise-set-header { padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
   .difficulty-dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -86,13 +87,13 @@
   
   /* GRID FOR HOMEWORK */
   @media(min-width: 768px) {
-    .hw-grid .exercise-list { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .hw-grid .exercise-list { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .hw-grid .exercise-item { border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 0; background: #fafafa; }
     .hw-grid .ex-problem { background: white; border: 1px solid #eee; }
   }
 
   .answer-box { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-  .answer-input { border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px; font-family: 'DM Mono', monospace; font-size: 14px; width: 140px; outline: none; transition: border-color .2s; }
+  .answer-input { border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px; font-family: 'DM Mono', monospace; font-size: 14px; width: 220px; outline: none; transition: border-color .2s; }
   .answer-input:focus { border-color: var(--teal); }
   .answer-input.correct { border-color: var(--correct); background: #f0faf8; color: var(--correct); }
   .answer-input.wrong   { border-color: var(--wrong);   background: #fff5f5; color: var(--wrong); }
@@ -128,348 +129,322 @@
 </head>
 <body>
 
-<div class="hero">
-  <div class="label">Репетиторское занятие · Патрик Уильям · YR11</div>
-  <h1>Задание №10<br><em>Движение по прямой</em></h1>
-  <p>Текстовые задачи на движение. Банк ФИПИ (ОСН) · Подготовка к ЕГЭ</p>
-  <div class="badges">
-    <span class="badge">Алгебра</span>
-    <span class="badge">Текстовые задачи</span>
-    <span class="badge">Квадратные уравнения</span>
+<div class=\"hero\">
+  <div class=\"label\">Репетиторское занятие · Патрик Уильям · YR10</div>
+  <h1>Inequalities<br><em>Неравенства</em></h1>
+  <p>Неравенства с одним неизвестным. Графический и алгебраический методы (стр. 94–96) · Mathematics 4 Anaya</p>
+  <div class=\"badges\">
+    <span class=\"badge\">Unit 4 · Equations & Inequations</span>
+    <span class=\"badge\">Метод интервалов</span>
   </div>
 </div>
 
-<div class="container">
+<div class=\"container\">
 
-  <div class="tabs-nav">
-    <button class="tab-btn active" onclick="switchTab('classwork')">📝 Классная работа</button>
-    <button class="tab-btn" onclick="switchTab('homework')">🏠 Домашнее задание</button>
+  <div class=\"tabs-nav\">
+    <button class=\"tab-btn active\" onclick=\"switchTab('classwork')\">📝 Классная работа</button>
+    <button class=\"tab-btn\" onclick=\"switchTab('homework')\">🏠 Домашнее задание</button>
   </div>
 
-  <div id="tab-classwork" class="tab-content active">
+  <div id=\"tab-classwork\" class=\"tab-content active\">
     
-    <nav class="toc">
+    <nav class=\"toc\">
       <span>Разделы</span>
-      <a href="#theory">📖 Теория</a>
-      <a href="#examples">✏️ Разбор</a>
-      <a href="#exercises-easy">🟢 Базовые</a>
-      <a href="#exercises-med">🟡 Средние</a>
-      <a href="#exercises-hard">🔴 Сложные</a>
-      <a href="#cheatsheet">📋 Шпаргалка</a>
+      <a href=\"#theory\">📖 Теория</a>
+      <a href=\"#examples\">✏️ Разбор</a>
+      <a href=\"#exercises-easy\">🟢 Базовые</a>
+      <a href=\"#exercises-med\">🟡 Средние</a>
+      <a href=\"#exercises-hard\">🔴 Сложные</a>
+      <a href=\"#cheatsheet\">📋 Шпаргалка</a>
     </nav>
 
-    <div id="theory">
-      <div class="section-label">Теория</div>
-      <h2>Как решать задачи на движение?</h2>
+    <div id=\"theory\">
+      <div class=\"section-label\">Теория</div>
+      <h2>Как решать неравенства?</h2>
 
-      <div class="theory-card">
-        <div class="stripe"></div>
-        <h3>Алгоритм решения (Метод Таблицы)</h3>
-        <p>Любая задача на движение по прямой решается в 4 шага:</p>
-        <ol style="margin-left: 20px; color: #374151; font-size: 15px;">
-          <li><strong>Рисуем таблицу</strong> с тремя колонками: \(S\) (путь), \(V\) (скорость), \(t\) (время).</li>
-          <li><strong>Заполняем две колонки</strong> из условия задачи (обычно это путь и скорость, где скорость берем за \(x\)).</li>
-          <li><strong>Третью колонку выражаем</strong> по формуле. Например, \(t = \frac{S}{V}\).</li>
-          <li><strong>Составляем уравнение</strong> на основе разницы во времени. У кого скорость меньше, тот ехал дольше! Уравнение: \(t_{\text{медл}} - t_{\text{быстр}} = \Delta t\).</li>
-        </ol>
-      </div>
-
-      <div class="theory-card">
-        <div class="stripe" style="background:var(--accent)"></div>
-        <h3>Дискриминант и Чётный коэффициент (D/4)</h3>
-        <p>В таких задачах всегда получаются квадратные уравнения с большими числами. Если коэффициент \(b\) — чётный, используй формулу \(D_1\) (или \(D/4\)), чтобы считать было легче!</p>
-        <div class="math-block">
-          <strong>Обычный:</strong> \(\quad D = b^2 - 4ac \quad \implies \quad x = \frac{-b \pm \sqrt{D}}{2a}\)<br><br>
-          <strong>Если \(b\) чётное:</strong> \(\quad k = \frac{b}{2}, \quad D_1 = k^2 - ac \quad \implies \quad x = \frac{-k \pm \sqrt{D_1}}{a}\)
+      <div class=\"theory-card\">
+        <div class=\"stripe\"></div>
+        <h3>Основы и запись ответа</h3>
+        <p>Ответом в неравенстве является не одно число, а целый <strong>интервал</strong> (промежуток). Важно правильно ставить скобки:</p>
+        <ul style=\"margin-left: 20px; color: #374151; font-size: 15px; margin-bottom: 10px;\">
+          <li><strong>Строгие (\\(<\\) или \\(>\\)):</strong> Точки выколотые \\(\\circ\\). Скобки круглые <code>( )</code>.</li>
+          <li><strong>Нестрогие (\\(\\le\\) или \\(\\ge\\)):</strong> Точки закрашенные \\(\\bullet\\). Скобки квадратные <code>[ ]</code>.</li>
+          <li>Бесконечность (\\(-\\infty\\) или \\(+\\infty\\)) <strong>всегда</strong> пишется с круглой скобкой!</li>
+        </ul>
+        <div class=\"rule-box\">
+          <strong>⚠️ Главное правило неравенств</strong>
+          Если ты умножаешь или делишь обе части неравенства на <strong>отрицательное число</strong>, знак неравенства переворачивается! (Например: \\(-2x > 4 \\implies x < -2\\)).
         </div>
       </div>
 
-      <div class="theory-card">
-        <div class="stripe" style="background:var(--gold)"></div>
-        <h3>Лайфхак: Как извлекать огромные корни?</h3>
-        <p>Допустим, ты получил \(D = 3249\). Как найти корень без калькулятора?</p>
-        <ol style="margin-left: 20px; color: #374151; font-size: 15px;">
-          <li><strong>Оцени десятки:</strong> \(50^2 = 2500\), а \(60^2 = 3600\). Наш корень между 50 и 60.</li>
-          <li><strong>Посмотри на последнюю цифру:</strong> Число 3249 оканчивается на <strong>9</strong>.</li>
-          <li><strong>Вспомни таблицу умножения:</strong> Какие цифры в квадрате дают на конце 9? Это \(3 \times 3 = 9\) и \(7 \times 7 = 49\).</li>
-          <li><strong>Проверь варианты:</strong> Это либо 53, либо 57. Так как 3249 ближе к 3600, проверяем 57. \(57 \times 57 = 3249\). Бинго!</li>
+      <div class=\"theory-card\">
+        <div class=\"stripe\" style=\"background:var(--accent)\"></div>
+        <h3>Алгебраический метод (Метод интервалов)</h3>
+        <p>Идеально подходит для любых неравенств, которые можно разложить на множители.</p>
+        <ol style=\"margin-left: 20px; color: #374151; font-size: 15px;\">
+          <li>Перенеси всё в левую часть, чтобы справа остался \\(0\\).</li>
+          <li>Приравняй левую часть к нулю и найди корни (нули функции).</li>
+          <li>Отметь корни на числовой прямой (выколотые или закрашенные).</li>
+          <li>Определи знак (\\(+\\) или \\(-\\)) на каждом интервале, подставив любое число из него.</li>
+          <li>Заштрихуй нужные интервалы (если \\(> 0\\), то плюсы; если \\(< 0\\), то минусы).</li>
+        </ol>
+      </div>
+
+      <div class=\"theory-card\">
+        <div class=\"stripe\" style=\"background:var(--gold)\"></div>
+        <h3>Графический метод</h3>
+        <p>Отлично работает для квадратных неравенств вида \\(ax^2 + bx + c > 0\\).</p>
+        <ol style=\"margin-left: 20px; color: #374151; font-size: 15px;\">
+          <li>Найди корни уравнения \\(ax^2 + bx + c = 0\\) (это точки пересечения с осью X).</li>
+          <li>Нарисуй ось X и отметь на ней корни.</li>
+          <li>Схематично нарисуй параболу: если \\(a > 0\\) — ветви вверх \\(\\cup\\), если \\(a < 0\\) — ветви вниз \\(\\cap\\).</li>
+          <li>Всё, что выше оси X — это \\(+\\). Всё, что ниже — это \\(-\\).</li>
         </ol>
       </div>
     </div>
 
-    <div id="examples">
-      <div class="section-label">Разбор</div>
-      <h2>Решённый пример</h2>
-      <div class="example-grid">
+    <div id=\"examples\">
+      <div class=\"section-label\">Разбор</div>
+      <h2>Решённые примеры</h2>
+      <div class=\"example-grid\">
 
-        <div class="example-card">
-          <div class="example-header">
-            <span>Задача 1 (ОСН) · Классика</span><span class="tag">Шаг за шагом</span>
+        <div class=\"example-card\">
+          <div class=\"example-header\">
+            <span>Пример 1 · Линейное неравенство</span><span class=\"tag\">Алгебра</span>
           </div>
-          <div class="example-body">
-            <div class="problem-statement">
-              Два велосипедиста одновременно отправились в 140-километровый пробег. Первый ехал со скоростью, на 4 км/ч большей, чем скорость второго, и прибыл к финишу на 4 часа раньше второго. Найти скорость велосипедиста, пришедшего к финишу первым. Ответ дайте в км/ч.
+          <div class=\"example-body\">
+            <div class=\"problem-statement\">
+              Решить неравенство: \\(5 - 2x \\ge 11\\)
             </div>
-            <div class="step-row">
-              <div class="step-num">1</div>
-              <div class="step-content">Пусть скорость первого (быстрого) равна \(x\). Тогда скорость второго (медленного) равна \(x - 4\).
+            <div class=\"step-row\">
+              <div class=\"step-num\">1</div>
+              <div class=\"step-content\">Переносим числа вправо:
+                <div class=\"step-math\">\\(-2x \\ge 11 - 5 \\implies -2x \\ge 6\\)</div>
               </div>
             </div>
-            <div class="step-row">
-              <div class="step-num">2</div>
-              <div class="step-content">Выразим время каждого: \(t_1 = \frac{140}{x}\), а \(t_2 = \frac{140}{x-4}\).
+            <div class=\"step-row\">
+              <div class=\"step-num\">2</div>
+              <div class=\"step-content\">Делим на \\(-2\\). <strong>Внимание:</strong> знак неравенства меняется на противоположный!
+                <div class=\"step-math\">\\(x \\le -3\\)</div>
               </div>
             </div>
-            <div class="step-row">
-              <div class="step-num">3</div>
-              <div class="step-content">Второй ехал дольше на 4 часа. Составляем уравнение:
-                <div class="step-math">\(\frac{140}{x-4} - \frac{140}{x} = 4\)</div>
+            <div class=\"rule-box\"><strong>Ответ</strong>\\(\\;(-\\infty; -3]\\)</div>
+          </div>
+        </div>
+
+        <div class=\"example-card\">
+          <div class=\"example-header\">
+            <span>Пример 2 · Квадратное неравенство</span><span class=\"tag\">Графический метод</span>
+          </div>
+          <div class=\"example-body\">
+            <div class=\"problem-statement\">
+              Решить неравенство: \\(x^2 - 4x - 5 < 0\\)
+            </div>
+            <div class=\"step-row\">
+              <div class=\"step-num\">1</div>
+              <div class=\"step-content\">Найдём корни уравнения \\(x^2 - 4x - 5 = 0\\). По теореме Виета:
+                <div class=\"step-math\">\\(x_1 = 5, \\quad x_2 = -1\\)</div>
               </div>
             </div>
-            <div class="step-row">
-              <div class="step-num">4</div>
-              <div class="step-content">Делим всё на 4 для простоты и приводим к общему знаменателю:
-                <div class="step-math">\(\frac{35}{x-4} - \frac{35}{x} = 1 \implies 35x - 35(x-4) = x(x-4)\)</div>
+            <div class=\"step-row\">
+              <div class=\"step-num\">2</div>
+              <div class=\"step-content\">Коэффициент \\(a = 1 > 0\\), значит ветви параболы направлены <strong>вверх</strong>.
               </div>
             </div>
-            <div class="step-row">
-              <div class="step-num">5</div>
-              <div class="step-content">Раскрываем скобки: \(140 = x^2 - 4x \implies x^2 - 4x - 140 = 0\).<br>
-              Корни по Виету: \(14\) и \(-10\). Скорость не может быть отрицательной.
+            <div class=\"step-row\">
+              <div class=\"step-num\">3</div>
+              <div class=\"step-content\">Парабола пересекает ось в точках \\(-1\\) и \\(5\\). Часть графика, которая находится <strong>ниже</strong> оси X (так как \\(< 0\\)), расположена между корнями.
               </div>
             </div>
-            <div class="rule-box"><strong>Ответ</strong>\(\;14\)</div>
+            <div class=\"rule-box\"><strong>Ответ</strong>\\(\\;(-1; 5)\\)</div>
           </div>
         </div>
 
       </div>
     </div>
 
-    <div id="exercises-easy">
-      <div class="section-label">Задания</div>
+    <div id=\"exercises-easy\">
+      <div class=\"section-label\">Задания</div>
       <h2>Упражнения для занятия</h2>
 
-      <div class="instruction-box">
-        <span>💡 <strong>Внимание:</strong> Вводи только число (без единиц измерения). Все задачи взяты из открытого банка ФИПИ (пометка ОСН).</span>
+      <div class=\"instruction-box\">
+        💡 <strong>Как вводить ответы (Интервалы):</strong><br><br>
+        • Используй круглые <code>( )</code> или квадратные <code>[ ]</code> скобки.<br>
+        • Бесконечность пиши как <code>-inf</code> или <code>inf</code>.<br>
+        • Знак объединения (U) пиши английской буквой <code>U</code>.<br>
+        • <em>Пример сложного ответа:</em> <code>(-inf; -2] U (5; inf)</code>
       </div>
 
-      <div class="exercise-set">
-        <div class="exercise-set-header">
-          <div class="difficulty-dot easy"></div>
-          <h3>Уровень 1 — Базовые задачи</h3>
-          <span>Нахождение скорости</span>
+      <div class=\"exercise-set\">
+        <div class=\"exercise-set-header\">
+          <div class=\"difficulty-dot easy\"></div>
+          <h3>Уровень 1 — Базовые</h3>
+          <span>Линейные неравенства</span>
         </div>
-        <div class="exercise-list">
+        <div class=\"exercise-list\">
 
-          <div class="exercise-item">
-            <div class="ex-num">2.</div>
-            <div class="ex-body">
-              <div class="ex-problem">Два велосипедиста одновременно отправились в 160-километровый пробег. Первый ехал со скоростью, на 6 км/ч большей, чем скорость второго, и прибыл к финишу на 6 часов раньше второго. Найти скорость велосипедиста, пришедшего к финишу вторым. Ответ дайте в км/ч.</div>
-              <div class="answer-box">
-                <input class="answer-input" type="text" placeholder="Ответ" data-answer="10">
-                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
-                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+          <div class=\"exercise-item\">
+            <div class=\"ex-num\">1.</div>
+            <div class=\"ex-body\">
+              <div class=\"ex-problem\">Решить: \\(3x - 6 > 0\\)</div>
+              <div class=\"answer-box\">
+                <input class=\"answer-input\" type=\"text\" placeholder=\"Например: (2; inf)\" data-answer=\"(2;inf)\">
+                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
               </div>
-              <div class="hint-text">Обозначь скорость второго за \(x\). Тогда скорость первого \(x+6\). Уравнение: \(\frac{160}{x} - \frac{160}{x+6} = 6\).</div>
-              <div class="feedback"></div>
+              <div class=\"feedback\"></div>
             </div>
           </div>
 
-          <div class="exercise-item">
-            <div class="ex-num">3.</div>
-            <div class="ex-body">
-              <div class="ex-problem">Велосипедист выехал с постоянной скоростью из города А в город В, расстояние между которыми равно 132 км. На следующий день он отправился обратно со скоростью на 1 км/ч больше прежней. По дороге он сделал остановку на 1 час. В результате он затратил на обратный путь столько же времени, сколько на путь из А в В. Найдите скорость велосипедиста на пути из В в А. Ответ дайте в км/ч.</div>
-              <div class="answer-box">
-                <input class="answer-input" type="text" placeholder="Ответ" data-answer="12">
-                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+          <div class=\"exercise-item\">
+            <div class=\"ex-num\">2.</div>
+            <div class=\"ex-body\">
+              <div class=\"ex-problem\">Решить: \\(4 - 2x \\ge 0\\)</div>
+              <div class=\"answer-box\">
+                <input class=\"answer-input\" type=\"text\" placeholder=\"Интервал\" data-answer=\"(-inf;2]\">
+                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
+                <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
               </div>
-              <div class="feedback"></div>
-            </div>
-          </div>
-
-          <div class="exercise-item">
-            <div class="ex-num">4.</div>
-            <div class="ex-body">
-              <div class="ex-problem">Из пункта А в пункт В, расстояние между которыми 60 км, одновременно выехали мотоциклист и велосипедист. Известно, что за час мотоциклист проезжает на 50 км больше, чем велосипедист. Определите скорость велосипедиста, если известно, что он прибыл в пункт В на 5 часов позже мотоциклиста. Ответ дайте в км/ч.</div>
-              <div class="answer-box">
-                <input class="answer-input" type="text" placeholder="Ответ" data-answer="10">
-                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
-                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
-              </div>
-              <div class="hint-text">Фраза "за час проезжает на 50 км больше" означает, что скорость мотоциклиста на 50 км/ч больше скорости велосипедиста.</div>
-              <div class="feedback"></div>
-            </div>
-          </div>
-
-          <div class="exercise-item">
-            <div class="ex-num">5.</div>
-            <div class="ex-body">
-              <div class="ex-problem">(ДОП) Товарный поезд каждую минуту проезжает на 900 метров меньше, чем скорый, и на путь в 180 км тратит времени на 3 часа больше, чем скорый. Найдите скорость товарного поезда. Ответ дайте в км/ч.</div>
-              <div class="answer-box">
-                <input class="answer-input" type="text" placeholder="Ответ" data-answer="36">
-                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
-                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
-              </div>
-              <div class="hint-text">Сначала переведи 900 м/мин в км/ч! \(900 \text{ м} = 0.9 \text{ км}\). В часе 60 минут. Значит, разница скоростей: \(0.9 \times 60 = 54\) км/ч.</div>
-              <div class="feedback"></div>
+              <div class=\"hint-text\">Перенеси 4 вправо: \\(-2x \\ge -4\\). При делении на \\(-2\\) знак перевернется: \\(x \\le 2\\).</div>
+              <div class=\"feedback\"></div>
             </div>
           </div>
 
         </div>
       </div>
 
-      <div id="exercises-med" class="exercise-set">
-        <div class="exercise-set-header">
-          <div class="difficulty-dot medium"></div>
-          <h3>Уровень 2 — Средние задачи</h3>
-          <span>Разные участки пути и движение навстречу</span>
+      <div id=\"exercises-med\" class=\"exercise-set\">
+        <div class=\"exercise-set-header\">
+          <div class=\"difficulty-dot medium\"></div>
+          <h3>Уровень 2 — Средние</h3>
+          <span>Квадратные неравенства</span>
         </div>
-        <div class="exercise-list">
+        <div class=\"exercise-list\">
 
-          <div class="exercise-item">
-            <div class="ex-num">6.</div>
-            <div class="ex-body">
-              <div class="ex-problem">Дорога между пунктами А и В состоит из подъёма и спуска, а её длина равна 25 км. Путь из А в В занял у туриста 6 часов, из которых 1 час ушёл на спуск. Найдите скорость туриста на спуске, если она больше скорости на подъёме на 1 км/ч. Ответ дайте в км/ч.</div>
-              <div class="answer-box">
-                <input class="answer-input" type="text" placeholder="Ответ" data-answer="5">
-                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
-                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+          <div class=\"exercise-item\">
+            <div class=\"ex-num\">3.</div>
+            <div class=\"ex-body\">
+              <div class=\"ex-problem\">Решить: \\((x - 1)(x - 5) < 0\\)</div>
+              <div class=\"answer-box\">
+                <input class=\"answer-input\" type=\"text\" placeholder=\"Интервал\" data-answer=\"(1;5)\">
+                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
+                <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
               </div>
-              <div class="hint-text">Пусть скорость на спуске \(x\). Тогда на подъеме \(x-1\). Время на спуск 1 час, значит путь спуска \(1 \cdot x\). Время на подъем \(6-1=5\) часов, путь подъема \(5(x-1)\). Сумма путей равна 25.</div>
-              <div class="feedback"></div>
+              <div class=\"hint-text\">Корни: 1 и 5. Парабола ветвями вверх. Нам нужно то, что меньше нуля (ниже оси X), то есть между корнями.</div>
+              <div class=\"feedback\"></div>
             </div>
           </div>
 
-          <div class="exercise-item">
-            <div class="ex-num">7.</div>
-            <div class="ex-body">
-              <div class="ex-problem">Из городов А и В навстречу друг другу одновременно выехали мотоциклист и велосипедист. Мотоциклист приехал в город В на 12 часов раньше, чем велосипедист приехал в город А, а встретились они через 2 часа 30 минут после выезда. Сколько часов затратил на путь из города В в город А велосипедист?</div>
-              <div class="answer-box">
-                <input class="answer-input" type="text" placeholder="Ответ" data-answer="15">
-                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
-                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+          <div class=\"exercise-item\">
+            <div class=\"ex-num\">4.</div>
+            <div class=\"ex-body\">
+              <div class=\"ex-problem\">Решить: \\(x^2 - 16 \\ge 0\\)</div>
+              <div class=\"answer-box\">
+                <input class=\"answer-input\" type=\"text\" placeholder=\"Пример: (-inf;-4] U[4;inf)\" data-answer=\"(-inf;-4]U[4;inf)\">
+                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
               </div>
-              <div class="hint-text">Пусть время велосипедиста \(t\), тогда время мотоциклиста \(t-12\). Так как они встретились через 2.5 часа, сумма их скоростей (выраженных как доли всего пути в час) равна \(\frac{1}{2.5}\). Уравнение: \(\frac{1}{t} + \frac{1}{t-12} = \frac{1}{2.5}\).</div>
-              <div class="feedback"></div>
+              <div class=\"feedback\"></div>
             </div>
           </div>
 
-          <div class="exercise-item">
-            <div class="ex-num">8.</div>
-            <div class="ex-body">
-              <div class="ex-problem">Расстояние между городами А и В равно 630 км. Из города А в город В выехал первый автомобиль, а через три часа после этого навстречу ему из города В выехал со скоростью 70 км/ч второй автомобиль. Найдите скорость первого автомобиля, если автомобили встретились на расстоянии 350 км от города А. Ответ дайте в км/ч.</div>
-              <div class="answer-box">
-                <input class="answer-input" type="text" placeholder="Ответ" data-answer="50">
-                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+          <div class=\"exercise-item\">
+            <div class=\"ex-num\">5.</div>
+            <div class=\"ex-body\">
+              <div class=\"ex-problem\">Решить: \\(x^2 - 7x + 10 \\le 0\\)</div>
+              <div class=\"answer-box\">
+                <input class=\"answer-input\" type=\"text\" placeholder=\"Интервал\" data-answer=\"[2;5]\">
+                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
               </div>
-              <div class="feedback"></div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div id="exercises-hard" class="exercise-set">
-        <div class="exercise-set-header">
-          <div class="difficulty-dot hard"></div>
-          <h3>Уровень 3 — Сложные задачи</h3>
-          <span>Нестандартные сценарии</span>
-        </div>
-        <div class="exercise-list">
-
-          <div class="exercise-item">
-            <div class="ex-num">9.</div>
-            <div class="ex-body">
-              <div class="ex-problem">Два человека отправляются из одного дома на прогулку до опушки леса, находящейся в 1,5 км от дома. Один идёт со скоростью 2,2 км/ч, а другой — со скоростью 4,4 км/ч. Дойдя до опушки, второй с той же скоростью возвращается обратно. На каком расстоянии от точки отправления произойдёт их встреча? Ответ дайте в километрах.</div>
-              <div class="answer-box">
-                <input class="answer-input" type="text" placeholder="Ответ" data-answer="1">
-                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
-                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
-              </div>
-              <div class="hint-text">Пусть встреча произошла на расстоянии \(x\) км от дома. Первый прошел \(x\) км. Второй дошел до опушки (1.5 км) и вернулся назад навстречу первому, пройдя еще \((1.5 - x)\) км. Приравняй их время в пути.</div>
-              <div class="feedback"></div>
-            </div>
-          </div>
-
-          <div class="exercise-item">
-            <div class="ex-num">10.</div>
-            <div class="ex-body">
-              <div class="ex-problem">Расстояние между городами А и В равно 420 км. Из города А в город В выехал автомобиль, а через 1 час следом за ним со скоростью 80 км/ч выехал мотоциклист, догнал автомобиль в городе С и повернул обратно. Когда он вернулся в А, автомобиль прибыл в В. Найдите расстояние от А до С. Ответ дайте в километрах.</div>
-              <div class="answer-box">
-                <input class="answer-input" type="text" placeholder="Ответ" data-answer="240">
-                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
-                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
-              </div>
-              <div class="hint-text">Пусть расстояние AC = \(S\), скорость авто = \(v\). Мотоциклист проехал туда-обратно \(2S\) за время \(\frac{2S}{80}\). Автомобиль проехал весь путь 420 за время \(\frac{420}{v}\). Эти времена равны. Вырази \(v\) и подставь в уравнение для первой части пути (до встречи в С).</div>
-              <div class="feedback"></div>
+              <div class=\"feedback\"></div>
             </div>
           </div>
 
         </div>
       </div>
 
-      <div class="progress-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <span style="font-weight:600;font-size:15px;">Прогресс классной работы</span>
-          <span class="score-display" id="scoreText-class">0 / 9 правильно</span>
+      <div id=\"exercises-hard\" class=\"exercise-set\">
+        <div class=\"exercise-set-header\">
+          <div class=\"difficulty-dot hard\"></div>
+          <h3>Уровень 3 — Сложные</h3>
+          <span>Дробно-рациональные (Метод интервалов)</span>
         </div>
-        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill-class"></div></div>
+        <div class=\"exercise-list\">
+
+          <div class=\"exercise-item\">
+            <div class=\"ex-num\">6.</div>
+            <div class=\"ex-body\">
+              <div class=\"ex-problem\">Решить: \\(\\dfrac{x - 3}{x + 1} < 0\\)</div>
+              <div class=\"answer-box\">
+                <input class=\"answer-input\" type=\"text\" placeholder=\"Интервал\" data-answer=\"(-1;3)\">
+                <button class=\"check-btn\" onclick=\"checkAnswer(this, 'class')\">Проверить</button>
+                <button class=\"hint-btn\" onclick=\"toggleHint(this)\">Подсказка</button>
+              </div>
+              <div class=\"hint-text\">Нуль числителя: \\(x=3\\). Нуль знаменателя: \\(x=-1\\) (всегда выколотая точка!). Отметь их на оси и расставь знаки: \\(+\\) \\(-\\) \\(+\\). Нам нужен минус.</div>
+              <div class=\"feedback\"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class=\"progress-card\">
+        <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;\">
+          <span style=\"font-weight:600;font-size:15px;\">Прогресс классной работы</span>
+          <span class=\"score-display\" id=\"scoreText-class\">0 / 6 правильно</span>
+        </div>
+        <div class=\"progress-bar-wrap\"><div class=\"progress-bar-fill\" id=\"progressFill-class\"></div></div>
       </div>
     </div>
 
-    <div id="cheatsheet">
-      <div class="section-label">Справочник</div>
-      <div class="cheatsheet">
-        <h2>📋 Шпаргалка — Движение по прямой</h2>
-        <div class="cheat-grid">
-          <div class="cheat-item">
-            <h4>Главная формула</h4>
-            <p>\(S = V \cdot t\)<br>\(V = \frac{S}{t}\)<br>\(t = \frac{S}{V}\)</p>
+    <div id=\"cheatsheet\">
+      <div class=\"section-label\">Справочник</div>
+      <div class=\"cheatsheet\">
+        <h2>📋 Шпаргалка — Неравенства</h2>
+        <div class=\"cheat-grid\">
+          <div class=\"cheat-item\">
+            <h4>Типы скобок</h4>
+            <p>\\(<\\) или \\(>\\) \\(\\implies\\) <code>( )</code> выколотые<br>\\(\\le\\) или \\(\\ge\\) \\(\\implies\\) <code>[ ]</code> закрашенные<br>\\(\\pm\\infty\\) \\(\\implies\\) всегда <code>( )</code></p>
           </div>
-          <div class="cheat-item">
-            <h4>Уравнение времени</h4>
-            <p>Всегда вычитай из БОЛЬШЕГО времени МЕНЬШЕЕ:<br>\(t_{\text{медленного}} - t_{\text{быстрого}} = \text{Разница}\)</p>
+          <div class=\"cheat-item\">
+            <h4>Деление на минус</h4>
+            <p>Если \\(-3x > 9\\)<br>Делим на \\(-3\\)<br>Знак меняется: \\(x < -3\\)</p>
           </div>
-          <div class="cheat-item">
-            <h4>Движение навстречу</h4>
-            <p>Скорости сближения складываются:<br>\(V_{\text{сближ}} = V_1 + V_2\)<br>\(t_{\text{встречи}} = \frac{S}{V_1 + V_2}\)</p>
+          <div class=\"cheat-item\">
+            <h4>Парабола \\(ax^2+bx+c\\)</h4>
+            <p>\\(a > 0\\) \\(\\implies\\) ветви вверх \\(\\cup\\)<br>\\(a < 0\\) \\(\\implies\\) ветви вниз \\(\\cap\\)<br>Выше оси X — это \\(+\\), ниже — это \\(-\\).</p>
           </div>
-          <div class="cheat-item">
-            <h4>Движение вдогонку</h4>
-            <p>Скорости вычитаются:<br>\(V_{\text{сближ}} = V_{\text{быстр}} - V_{\text{медл}}\)<br>\(t_{\text{догона}} = \frac{S}{V_1 - V_2}\)</p>
+          <div class=\"cheat-item\">
+            <h4>Дроби \\(\\frac{A}{B} \\ge 0\\)</h4>
+            <p>Знаменатель \\(B\\) <strong>никогда не равен нулю</strong>. Точки из знаменателя всегда выколотые (круглые скобки), даже если неравенство нестрогое (\\(\\ge\\)).</p>
           </div>
         </div>
       </div>
     </div>
 
-  </div><div id="tab-homework" class="tab-content">
+  </div><div id=\"tab-homework\" class=\"tab-content\">
     
-    <div class="section-label">Самостоятельная отработка</div>
+    <div class=\"section-label\">Самостоятельная отработка</div>
     <h2>Домашнее задание</h2>
-    <p style="color:var(--muted); margin-bottom: 24px;">Реши эти 10 задач. Это те же самые типы заданий из банка ФИПИ, которые мы разбирали в классе, но с другими числами. Вводи только числовой ответ.</p>
+    <p style=\"color:var(--muted); margin-bottom: 24px;\">Реши эти 8 неравенств. Помни про правила ввода интервалов: <code>( )</code>, <code>[ ]</code>, <code>inf</code>, <code>U</code>.</p>
 
-    <div class="exercise-set hw-grid">
-      <div class="exercise-list" id="hw-list">
-        <div class="exercise-item"><div class="ex-num">1.</div><div class="ex-body"><div class="ex-problem">Два велосипедиста одновременно отправились в 154-километровый пробег. Первый ехал со скоростью, на 3 км/ч большей, чем скорость второго, и прибыл к финишу на 3 часа раньше второго. Найти скорость велосипедиста, пришедшего к финишу первым.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="14"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">2.</div><div class="ex-body"><div class="ex-problem">Два автомобиля отправляются в 420-километровый пробег. Первый едет со скоростью на 10 км/ч большей, чем второй, и прибывает к финишу на 1 час раньше второго. Найти скорость автомобиля, пришедшего к финишу вторым.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="70"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">3.</div><div class="ex-body"><div class="ex-problem">Велосипедист выехал с постоянной скоростью из города А в город В, расстояние между которыми равно 135 км. На следующий день он отправился обратно со скоростью на 6 км/ч больше прежней. По дороге он сделал остановку на 6 часов. В результате он затратил на обратный путь столько же времени, сколько на путь из А в В. Найдите скорость велосипедиста на пути из В в А.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="15"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">4.</div><div class="ex-body"><div class="ex-problem">Велосипедист выехал с постоянной скоростью из города А в город В, расстояние между которыми равно 190 км. На следующий день он отправился обратно в А со скоростью на 9 км/ч больше прежней. По дороге он сделал остановку на 9 часов. В результате велосипедист затратил на обратный путь столько же времени, сколько на путь из А в В. Найдите скорость велосипедиста на пути из В в А.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="19"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">5.</div><div class="ex-body"><div class="ex-problem">Из пункта А в пункт В, расстояние между которыми 30 км, одновременно выехали автомобилист и велосипедист. За час автомобилист проезжает на 80 км больше, чем велосипедист. Определите скорость велосипедиста, если известно, что он прибыл в пункт В на 2 часа 40 минут позже автомобилиста.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="10"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">6.</div><div class="ex-body"><div class="ex-problem">Товарный поезд каждую минуту проезжает на 400 метров меньше, чем скорый, и на путь в 270 км тратит времени на 3 часа больше, чем скорый. Найдите скорость товарного поезда.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="36"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">7.</div><div class="ex-body"><div class="ex-problem">Дорога между пунктами А и В состоит из подъёма и спуска, а её длина равна 15 км. Путь из А в В занял у туриста 7 часов, из которых 4 часа ушло на спуск. Найдите скорость туриста на подъёме, если она меньше скорости на спуске на 2 км/ч.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="1"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">8.</div><div class="ex-body"><div class="ex-problem">Из городов А и В навстречу друг другу одновременно выехали мотоциклист и велосипедист. Мотоциклист приехал в город В на 10 часов раньше, чем велосипедист приехал в город А, а встретились они через 3 часа 45 минут после выезда. Сколько часов затратил на путь из города В в город А велосипедист?</div><div class="answer-box"><input class="answer-input" type="text" data-answer="15"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">9.</div><div class="ex-body"><div class="ex-problem">Расстояние между городами А и В равно 390 км. Из города А в город В выехал первый автомобиль, а через два часа после этого навстречу ему из города В выехал со скоростью 75 км/ч второй автомобиль. Найдите скорость первого автомобиля, если автомобили встретились на расстоянии 240 км от города А.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="60"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">10.</div><div class="ex-body"><div class="ex-problem">Два человека отправляются из одного дома на прогулку до опушки леса, находящейся в 1,1 км от дома. Один идёт со скоростью 2,5 км/ч, а другой — со скоростью 3 км/ч. Дойдя до опушки, второй с той же скоростью возвращается обратно. На каком расстоянии от точки отправления произойдёт их встреча? Ответ дайте в километрах.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="1"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
-        <div class="exercise-item"><div class="ex-num">11.</div><div class="ex-body"><div class="ex-problem">Расстояние между городами А и В равно 630 км. Из города А в город В выехал автомобиль, а через 2 часа следом за ним со скоростью 60 км/ч выехал мотоциклист, догнал автомобиль в городе С и повернул обратно. Когда он вернулся в А, автомобиль прибыл в В. Найдите расстояние от А до С.</div><div class="answer-box"><input class="answer-input" type="text" data-answer="360"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+    <div class=\"exercise-set hw-grid\">
+      <div class=\"exercise-list\" id=\"hw-list\">
+        <div class=\"exercise-item\"><div class=\"ex-num\">1.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(5x - 15 < 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-inf;3)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
+        <div class=\"exercise-item\"><div class=\"ex-num\">2.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(7 - x \\le 2\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"[5;inf)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
+        <div class=\"exercise-item\"><div class=\"ex-num\">3.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\((x + 2)(x - 4) \\le 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"[-2;4]\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
+        <div class=\"exercise-item\"><div class=\"ex-num\">4.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(x^2 - 25 > 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-inf;-5)U(5;inf)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
+        <div class=\"exercise-item\"><div class=\"ex-num\">5.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(x(x - 6) \\ge 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-inf;0]U[6;inf)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
+        <div class=\"exercise-item\"><div class=\"ex-num\">6.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(x^2 + 4x + 3 < 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-3;-1)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
+        <div class=\"exercise-item\"><div class=\"ex-num\">7.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(\\dfrac{x}{x - 2} \\le 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"[0;2)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
+        <div class=\"exercise-item\"><div class=\"ex-num\">8.</div><div class=\"ex-body\"><div class=\"ex-problem\">\\(-x^2 + 4x - 3 < 0\\)</div><div class=\"answer-box\"><input class=\"answer-input\" type=\"text\" data-answer=\"(-inf;1)U(3;inf)\"><button class=\"check-btn\" onclick=\"checkAnswer(this, 'hw')\">✓</button></div><div class=\"feedback\"></div></div></div>
       </div>
     </div>
 
-    <div class="progress-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <span style="font-weight:600;font-size:15px;">Прогресс домашнего задания</span>
-        <span class="score-display" id="scoreText-hw">0 / 11 правильно</span>
+    <div class=\"progress-card\">
+      <div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;\">
+        <span style=\"font-weight:600;font-size:15px;\">Прогресс домашнего задания</span>
+        <span class=\"score-display\" id=\"scoreText-hw\">0 / 8 правильно</span>
       </div>
-      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill-hw"></div></div>
+      <div class=\"progress-bar-wrap\"><div class=\"progress-bar-fill\" id=\"progressFill-hw\"></div></div>
     </div>
 
   </div></div>
@@ -485,12 +460,20 @@
 
   // Answer Checking Logic
   let stats = {
-    'class': { correct: 0, total: 9, attempted: new Set() },
-    'hw':    { correct: 0, total: 11, attempted: new Set() }
+    'class': { correct: 0, total: 6, attempted: new Set() },
+    'hw':    { correct: 0, total: 8, attempted: new Set() }
   };
 
-  function normalizeAnswer(s) {
-    return s.replace(/\s+/g, '').replace(/,/g, '.');
+  // Умная нормализация для интервалов
+  function normalizeInterval(s) {
+    let res = s.toLowerCase();
+    res = res.replace(/\\s+/g, ''); // Удаляем все пробелы
+    res = res.replace(/,/g, ';'); // Заменяем запятые на точки с запятой
+    res = res.replace(/\\+?inf(inity)?/g, 'inf'); // Нормализуем бесконечность (убираем +, понимаем infinity)
+    res = res.replace(/бесконечность/g, 'inf');
+    res = res.replace(/[-\\u2013\\u2014]/g, '-'); // Нормализуем разные виды тире в обычный минус
+    res = res.replace(/[u∪vи]/g, 'U'); // Нормализуем знак объединения (U, u, ∪, v, или русская 'и')
+    return res;
   }
 
   function checkAnswer(btn, sectionType) {
@@ -499,8 +482,8 @@
     const feedback = btn.closest('.ex-body').querySelector('.feedback');
     const exNum = btn.closest('.exercise-item').querySelector('.ex-num').textContent.trim();
     
-    const userAns = normalizeAnswer(input.value);
-    const correctAns = normalizeAnswer(input.dataset.answer);
+    const userAns = normalizeInterval(input.value);
+    const correctAns = normalizeInterval(input.dataset.answer);
     const isCorrect = (userAns === correctAns) && userAns !== '';
 
     input.classList.remove('correct','wrong');
@@ -520,7 +503,7 @@
     } else {
       input.classList.add('wrong');
       feedback.classList.add('wrong');
-      feedback.textContent = '✗ Ошибка. Пересчитай дискриминант или проверь уравнение.';
+      feedback.textContent = '✗ Ошибка. Проверь скобки и знаки.';
     }
   }
 
