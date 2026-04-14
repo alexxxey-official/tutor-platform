@@ -3,50 +3,369 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Испанская Лексика А1: Введение — Академия Алексея Гуляева</title>
+<title>Испанская Лексика А1: Полный справочник — AG Academy</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root { --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946; --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280; --card: #ffffff; --border: #e5e0d5; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+  
   .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
   .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
-  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; position: relative; z-index: 2; }
   .hero h1 em { color: var(--teal); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
-  .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; }
+  .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; position: relative; z-index: 2; }
+  .hero::before { content: 'VOCABULARIO'; position: absolute; right: -20px; top: 10px; font-size: 100px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; z-index: 1; pointer-events: none;}
+  
   .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
-  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin: 16px 0; position: relative; }
+  
+  .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin: 48px 0 20px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--teal); }
+  h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
+
+  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 16px; position: relative; }
   .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--teal); }
-  .roadmap-list { list-style: none; padding: 0; margin: 20px 0; }
-  .roadmap-list li { padding: 12px 16px; background: #f9fafb; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid var(--teal); font-size: 15px; }
-  .roadmap-list li strong { color: var(--ink); display: block; margin-bottom: 4px; }
-  .roadmap-list li span { font-size: 13px; color: var(--muted); }
+  .theory-card h3 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 16px; color: var(--ink); }
+  
+  .conj-table { width: 100%; border-collapse: collapse; margin: 10px 0 24px; font-size: 15px; }
+  .conj-table th, .conj-table td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+  .conj-table th { background: #f9fafb; font-weight: 600; color: var(--ink); }
+  .conj-table td:first-child { font-weight: 600; color: var(--teal); width: 40%; }
+  
+  .phrase-box { background: #f0faf8; border-left: 4px solid var(--teal); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+  .phrase-box p { margin-bottom: 8px; font-size: 15px; border-bottom: 1px dashed rgba(0,0,0,0.05); padding-bottom: 8px; }
+  .phrase-box p:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+  .phrase-box strong { color: var(--ink); display: inline-block; min-width: 180px; }
+  .phrase-box em { color: var(--muted); font-style: normal; font-size: 14px; }
+  
+  .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
+  .rule-box > strong:first-child { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+
   .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+  .toc a:hover { background: var(--teal); color: white; }
+  
+  .anchor-target { scroll-margin-top: 20px; }
 </style>
 </head>
 <body>
+
 <div class="hero">
-  <div class="label">🇪🇸 Введение · Лексика</div>
-  <h1>Карта лексики<br><em>Уровень A1</em></h1>
-  <p>Словарь выживания в испаноязычной среде.</p>
+  <div class="label">🇪🇸 Лексика · Уровень A1</div>
+  <h1>Мега-словарь<br><em>A1 (500+ слов)</em></h1>
+  <p>Продвинутый словарный запас для начинающих. Всё, что нужно для выживания, общения, походов в ресторан и навигации по городу.</p>
 </div>
+
 <div class="container">
-  <nav class="toc"><a href="../index.html">← На главную</a></nav>
-  <div class="theory-card">
-    <div class="stripe"></div>
-    <h3>Темы A1</h3>
-    <ul class="roadmap-list">
-      <li><strong>1. Семья и люди</strong><span>(La familia, el padre, la madre) - Урок 1</span></li>
-      <li><strong>2. Дом и квартира</strong><span>(La casa, la habitación, la mesa)</span></li>
-      <li><strong>3. Город и места</strong><span>(La ciudad, el banco, la farmacia)</span></li>
-      <li><strong>4. Еда и напитки</strong><span>(La comida, el agua, la carne)</span></li>
-      <li><strong>5. Одежда и цвета</strong><span>(La ropa, los pantalones, rojo/azul)</span></li>
-    </ul>
+  <nav class="toc">
+    <a href="../index.html">← На главную</a>
+    <a href="#greetings">👋 Приветствия</a>
+    <a href="#family">👨‍👩‍👧‍👦 Семья</a>
+    <a href="#city">🏙️ Город</a>
+    <a href="#food">🥘 Еда</a>
+    <a href="#house">🏠 Дом</a>
+    <a href="#clothes">👕 Одежда</a>
+    <a href="#time">⏳ Время</a>
+    <a href="#adjectives">✨ Прилагательные</a>
+  </nav>
+
+  <!-- GREETINGS -->
+  <div id="greetings" class="anchor-target">
+    <div class="section-label">Тема 1</div>
+    <h2>👋 Приветствия и Вежливость</h2>
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Базовые слова</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>Hola / Adiós</td><td>Привет / Пока</td></tr>
+        <tr><td>Buenos días</td><td>Доброе утро (до обеда)</td></tr>
+        <tr><td>Buenas tardes</td><td>Добрый день (после обеда)</td></tr>
+        <tr><td>Buenas noches</td><td>Добрый вечер / Спокойной ночи</td></tr>
+        <tr><td>Hasta luego / Hasta pronto</td><td>До скорого / До скорой встречи</td></tr>
+        <tr><td>Hasta mañana</td><td>До завтра</td></tr>
+        <tr><td>Por favor</td><td>Пожалуйста (когда просишь)</td></tr>
+        <tr><td>Gracias / Muchas gracias</td><td>Спасибо / Большое спасибо</td></tr>
+        <tr><td>De nada</td><td>Не за что</td></tr>
+        <tr><td>Lo siento / Perdón</td><td>Мне жаль / Извините</td></tr>
+        <tr><td>Sí / No</td><td>Да / Нет</td></tr>
+        <tr><td>Vale</td><td>Окей / Ладно (очень часто в Испании!)</td></tr>
+      </table>
+
+      <h3>Как дела? (Фразы)</h3>
+      <div class="phrase-box">
+        <p><strong>¿Qué tal?</strong> <em>Как дела? (Универсально)</em></p>
+        <p><strong>¿Cómo estás?</strong> <em>Как ты?</em></p>
+        <p><strong>¿Cómo se llama usted?</strong> <em>Как вас зовут? (вежливо)</em></p>
+        <p><strong>Me llamo... / Soy...</strong> <em>Меня зовут... / Я...</em></p>
+        <p><strong>Mucho gusto / Encantado(a)</strong> <em>Очень приятно (познакомиться)</em></p>
+        <p><strong>Muy bien, ¿y tú?</strong> <em>Очень хорошо, а у тебя?</em></p>
+        <p><strong>Regular / Más o menos</strong> <em>Нормально / Так себе</em></p>
+        <p><strong>Fatal</strong> <em>Ужасно</em></p>
+      </div>
+    </div>
   </div>
-  <div style="text-align: center; margin: 60px 0;">
-    <a href="spanish_vocab_family.html" style="background: var(--teal); color: white; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-weight: 600;">Начать Урок 1: Семья</a>
+
+  <!-- FAMILY -->
+  <div id="family" class="anchor-target">
+    <div class="section-label">Тема 2</div>
+    <h2>👨‍👩‍👧‍👦 Семья и Люди</h2>
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Родственники (Продвинутый A1)</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>la familia</td><td>семья</td></tr>
+        <tr><td>los padres</td><td>родители</td></tr>
+        <tr><td>el padre / la madre</td><td>отец / мать</td></tr>
+        <tr><td>el hijo / la hija</td><td>сын / дочь</td></tr>
+        <tr><td>el hermano / la hermana</td><td>брат / сестра</td></tr>
+        <tr><td>el abuelo / la abuela</td><td>дедушка / бабушка</td></tr>
+        <tr><td>el nieto / la nieta</td><td>внук / внучка</td></tr>
+        <tr><td>el tío / la tía</td><td>дядя / тётя</td></tr>
+        <tr><td>el primo / la prima</td><td>двоюродный брат / сестра</td></tr>
+        <tr><td>el sobrino / la sobrina</td><td>племянник / племянница</td></tr>
+        <tr><td>el marido (esposo) / la mujer (esposa)</td><td>муж / жена</td></tr>
+        <tr><td>el novio / la novia</td><td>парень / девушка (в отношениях)</td></tr>
+        <tr><td>el suegro / la suegra</td><td>тёсть, свёкор / тёща, свекровь</td></tr>
+        <tr><td>los gemelos</td><td>близнецы</td></tr>
+      </table>
+
+      <div class="rule-box">
+        <strong>💡 Правило множественного числа:</strong><br>
+        Если мы объединяем мужчин и женщин в одну группу, используется мужской род множественного числа.<br>
+        <i>el padre + la madre = <strong>los padres</strong> (родители)</i><br>
+        <i>el hijo + la hija = <strong>los hijos</strong> (дети)</i><br>
+        <i>el rey + la reina = <strong>los reyes</strong> (король и королева)</i>
+      </div>
+
+      <h3>Люди и этапы жизни</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>el hombre / la mujer</td><td>мужчина / женщина</td></tr>
+        <tr><td>el chico / la chica (el muchacho/a)</td><td>парень / девушка (мальчик / девочка)</td></tr>
+        <tr><td>el niño / la niña</td><td>ребенок (мальчик / девочка)</td></tr>
+        <tr><td>el bebé</td><td>младенец</td></tr>
+        <tr><td>el amigo / la amiga</td><td>друг / подруга</td></tr>
+        <tr><td>el compañero (de clase / de trabajo)</td><td>одноклассник / коллега</td></tr>
+        <tr><td>el señor / la señora (Sr. / Sra.)</td><td>господин / госпожа</td></tr>
+      </table>
+    </div>
   </div>
+
+  <!-- CITY -->
+  <div id="city" class="anchor-target">
+    <div class="section-label">Тема 3</div>
+    <h2>🏙️ Город и Навигация</h2>
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Места в городе</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>la ciudad / el pueblo</td><td>город / деревня (поселок)</td></tr>
+        <tr><td>la calle / la plaza / la avenida</td><td>улица / площадь / проспект</td></tr>
+        <tr><td>el centro (de la ciudad)</td><td>центр (города)</td></tr>
+        <tr><td>el barrio</td><td>район</td></tr>
+        <tr><td>el parque</td><td>парк</td></tr>
+        <tr><td>el hospital / la farmacia</td><td>больница / аптека</td></tr>
+        <tr><td>el banco / el cajero automático</td><td>банк / банкомат</td></tr>
+        <tr><td>el supermercado / el mercado</td><td>супермаркет / рынок</td></tr>
+        <tr><td>la tienda / el centro comercial</td><td>магазин / торговый центр</td></tr>
+        <tr><td>el restaurante / la cafetería / el bar</td><td>ресторан / кафе / бар</td></tr>
+        <tr><td>el museo / el teatro / el cine</td><td>музей / театр / кинотеатр</td></tr>
+        <tr><td>la escuela / la universidad</td><td>школа / университет</td></tr>
+        <tr><td>la estación (de tren / de metro)</td><td>станция (поезда / метро)</td></tr>
+        <tr><td>el aeropuerto</td><td>аэропорт</td></tr>
+        <tr><td>la parada de autobús</td><td>автобусная остановка</td></tr>
+      </table>
+
+      <h3>Направления (Где это?)</h3>
+      <div class="phrase-box">
+        <p><strong>¿Dónde está...?</strong> <em>Где находится...?</em></p>
+        <p><strong>¿Cómo puedo ir a...?</strong> <em>Как мне дойти/доехать до...?</em></p>
+        <p><strong>(Sigue) todo recto</strong> <em>(Иди) всё прямо</em></p>
+        <p><strong>Gira a la derecha / a la izquierda</strong> <em>Поверни направо / налево</em></p>
+        <p><strong>Al lado de...</strong> <em>Рядом с (сбоку от)...</em></p>
+        <p><strong>Enfrente de...</strong> <em>Напротив...</em></p>
+        <p><strong>Cerca de / Lejos de...</strong> <em>Близко от / Далеко от...</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOD -->
+  <div id="food" class="anchor-target">
+    <div class="section-label">Тема 4</div>
+    <h2>🥘 Еда и Ресторан</h2>
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Продукты и Напитки</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>el agua (f.) / el pan</td><td>вода / хлеб (agua - жен.род, но артикль el!)</td></tr>
+        <tr><td>la carne / el pescado / el pollo</td><td>мясо / рыба (как еда) / курица</td></tr>
+        <tr><td>el queso / el huevo / la leche</td><td>сыр / яйцо / молоко</td></tr>
+        <tr><td>la fruta / la verdura</td><td>фрукты / овощи</td></tr>
+        <tr><td>la manzana / la naranja / el plátano</td><td>яблоко / апельсин / банан</td></tr>
+        <tr><td>el tomate / la patata (papa)</td><td>помидор / картошка</td></tr>
+        <tr><td>la ensalada / la sopa</td><td>салат / суп</td></tr>
+        <tr><td>el arroz / la pasta</td><td>рис / паста</td></tr>
+        <tr><td>la sal / el azúcar / la pimienta</td><td>соль / сахар / перец</td></tr>
+        <tr><td>el café / el té / el zumo (jugo)</td><td>кофе / чай / сок</td></tr>
+        <tr><td>el vino (tinto/blanco) / la cerveza</td><td>вино (красное/белое) / пиво</td></tr>
+      </table>
+
+      <h3>В ресторане (Фразы)</h3>
+      <div class="phrase-box">
+        <p><strong>¿Tienen una mesa para dos?</strong> <em>У вас есть столик на двоих?</em></p>
+        <p><strong>La carta / El menú, por favor.</strong> <em>Меню, пожалуйста.</em></p>
+        <p><strong>¿Qué va a tomar?</strong> <em>Что будете заказывать? (пить/есть)</em></p>
+        <p><strong>Para mí, la sopa y un agua.</strong> <em>Мне суп и воду.</em></p>
+        <p><strong>De primer plato / De segundo plato</strong> <em>На первое / На второе</em></p>
+        <p><strong>¿Y de postre?</strong> <em>А на десерт?</em></p>
+        <p><strong>La cuenta, por favor.</strong> <em>Счёт, пожалуйста.</em></p>
+        <p><strong>¡Qué rico! / ¡Está riquísimo!</strong> <em>Как вкусно! / Очень вкусно!</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOUSE -->
+  <div id="house" class="anchor-target">
+    <div class="section-label">Тема 5</div>
+    <h2>🏠 Дом и Мебель</h2>
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Комнаты и элементы дома</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>la casa / el piso (el apartamento)</td><td>дом / квартира</td></tr>
+        <tr><td>la habitación / el dormitorio</td><td>комната / спальня</td></tr>
+        <tr><td>el salón (el comedor)</td><td>гостиная (столовая)</td></tr>
+        <tr><td>la cocina / el baño</td><td>кухня / ванная комната</td></tr>
+        <tr><td>el pasillo / el balcón / la terraza</td><td>коридор / балкон / терраса</td></tr>
+        <tr><td>el jardín / el garaje</td><td>сад / гараж</td></tr>
+        <tr><td>la puerta / la ventana</td><td>дверь / окно</td></tr>
+        <tr><td>la pared / el suelo / el techo</td><td>стена / пол / потолок</td></tr>
+      </table>
+
+      <h3>Мебель и вещи (Muebles)</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>la cama</td><td>кровать</td></tr>
+        <tr><td>la mesa / la silla</td><td>стол / стул</td></tr>
+        <tr><td>el sofá / el sillón</td><td>диван / кресло</td></tr>
+        <tr><td>el armario</td><td>шкаф</td></tr>
+        <tr><td>la televisión (la tele)</td><td>телевизор</td></tr>
+        <tr><td>la nevera (el frigorífico)</td><td>холодильник</td></tr>
+        <tr><td>la lavadora</td><td>стиральная машина</td></tr>
+        <tr><td>la lámpara</td><td>лампа</td></tr>
+        <tr><td>el espejo</td><td>зеркало</td></tr>
+        <tr><td>la alfombra</td><td>ковер</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- CLOTHES -->
+  <div id="clothes" class="anchor-target">
+    <div class="section-label">Тема 6</div>
+    <h2>👕 Одежда и Цвета</h2>
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Одежда (La ropa)</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>la camiseta / la camisa</td><td>футболка / рубашка</td></tr>
+        <tr><td>el jersey (el suéter)</td><td>свитер</td></tr>
+        <tr><td>los pantalones / los vaqueros (jeans)</td><td>штаны, брюки / джинсы</td></tr>
+        <tr><td>la falda / el vestido</td><td>юбка / платье</td></tr>
+        <tr><td>la chaqueta / el abrigo</td><td>куртка / пальто (плащ)</td></tr>
+        <tr><td>los zapatos / las zapatillas</td><td>туфли, ботинки / кроссовки</td></tr>
+        <tr><td>las botas / las sandalias</td><td>сапоги / сандалии, босоножки</td></tr>
+        <tr><td>los calcetines</td><td>носки</td></tr>
+        <tr><td>el sombrero / la gorra</td><td>шляпа / кепка</td></tr>
+        <tr><td>la bufanda / los guantes</td><td>шарф / перчатки</td></tr>
+        <tr><td>el bañador</td><td>купальник, плавки</td></tr>
+      </table>
+
+      <h3>Цвета (Los colores)</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>rojo / amarillo / azul</td><td>красный / жёлтый / синий</td></tr>
+        <tr><td>verde / negro / blanco</td><td>зелёный / чёрный / белый</td></tr>
+        <tr><td>gris / marrón / naranja / rosa</td><td>серый / коричневый / оранжевый / розовый</td></tr>
+      </table>
+      <div class="rule-box">
+        <strong>💡 Правило цветов:</strong><br>
+        Цвета изменяются по роду и числу, как прилагательные: <i>el coche rojo</i> (красная машина), <i>la casa roja</i> (красный дом).<br>
+        НО! Цвета <strong>naranja</strong> (оранжевый) и <strong>rosa</strong> (розовый) не меняют букву 'a' на 'o': <i>el coche naranja, la casa naranja</i>.
+      </div>
+    </div>
+  </div>
+
+  <!-- TIME -->
+  <div id="time" class="anchor-target">
+    <div class="section-label">Тема 7</div>
+    <h2>⏳ Время и Календарь</h2>
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Дни недели и Месяцы (С маленькой буквы!)</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>lunes, martes, miércoles</td><td>понедельник, вторник, среда</td></tr>
+        <tr><td>jueves, viernes</td><td>четверг, пятница</td></tr>
+        <tr><td>sábado, domingo</td><td>суббота, воскресенье</td></tr>
+        <tr><td>el fin de semana</td><td>выходные (конец недели)</td></tr>
+        <tr><td>enero, febrero, marzo...</td><td>январь, февраль, март...</td></tr>
+      </table>
+
+      <h3>Время и сезоны</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>hoy / mañana / ayer</td><td>сегодня / завтра / вчера</td></tr>
+        <tr><td>la mañana / la tarde / la noche</td><td>утро / день / ночь (вечер)</td></tr>
+        <tr><td>la primavera / el verano</td><td>весна / лето</td></tr>
+        <tr><td>el otoño / el invierno</td><td>осень / зима</td></tr>
+        <tr><td>la hora / el minuto / el segundo</td><td>час / минута / секунда</td></tr>
+        <tr><td>el día / la semana / el mes / el año</td><td>день / неделя / месяц / год</td></tr>
+      </table>
+
+      <h3>Фразы о времени</h3>
+      <div class="phrase-box">
+        <p><strong>¿Qué hora es?</strong> <em>Который час?</em></p>
+        <p><strong>Es la una.</strong> <em>Час дня/ночи. (Для 1 часа - ед.ч.)</em></p>
+        <p><strong>Son las dos / Son las cinco.</strong> <em>Два часа / Пять часов. (Для остальных - мн.ч.)</em></p>
+        <p><strong>Son las tres y media.</strong> <em>Три с половиной (15:30).</em></p>
+        <p><strong>Son las cuatro menos cuarto.</strong> <em>Без четверти четыре (15:45).</em></p>
+        <p><strong>¿A qué hora empieza la clase?</strong> <em>Во сколько начинается урок?</em></p>
+        <p><strong>A las nueve de la mañana.</strong> <em>В 9 утра.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADJECTIVES -->
+  <div id="adjectives" class="anchor-target">
+    <div class="section-label">Тема 8</div>
+    <h2>✨ Базовые прилагательные</h2>
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Как описать предмет (Противоположности)</h3>
+      <table class="conj-table">
+        <tr><th>Испанский</th><th>Русский</th></tr>
+        <tr><td>bueno - malo</td><td>хороший - плохой</td></tr>
+        <tr><td>grande - pequeño</td><td>большой - маленький</td></tr>
+        <tr><td>nuevo - viejo</td><td>новый - старый</td></tr>
+        <tr><td>bonito - feo</td><td>красивый - некрасивый</td></tr>
+        <tr><td>caro - barato</td><td>дорогой - дешевый</td></tr>
+        <tr><td>fácil - difícil</td><td>легкий - сложный</td></tr>
+        <tr><td>frío - caliente</td><td>холодный - горячий</td></tr>
+        <tr><td>abierto - cerrado</td><td>открытый - закрытый</td></tr>
+        <tr><td>limpio - sucio</td><td>чистый - грязный</td></tr>
+        <tr><td>rápido - lento</td><td>быстрый - медленный</td></tr>
+        <tr><td>rico - pobre</td><td>богатый - бедный (про еду rico = вкусный!)</td></tr>
+      </table>
+    </div>
+  </div>
+
 </div>
+
 </body>
 </html>
