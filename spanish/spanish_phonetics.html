@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанский А1: Фонетика и Правила чтения — AG Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946; --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280; --card: #ffffff; --border: #e5e0d5; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+  
+  .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; position: relative; z-index: 2; }
+  .hero h1 em { color: var(--gold); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; position: relative; z-index: 2; }
+  .hero::before { content: 'HOLA'; position: absolute; right: 20px; top: -20px; font-size: 130px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; z-index: 1; pointer-events: none;}
+  
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  
+  .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 48px 0 20px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+  h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
+
+  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-bottom: 16px; position: relative; }
+  .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--accent); }
+  .theory-card h3 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 16px; color: var(--ink); }
+  
+  .conj-table { width: 100%; border-collapse: collapse; margin: 10px 0 24px; font-size: 15px; }
+  .conj-table th, .conj-table td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; }
+  .conj-table th { background: #f9fafb; font-weight: 600; color: var(--ink); }
+  .conj-table td:first-child { font-weight: 700; color: var(--accent); font-family: 'DM Mono', monospace; font-size: 18px; width: 25%; text-align: center;}
+  
+  .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
+  .rule-box > strong:first-child { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+  .toc a:hover { background: var(--accent); color: white; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">🇪🇸 Фонетика · Уровень A1</div>
+  <h1>Правила чтения<br><em>Как звучать круто</em></h1>
+  <p>Испанский язык читается ровно так, как пишется. Освой эти 5 правил, и ты сможешь прочесть вслух любую книгу, даже не зная перевода!</p>
+</div>
+
+<div class="container">
+  <nav class="toc">
+    <a href="../index.html">← На главную</a>
+    <a href="#vowels">Гласные</a>
+    <a href="#consonants">Хитрые согласные</a>
+    <a href="#stress">Ударение</a>
+  </nav>
+
+  <!-- VOWELS -->
+  <div id="vowels">
+    <div class="section-label">Золотое правило</div>
+    <h2>Чёткие гласные</h2>
+    <div class="theory-card">
+      <div class="stripe" style="background: var(--gold);"></div>
+      <p>В русском языке безударная "О" читается как "А" (м<u>о</u>л<u>о</u>к<u>о</u> -> м[а]л[а]ко). <strong>В испанском так делать КАТЕГОРИЧЕСКИ НЕЛЬЗЯ!</strong></p>
+      <p>Все гласные (A, E, I, O, U) всегда читаются чётко и полнозвучно, независимо от того, падает на них ударение или нет.</p>
+      <div class="rule-box">
+        <strong>⚠️ Пример ошибки:</strong><br>
+        Слово <strong>loco</strong> (сумасшедший). Если прочитаешь как <i>[лОка]</i>, испанец услышит <strong>loca</strong> (сумасшедшая девочка). Читай чётко: <i>[лОкО]</i>!
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSONANTS -->
+  <div id="consonants">
+    <div class="section-label">Буквы с сюрпризом</div>
+    <h2>Хитрые согласные</h2>
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <table class="conj-table">
+        <tr><th>Буква</th><th>Как читается?</th><th>Примеры</th></tr>
+        <tr>
+          <td>H h</td>
+          <td><strong>ВСЕГДА НЕМАЯ!</strong> Никогда не читается.</td>
+          <td><strong>h</strong>ola [Ола] (привет)<br><strong>h</strong>otel [отЭль] (отель)</td>
+        </tr>
+        <tr>
+          <td>J j</td>
+          <td>Как русская жесткая <strong>[Х]</strong></td>
+          <td><strong>j</strong>amón [хамон]<br><strong>j</strong>efe [хЕфэ] (босс)</td>
+        </tr>
+        <tr>
+          <td>LL ll</td>
+          <td>Как русская <strong>[Й]</strong> (или мягкая [ДЖ] в Аргентине)</td>
+          <td><strong>ll</strong>amar [ямар] (звонить)<br>pae<strong>ll</strong>a [паЭйя]</td>
+        </tr>
+        <tr>
+          <td>Ñ ñ</td>
+          <td>Как мягкая <strong>[НЬ]</strong></td>
+          <td>Espa<strong>ñ</strong>a [эспаНЬя]<br>ni<strong>ñ</strong>o [ниНЬо]</td>
+        </tr>
+        <tr>
+          <td>V v <br> B b</td>
+          <td>Обе читаются одинаково! Как нечто среднее между <strong>[Б]</strong> и <strong>[В]</strong> (губы не смыкаются до конца).</td>
+          <td><strong>v</strong>ida [Бида] (жизнь)<br><strong>b</strong>eso [Бэсо] (поцелуй)</td>
+        </tr>
+        <tr>
+          <td>Z z</td>
+          <td>Межзубная <strong>[С]</strong> (как английское th)</td>
+          <td><strong>z</strong>apato [сапато]<br><strong>z</strong>orro [сорро]</td>
+        </tr>
+      </table>
+
+      <h3 style="margin-top: 30px;">Буквы-хамелеоны (C и G)</h3>
+      <p>Эти две буквы меняют свой звук в зависимости от того, какая гласная стоит после них.</p>
+      <table class="conj-table">
+        <tr><th>Слоги</th><th>Звук</th><th>Пример</th></tr>
+        <tr><td><strong>ca, co, cu</strong></td><td>Твердо: <strong>[К]</strong></td><td><strong>c</strong>asa [Каса] (дом)</td></tr>
+        <tr><td><strong>ce, ci</strong></td><td>Межзубно: <strong>[С/TH]</strong></td><td><strong>c</strong>ero [Сэро] (ноль)</td></tr>
+        <tr><td><strong>ga, go, gu</strong></td><td>Твердо: <strong>[Г]</strong></td><td><strong>g</strong>ato [Гато] (кот)</td></tr>
+        <tr><td><strong>ge, gi</strong></td><td>Мягко: <strong>[Х]</strong></td><td><strong>g</strong>ente [Хэнтэ] (люди)</td></tr>
+      </table>
+
+      <h3 style="margin-top: 30px;">Секретная связка (QUE, QUI, GUE, GUI)</h3>
+      <p>А как же написать звуки [КЕ], [КИ] или [ГЕ], [ГИ]? Для этого используют букву <strong>U</strong>, которая выступает в роли "щита" и <strong>не читается</strong>!</p>
+      <table class="conj-table">
+        <tr><th>Слоги</th><th>Звук</th><th>Пример (U не читаем!)</th></tr>
+        <tr><td><strong>que, qui</strong></td><td><strong>[КЕ], [КИ]</strong></td><td><strong>que</strong>so [КЭсо] (сыр)<br>a<strong>qui</strong> [аКИ] (здесь)</td></tr>
+        <tr><td><strong>gue, gui</strong></td><td><strong>[ГЕ], [ГИ]</strong></td><td><strong>gui</strong>tarra [ГИтарра]<br><strong>gue</strong>rra [ГЭрра] (война)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- STRESS -->
+  <div id="stress">
+    <div class="section-label">Ритм языка</div>
+    <h2>Ударение (Acento)</h2>
+    <div class="theory-card">
+      <div class="stripe" style="background: var(--teal);"></div>
+      <p>В испанском всего <strong>два правила ударения</strong>. Если слово нарушает эти правила — на нём ставят графическую палочку (Tilde: á, é, í, ó, ú), чтобы мы знали, как его прочесть!</p>
+      
+      <ol style="margin-left: 20px; line-height: 1.8;">
+        <li><strong>Правило 1:</strong> Если слово оканчивается на <strong>гласную (A,E,I,O,U)</strong> или буквы <strong>N, S</strong> — ударение падает на <strong>ПРЕДПОСЛЕДНИЙ</strong> слог.<br>
+        <i>Примеры: c<strong>A</strong>sa, m<strong>E</strong>sa, traba<strong>J</strong>amos, <strong>C</strong>omen.</i></li>
+        <br>
+        <li><strong>Правило 2:</strong> Если слово оканчивается на любую <strong>ДРУГУЮ согласную</strong> (кроме N, S) — ударение падает на <strong>ПОСЛЕДНИЙ</strong> слог.<br>
+        <i>Примеры: ciud<strong>A</strong>d, ho<strong>T</strong>el, habl<strong>A</strong>r, re<strong>L</strong>oj.</i></li>
+      </ol>
+
+      <div class="rule-box">
+        <strong>💡 А что если графическое ударение стоит?</strong><br>
+        Тогда забудь про правила и просто лупи голосом туда, где стоит палочка! Она главнее правил.<br>
+        <i>Примеры: m<strong>É</strong>dico (врач), canci<strong>Ó</strong>n (песня), <strong>É</strong>l (он).</i>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанский А1: Аудирование и Диктант — AG Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946; --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280; --card: #ffffff; --border: #e5e0d5; --correct: #2a9d8f; --wrong: #e63946; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+  
+  .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; position: relative; z-index: 2; }
+  .hero h1 em { color: var(--teal); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; position: relative; z-index: 2; }
+  .hero::before { content: 'ESCUCHA'; position: absolute; right: -20px; top: 10px; font-size: 100px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; z-index: 1; pointer-events: none;}
+  
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  
+  .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 48px 0 20px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+  h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
+
+  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 16px; position: relative; }
+  .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--teal); }
+  .theory-card h3 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 16px; color: var(--ink); }
+  
+  .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
+
+  .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+  .toc a:hover { background: var(--accent); color: white; }
+
+  .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0; border: 1px solid var(--border); }
+  .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+  .dictation-text { font-size: 18px; line-height: 2; color: var(--ink); padding: 24px; background: #fafafa; border: 1px solid var(--border); border-radius: 12px; }
+  .blank-input { border: none; border-bottom: 2px solid var(--muted); background: transparent; font-family: 'DM Mono', monospace; font-size: 16px; color: var(--accent); text-align: center; outline: none; width: 120px; transition: all 0.2s; padding: 2px 4px; }
+  .blank-input:focus { border-bottom-color: var(--accent); }
+  .blank-input.correct { border-bottom-color: var(--correct); color: var(--correct); }
+  .blank-input.wrong { border-bottom-color: var(--wrong); color: var(--wrong); }
+  
+  .check-btn { background: var(--ink); color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 12px; cursor: pointer; font-family: 'Unbounded', sans-serif; font-weight: 600; margin-top: 20px; display: inline-block; transition: transform 0.2s; }
+  .check-btn:hover { background: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">🇪🇸 Аудирование · Уровень A1</div>
+  <h1>Интерактивный<br><em>Диктант</em></h1>
+  <p>Учимся понимать испанскую речь на слух. Включай аудио и заполняй пропуски в тексте.</p>
+</div>
+
+<div class="container">
+  <nav class="toc">
+    <a href="../index.html">← На главную</a>
+  </nav>
+
+  <div class="section-label">Задание 1</div>
+  <h2>Слушай и вписывай</h2>
+  <div class="theory-card">
+    <div class="stripe" style="background: var(--gold);"></div>
+    <p>В этом задании мы используем видео от <strong>Dreaming Spanish</strong> (самый популярный канал для начинающих). Внимательно слушай, как Пабло (носитель из Испании) произносит слова, и вписывай то, что услышишь, в пропуски (с маленькой буквы).</p>
+    
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/oK2w9K7q8Cg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="rule-box">
+      <strong>💡 Подсказка:</strong><br>
+      Если ты забыл, как пишутся слова — обратись к нашему разделу "Фонетика"! Испанский читается так же, как пишется.
+    </div>
+
+    <h3>Заполни пропуски:</h3>
+    <div class="dictation-text">
+      ¡Hola! Me <input type="text" class="blank-input" data-answer="llamo"> Pablo. <br><br>
+      Yo <input type="text" class="blank-input" data-answer="soy"> de España. <br><br>
+      Y <input type="text" class="blank-input" data-answer="vivo"> en España también (тоже). <br><br>
+      Tengo treinta y seis <input type="text" class="blank-input" data-answer="años">. <br><br>
+      Me gusta mucho <input type="text" class="blank-input" data-answer="hablar"> español.
+    </div>
+
+    <button class="check-btn" onclick="checkAll()">Проверить весь текст</button>
+    <p id="feedback-msg" style="margin-top: 10px; font-weight: 500; font-size: 15px;"></p>
+  </div>
+
+</div>
+
+<script>
+  function normalize(s){ return s.toLowerCase().replace(/\s+/g,'').trim(); }
+  
+  function checkAll() {
+    let inputs = document.querySelectorAll('.blank-input');
+    let correctCount = 0;
+    
+    inputs.forEach(input => {
+      const userAns = normalize(input.value);
+      const correctAns = normalize(input.dataset.answer);
+      
+      input.classList.remove('correct', 'wrong');
+      if (userAns === correctAns && userAns !== '') {
+        input.classList.add('correct');
+        correctCount++;
+      } else {
+        input.classList.add('wrong');
+      }
+    });
+
+    const msg = document.getElementById('feedback-msg');
+    if (correctCount === inputs.length) {
+      msg.style.color = 'var(--correct)';
+      msg.textContent = '¡Excelente! Все слова услышаны и написаны верно! 🎉';
+    } else {
+      msg.style.color = 'var(--wrong)';
+      msg.textContent = `Правильно ${correctCount} из ${inputs.length}. Попробуй послушать еще раз!`;
+    }
+  }
+
+  // Submit on Enter
+  document.querySelectorAll('.blank-input').forEach(input => {
+    input.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        checkAll();
+      }
+    });
+  });
+</script>
+</body>
+</html>
