@@ -32,6 +32,7 @@
   
   .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
   .rule-box > strong:first-child { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .rule-box strong:not(:first-child) { display: inline; color: inherit; font-weight: 700; text-transform: none; letter-spacing: normal; font-size: inherit; margin-bottom: 0; }
 
   .conj-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
   .conj-table th, .conj-table td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; }
@@ -70,7 +71,6 @@
   .word-bank { display: flex; flex-wrap: wrap; gap: 8px; min-height: 40px; }
   .draggable-word { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 15px; font-weight: 500; cursor: grab; user-select: none; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: transform 0.1s, box-shadow 0.1s; }
   .draggable-word:active { cursor: grabbing; transform: scale(0.95); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-  .draggable-word.dragging { opacity: 0.5; }
 
   /* 3. MULTIPLE CHOICE (Buttons) */
   .mcq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
@@ -89,8 +89,8 @@
   .check-btn { background: var(--ink); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background .2s; font-weight: 600; margin-top: 16px; }
   .check-btn:hover { background: #2d2d4e; }
 
-  .progress-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; margin-top: 24px; }
-  .progress-bar-wrap { background: #e5e7eb; border-radius: 10px; height: 6px; margin: 6px 0 0; overflow: hidden; }
+  .progress-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; margin-top: 24px; position: sticky; top: 20px; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.05);}
+  .progress-bar-wrap { background: #e5e7eb; border-radius: 10px; height: 10px; margin: 6px 0 0; overflow: hidden; }
   .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 10px; width: 0%; transition: width .4s ease; }
 </style>
 </head>
@@ -99,22 +99,19 @@
 <div class="hero">
   <div class="label">🇪🇸 Урок 6 · Грамматика A1</div>
   <h1>Вопросы и<br><em>Порядок слов</em></h1>
-  <p>Как спросить «Где?», «Когда?» и «Почему?». Учимся собирать испанские предложения правильно (без рунглиша).</p>
-  <div class="badges">
-    <span class="badge">Вопросительные слова</span>
-    <span class="badge">Порядок слов (SVO)</span>
-    <span class="badge">Интерактивный тренажер</span>
-  </div>
+  <p>Учимся строить испанские предложения. Где ставить вопросительные слова, как использовать прилагательные и почему порядок слов имеет значение.</p>
 </div>
 
 <div class="container">
 
   <nav class="toc">
-    <a href="spanish_intro.html">← Введение</a>
+    <a href="../index.html">← На главную</a>
     <a href="spanish_tener.html">← Урок 5</a>
     <a href="#theory">📖 Теория</a>
-    <a href="#exercises-mcq">🎯 Тесты</a>
-    <a href="#exercises-drag">🎯 Пазлы (Duolingo)</a>
+    <a href="#exercises-mcq">🎯 Выбор ответа</a>
+    <a href="#exercises-dropdown">🎯 Подстановка</a>
+    <a href="#exercises-drag">🎯 Конструктор фраз</a>
+    <a href="#exercises-audio">🎯 Аудио-диктант</a>
   </nav>
 
   <!-- THEORY -->
@@ -124,8 +121,8 @@
 
     <div class="theory-card">
       <div class="stripe"></div>
-      <h3>1. Перевернутые вопросы (¿?)</h3>
-      <p>Испанцы настолько эмоциональны, что им нужно с самого начала предложения знать, с какой интонацией его читать! Поэтому перед вопросом всегда ставится <strong>перевёрнутый вопросительный знак (¿)</strong>, а перед восклицанием — <strong>(¡)</strong>.</p>
+      <h3>1. Вопросы (¿?)</h3>
+      <p>Перед вопросом всегда ставится <strong>перевёрнутый вопросительный знак (¿)</strong>, а перед восклицанием — <strong>(¡)</strong>.</p>
       
       <table class="conj-table">
         <tr><th>Слово</th><th>Перевод</th><th>Пример</th></tr>
@@ -138,39 +135,46 @@
         <tr><td>¿Cuánto?</td><td>Сколько?</td><td>¿Cuánto cuesta? (Сколько стоит?)</td></tr>
       </table>
       <div class="rule-box">
-        <strong>💡 Важно про ударения:</strong><br>
-        Все вопросительные слова <strong>всегда</strong> пишутся с графическим ударением (Tilde): <i>qué, dónde, cómo</i>. Если ударения нет (<i>que, donde, como</i>), то они превращаются в союзы: "что", "где", "как" (внутри обычного предложения).
+        <strong>💡 Правило ударений:</strong><br>
+        Все вопросительные слова <strong>всегда</strong> пишутся с графическим ударением (Tilde): <i>qué, dónde, cómo</i>. Если ударения нет, то они превращаются в союзы: "что", "где", "как" внутри обычного предложения.
       </div>
     </div>
 
     <div class="theory-card gold">
       <div class="stripe"></div>
       <h3>2. Порядок слов (Прилагательные в конце!)</h3>
-      <p>В русском языке мы говорим "Красная машина". Прилагательное стоит ПЕРЕД существительным. В испанском всё наоборот: сначала предмет, потом его описание. <strong>Машина красная.</strong></p>
+      <p>В русском языке мы говорим "Красная машина" (сначала признак, потом предмет). В испанском всё наоборот: <strong>Машина красная.</strong></p>
       <ul style="margin-left: 20px; line-height: 1.8;">
         <li><i>El coche rojo</i> (Машина красная)</li>
         <li><i>La chica guapa</i> (Девушка красивая)</li>
         <li><i>Un libro interesante</i> (Книга интересная)</li>
       </ul>
-      <p><strong>Порядок в обычном предложении:</strong> Кто (S) + Что делает (V) + С чем/Где (O).<br>
+      <p><strong>Порядок в утверждении:</strong> Кто (Субъект) + Что делает (Глагол) + Детали (Объект/Место).<br>
       <i>Yo como una manzana (Я ем яблоко).</i></p>
-      <p><strong>Порядок в вопросе:</strong> Вопросительное слово + Глагол + Кто (если нужен).<br>
+      <p><strong>Порядок в вопросе:</strong> Вопросительное слово + Глагол + Кто.<br>
       <i>¿Dónde vive María? (Где живёт Мария?)</i></p>
     </div>
   </div>
 
+  <div class="progress-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <span style="font-weight:600;font-size:15px;">Твой прогресс</span>
+      <span class="score-display" id="scoreText">0 / 23 правильно</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+
   <!-- EXERCISES -->
-  <div class="section-label">Новые интерактивные форматы</div>
+  <div class="section-label">Практика</div>
   <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">
-    Давай потренируем разные механики: тесты, пазлы и аудирование!
+    Отработаем теорию на большой подборке заданий.
   </p>
 
   <!-- BLOCK 1: MULTIPLE CHOICE -->
   <div id="exercises-mcq" class="exercise-set">
     <div class="exercise-set-header">
       <div class="difficulty-dot easy"></div>
-      <h3>Блок 1: Выбери правильный перевод</h3>
-      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Multiple Choice</span>
+      <h3>Блок 1: Выбор перевода</h3>
     </div>
     <div class="exercise-list">
       
@@ -198,6 +202,54 @@
         <div class="feedback"></div>
       </div>
 
+      <div class="exercise-item mcq-question" data-answer="1">
+        <div class="ex-problem">3. Как спросить: "Почему ты здесь?"</div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">¿Por qué estás aquí?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">¿Qué estás aquí?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">¿Dónde estás aquí?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">¿Cómo estás aquí?</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item mcq-question" data-answer="4">
+        <div class="ex-problem">4. Как спросить: "Сколько это стоит?"</div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">¿Cómo cuesta?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">¿Qué cuesta?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">¿Cuándo cuesta?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">¿Cuánto cuesta?</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item mcq-question" data-answer="2">
+        <div class="ex-problem">5. "Красная машина" — это...</div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">El rojo coche</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">El coche rojo</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">La coche roja</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">La roja coche</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item mcq-question" data-answer="2">
+        <div class="ex-problem">6. "Интересная книга" — это...</div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">Un interesante libro</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">Un libro interesante</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">Una libro interesante</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">Interesante un libro</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
     </div>
   </div>
 
@@ -205,14 +257,13 @@
   <div id="exercises-dropdown" class="exercise-set">
     <div class="exercise-set-header">
       <div class="difficulty-dot medium"></div>
-      <h3>Блок 2: Вставь вопросительное слово</h3>
-      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Dropdown</span>
+      <h3>Блок 2: Подстановка</h3>
     </div>
     <div class="exercise-list">
       
       <div class="exercise-item dropdown-question">
         <div class="ex-problem">
-          3. ¿
+          7. ¿
           <select class="inline-select" data-answer="qué">
             <option value="" disabled selected>выбери</option>
             <option value="dónde">dónde</option>
@@ -227,7 +278,7 @@
 
       <div class="exercise-item dropdown-question">
         <div class="ex-problem">
-          4. ¿
+          8. ¿
           <select class="inline-select" data-answer="por qué">
             <option value="" disabled selected>выбери</option>
             <option value="quién">quién</option>
@@ -240,6 +291,66 @@
         <div class="feedback"></div>
       </div>
 
+      <div class="exercise-item dropdown-question">
+        <div class="ex-problem">
+          9. ¿De
+          <select class="inline-select" data-answer="dónde">
+            <option value="" disabled selected>выбери</option>
+            <option value="qué">qué</option>
+            <option value="dónde">dónde</option>
+            <option value="cuándo">cuándo</option>
+          </select>
+          eres? (Откуда ты родом?)
+        </div>
+        <button class="check-btn" onclick="checkDropdown(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item dropdown-question">
+        <div class="ex-problem">
+          10. ¿
+          <select class="inline-select" data-answer="quién">
+            <option value="" disabled selected>выбери</option>
+            <option value="quién">quién</option>
+            <option value="qué">qué</option>
+            <option value="cómo">cómo</option>
+          </select>
+          es él? - Он мой брат. (Кто он?)
+        </div>
+        <button class="check-btn" onclick="checkDropdown(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item dropdown-question">
+        <div class="ex-problem">
+          11. ¿
+          <select class="inline-select" data-answer="cómo">
+            <option value="" disabled selected>выбери</option>
+            <option value="cómo">cómo</option>
+            <option value="cuánto">cuánto</option>
+            <option value="qué">qué</option>
+          </select>
+          estás hoy? (Как ты сегодня?)
+        </div>
+        <button class="check-btn" onclick="checkDropdown(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item dropdown-question">
+        <div class="ex-problem">
+          12. ¿
+          <select class="inline-select" data-answer="cuándo">
+            <option value="" disabled selected>выбери</option>
+            <option value="cuándo">cuándo</option>
+            <option value="dónde">dónde</option>
+            <option value="por qué">por qué</option>
+          </select>
+          trabajas? - Утром. (Когда ты работаешь?)
+        </div>
+        <button class="check-btn" onclick="checkDropdown(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
     </div>
   </div>
 
@@ -247,13 +358,12 @@
   <div id="exercises-drag" class="exercise-set">
     <div class="exercise-set-header">
       <div class="difficulty-dot hard"></div>
-      <h3>Блок 3: Собери предложение (Механика Duolingo)</h3>
-      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Кликай по словам по порядку</span>
+      <h3>Блок 3: Собери предложение</h3>
     </div>
     <div class="exercise-list">
       
       <div class="exercise-item builder-question" data-answer="Yo tengo un coche rojo">
-        <div class="ex-problem">5. Я имею красную машину. (У меня есть красная машина)</div>
+        <div class="ex-problem">13. У меня есть красная машина.</div>
         <div class="word-builder-area">
           <div class="drop-zone" id="zone1"></div>
           <div class="word-bank" id="bank1">
@@ -269,7 +379,7 @@
       </div>
 
       <div class="exercise-item builder-question" data-answer="¿ Dónde vive María ?">
-        <div class="ex-problem">6. Где живет Мария? (Соблюдай порядок слов в вопросе!)</div>
+        <div class="ex-problem">14. Где живет Мария?</div>
         <div class="word-builder-area">
           <div class="drop-zone" id="zone2"></div>
           <div class="word-bank" id="bank2">
@@ -284,6 +394,76 @@
         <div class="feedback"></div>
       </div>
 
+      <div class="exercise-item builder-question" data-answer="El museo es grande y viejo">
+        <div class="ex-problem">15. Музей большой и старый.</div>
+        <div class="word-builder-area">
+          <div class="drop-zone" id="zone3"></div>
+          <div class="word-bank" id="bank3">
+            <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">viejo</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">es</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">grande</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">El</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">museo</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">y</div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkBuilder(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item builder-question" data-answer="¿ Cuándo trabajas en el banco ?">
+        <div class="ex-problem">16. Когда ты работаешь в банке?</div>
+        <div class="word-builder-area">
+          <div class="drop-zone" id="zone4"></div>
+          <div class="word-bank" id="bank4">
+            <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">trabajas</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">¿</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">el</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">en</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">banco</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">Cuándo</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">?</div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkBuilder(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item builder-question" data-answer="Mi hermano es un estudiante bueno">
+        <div class="ex-problem">17. Мой брат — хороший студент.</div>
+        <div class="word-builder-area">
+          <div class="drop-zone" id="zone5"></div>
+          <div class="word-bank" id="bank5">
+            <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">bueno</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">Mi</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">estudiante</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">es</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">un</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">hermano</div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkBuilder(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item builder-question" data-answer="¿ Por qué no comes carne ?">
+        <div class="ex-problem">18. Почему ты не ешь мясо?</div>
+        <div class="word-builder-area">
+          <div class="drop-zone" id="zone6"></div>
+          <div class="word-bank" id="bank6">
+            <div class="draggable-word" onclick="toggleWord(this, 'zone6', 'bank6')">carne</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone6', 'bank6')">¿</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone6', 'bank6')">no</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone6', 'bank6')">Por</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone6', 'bank6')">comes</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone6', 'bank6')">qué</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone6', 'bank6')">?</div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkBuilder(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
     </div>
   </div>
 
@@ -291,14 +471,13 @@
   <div id="exercises-audio" class="exercise-set">
     <div class="exercise-set-header">
       <div class="difficulty-dot teal"></div>
-      <h3 style="color: var(--teal);">Блок 4: Аудио-Квиз (Что ты слышишь?)</h3>
-      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Нажми на динамик!</span>
+      <h3 style="color: var(--teal);">Блок 4: Аудио-диктант</h3>
     </div>
     <div class="exercise-list">
       
       <div class="exercise-item mcq-question" data-answer="3">
         <div class="ex-problem" style="display: flex; align-items: center; gap: 16px;">
-          7. Послушай слово и выбери, как оно пишется:
+          19. Какое слово произнесено?
           <button class="audio-btn" onclick="speakSpanish('¿Quién?')">🔊</button>
         </div>
         <div class="mcq-grid">
@@ -311,22 +490,74 @@
         <div class="feedback"></div>
       </div>
 
-    </div>
-  </div>
+      <div class="exercise-item mcq-question" data-answer="1">
+        <div class="ex-problem" style="display: flex; align-items: center; gap: 16px;">
+          20. Какое слово произнесено?
+          <button class="audio-btn" onclick="speakSpanish('¿Cuándo?')">🔊</button>
+        </div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">¿Cuándo?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">¿Cuánto?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">¿Kuando?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">¿Cómdo?</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
 
-  <div class="progress-card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <span style="font-weight:600;font-size:15px;">Твой прогресс в Уроке 6</span>
-      <span class="score-display" id="scoreText">0 / 7 правильно</span>
+      <div class="exercise-item mcq-question" data-answer="2">
+        <div class="ex-problem" style="display: flex; align-items: center; gap: 16px;">
+          21. Какое слово произнесено?
+          <button class="audio-btn" onclick="speakSpanish('¿Cómo?')">🔊</button>
+        </div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">¿Qué?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">¿Cómo?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">¿Dónde?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">¿Kómo?</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item mcq-question" data-answer="4">
+        <div class="ex-problem" style="display: flex; align-items: center; gap: 16px;">
+          22. Какое слово произнесено?
+          <button class="audio-btn" onclick="speakSpanish('¿Por qué?')">🔊</button>
+        </div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">¿Porque?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">¿Porke?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">¿Porqué?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">¿Por qué?</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item mcq-question" data-answer="1">
+        <div class="ex-problem" style="display: flex; align-items: center; gap: 16px;">
+          23. Какое слово произнесено?
+          <button class="audio-btn" onclick="speakSpanish('¿Dónde?')">🔊</button>
+        </div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">¿Dónde?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">¿Donde?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">¿Dande?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">¿Cuando?</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
     </div>
-    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
   </div>
 
 </div>
 
 <script>
   let correctTotal = 0;
-  const maxTotal = 7;
+  const maxTotal = 23;
   const attemptedItems = new Set();
 
   function updateProgress(exId) {
@@ -342,11 +573,8 @@
   /* MCQ LOGIC */
   function selectMcq(btn, answerVal) {
     const grid = btn.closest('.mcq-grid');
-    // Remove selected from all
     grid.querySelectorAll('.mcq-btn').forEach(b => b.classList.remove('selected'));
-    // Add selected to clicked
     btn.classList.add('selected');
-    // Store value in parent
     grid.dataset.selected = answerVal;
   }
 
@@ -368,7 +596,7 @@
       feedback.className = 'feedback correct';
       feedback.textContent = '✓ Правильно!';
       grid.querySelector('.selected').classList.add('correct');
-      updateProgress(parent); // Using element ref as unique ID
+      updateProgress(parent);
     } else {
       feedback.className = 'feedback wrong';
       feedback.textContent = '✗ Неверно. Попробуй другой вариант.';
@@ -401,12 +629,11 @@
     }
   }
 
-  /* WORD BUILDER (DRAG & DROP / CLICK) LOGIC */
+  /* WORD BUILDER LOGIC */
   function toggleWord(wordEl, zoneId, bankId) {
     const zone = document.getElementById(zoneId);
     const bank = document.getElementById(bankId);
     
-    // If it's in the bank, move to zone. If in zone, move to bank.
     if (wordEl.parentElement.id === bankId) {
       zone.appendChild(wordEl);
     } else {
@@ -420,7 +647,6 @@
     const feedback = parent.querySelector('.feedback');
     const correctAns = parent.dataset.answer;
     
-    // Extract text from words in drop zone
     const words = Array.from(zone.querySelectorAll('.draggable-word')).map(w => w.textContent.trim());
     const userAns = words.join(' ');
 
