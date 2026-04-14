@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ЕГЭ Физика: Постоянный ток — Math Platform</title>
+<title>ЕГЭ Физика: Постоянный ток — Академия А. Гуляева</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script>
   window.MathJax = {
@@ -115,10 +115,38 @@
   .score-display { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
 </style>
-</head>
-<body>
 
-<div class="hero">
+<style>
+  @media print {
+    body { background: white; padding: 0; margin: 0; }
+    .container { width: 100%; max-width: 100%; margin: 0; padding: 0; }
+    .hero { padding: 30px; border-radius: 12px; margin-bottom: 20px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .theory-card { break-inside: avoid; page-break-inside: avoid; margin-bottom: 20px; -webkit-print-color-adjust: exact; print-color-adjust: exact; border: 1px solid #ddd; }
+    .stripe { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .rule-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; break-inside: avoid; }
+    .math-block { -webkit-print-color-adjust: exact; print-color-adjust: exact; break-inside: avoid; }
+    .circuit-diagram { break-inside: avoid; page-break-inside: avoid; }
+    .theory-image { break-inside: avoid; page-break-inside: avoid; max-width: 90%; }
+    h2, h3 { break-after: avoid; page-break-after: avoid; }
+    /* Hide TOC and exercises if they accidentally get matched */
+    .toc, #exercises, .progress-card { display: none !important; }
+  }
+  .print-btn-container { text-align: center; margin: 40px 0; }
+  .print-btn { background: #e63946; color: white; border: none; padding: 16px 32px; font-size: 18px; border-radius: 12px; cursor: pointer; font-family: 'Unbounded', sans-serif; font-weight: 600; box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3); transition: transform 0.2s; }
+  .print-btn:hover { transform: scale(1.05); }
+  @media print { .print-btn-container { display: none !important; } }
+</style>
+
+</head>
+<body style="background: white;">
+
+<div class="print-btn-container">
+  <button class="print-btn" onclick="window.print()">🖨 Сохранить как PDF / Распечатать</button>
+  <p style="margin-top: 12px; color: #666; font-size: 14px;">(В настройках печати убедитесь, что включены «Фоновые изображения» / «Background graphics»)</p>
+</div>
+
+<div class="container" style="max-width: 900px; margin: 0 auto; padding: 20px;">
+  <div class="hero">
   <div class="label">Репетиторское занятие · Физика · ЕГЭ</div>
   <h1>Постоянный<br><em>ток</em></h1>
   <p>Электродинамика: Сила тока, Закон Ома, ЭДС, соединение проводников, работа и мощность.</p>
@@ -129,17 +157,7 @@
   </div>
 </div>
 
-<div class="container">
 
-  <nav class="toc">
-    <span>Навигация</span>
-    <a href="#theory">📖 Теория</a>
-    <a href="#circuits">🔌 Схемы соединения</a>
-    <a href="#examples">✏️ Разбор задач</a>
-    <a href="#exercises">🎯 Практика</a>
-  </nav>
-
-  <!-- ═══ THEORY ═══ -->
   <div id="theory">
     <div class="section-label">Теория</div>
     <h2>Законы постоянного тока</h2>
@@ -149,7 +167,7 @@
       <h3>Что такое электрический ток?</h3>
       <p><strong>Электрический ток</strong> — это направленное движение свободных заряженных частиц (например, электронов в металлах или ионов в растворах солей).</p>
       
-      <img src="images/current_direction.jpg" alt="Направление электрического тока" class="theory-image" />
+      <img src="../images/current_direction.jpg" alt="Направление электрического тока" class="theory-image" />
       <div class="theory-image-caption">Слева: движение положительных зарядов. Справа: движение отрицательных электронов.</div>
 
       <p>Исторически сложилось так, что <strong>за направление тока всегда принимают направление движения положительных зарядов</strong> (от плюса к минусу источника). Даже в металлах, где реально двигаются электроны (от минуса к плюсу), на схемах мы рисуем стрелочку тока наоборот — от «+» к «-».</p>
@@ -181,7 +199,7 @@
       <h3>Сторонние силы и ЭДС</h3>
       <p>Если просто соединить два заряженных шарика проводом, ток быстро прекратится, как только их заряды выровняются. Чтобы ток был <strong>постоянным</strong>, нужен источник (батарейка). Внутри источника заряды нужно перетаскивать против электрического поля — от минуса к плюсу. Для этого нужны <strong>сторонние силы</strong> (химические, механические и т.д.).</p>
       
-      <img src="images/emf_analogy.png" alt="Аналогия со сторонними силами" class="theory-image" />
+      <img src="../images/emf_analogy.png" alt="Аналогия со сторонними силами" class="theory-image" />
       <div class="theory-image-caption">Сторонние силы работают как насос (или люди с вёдрами), поднимая заряды наверх, чтобы они снова могли скатиться вниз по внешней цепи.</div>
 
       <p><strong>Электродвижущая сила (ЭДС)</strong> — это работа этих сторонних сил по перемещению единичного положительного заряда. Обозначается буквой \( \mathcal{E} \).</p>
@@ -192,7 +210,7 @@
       • <strong>Внешним:</strong> Заряды двигаются только под действием электрической силы (различные потребители тока, провода).<br>
       • <strong>Внутренним:</strong> Участок внутри источника тока, где заряды двигаются под действием сторонней и электрической сил.</p>
 
-      <img src="images/external_internal.png" alt="Внешний и внутренний участки цепи" class="theory-image" style="max-width: 80%;" />
+      <img src="../images/external_internal.png" alt="Внешний и внутренний участки цепи" class="theory-image" style="max-width: 80%;" />
       <div class="theory-image-caption">Слева — движение по внешней цепи. Справа — работа сторонних сил внутри источника, перемещающих заряд против кулоновских сил.</div>
     </div>
 
@@ -225,7 +243,7 @@
     </div>
   </div>
 
-  <!-- ═══ CIRCUITS ═══ -->
+  
   <div id="circuits">
     <div class="section-label">Виды соединений</div>
     <h2>Схемы и правила</h2>
@@ -315,194 +333,8 @@
     </div>
   </div>
 
-  <!-- ═══ WORKED EXAMPLES ═══ -->
-  <div id="examples">
-    <div class="section-label">Разборы</div>
-    <h2>Решённые примеры</h2>
-    <div class="example-grid">
-
-      <div class="example-card">
-        <div class="example-header">
-          <span>Пример 1 · Закон Ома для полной цепи</span><span class="tag">Шаг за шагом</span>
-        </div>
-        <div class="example-body">
-          <div class="problem-statement">Батарейка с ЭДС 12 В и внутренним сопротивлением 1 Ом замкнута на резистор с сопротивлением 5 Ом. Какая сила тока в цепи и какое напряжение покажет идеальный вольтметр на резисторе?</div>
-          <div class="step-row">
-            <div class="step-num">1</div>
-            <div class="step-content">Выпишем дано:
-              <div class="step-math">\(\mathcal{E} = 12 \text{ В}, r = 1 \text{ Ом}, R = 5 \text{ Ом}\)</div>
-            </div>
-          </div>
-          <div class="step-row">
-            <div class="step-num">2</div>
-            <div class="step-content">По закону Ома для полной цепи найдём силу тока:
-              <div class="step-math">\(I = \frac{\mathcal{E}}{R + r} = \frac{12}{5 + 1} = \frac{12}{6} = 2 \text{ А}\)</div>
-            </div>
-          </div>
-          <div class="step-row">
-            <div class="step-num">3</div>
-            <div class="step-content">Напряжение на резисторе найдём по закону Ома для участка цепи:
-              <div class="step-math">
-                \(U = I \cdot R = 2 \cdot 5 = 10 \text{ В}\)
-              </div>
-            </div>
-          </div>
-          <div class="rule-box"><strong>Ответ</strong>\(\; I = 2 \text{ А}, U = 10 \text{ В}\)</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ═══ EXERCISES ═══ -->
-  <div id="exercises">
-    <div class="section-label">Задания</div>
-    <h2>Упражнения для занятия</h2>
-    <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">
-      Вводи только числа (или десятичные дроби через точку, например <code>1.5</code>). Без единиц измерения.
-    </p>
-
-    <!-- LEVEL 1 -->
-    <div class="exercise-set">
-      <div class="exercise-set-header">
-        <div class="difficulty-dot easy"></div>
-        <h3>Уровень 1 — Базовые формулы</h3>
-        <span>Основы тока и напряжения</span>
-      </div>
-      <div class="exercise-list">
-
-        <div class="exercise-item">
-          <div class="ex-num">1.</div>
-          <div class="ex-body">
-            <div class="ex-problem">Через поперечное сечение проводника за 5 секунд прошел заряд, равный 15 Кл. Чему равна сила тока в проводнике? (Ответ в А)</div>
-            <div class="answer-box">
-              <input class="answer-input" type="text" placeholder="Ответ" data-answer="3">
-              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
-            </div>
-            <div class="hint-text">Воспользуйся формулой определения силы тока: \( I = \frac{q}{t} \). Раздели 15 на 5.</div>
-            <div class="feedback"></div>
-          </div>
-        </div>
-
-        <div class="exercise-item">
-          <div class="ex-num">2.</div>
-          <div class="ex-body">
-            <div class="ex-problem">К резистору сопротивлением 12 Ом приложили напряжение 36 В. Какова сила тока, протекающего через резистор? (Ответ в А)</div>
-            <div class="answer-box">
-              <input class="answer-input" type="text" placeholder="Ответ" data-answer="3">
-              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-            </div>
-            <div class="feedback"></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- LEVEL 2 -->
-    <div class="exercise-set">
-      <div class="exercise-set-header">
-        <div class="difficulty-dot medium"></div>
-        <h3>Уровень 2 — Цепи и соединения</h3>
-        <span>Смешанное соединение и полная цепь</span>
-      </div>
-      <div class="exercise-list">
-
-        <div class="exercise-item">
-          <div class="ex-num">3.</div>
-          <div class="ex-body">
-            <div class="ex-problem">Два резистора сопротивлениями 6 Ом и 3 Ом соединены параллельно. Каково их общее сопротивление? (Ответ в Ом)</div>
-            <div class="answer-box">
-              <input class="answer-input" type="text" placeholder="Ответ" data-answer="2">
-              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
-            </div>
-            <div class="hint-text">Используй лайфхак для двух резисторов: \( R = \frac{R_1 \cdot R_2}{R_1 + R_2} = \frac{6 \cdot 3}{6 + 3} \).</div>
-            <div class="feedback"></div>
-          </div>
-        </div>
-
-        <div class="exercise-item">
-          <div class="ex-num">4.</div>
-          <div class="ex-body">
-            <div class="ex-problem">Источник тока с ЭДС 24 В и внутренним сопротивлением 2 Ом замкнут на внешнее сопротивление 10 Ом. Какая мощность выделяется на внешнем сопротивлении (резисторе)? (Ответ в Вт)</div>
-            <div class="answer-box">
-              <input class="answer-input" type="text" placeholder="Ответ" data-answer="40">
-              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
-            </div>
-            <div class="hint-text">Сначала найди ток: \( I = \frac{24}{10 + 2} = 2 \text{ А} \). Затем найди мощность, выделяемую на внешнем резисторе: \( P = I^2 R = 2^2 \cdot 10 \).</div>
-            <div class="feedback"></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- PROGRESS -->
-    <div class="progress-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-        <span style="font-weight:600;font-size:15px;">Прогресс занятия</span>
-        <span class="score-display" id="scoreText">0 / 4 правильно</span>
-      </div>
-      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
-    </div>
-  </div>
-
+  
 </div>
 
-<script>
-  let correct = 0;
-  const attempted = new Set();
-  const total = 4;
-
-  function normalize(s){
-    return s.replace(/\s+/g,'').replace(/,/g,'.');
-  }
-  function checkAnswer(btn){
-    const box = btn.closest('.answer-box');
-    const input = box.querySelector('.answer-input');
-    const feedback = btn.closest('.ex-body').querySelector('.feedback');
-    const exNum = btn.closest('.exercise-item').querySelector('.ex-num').textContent.trim();
-    
-    const userAns = normalize(input.value);
-    const correctAns = normalize(input.dataset.answer);
-    
-    const isCorrect = userAns === correctAns && userAns !== '';
-    
-    input.classList.remove('correct','wrong');
-    feedback.classList.remove('correct','wrong');
-    feedback.style.display = 'block';
-    
-    if(isCorrect){
-      input.classList.add('correct');
-      feedback.classList.add('correct');
-      feedback.textContent = '✓ Отлично! Правильный ответ.';
-      if(!attempted.has(exNum)){ 
-        attempted.add(exNum); 
-        correct++; 
-        updateProgress(); 
-      }
-    } else {
-      input.classList.add('wrong');
-      feedback.classList.add('wrong');
-      feedback.textContent = '✗ Ошибка. Проверь вычисления или почитай теорию выше.';
-    }
-  }
-  
-  function toggleHint(btn){
-    const hint = btn.closest('.ex-body').querySelector('.hint-text');
-    hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
-    btn.textContent = hint.style.display === 'block' ? 'Скрыть' : 'Подсказка';
-    if(hint.style.display === 'block' && window.MathJax) MathJax.typesetPromise([hint]);
-  }
-  
-  function updateProgress(){
-    const pct = (correct / total) * 100;
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.getElementById('scoreText').textContent = correct + ' / ' + total + ' правильно';
-  }
-</script>
 </body>
 </html>

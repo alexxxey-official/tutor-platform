@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Испанский А1: Глагол TENER — Math Platform</title>
+<title>Испанский А1: Местоимения и глагол SER — Академия А. Гуляева</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -15,8 +15,9 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
 
+  /* HERO */
   .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
-  .hero::before { content: 'TENER'; position: absolute; right: 20px; top: -20px; font-size: 130px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; }
+  .hero::before { content: 'SER'; position: absolute; right: 20px; top: -20px; font-size: 150px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; }
   .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
   .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; }
   .hero h1 em { color: var(--gold); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
@@ -24,11 +25,13 @@
   .badges { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
   .badge { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,.7); }
 
+  /* LAYOUT */
   .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
   .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 48px 0 20px; }
   .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
   h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
 
+  /* THEORY */
   .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 16px; position: relative; }
   .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--accent); }
   .theory-card.gold .stripe { background: var(--gold); }
@@ -40,11 +43,14 @@
   .rule-box > strong:first-child { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
   .rule-box strong:not(:first-child) { display: inline; color: inherit; font-weight: 700; text-transform: none; letter-spacing: normal; font-size: inherit; margin-bottom: 0; }
 
+  /* TABLES */
   .conj-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
   .conj-table th, .conj-table td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; }
   .conj-table th { background: #f9fafb; font-weight: 600; color: var(--ink); }
-  .conj-table td:first-child { font-weight: 600; color: var(--accent); width: 25%; }
+  .conj-table td:first-child { font-weight: 600; color: var(--accent); width: 40%; }
+  .conj-table td:nth-child(2) { font-family: 'DM Mono', monospace; font-weight: 600; font-size: 16px; color: var(--teal); }
 
+  /* EXERCISES */
   .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
   .exercise-set-header { padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
   .difficulty-dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -68,6 +74,7 @@
   .feedback { display: none; margin-top: 6px; font-size: 13px; font-weight: 500; }
   .feedback.correct { color: var(--correct); } .feedback.wrong { color: var(--wrong); }
 
+  /* TOC */
   .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
   .toc a:hover { background: var(--accent); color: white; }
@@ -80,94 +87,103 @@
 <body>
 
 <div class="hero">
-  <div class="label">🇪🇸 Урок 5 · Грамматика A1</div>
-  <h1>Глагол<br><em>TENER</em></h1>
-  <p>Быть голодным, иметь собаку, указывать возраст и быть должным что-то сделать. Всё это — глагол "ИМЕТЬ".</p>
+  <div class="label">🇪🇸 Урок 1 · Грамматика A1</div>
+  <h1>Местоимения<br>и <em>глагол SER</em></h1>
+  <p>Фундамент испанского языка. Кто мы такие, откуда и кем работаем.</p>
   <div class="badges">
-    <span class="badge">Спряжение TENER</span>
-    <span class="badge">Выражения с TENER</span>
-    <span class="badge">Tener que + infinitivo</span>
+    <span class="badge">Местоимения</span>
+    <span class="badge">Спряжение SER</span>
+    <span class="badge">Базовая лексика</span>
   </div>
 </div>
 
 <div class="container">
 
   <nav class="toc">
-    <a href="spanish_intro.html">← Введение</a>
-    <a href="spanish_verbs.html">← Урок 4</a>
+    <a href="spanish_intro.html">← Назад к Введению</a>
     <a href="#theory">📖 Теория</a>
-    <a href="#exercises-conj">🎯 Блок 1: Спряжение</a>
-    <a href="#exercises-states">🎯 Блок 2: Состояния</a>
-    <a href="#exercises-que">🎯 Блок 3: Должен!</a>
+    <a href="#exercises-pronouns">🎯 Упражнения 1</a>
+    <a href="#exercises-ser">🎯 Упражнения 2</a>
   </nav>
 
   <!-- THEORY -->
   <div id="theory">
     <div class="section-label">Теория</div>
-    <h2>Глагол, который делает всё</h2>
+    <h2>1. Личные местоимения</h2>
 
     <div class="theory-card">
       <div class="stripe"></div>
-      <h3>1. Как он спрягается (Это исключение!)</h3>
-      <p>Глагол <strong>TENER</strong> (иметь) относится к неправильным глаголам (отклоняющимся). В форме "Yo" у него появляется буква <i>g</i> (tengo), а буква <i>e</i> в корне распадается на <i>ie</i> (tienes).</p>
+      <h3>Кто есть кто (Pronombres personales)</h3>
+      <p>В испанском языке местоимения имеют <strong>род</strong> даже во множественном числе!</p>
       
       <table class="conj-table">
-        <tr><th>Местоимение</th><th>TENER (иметь)</th><th>Пример</th></tr>
-        <tr><td>Yo (Я)</td><td>tengo</td><td>(Yo) tengo un perro. (У меня есть собака)</td></tr>
-        <tr><td>Tú (Ты)</td><td>tienes</td><td>¿Tienes un coche? (У тебя есть машина?)</td></tr>
-        <tr><td>Él/Ella/Ud.</td><td>tiene</td><td>Ella tiene dinero. (У нее есть деньги)</td></tr>
-        <tr><td>Nosotros</td><td>tenemos</td><td>Tenemos tiempo. (У нас есть время)</td></tr>
-        <tr><td>Ellos/Uds.</td><td>tienen</td><td>Ellos tienen una casa. (У них есть дом)</td></tr>
+        <tr><th>Местоимение</th><th>Перевод</th><th>Особенности</th></tr>
+        <tr><td>Yo</td><td>Я</td><td></td></tr>
+        <tr><td>Tú</td><td>Ты</td><td>Всегда с ударением (tú). Без ударения tu = твой.</td></tr>
+        <tr><td>Él / Ella / Usted</td><td>Он / Она / Вы (вежливо)</td><td>Usted (Вы на "Вы" к одному человеку) спрягается как он/она.</td></tr>
+        <tr><td>Nosotros / Nosotras</td><td>Мы (муж.) / Мы (жен.)</td><td>Если в группе из 100 женщин есть 1 мужчина, группа становится <i>Nosotros</i>.</td></tr>
+        <tr><td>Vosotros / Vosotras</td><td>Вы (ребята)</td><td>Используется только в Испании. В Латинской Америке говорят <i>Ustedes</i>.</td></tr>
+        <tr><td>Ellos / Ellas / Ustedes</td><td>Они (муж.) / Они (жен.) / Вы (группа)</td><td>Ustedes = Вы ко многим людям с уважением (или просто "вы ребята" в Лат. Америке).</td></tr>
       </table>
+      
     </div>
 
     <div class="theory-card gold">
       <div class="stripe"></div>
-      <h3>2. Возраст и Чувства (Ловушки перевода!)</h3>
-      <p>В русском языке мы говорим "Мне 20 лет", в английском "I am 20". Но в испанском мы <strong>ИМЕЕМ годы</strong>! И мы <strong>ИМЕЕМ</strong> голод, холод и страх. Мы не используем здесь глаголы SER или ESTAR.</p>
-      <ul style="margin-left: 20px; line-height: 1.8;">
-        <li><strong>Tener ... años</strong> (Иметь ... лет): <i>Tengo veinte años</i> (Мне 20 лет).</li>
-        <li><strong>Tener hambre</strong> (Иметь голод): <i>¿Tienes hambre?</i> (Ты голоден?)</li>
-        <li><strong>Tener sed</strong> (Иметь жажду): <i>Tiene sed</i> (Он хочет пить).</li>
-        <li><strong>Tener frío</strong> (Иметь холод): <i>Tenemos frío</i> (Нам холодно).</li>
-        <li><strong>Tener calor</strong> (Иметь жару): <i>Ellos tienen calor</i> (Им жарко).</li>
-        <li><strong>Tener miedo</strong> (Иметь страх): <i>Tengo miedo</i> (Мне страшно / Я боюсь).</li>
-      </ul>
+      <h3>2. Глагол SER (Быть)</h3>
+      <p>В русском языке мы часто пропускаем глагол "быть" в настоящем времени. Мы говорим: "Я студент", "Он умный". В испанском <strong>обязательно</strong> нужен глагол-связка: "Я ЕСТЬ студент", "Он ЕСТЬ умный".</p>
+      <p>Это самый неправильный глагол в языке, его нужно заучить как таблицу умножения:</p>
+      
+      <table class="conj-table">
+        <tr><th>Местоимение</th><th>Глагол SER</th><th>Пример</th></tr>
+        <tr><td>Yo</td><td>soy</td><td>(Yo) soy de Rusia. — Я из России.</td></tr>
+        <tr><td>Tú</td><td>eres</td><td>¿(Tú) eres estudiante? — Ты студент?</td></tr>
+        <tr><td>Él / Ella / Usted</td><td>es</td><td>Ella es profesora. — Она преподаватель.</td></tr>
+        <tr><td>Nosotros / Nosotras</td><td>somos</td><td>Somos amigos. — Мы друзья.</td></tr>
+        <tr><td>Vosotros / Vosotras</td><td>sois</td><td>Sois altos. — Вы высокие.</td></tr>
+        <tr><td>Ellos / Ellas / Ustedes</td><td>son</td><td>Ellos son listos. — Они умные.</td></tr>
+      </table>
+
+      <div class="rule-box">
+        <strong>⚡ Главный лайфхак A1:</strong><br>
+        Испанцы в 90% случаев <strong>не говорят местоимения</strong> (yo, tú, nosotros). Форма глагола (soy, eres, somos) уже кричит о том, КТО совершает действие.<br>
+        Поэтому вместо <i>"Yo soy Alex"</i> говори просто <i>"Soy Alex"</i>.
+      </div>
     </div>
     
     <div class="theory-card teal">
       <div class="stripe"></div>
-      <h3>3. Tener que + инфинитив (Я ДОЛЖЕН)</h3>
-      <p>Если после глагола tener поставить словечко <strong>que</strong>, смысл резко меняется. Теперь это переводится как <strong>«быть должным / нужно что-то сделать»</strong>.</p>
-      <p>После "que" мы ставим обычный глагол в начальной форме (инфинитив, без спряжения!).</p>
-      <div class="rule-box">
-        <strong>⚠️ Сравни:</strong><br>
-        <i>Tengo un libro.</i> — У меня есть книга. (Просто владение).<br>
-        <i>Tengo <strong>que</strong> leer un libro.</i> — Я <strong>должен</strong> прочитать книгу. (Обязательство).<br><br>
-        <i>Tienes que trabajar.</i> — Ты должен работать.
-      </div>
+      <h3>Когда мы используем SER? (Уловка DOCTOR)</h3>
+      <p>В испанском два глагола "быть". Глагол <strong>SER</strong> используется для <strong>постоянных свойств</strong> (которые нельзя легко изменить). Запомни слово <strong>DOCTOR</strong>:</p>
+      <ul style="margin-left: 20px; line-height: 1.8;">
+        <li><strong>D</strong>escription (Описание внешности и характера): <i>Soy alto</i> (Я высокий).</li>
+        <li><strong>O</strong>ccupation (Профессия): <i>Es doctor</i> (Он врач).</li>
+        <li><strong>C</strong>haracteristic (Суть предмета): <i>El hielo es frío</i> (Лёд холодный).</li>
+        <li><strong>T</strong>ime (Время / Дата / День недели): <i>Son las dos</i> (Сейчас 2 часа). <i>Es lunes</i> (Сегодня понедельник).</li>
+        <li><strong>O</strong>rigin (Происхождение, национальность): <i>Soy de Moscú</i> (Я из Москвы). <i>Eres ruso</i> (Ты русский).</li>
+        <li><strong>R</strong>elation (Родственные/социальные связи): <i>Ella es mi hermana</i> (Она моя сестра).</li>
+      </ul>
     </div>
   </div>
 
   <!-- EXERCISES -->
-  <div class="section-label">Большая практика (15 заданий)</div>
+  <div class="section-label">Практика: Тренировка до автоматизма</div>
   <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">
-    Давай закрепим все 3 функции глагола Tener! Пиши глагол маленькими буквами.
+    Введи правильное слово в поле (строчными буквами). Если застрял — жми "Подсказка", я объясню!
   </p>
 
-  <!-- BLOCK 1 -->
-  <div id="exercises-conj" class="exercise-set">
+  <div id="exercises-pronouns" class="exercise-set">
     <div class="exercise-set-header">
       <div class="difficulty-dot easy"></div>
-      <h3>Блок 1: Спряжение TENER (иметь)</h3>
-      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">tengo, tienes, tiene...</span>
+      <h3>Блок 1: Личные местоимения</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Введи местоимение (yo, tú, ella...)</span>
     </div>
     <div class="exercise-list">
       <div class="exercise-item">
         <div class="ex-num">1.</div><div class="ex-body">
-          <div class="ex-problem">Yo ________ un problema. (У меня есть проблема)</div>
+          <div class="ex-problem">Как сказать <b>"Мы"</b>, если речь идет о группе только из девочек?</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tengo">
+            <input class="answer-input" type="text" data-answer="nosotras">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
           </div>
           <div class="feedback"></div>
@@ -175,31 +191,41 @@
       </div>
       <div class="exercise-item">
         <div class="ex-num">2.</div><div class="ex-body">
-          <div class="ex-problem">Tú ________ mucho dinero. (У тебя есть много денег)</div>
+          <div class="ex-problem">Как сказать <b>"Вы" (вежливо одному человеку)</b>?</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tienes">
+            <input class="answer-input" type="text" data-answer="usted">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-            <button class="check-btn" style="background:none; color:var(--muted); border:1px solid #ccc;" onclick="toggleHint(this)">Подсказка</button>
           </div>
-          <div class="hint-text" style="display:none; margin-top:8px;">Для "Tú" глагол меняет гласную: tienes.</div>
           <div class="feedback"></div>
         </div>
       </div>
       <div class="exercise-item">
         <div class="ex-num">3.</div><div class="ex-body">
-          <div class="ex-problem">María ________ un coche nuevo. (У Марии есть новая машина)</div>
+          <div class="ex-problem">Как сказать <b>"Они"</b>, если в группе 5 девушек и 1 парень?</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tiene">
+            <input class="answer-input" type="text" data-answer="ellos">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+            <button class="check-btn" style="background:none; color:var(--muted); border:1px solid #ccc;" onclick="toggleHint(this)">Подсказка</button>
           </div>
+          <div class="hint-text" style="display:none; margin-top:8px;">Даже один мужчина превращает всю группу в мужской род (ellos)!</div>
           <div class="feedback"></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="exercises-ser" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot medium"></div>
+      <h3>Блок 2: Спряжение глагола SER</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Вставь правильную форму SER</span>
+    </div>
+    <div class="exercise-list">
       <div class="exercise-item">
         <div class="ex-num">4.</div><div class="ex-body">
-          <div class="ex-problem">Nosotros ________ tiempo. (У нас есть время)</div>
+          <div class="ex-problem">Yo _______ de Rusia. (Я из России)</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tenemos">
+            <input class="answer-input" type="text" data-answer="soy">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
           </div>
           <div class="feedback"></div>
@@ -207,40 +233,31 @@
       </div>
       <div class="exercise-item">
         <div class="ex-num">5.</div><div class="ex-body">
-          <div class="ex-problem">Los estudiantes ________ libros. (У студентов есть книги)</div>
+          <div class="ex-problem">¿De dónde _______ tú? (Откуда ты?)</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tienen">
+            <input class="answer-input" type="text" data-answer="eres">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
           </div>
           <div class="feedback"></div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- BLOCK 2 -->
-  <div id="exercises-states" class="exercise-set">
-    <div class="exercise-set-header">
-      <div class="difficulty-dot medium"></div>
-      <h3>Блок 2: Возраст и Состояния</h3>
-      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">hambre, frío, años</span>
-    </div>
-    <div class="exercise-list">
       <div class="exercise-item">
         <div class="ex-num">6.</div><div class="ex-body">
-          <div class="ex-problem">Ella ________ 25 años. (Ей 25 лет)</div>
+          <div class="ex-problem">María y Juan _______ amigos. (Они друзья)</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tiene">
+            <input class="answer-input" type="text" data-answer="son">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+            <button class="check-btn" style="background:none; color:var(--muted); border:1px solid #ccc;" onclick="toggleHint(this)">Подсказка</button>
           </div>
+          <div class="hint-text" style="display:none; margin-top:8px;">Мария и Хуан — это ОНИ (Ellos). Посмотри в таблицу, какая форма SER нужна для Ellos!</div>
           <div class="feedback"></div>
         </div>
       </div>
       <div class="exercise-item">
         <div class="ex-num">7.</div><div class="ex-body">
-          <div class="ex-problem">Nosotros ________ hambre. (Мы голодны / Мы хотим есть)</div>
+          <div class="ex-problem">Mi coche _______ muy rápido. (Моя машина очень быстрая)</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tenemos">
+            <input class="answer-input" type="text" data-answer="es">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
           </div>
           <div class="feedback"></div>
@@ -248,19 +265,29 @@
       </div>
       <div class="exercise-item">
         <div class="ex-num">8.</div><div class="ex-body">
-          <div class="ex-problem">Yo ________ mucho calor. (Мне очень жарко)</div>
+          <div class="ex-problem">Nosotros _______ estudiantes de español. (Мы студенты)</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tengo">
+            <input class="answer-input" type="text" data-answer="somos">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
           </div>
           <div class="feedback"></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="exercises-mix" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot hard"></div>
+      <h3>Блок 3: Пропущенные местоимения</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Угадай, кто это делает?</span>
+    </div>
+    <div class="exercise-list">
       <div class="exercise-item">
         <div class="ex-num">9.</div><div class="ex-body">
-          <div class="ex-problem">¿(Tú) ________ sed? (Ты хочешь пить?)</div>
+          <div class="ex-problem">_______ es doctora. (Она врач)</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tienes">
+            <input class="answer-input" type="text" data-answer="ella">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
           </div>
           <div class="feedback"></div>
@@ -268,72 +295,9 @@
       </div>
       <div class="exercise-item">
         <div class="ex-num">10.</div><div class="ex-body">
-          <div class="ex-problem">El niño ________ miedo del perro. (Мальчик боится собаки)</div>
+          <div class="ex-problem">_______ son mis padres. (Они мои родители)</div>
           <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tiene">
-            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-            <button class="check-btn" style="background:none; color:var(--muted); border:1px solid #ccc;" onclick="toggleHint(this)">Подсказка</button>
-          </div>
-          <div class="hint-text" style="display:none; margin-top:8px;">Мальчик (El niño) = Он (él). Значит форма глагола — tiene.</div>
-          <div class="feedback"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BLOCK 3 -->
-  <div id="exercises-que" class="exercise-set">
-    <div class="exercise-set-header">
-      <div class="difficulty-dot hard"></div>
-      <h3>Блок 3: Быть должным (Tener que)</h3>
-      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Не забудь написать "que"!</span>
-    </div>
-    <div class="exercise-list">
-      <div class="exercise-item">
-        <div class="ex-num">11.</div><div class="ex-body">
-          <div class="ex-problem">Yo ____________ trabajar hoy. (Я должен работать сегодня)</div>
-          <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tengo que" placeholder="два слова">
-            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-      </div>
-      <div class="exercise-item">
-        <div class="ex-num">12.</div><div class="ex-body">
-          <div class="ex-problem">Nosotros ____________ estudiar español. (Мы должны учить испанский)</div>
-          <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tenemos que" placeholder="два слова">
-            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-      </div>
-      <div class="exercise-item">
-        <div class="ex-num">13.</div><div class="ex-body">
-          <div class="ex-problem">Tú ____________ comer más. (Ты должен больше есть)</div>
-          <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tienes que" placeholder="два слова">
-            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-      </div>
-      <div class="exercise-item">
-        <div class="ex-num">14.</div><div class="ex-body">
-          <div class="ex-problem">Él ____________ dormir. (Он должен спать)</div>
-          <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tiene que" placeholder="два слова">
-            <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
-          </div>
-          <div class="feedback"></div>
-        </div>
-      </div>
-      <div class="exercise-item">
-        <div class="ex-num">15.</div><div class="ex-body">
-          <div class="ex-problem">Ellos ____________ beber agua. (Они должны пить воду)</div>
-          <div class="answer-box">
-            <input class="answer-input" type="text" data-answer="tienen que" placeholder="два слова">
+            <input class="answer-input" type="text" data-answer="ellos">
             <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
           </div>
           <div class="feedback"></div>
@@ -342,10 +306,11 @@
     </div>
   </div>
 
+  <!-- PROGRESS -->
   <div class="progress-card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <span style="font-weight:600;font-size:15px;">Твой прогресс в Уроке 5</span>
-      <span class="score-display" id="scoreText">0 / 15 правильно</span>
+      <span style="font-weight:600;font-size:15px;">Твой прогресс в Уроке 1</span>
+      <span class="score-display" id="scoreText">0 / 10 правильно</span>
     </div>
     <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
   </div>
@@ -355,9 +320,11 @@
 <script>
   let correct = 0;
   const attempted = new Set();
-  const total = 15;
+  const total = 10;
 
-  function normalize(s){ return s.toLowerCase().replace(/\s+/g,' ').trim(); }
+  function normalize(s){
+    return s.toLowerCase().replace(/\s+/g,'').trim();
+  }
   function checkAnswer(btn){
     const box = btn.closest('.answer-box');
     const input = box.querySelector('.answer-input');
@@ -366,6 +333,7 @@
     
     const userAns = normalize(input.value);
     const correctAns = normalize(input.dataset.answer);
+    
     const isCorrect = userAns === correctAns && userAns !== '';
     
     input.classList.remove('correct','wrong');
@@ -375,14 +343,16 @@
     if(isCorrect){
       input.classList.add('correct');
       feedback.classList.add('correct');
-      feedback.textContent = '✓ ¡Perfecto!';
+      feedback.textContent = '✓ ¡Muy bien! (Очень хорошо!)';
       if(!attempted.has(exNum)){ 
-        attempted.add(exNum); correct++; updateProgress(); 
+        attempted.add(exNum); 
+        correct++; 
+        updateProgress(); 
       }
     } else {
       input.classList.add('wrong');
       feedback.classList.add('wrong');
-      feedback.textContent = '✗ Неверно. Вспомни правило!';
+      feedback.textContent = '✗ Неверно. Попробуй ещё раз!';
     }
   }
   
