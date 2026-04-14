@@ -367,5 +367,54 @@
 
 </div>
 
+
+<script>
+  function speakSpanish(text) {
+    const cleanText = text.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '').split('/')[0].trim();
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'es-ES'; // Castilian Spanish
+    utterance.rate = 0.85; // Slightly slower for learning
+    window.speechSynthesis.speak(utterance);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Add audio to tables
+    const rows = document.querySelectorAll('.conj-table tr');
+    rows.forEach((row, index) => {
+      const firstCell = row.querySelector('td:first-child');
+      if (firstCell) {
+        const textToSpeak = firstCell.textContent.replace(/'/g, "\'");
+        
+        const audioBtn = document.createElement('span');
+        audioBtn.innerHTML = '🔊 ';
+        audioBtn.style.cursor = 'pointer';
+        audioBtn.style.fontSize = '18px';
+        audioBtn.title = "Прослушать";
+        audioBtn.onclick = () => speakSpanish(textToSpeak);
+        
+        firstCell.insertBefore(audioBtn, firstCell.firstChild);
+      }
+    });
+
+    // Add audio to phrase boxes
+    const phraseBoxes = document.querySelectorAll('.phrase-box p');
+    phraseBoxes.forEach(p => {
+      const strong = p.querySelector('strong');
+      if (strong) {
+        const textToSpeak = strong.textContent.replace(/'/g, "\'").replace(/[¿?¡!]/g, '').trim();
+        
+        const audioBtn = document.createElement('span');
+        audioBtn.innerHTML = '🔊 ';
+        audioBtn.style.cursor = 'pointer';
+        audioBtn.style.fontSize = '18px';
+        audioBtn.title = "Прослушать";
+        audioBtn.onclick = () => speakSpanish(textToSpeak);
+        
+        strong.insertBefore(audioBtn, strong.firstChild);
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
