@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанский А1: Вопросы и Порядок Слов — AG Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946; --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280; --card: #ffffff; --border: #e5e0d5; --correct: #2a9d8f; --wrong: #e63946; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+  
+  .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; position: relative; z-index: 2; }
+  .hero h1 em { color: var(--gold); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; position: relative; z-index: 2; }
+  .hero::before { content: '¿?'; position: absolute; right: 20px; top: -20px; font-size: 130px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; z-index: 1; pointer-events: none;}
+  
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  
+  .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 48px 0 20px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+  h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
+
+  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 16px; position: relative; }
+  .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--accent); }
+  .theory-card.gold .stripe { background: var(--gold); }
+  .theory-card.teal .stripe { background: var(--teal); }
+  .theory-card h3 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 12px; }
+  .theory-card p { color: #374151; font-size: 15px; margin-bottom: 10px; }
+  
+  .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
+  .rule-box > strong:first-child { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .conj-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 15px; }
+  .conj-table th, .conj-table td { border: 1px solid var(--border); padding: 12px 16px; text-align: left; }
+  .conj-table th { background: #f9fafb; font-weight: 600; color: var(--ink); }
+  .conj-table td:first-child { font-weight: 600; color: var(--accent); width: 30%; }
+
+  .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+  .toc a:hover { background: var(--accent); color: white; }
+
+  /* EXERCISE STYLES */
+  .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+  .exercise-set-header { padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+  .difficulty-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .easy { background: var(--teal); } .medium { background: var(--gold); } .hard { background: var(--accent); }
+  .exercise-set-header h3 { font-size: 16px; font-weight: 600; }
+  .exercise-list { padding: 16px 24px; }
+  .exercise-item { border-bottom: 1px dashed var(--border); padding: 24px 0; display: flex; gap: 16px; align-items: flex-start; flex-direction: column; }
+  .exercise-item:last-child { border-bottom: none; }
+  .ex-problem { font-size: 16px; font-weight: 500; margin-bottom: 12px; }
+  
+  .feedback { display: none; margin-top: 12px; font-size: 14px; font-weight: 500; padding: 10px 16px; border-radius: 8px; width: 100%; }
+  .feedback.correct { background: #f0faf8; color: var(--correct); border-left: 4px solid var(--correct); }
+  .feedback.wrong { background: #fff5f5; color: var(--wrong); border-left: 4px solid var(--wrong); }
+
+  /* 1. DROPDOWN (Select) */
+  .inline-select { appearance: none; background: #f8f8f8; border: 1.5px solid var(--border); border-radius: 8px; padding: 6px 32px 6px 12px; font-family: 'DM Mono', monospace; font-size: 15px; color: var(--accent); font-weight: 600; cursor: pointer; outline: none; transition: border-color 0.2s; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+  .inline-select:focus { border-color: var(--accent); }
+  .inline-select.correct { border-color: var(--correct); color: var(--correct); background-color: #f0faf8; }
+  .inline-select.wrong { border-color: var(--wrong); color: var(--wrong); background-color: #fff5f5; }
+
+  /* 2. DRAG & DROP (Word Builder) */
+  .word-builder-area { width: 100%; }
+  .drop-zone { min-height: 50px; background: #fafafa; border: 2px dashed var(--border); border-radius: 12px; padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; transition: border-color 0.2s; }
+  .drop-zone.active { border-color: var(--accent); background: #fff5f5; }
+  .word-bank { display: flex; flex-wrap: wrap; gap: 8px; min-height: 40px; }
+  .draggable-word { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 15px; font-weight: 500; cursor: grab; user-select: none; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: transform 0.1s, box-shadow 0.1s; }
+  .draggable-word:active { cursor: grabbing; transform: scale(0.95); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .draggable-word.dragging { opacity: 0.5; }
+
+  /* 3. MULTIPLE CHOICE (Buttons) */
+  .mcq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+  @media(max-width: 600px){ .mcq-grid { grid-template-columns: 1fr; } }
+  .mcq-btn { background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 16px; font-size: 15px; text-align: left; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 12px; }
+  .mcq-btn:hover { border-color: var(--accent); background: #fafafa; }
+  .mcq-btn.selected { border-color: var(--accent); background: #fff5f5; color: var(--ink); }
+  .mcq-btn.correct { border-color: var(--correct); background: #f0faf8; color: var(--correct); font-weight: 600; pointer-events: none; }
+  .mcq-btn.wrong { border-color: var(--wrong); background: #fff5f5; color: var(--wrong); pointer-events: none; opacity: 0.7; }
+
+  /* 4. AUDIO QUIZ */
+  .audio-btn { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--teal); color: white; font-size: 24px; cursor: pointer; border: none; box-shadow: 0 4px 10px rgba(42, 157, 143, 0.3); transition: transform 0.2s; }
+  .audio-btn:hover { transform: scale(1.05); }
+  .audio-btn:active { transform: scale(0.95); }
+
+  .check-btn { background: var(--ink); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background .2s; font-weight: 600; margin-top: 16px; }
+  .check-btn:hover { background: #2d2d4e; }
+
+  .progress-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; margin-top: 24px; }
+  .progress-bar-wrap { background: #e5e7eb; border-radius: 10px; height: 6px; margin: 6px 0 0; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 10px; width: 0%; transition: width .4s ease; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">🇪🇸 Урок 6 · Грамматика A1</div>
+  <h1>Вопросы и<br><em>Порядок слов</em></h1>
+  <p>Как спросить «Где?», «Когда?» и «Почему?». Учимся собирать испанские предложения правильно (без рунглиша).</p>
+  <div class="badges">
+    <span class="badge">Вопросительные слова</span>
+    <span class="badge">Порядок слов (SVO)</span>
+    <span class="badge">Интерактивный тренажер</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <nav class="toc">
+    <a href="spanish_intro.html">← Введение</a>
+    <a href="spanish_tener.html">← Урок 5</a>
+    <a href="#theory">📖 Теория</a>
+    <a href="#exercises-mcq">🎯 Тесты</a>
+    <a href="#exercises-drag">🎯 Пазлы (Duolingo)</a>
+  </nav>
+
+  <!-- THEORY -->
+  <div id="theory">
+    <div class="section-label">Теория</div>
+    <h2>Анатомия испанской фразы</h2>
+
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>1. Перевернутые вопросы (¿?)</h3>
+      <p>Испанцы настолько эмоциональны, что им нужно с самого начала предложения знать, с какой интонацией его читать! Поэтому перед вопросом всегда ставится <strong>перевёрнутый вопросительный знак (¿)</strong>, а перед восклицанием — <strong>(¡)</strong>.</p>
+      
+      <table class="conj-table">
+        <tr><th>Слово</th><th>Перевод</th><th>Пример</th></tr>
+        <tr><td>¿Qué?</td><td>Что? / Какой?</td><td>¿Qué es esto? (Что это?)</td></tr>
+        <tr><td>¿Quién?</td><td>Кто?</td><td>¿Quién es él? (Кто он?)</td></tr>
+        <tr><td>¿Dónde?</td><td>Где?</td><td>¿Dónde vives? (Где ты живешь?)</td></tr>
+        <tr><td>¿Cuándo?</td><td>Когда?</td><td>¿Cuándo trabajas? (Когда ты работаешь?)</td></tr>
+        <tr><td>¿Por qué?</td><td>Почему?</td><td>¿Por qué estudias español? (Почему ты учишь испанский?)</td></tr>
+        <tr><td>¿Cómo?</td><td>Как?</td><td>¿Cómo estás? (Как ты?)</td></tr>
+        <tr><td>¿Cuánto?</td><td>Сколько?</td><td>¿Cuánto cuesta? (Сколько стоит?)</td></tr>
+      </table>
+      <div class="rule-box">
+        <strong>💡 Важно про ударения:</strong><br>
+        Все вопросительные слова <strong>всегда</strong> пишутся с графическим ударением (Tilde): <i>qué, dónde, cómo</i>. Если ударения нет (<i>que, donde, como</i>), то они превращаются в союзы: "что", "где", "как" (внутри обычного предложения).
+      </div>
+    </div>
+
+    <div class="theory-card gold">
+      <div class="stripe"></div>
+      <h3>2. Порядок слов (Прилагательные в конце!)</h3>
+      <p>В русском языке мы говорим "Красная машина". Прилагательное стоит ПЕРЕД существительным. В испанском всё наоборот: сначала предмет, потом его описание. <strong>Машина красная.</strong></p>
+      <ul style="margin-left: 20px; line-height: 1.8;">
+        <li><i>El coche rojo</i> (Машина красная)</li>
+        <li><i>La chica guapa</i> (Девушка красивая)</li>
+        <li><i>Un libro interesante</i> (Книга интересная)</li>
+      </ul>
+      <p><strong>Порядок в обычном предложении:</strong> Кто (S) + Что делает (V) + С чем/Где (O).<br>
+      <i>Yo como una manzana (Я ем яблоко).</i></p>
+      <p><strong>Порядок в вопросе:</strong> Вопросительное слово + Глагол + Кто (если нужен).<br>
+      <i>¿Dónde vive María? (Где живёт Мария?)</i></p>
+    </div>
+  </div>
+
+  <!-- EXERCISES -->
+  <div class="section-label">Новые интерактивные форматы</div>
+  <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">
+    Давай потренируем разные механики: тесты, пазлы и аудирование!
+  </p>
+
+  <!-- BLOCK 1: MULTIPLE CHOICE -->
+  <div id="exercises-mcq" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot easy"></div>
+      <h3>Блок 1: Выбери правильный перевод</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Multiple Choice</span>
+    </div>
+    <div class="exercise-list">
+      
+      <div class="exercise-item mcq-question" data-answer="2">
+        <div class="ex-problem">1. Как спросить: "Где находится банк?"</div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">¿Cuándo está el banco?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">¿Dónde está el banco?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">¿Qué es el banco?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">¿Cómo está el banco?</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item mcq-question" data-answer="3">
+        <div class="ex-problem">2. Как перевести фразу: "La casa grande"?</div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">Красный дом</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">Маленький дом</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">Большой дом</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">Старый дом</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 2: DROPDOWN (Select) -->
+  <div id="exercises-dropdown" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot medium"></div>
+      <h3>Блок 2: Вставь вопросительное слово</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Dropdown</span>
+    </div>
+    <div class="exercise-list">
+      
+      <div class="exercise-item dropdown-question">
+        <div class="ex-problem">
+          3. ¿
+          <select class="inline-select" data-answer="qué">
+            <option value="" disabled selected>выбери</option>
+            <option value="dónde">dónde</option>
+            <option value="qué">qué</option>
+            <option value="cuándo">cuándo</option>
+          </select>
+          hora es? (Который час?)
+        </div>
+        <button class="check-btn" onclick="checkDropdown(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item dropdown-question">
+        <div class="ex-problem">
+          4. ¿
+          <select class="inline-select" data-answer="por qué">
+            <option value="" disabled selected>выбери</option>
+            <option value="quién">quién</option>
+            <option value="dónde">dónde</option>
+            <option value="por qué">por qué</option>
+          </select>
+          estudias español? (Почему ты учишь испанский?)
+        </div>
+        <button class="check-btn" onclick="checkDropdown(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 3: DRAG & DROP (Word Builder) -->
+  <div id="exercises-drag" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot hard"></div>
+      <h3>Блок 3: Собери предложение (Механика Duolingo)</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Кликай по словам по порядку</span>
+    </div>
+    <div class="exercise-list">
+      
+      <div class="exercise-item builder-question" data-answer="Yo tengo un coche rojo">
+        <div class="ex-problem">5. Я имею красную машину. (У меня есть красная машина)</div>
+        <div class="word-builder-area">
+          <div class="drop-zone" id="zone1"></div>
+          <div class="word-bank" id="bank1">
+            <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">rojo</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">un</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">Yo</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">tengo</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">coche</div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkBuilder(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="exercise-item builder-question" data-answer="¿ Dónde vive María ?">
+        <div class="ex-problem">6. Где живет Мария? (Соблюдай порядок слов в вопросе!)</div>
+        <div class="word-builder-area">
+          <div class="drop-zone" id="zone2"></div>
+          <div class="word-bank" id="bank2">
+            <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">María</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">¿</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">vive</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">Dónde</div>
+            <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">?</div>
+          </div>
+        </div>
+        <button class="check-btn" onclick="checkBuilder(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 4: AUDIO QUIZ -->
+  <div id="exercises-audio" class="exercise-set">
+    <div class="exercise-set-header">
+      <div class="difficulty-dot teal"></div>
+      <h3 style="color: var(--teal);">Блок 4: Аудио-Квиз (Что ты слышишь?)</h3>
+      <span style="margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px;">Нажми на динамик!</span>
+    </div>
+    <div class="exercise-list">
+      
+      <div class="exercise-item mcq-question" data-answer="3">
+        <div class="ex-problem" style="display: flex; align-items: center; gap: 16px;">
+          7. Послушай слово и выбери, как оно пишется:
+          <button class="audio-btn" onclick="speakSpanish('¿Quién?')">🔊</button>
+        </div>
+        <div class="mcq-grid">
+          <button class="mcq-btn" onclick="selectMcq(this, 1)">¿Cién?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 2)">¿Kién?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 3)">¿Quién?</button>
+          <button class="mcq-btn" onclick="selectMcq(this, 4)">¿Gién?</button>
+        </div>
+        <button class="check-btn" onclick="checkMcq(this)">Проверить</button>
+        <div class="feedback"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="progress-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <span style="font-weight:600;font-size:15px;">Твой прогресс в Уроке 6</span>
+      <span class="score-display" id="scoreText">0 / 7 правильно</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+
+</div>
+
+<script>
+  let correctTotal = 0;
+  const maxTotal = 7;
+  const attemptedItems = new Set();
+
+  function updateProgress(exId) {
+    if (!attemptedItems.has(exId)) {
+      attemptedItems.add(exId);
+      correctTotal++;
+      const pct = (correctTotal / maxTotal) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('scoreText').textContent = correctTotal + ' / ' + maxTotal + ' правильно';
+    }
+  }
+
+  /* MCQ LOGIC */
+  function selectMcq(btn, answerVal) {
+    const grid = btn.closest('.mcq-grid');
+    // Remove selected from all
+    grid.querySelectorAll('.mcq-btn').forEach(b => b.classList.remove('selected'));
+    // Add selected to clicked
+    btn.classList.add('selected');
+    // Store value in parent
+    grid.dataset.selected = answerVal;
+  }
+
+  function checkMcq(btn) {
+    const parent = btn.closest('.mcq-question');
+    const grid = parent.querySelector('.mcq-grid');
+    const feedback = parent.querySelector('.feedback');
+    const selected = grid.dataset.selected;
+    const correctAns = parent.dataset.answer;
+
+    if (!selected) {
+      alert("Сначала выбери вариант ответа!");
+      return;
+    }
+
+    feedback.style.display = 'block';
+    
+    if (selected === correctAns) {
+      feedback.className = 'feedback correct';
+      feedback.textContent = '✓ Правильно!';
+      grid.querySelector('.selected').classList.add('correct');
+      updateProgress(parent); // Using element ref as unique ID
+    } else {
+      feedback.className = 'feedback wrong';
+      feedback.textContent = '✗ Неверно. Попробуй другой вариант.';
+      grid.querySelector('.selected').classList.add('wrong');
+    }
+  }
+
+  /* DROPDOWN LOGIC */
+  function checkDropdown(btn) {
+    const parent = btn.closest('.dropdown-question');
+    const select = parent.querySelector('.inline-select');
+    const feedback = parent.querySelector('.feedback');
+    const correctAns = select.dataset.answer;
+    const userAns = select.value;
+
+    if (!userAns) return;
+
+    select.classList.remove('correct', 'wrong');
+    feedback.style.display = 'block';
+
+    if (userAns === correctAns) {
+      select.classList.add('correct');
+      feedback.className = 'feedback correct';
+      feedback.textContent = '✓ Правильно!';
+      updateProgress(parent);
+    } else {
+      select.classList.add('wrong');
+      feedback.className = 'feedback wrong';
+      feedback.textContent = '✗ Ошибка. Подумай еще.';
+    }
+  }
+
+  /* WORD BUILDER (DRAG & DROP / CLICK) LOGIC */
+  function toggleWord(wordEl, zoneId, bankId) {
+    const zone = document.getElementById(zoneId);
+    const bank = document.getElementById(bankId);
+    
+    // If it's in the bank, move to zone. If in zone, move to bank.
+    if (wordEl.parentElement.id === bankId) {
+      zone.appendChild(wordEl);
+    } else {
+      bank.appendChild(wordEl);
+    }
+  }
+
+  function checkBuilder(btn) {
+    const parent = btn.closest('.builder-question');
+    const zone = parent.querySelector('.drop-zone');
+    const feedback = parent.querySelector('.feedback');
+    const correctAns = parent.dataset.answer;
+    
+    // Extract text from words in drop zone
+    const words = Array.from(zone.querySelectorAll('.draggable-word')).map(w => w.textContent.trim());
+    const userAns = words.join(' ');
+
+    feedback.style.display = 'block';
+
+    if (userAns === correctAns) {
+      feedback.className = 'feedback correct';
+      feedback.textContent = '✓ Идеально собрано!';
+      zone.style.borderColor = 'var(--correct)';
+      zone.style.backgroundColor = '#f0faf8';
+      updateProgress(parent);
+    } else {
+      feedback.className = 'feedback wrong';
+      feedback.textContent = '✗ Неправильный порядок. Попробуй переставить слова.';
+      zone.style.borderColor = 'var(--wrong)';
+      zone.style.backgroundColor = '#fff5f5';
+      setTimeout(() => {
+        zone.style.borderColor = 'var(--border)';
+        zone.style.backgroundColor = '#fafafa';
+      }, 1000);
+    }
+  }
+
+  /* TTS LOGIC */
+  function speakSpanish(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'es-ES';
+    utterance.rate = 0.85;
+    window.speechSynthesis.speak(utterance);
+  }
+</script>
+</body>
+</html>
