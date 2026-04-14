@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English B1: Passive Voice — AG Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #1e1b4b; --paper: #f8fafc; --accent: #2563eb; --gold: #f59e0b; --teal: #0d9488; --muted: #64748b; --card: #ffffff; --border: #e2e8f0; --correct: #059669; --wrong: #dc2626; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+  
+  .hero { background: var(--ink); color: white; padding: 56px 40px 48px; position: relative; overflow: hidden; }
+  .label { font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; position: relative; z-index: 2; }
+  .hero h1 em { color: var(--gold); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .hero p { color: rgba(255,255,255,.8); font-size: 16px; max-width: 540px; position: relative; z-index: 2; }
+  .hero::before { content: 'V3'; position: absolute; right: 10px; top: -10px; font-size: 180px; color: rgba(255,255,255,.02); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; z-index: 1; pointer-events: none;}
+  
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  
+  .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 56px 0 20px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+  h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 24px; }
+
+  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 20px; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+  .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--accent); }
+  .theory-card.gold .stripe { background: var(--gold); }
+  .theory-card.teal .stripe { background: var(--teal); }
+  .theory-card h3 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 16px; color: var(--ink); }
+  .theory-card p { color: #334155; font-size: 15px; margin-bottom: 12px; }
+  
+  .rule-box { background: linear-gradient(135deg,#f0fdf4,#ccfbf1); border: 1px solid #5eead4; border-left: 4px solid var(--teal); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #115e59; }
+  .rule-box > strong:first-child { color: #042f2e; display: block; margin-bottom: 8px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+  .rule-box strong:not(:first-child) { display: inline; color: inherit; font-weight: 700; }
+
+  .conj-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; }
+  .conj-table th, .conj-table td { border: 1px solid var(--border); padding: 14px 16px; text-align: left; }
+  .conj-table th { background: #f8fafc; font-weight: 600; color: var(--ink); }
+  .conj-table td:first-child { font-weight: 600; color: var(--accent); width: 35%; }
+
+  .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .toc a { background: #f1f5f9; color: var(--ink); text-decoration: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 500; transition: all .2s; }
+  .toc a:hover { background: var(--accent); color: white; }
+
+  /* EXERCISE STYLES */
+  .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+  .exercise-set-header { padding: 20px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); background: #fafaf9; }
+  .difficulty-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .easy { background: var(--teal); } .medium { background: var(--gold); } .hard { background: var(--accent); }
+  .exercise-set-header h3 { font-size: 16px; font-weight: 700; color: var(--ink); }
+  .exercise-list { padding: 16px 24px; }
+  .exercise-item { border-bottom: 1px dashed var(--border); padding: 24px 0; display: flex; gap: 16px; align-items: flex-start; flex-direction: column; }
+  .exercise-item:last-child { border-bottom: none; }
+  .ex-problem { font-size: 16px; font-weight: 500; margin-bottom: 16px; color: var(--ink); line-height: 1.5; }
+  
+  .feedback { display: none; margin-top: 16px; font-size: 14px; font-weight: 500; padding: 12px 16px; border-radius: 8px; width: 100%; }
+  .feedback.correct { background: #ecfdf5; color: var(--correct); border-left: 4px solid var(--correct); }
+  .feedback.wrong { background: #fef2f2; color: var(--wrong); border-left: 4px solid var(--wrong); }
+
+  /* 1. TEXT INPUT */
+  .answer-input { border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 14px; font-family: 'DM Mono', monospace; font-size: 15px; min-width: 220px; outline: none; transition: border-color .2s; }
+  .answer-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+  .answer-input.correct { border-color: var(--correct); background-color: #ecfdf5; color: var(--correct); }
+  .answer-input.wrong { border-color: var(--wrong); background-color: #fef2f2; color: var(--wrong); }
+
+  /* 2. DROPDOWN (Select) */
+  .inline-select { appearance: none; background: #f8fafc; border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 36px 8px 14px; font-family: 'DM Mono', monospace; font-size: 15px; color: var(--accent); font-weight: 600; cursor: pointer; outline: none; transition: border-color 0.2s; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+  .inline-select:focus { border-color: var(--accent); }
+  .inline-select.correct { border-color: var(--correct); color: var(--correct); background-color: #ecfdf5; }
+  .inline-select.wrong { border-color: var(--wrong); color: var(--wrong); background-color: #fef2f2; }
+
+  /* 3. DRAG & DROP (Word Builder) */
+  .word-builder-area { width: 100%; }
+  .drop-zone { min-height: 56px; background: #f8fafc; border: 2px dashed var(--border); border-radius: 12px; padding: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 20px; transition: border-color 0.2s; }
+  .drop-zone.active { border-color: var(--accent); background: #eff6ff; }
+  .word-bank { display: flex; flex-wrap: wrap; gap: 10px; min-height: 48px; }
+  .draggable-word { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 18px; font-size: 15px; font-weight: 500; cursor: pointer; user-select: none; box-shadow: 0 2px 4px rgba(0,0,0,0.03); transition: transform 0.1s, box-shadow 0.1s, background 0.2s; color: var(--ink); }
+  .draggable-word:hover { background: #f1f5f9; border-color: var(--muted); }
+  .draggable-word:active { transform: scale(0.95); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+  /* 4. MULTIPLE CHOICE (Buttons) */
+  .mcq-grid { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; }
+  .mcq-btn { background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 16px 20px; font-size: 15px; text-align: left; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 12px; color: var(--ink); line-height: 1.4; }
+  .mcq-btn:hover { border-color: var(--accent); background: #f8fafc; }
+  .mcq-btn.selected { border-color: var(--accent); background: #eff6ff; color: var(--ink); box-shadow: 0 0 0 2px rgba(37,99,235,0.2); }
+  .mcq-btn.correct { border-color: var(--correct); background: #ecfdf5; color: var(--correct); font-weight: 600; pointer-events: none; }
+  .mcq-btn.wrong { border-color: var(--wrong); background: #fef2f2; color: var(--wrong); pointer-events: none; opacity: 0.8; }
+
+  .check-btn { background: var(--ink); color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 15px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background .2s, transform .1s; font-weight: 600; margin-top: 8px; }
+  .check-btn:hover { background: #334155; }
+  .check-btn:active { transform: scale(0.97); }
+
+  .progress-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 24px; margin-top: 32px; position: sticky; top: 20px; z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.06);}
+  .progress-bar-wrap { background: #f1f5f9; border-radius: 10px; height: 8px; margin: 12px 0 0; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 10px; width: 0%; transition: width .4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+  /* READING TEXT */
+  .reading-text { font-size: 16px; line-height: 1.8; color: #334155; background: #fffbeb; border-left: 4px solid var(--gold); padding: 24px 32px; border-radius: 0 16px 16px 0; margin-bottom: 24px; }
+  .reading-text p { margin-bottom: 16px; }
+  .reading-text p:last-child { margin-bottom: 0; }
+  .reading-text strong { color: var(--ink); }
+
+  .hw-badge { background: var(--ink); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">🇬🇧 Урок 1 · Грамматика B1</div>
+  <h1>The Passive<br><em>Voice</em></h1>
+  <p>Пассивный залог — визитная карточка уровня B1. Учимся говорить не о том, кто сделал действие, а о том, что произошло с предметом.</p>
+</div>
+
+<div class="container">
+
+  <nav class="toc">
+    <a href="../index.html">← На главную</a>
+    <a href="#theory">📖 Теория</a>
+    <a href="#reading">📰 Чтение (Текст)</a>
+    <a href="#classwork">🎯 Практика (Класс)</a>
+    <a href="#homework">📝 Домашнее задание</a>
+  </nav>
+
+  <!-- THEORY -->
+  <div id="theory">
+    <div class="section-label">Теория: Пассивный залог</div>
+    <h2>Кто виноват или что сделано?</h2>
+
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>1. Суть пассива (Active vs Passive)</h3>
+      <p>В активном залоге (Active Voice) мы фокусируемся на том, <strong>КТО</strong> совершает действие: <br>
+      <i>Shakespeare wrote Hamlet. (Шекспир написал Гамлета).</i></p>
+      
+      <p>В пассивном залоге (Passive Voice) нам не так важно (или мы не знаем), кто это сделал. Фокус смещается на сам <strong>ОБЪЕКТ</strong>: <br>
+      <i>Hamlet <strong>was written</strong> by Shakespeare. (Гамлет был написан Шекспиром).</i></p>
+
+      <div class="rule-box">
+        <strong>💡 Золотая формула пассива:</strong><br>
+        <strong>to be</strong> + <strong>V3</strong> (глагол в 3-й форме: <i>written, done, played</i>).<br>
+        Чтобы поменять время в предложении, мы меняем <strong>ТОЛЬКО глагол to be</strong>. Третья форма (V3) остаётся неизменной всегда!
+      </div>
+    </div>
+
+    <div class="theory-card gold">
+      <div class="stripe"></div>
+      <h3>2. Времена в Пассиве (Главные для B1)</h3>
+      <table class="conj-table">
+        <tr><th>Время</th><th>Формула (to be) + V3</th><th>Пример</th></tr>
+        <tr><td><strong>Present Simple</strong><br><i>Обычно, каждый день</i></td><td>am / is / are + V3</td><td>The office <strong>is cleaned</strong> every day.<br><i>(Офис убирают каждый день).</i></td></tr>
+        <tr><td><strong>Past Simple</strong><br><i>Вчера, в 1999 году</i></td><td>was / were + V3</td><td>The Mona Lisa <strong>was painted</strong> by Da Vinci.<br><i>(Мона Лиза была нарисована Да Винчи).</i></td></tr>
+        <tr><td><strong>Future Simple</strong><br><i>Завтра, в будущем</i></td><td>will be + V3</td><td>The new bridge <strong>will be finished</strong> next year.<br><i>(Новый мост будет закончен в след. году).</i></td></tr>
+        <tr><td><strong>Present Perfect</strong><br><i>Результат к настоящему</i></td><td>have been / has been + V3</td><td>My car <strong>has been stolen</strong>!<br><i>(Мою машину украли!).</i></td></tr>
+      </table>
+    </div>
+
+    <div class="theory-card teal">
+      <div class="stripe"></div>
+      <h3>3. Кем или Чем? (by vs with)</h3>
+      <p>Если нам всё-таки хочется указать, кто или что совершило действие, мы используем предлоги в конце предложения:</p>
+      <ul style="margin-left: 20px; line-height: 1.8;">
+        <li><strong>BY + Человек / Создатель:</strong> <i>The book was written <strong>by</strong> J.K. Rowling.</i> (Написана Роулинг).</li>
+        <li><strong>WITH + Инструмент / Материал:</strong> <i>The window was broken <strong>with</strong> a hammer.</i> (Разбито молотком). <i>The soup is made <strong>with</strong> chicken.</i> (Сделан с помощью курицы).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- READING -->
+  <div id="reading">
+    <div class="section-label">Чтение в контексте</div>
+    <h2>The Journey of Chocolate</h2>
+    
+    <div class="reading-text">
+      <p>Chocolate <strong>is loved</strong> by people all over the world, but how is it actually made? The process begins in tropical countries like Ivory Coast and Ghana. Cacao beans <strong>are grown</strong> on small farms. When the pods are ripe, they <strong>are harvested</strong> by farmers by hand.</p>
+      <p>After that, the beans <strong>are fermented</strong> and dried in the sun. Then, they <strong>are shipped</strong> to chocolate factories in Europe or America. At the factory, the beans <strong>are roasted</strong> at high temperatures to bring out the flavor. Finally, sugar and milk <strong>are added</strong>, and the mixture <strong>is turned</strong> into delicious chocolate bars.</p>
+      <p>Many new types of chocolate <strong>will be invented</strong> in the future, but the classic milk chocolate will always be popular!</p>
+    </div>
+
+    <!-- Comprehension MCQ -->
+    <div class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot teal"></div>
+        <h3>Чтение: Проверка понимания (Reading Comprehension)</h3>
+      </div>
+      <div class="exercise-list">
+        
+        <div class="exercise-item mcq-question" data-answer="2">
+          <div class="ex-problem">1. According to the text, how are cacao beans harvested?</div>
+          <div class="mcq-grid">
+            <button class="mcq-btn" onclick="selectMcq(this, 1)">They are harvested by big machines.</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 2)">They are harvested by farmers by hand.</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 3)">They are grown in factories.</button>
+          </div>
+          <button class="check-btn" onclick="checkMcq(this)">Check Answer</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item mcq-question" data-answer="1">
+          <div class="ex-problem">2. Where are the beans roasted?</div>
+          <div class="mcq-grid">
+            <button class="mcq-btn" onclick="selectMcq(this, 1)">At the chocolate factories.</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 2)">On small farms in Africa.</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 3)">In the sun.</button>
+          </div>
+          <button class="check-btn" onclick="checkMcq(this)">Check Answer</button>
+          <div class="feedback"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <span style="font-weight:700;font-size:16px;color:var(--ink);">Твой прогресс (Классная работа)</span>
+      <span class="score-display" id="scoreText" style="font-weight: 600;">0 / 23 правильно</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+  </div>
+
+  <!-- CLASSWORK -->
+  <div id="classwork">
+    <div class="section-label">Классная работа (Classwork)</div>
+    <p style="font-size:15px; color:var(--muted); margin-bottom:24px;">Тренируем времена и формы глаголов в Пассивном залоге.</p>
+
+    <!-- BLOCK 1: DROPDOWN (TENSES) -->
+    <div class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot easy"></div>
+        <h3>Блок 1: Выбери правильную форму "to be" (8 заданий)</h3>
+        <span style="margin-left: auto; font-size: 13px; color: var(--muted);">Dropdown</span>
+      </div>
+      <div class="exercise-list">
+        
+        <div class="exercise-item dropdown-question">
+          <div class="ex-problem">
+            3. (Every day) The office 
+            <select class="inline-select" data-answer="is">
+              <option value="" disabled selected>choose</option>
+              <option value="is">is</option>
+              <option value="are">are</option>
+              <option value="was">was</option>
+              <option value="will be">will be</option>
+            </select>
+            cleaned at 6 PM.
+          </div>
+          <button class="check-btn" onclick="checkDropdown(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item dropdown-question">
+          <div class="ex-problem">
+            4. (Last night) My car 
+            <select class="inline-select" data-answer="was">
+              <option value="" disabled selected>choose</option>
+              <option value="is">is</option>
+              <option value="was">was</option>
+              <option value="were">were</option>
+              <option value="has been">has been</option>
+            </select>
+            stolen!
+          </div>
+          <button class="check-btn" onclick="checkDropdown(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item dropdown-question">
+          <div class="ex-problem">
+            5. (Next year) The new bridge 
+            <select class="inline-select" data-answer="will be">
+              <option value="" disabled selected>choose</option>
+              <option value="is">is</option>
+              <option value="was">was</option>
+              <option value="will be">will be</option>
+            </select>
+            opened to the public.
+          </div>
+          <button class="check-btn" onclick="checkDropdown(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item dropdown-question">
+          <div class="ex-problem">
+            6. (Just now / Result) Oh no! The window 
+            <select class="inline-select" data-answer="has been">
+              <option value="" disabled selected>choose</option>
+              <option value="is">is</option>
+              <option value="was">was</option>
+              <option value="has been">has been</option>
+            </select>
+            broken!
+          </div>
+          <button class="check-btn" onclick="checkDropdown(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item dropdown-question">
+          <div class="ex-problem">
+            7. (Usually) Millions of emails 
+            <select class="inline-select" data-answer="are">
+              <option value="" disabled selected>choose</option>
+              <option value="is">is</option>
+              <option value="are">are</option>
+              <option value="were">were</option>
+            </select>
+            sent every day.
+          </div>
+          <button class="check-btn" onclick="checkDropdown(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item dropdown-question">
+          <div class="ex-problem">
+            8. (In 1997) Harry Potter and the Philosopher's Stone 
+            <select class="inline-select" data-answer="was">
+              <option value="" disabled selected>choose</option>
+              <option value="is">is</option>
+              <option value="was">was</option>
+              <option value="were">were</option>
+            </select>
+            published.
+          </div>
+          <button class="check-btn" onclick="checkDropdown(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item dropdown-question">
+          <div class="ex-problem">
+            9. The cake was made 
+            <select class="inline-select" data-answer="with">
+              <option value="" disabled selected>by or with?</option>
+              <option value="by">by</option>
+              <option value="with">with</option>
+            </select>
+            chocolate and strawberries. (Инструмент/Ингредиент)
+          </div>
+          <button class="check-btn" onclick="checkDropdown(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item dropdown-question">
+          <div class="ex-problem">
+            10. The photo was taken 
+            <select class="inline-select" data-answer="by">
+              <option value="" disabled selected>by or with?</option>
+              <option value="by">by</option>
+              <option value="with">with</option>
+            </select>
+            my brother. (Человек/Деятель)
+          </div>
+          <button class="check-btn" onclick="checkDropdown(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BLOCK 2: WORD BUILDER -->
+    <div class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot medium"></div>
+        <h3>Блок 2: Порядок слов (Собери фразу)</h3>
+        <span style="margin-left: auto; font-size: 13px; color: var(--muted);">Кликай по словам</span>
+      </div>
+      <div class="exercise-list">
+        
+        <div class="exercise-item builder-question" data-answer="The letter was written yesterday">
+          <div class="ex-problem">11. Письмо было написано вчера.</div>
+          <div class="word-builder-area">
+            <div class="drop-zone" id="zone1"></div>
+            <div class="word-bank" id="bank1">
+              <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">yesterday</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">written</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">was</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">The</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone1', 'bank1')">letter</div>
+            </div>
+          </div>
+          <button class="check-btn" onclick="checkBuilder(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item builder-question" data-answer="English is spoken all over the world">
+          <div class="ex-problem">12. По-английски говорят по всему миру.</div>
+          <div class="word-builder-area">
+            <div class="drop-zone" id="zone2"></div>
+            <div class="word-bank" id="bank2">
+              <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">all over</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">spoken</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">is</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">the world</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone2', 'bank2')">English</div>
+            </div>
+          </div>
+          <button class="check-btn" onclick="checkBuilder(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item builder-question" data-answer="My phone has been stolen">
+          <div class="ex-problem">13. Мой телефон украли! (К настоящему моменту)</div>
+          <div class="word-builder-area">
+            <div class="drop-zone" id="zone3"></div>
+            <div class="word-bank" id="bank3">
+              <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">My</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">stolen</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">phone</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">has</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone3', 'bank3')">been</div>
+            </div>
+          </div>
+          <button class="check-btn" onclick="checkBuilder(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item builder-question" data-answer="When was the house built ?">
+          <div class="ex-problem">14. Когда был построен дом? (Вопрос)</div>
+          <div class="word-builder-area">
+            <div class="drop-zone" id="zone4"></div>
+            <div class="word-bank" id="bank4">
+              <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">built</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">was</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">the house</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">When</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone4', 'bank4')">?</div>
+            </div>
+          </div>
+          <button class="check-btn" onclick="checkBuilder(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item builder-question" data-answer="The report will be finished tomorrow">
+          <div class="ex-problem">15. Отчет будет закончен завтра.</div>
+          <div class="word-builder-area">
+            <div class="drop-zone" id="zone5"></div>
+            <div class="word-bank" id="bank5">
+              <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">be</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">finished</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">The report</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">will</div>
+              <div class="draggable-word" onclick="toggleWord(this, 'zone5', 'bank5')">tomorrow</div>
+            </div>
+          </div>
+          <button class="check-btn" onclick="checkBuilder(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BLOCK 3: MULTIPLE CHOICE (Active or Passive?) -->
+    <div class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot teal"></div>
+        <h3>Блок 3: Active или Passive?</h3>
+        <span style="margin-left: auto; font-size: 13px; color: var(--muted);">Прочитай и реши</span>
+      </div>
+      <div class="exercise-list">
+        
+        <div class="exercise-item mcq-question" data-answer="2">
+          <div class="ex-problem">16. "Somebody cleans the room." -> Какое предложение правильно переведено в пассив?</div>
+          <div class="mcq-grid">
+            <button class="mcq-btn" onclick="selectMcq(this, 1)">The room cleaned somebody.</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 2)">The room is cleaned.</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 3)">The room was cleaned.</button>
+          </div>
+          <button class="check-btn" onclick="checkMcq(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item mcq-question" data-answer="3">
+          <div class="ex-problem">17. "They built the house in 2010." -> Пассивный вариант:</div>
+          <div class="mcq-grid">
+            <button class="mcq-btn" onclick="selectMcq(this, 1)">The house is built in 2010.</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 2)">The house built in 2010.</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 3)">The house was built in 2010.</button>
+          </div>
+          <button class="check-btn" onclick="checkMcq(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+        <div class="exercise-item mcq-question" data-answer="2">
+          <div class="ex-problem">18. Выбери правильное продолжение: I can't find my keys! I think they ________!</div>
+          <div class="mcq-grid">
+            <button class="mcq-btn" onclick="selectMcq(this, 1)">stole</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 2)">have been stolen</button>
+            <button class="mcq-btn" onclick="selectMcq(this, 3)">was stolen</button>
+          </div>
+          <button class="check-btn" onclick="checkMcq(this)">Check</button>
+          <div class="feedback"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BLOCK 4: FILL IN THE BLANKS (V3 forms) -->
+    <div class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot accent"></div>
+        <h3 style="color: var(--accent);">Блок 4: Напиши 3-ю форму глагола (V3)</h3>
+      </div>
+      <div class="exercise-list">
+        
+        <div class="exercise-item" style="flex-direction: row; align-items: center; padding: 16px 0;">
+          <div class="ex-num" style="padding:0;">19.</div>
+          <div class="ex-problem" style="margin:0; min-width: 100px;">make →</div>
+          <div style="flex:1;">
+            <input class="answer-input" type="text" data-answer="made" placeholder="V3 form...">
+          </div>
+        </div>
+
+        <div class="exercise-item" style="flex-direction: row; align-items: center; padding: 16px 0;">
+          <div class="ex-num" style="padding:0;">20.</div>
+          <div class="ex-problem" style="margin:0; min-width: 100px;">write →</div>
+          <div style="flex:1;">
+            <input class="answer-input" type="text" data-answer="written" placeholder="V3 form...">
+          </div>
+        </div>
+
+        <div class="exercise-item" style="flex-direction: row; align-items: center; padding: 16px 0;">
+          <div class="ex-num" style="padding:0;">21.</div>
+          <div class="ex-problem" style="margin:0; min-width: 100px;">break →</div>
+          <div style="flex:1;">
+            <input class="answer-input" type="text" data-answer="broken" placeholder="V3 form...">
+          </div>
+        </div>
+
+        <div class="exercise-item" style="flex-direction: row; align-items: center; padding: 16px 0;">
+          <div class="ex-num" style="padding:0;">22.</div>
+          <div class="ex-problem" style="margin:0; min-width: 100px;">build →</div>
+          <div style="flex:1;">
+            <input class="answer-input" type="text" data-answer="built" placeholder="V3 form...">
+          </div>
+        </div>
+
+        <div class="exercise-item" style="flex-direction: row; align-items: center; padding: 16px 0; border: none;">
+          <div class="ex-num" style="padding:0;">23.</div>
+          <div class="ex-problem" style="margin:0; min-width: 100px;">invent (правильный) →</div>
+          <div style="flex:1; display: flex; gap: 12px;">
+            <input class="answer-input" type="text" data-answer="invented" placeholder="V3 form...">
+            <button class="check-btn" style="margin:0;" onclick="checkAllV3(this)">Проверить блок V3</button>
+          </div>
+        </div>
+        <div id="v3-feedback" class="feedback" style="margin-top: 0;"></div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- HOMEWORK SECTION (15 Questions) -->
+  <div id="homework">
+    <div class="section-label" style="color: var(--ink);">Домашнее задание (Homework)</div>
+    <p style="font-size:15px; color:var(--muted); margin-bottom:24px;">Твоя самостоятельная отработка. Раскрой скобки, поставив глагол в Пассивный залог в правильном времени.</p>
+    
+    <div class="exercise-set" style="border: 2px solid var(--ink);">
+      <div class="exercise-set-header" style="background: var(--ink); color: white;">
+        <span class="hw-badge">Mandatory</span>
+        <h3 style="color: white; margin: 0;">Rewrite in Passive Voice (15 items)</h3>
+      </div>
+      <div class="exercise-list">
+
+        <!-- 1-5 Present Simple -->
+        <div class="exercise-item" style="flex-direction: column;">
+          <div style="font-weight: 700; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; font-size: 13px;">Part 1: Present Simple (am/is/are + V3)</div>
+          
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>1. People speak English in Australia. -> English <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="is spoken"> in Australia.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>2. They make these cars in Japan. -> These cars <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="are made"> in Japan.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>3. The postman delivers the mail at 9 AM. -> The mail <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="is delivered"> at 9 AM.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>4. Do they clean the rooms every day? -> <input class="answer-input hw-input" style="min-width: 60px; padding: 6px 10px;" type="text" data-answer="Are"> the rooms <input class="answer-input hw-input" style="min-width: 100px; padding: 6px 10px;" type="text" data-answer="cleaned"> every day?</div>
+          </div>
+          <div style="margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px;">
+            <div>5. We do not use this room. -> This room <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="is not used" data-alt="isn't used">.</div>
+          </div>
+
+          <!-- 6-10 Past Simple -->
+          <div style="font-weight: 700; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; font-size: 13px;">Part 2: Past Simple (was/were + V3)</div>
+          
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>6. Someone stole my wallet yesterday. -> My wallet <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="was stolen"> yesterday.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>7. Alexander Bell invented the telephone. -> The telephone <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="was invented"> by Alexander Bell.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>8. They built these houses in 1950. -> These houses <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="were built"> in 1950.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>9. Did Shakespeare write this play? -> <input class="answer-input hw-input" style="min-width: 60px; padding: 6px 10px;" type="text" data-answer="Was"> this play <input class="answer-input hw-input" style="min-width: 100px; padding: 6px 10px;" type="text" data-answer="written"> by Shakespeare?</div>
+          </div>
+          <div style="margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px;">
+            <div>10. They didn't invite me to the party. -> I <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="was not invited" data-alt="wasn't invited"> to the party.</div>
+          </div>
+
+          <!-- 11-15 Future & Perfect -->
+          <div style="font-weight: 700; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; font-size: 13px;">Part 3: Future & Present Perfect</div>
+          
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>11. They will finish the project tomorrow. -> The project <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="will be finished"> tomorrow.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>12. Someone has painted the door. -> The door <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="has been painted">.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>13. They will send the tickets by email. -> The tickets <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="will be sent"> by email.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>14. The company has hired ten new people. -> Ten new people <input class="answer-input hw-input" style="min-width: 150px; padding: 6px 10px;" type="text" data-answer="have been hired">.</div>
+          </div>
+          <div style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+            <div>15. Will they serve dinner at 8? -> <input class="answer-input hw-input" style="min-width: 60px; padding: 6px 10px;" type="text" data-answer="Will"> dinner <input class="answer-input hw-input" style="min-width: 100px; padding: 6px 10px;" type="text" data-answer="be served"> at 8?</div>
+          </div>
+
+          <button class="check-btn" style="width: 200px; margin-top: 20px;" onclick="checkHomework()">Check Homework</button>
+          <div id="hw-feedback" class="feedback" style="margin-top: 16px; font-size: 16px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let correctClasswork = 0;
+  const maxClasswork = 23;
+  const attemptedItems = new Set();
+
+  function normalize(s){ return s.toLowerCase().replace(/\s+/g,' ').trim(); }
+  
+  function updateProgress(exId) {
+    if (!attemptedItems.has(exId)) {
+      attemptedItems.add(exId);
+      correctClasswork++;
+      const pct = (correctClasswork / maxClasswork) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('scoreText').textContent = correctClasswork + ' / ' + maxClasswork + ' правильно';
+    }
+  }
+
+  /* MCQ LOGIC */
+  function selectMcq(btn, answerVal) {
+    const grid = btn.closest('.mcq-grid');
+    grid.querySelectorAll('.mcq-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    grid.dataset.selected = answerVal;
+  }
+
+  function checkMcq(btn) {
+    const parent = btn.closest('.mcq-question');
+    const grid = parent.querySelector('.mcq-grid');
+    const feedback = parent.querySelector('.feedback');
+    const selected = grid.dataset.selected;
+    const correctAns = parent.dataset.answer;
+
+    if (!selected) { alert("Сначала выбери вариант!"); return; }
+    feedback.style.display = 'block';
+    
+    if (selected === correctAns) {
+      feedback.className = 'feedback correct';
+      feedback.textContent = '✓ Правильно!';
+      grid.querySelector('.selected').classList.add('correct');
+      updateProgress('mcq' + correctAns + parent.innerText.slice(0,5)); // unique id hack
+    } else {
+      feedback.className = 'feedback wrong';
+      feedback.textContent = '✗ Ошибка.';
+      grid.querySelector('.selected').classList.add('wrong');
+    }
+  }
+
+  /* DROPDOWN LOGIC */
+  function checkDropdown(btn) {
+    const parent = btn.closest('.dropdown-question');
+    const select = parent.querySelector('.inline-select');
+    const feedback = parent.querySelector('.feedback');
+    const correctAns = select.dataset.answer;
+    const userAns = select.value;
+
+    if (!userAns) return;
+    select.classList.remove('correct', 'wrong');
+    feedback.style.display = 'block';
+
+    if (userAns === correctAns) {
+      select.classList.add('correct');
+      feedback.className = 'feedback correct';
+      feedback.textContent = '✓ Правильно!';
+      updateProgress('dd' + correctAns + parent.innerText.slice(0,5));
+    } else {
+      select.classList.add('wrong');
+      feedback.className = 'feedback wrong';
+      feedback.textContent = '✗ Неверно. Вспомни формулу времени.';
+    }
+  }
+
+  /* WORD BUILDER LOGIC */
+  function toggleWord(wordEl, zoneId, bankId) {
+    const zone = document.getElementById(zoneId);
+    const bank = document.getElementById(bankId);
+    if (wordEl.parentElement.id === bankId) {
+      zone.appendChild(wordEl);
+    } else {
+      bank.appendChild(wordEl);
+    }
+  }
+
+  function checkBuilder(btn) {
+    const parent = btn.closest('.builder-question');
+    const zone = parent.querySelector('.drop-zone');
+    const feedback = parent.querySelector('.feedback');
+    const correctAns = parent.dataset.answer;
+    
+    const words = Array.from(zone.querySelectorAll('.draggable-word')).map(w => w.textContent.trim());
+    const userAns = words.join(' ');
+
+    feedback.style.display = 'block';
+
+    if (userAns === correctAns) {
+      feedback.className = 'feedback correct';
+      feedback.textContent = '✓ Идеальный порядок!';
+      zone.style.borderColor = 'var(--correct)';
+      zone.style.backgroundColor = '#ecfdf5';
+      updateProgress('wb' + correctAns.slice(0,10));
+    } else {
+      feedback.className = 'feedback wrong';
+      feedback.textContent = '✗ Ошибка. Проверь порядок слов.';
+      zone.style.borderColor = 'var(--wrong)';
+      zone.style.backgroundColor = '#fef2f2';
+      setTimeout(() => {
+        zone.style.borderColor = 'var(--border)';
+        zone.style.backgroundColor = '#f8fafc';
+      }, 1500);
+    }
+  }
+
+  /* V3 BLOCK LOGIC */
+  function checkAllV3(btn) {
+    const container = btn.closest('.exercise-list');
+    const inputs = container.querySelectorAll('.answer-input');
+    let allRight = true;
+    let checkedCount = 0;
+
+    inputs.forEach(input => {
+      const userAns = normalize(input.value);
+      const correctAns = input.dataset.answer;
+      
+      input.classList.remove('correct', 'wrong');
+      if (userAns === correctAns) {
+        input.classList.add('correct');
+        checkedCount++;
+        updateProgress('v3' + correctAns);
+      } else {
+        input.classList.add('wrong');
+        allRight = false;
+      }
+    });
+
+    const feedback = document.getElementById('v3-feedback');
+    feedback.style.display = 'block';
+    if (allRight && inputs.length > 0) {
+      feedback.className = 'feedback correct';
+      feedback.textContent = '✓ Все формы V3 написаны верно!';
+    } else {
+      feedback.className = 'feedback wrong';
+      feedback.textContent = '✗ Есть ошибки. Попробуй еще раз.';
+    }
+  }
+
+  /* HOMEWORK LOGIC */
+  function checkHomework() {
+    const inputs = document.querySelectorAll('.hw-input');
+    let correctCount = 0;
+    
+    inputs.forEach(input => {
+      const userAns = normalize(input.value);
+      const correctAns = normalize(input.dataset.answer);
+      const altAns = input.dataset.alt ? normalize(input.dataset.alt) : null;
+      
+      input.classList.remove('correct', 'wrong');
+      if (userAns !== '' && (userAns === correctAns || userAns === altAns)) {
+        input.classList.add('correct');
+        correctCount++;
+      } else if (userAns !== '') {
+        input.classList.add('wrong');
+      }
+    });
+
+    const feedback = document.getElementById('hw-feedback');
+    feedback.style.display = 'block';
+    
+    if (correctCount === inputs.length) {
+      feedback.className = 'feedback correct';
+      feedback.textContent = `🎉 Brilliant! 100% Score (${correctCount}/${inputs.length}). Homework is completely correct!`;
+    } else {
+      feedback.className = 'feedback wrong';
+      feedback.textContent = `You got ${correctCount} out of ${inputs.length} correct. Check the red boxes and try again.`;
+    }
+  }
+
+</script>
+</body>
+</html>
