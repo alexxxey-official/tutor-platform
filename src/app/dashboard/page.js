@@ -52,25 +52,29 @@ export default function DashboardPage() {
           <div className="theory-card">
             <div className="stripe !bg-[#e63946]"></div>
             <div className="label !mb-2 !text-[#e63946]">Introducción</div>
-            <h3 className="unbounded font-bold text-xl mb-4">Карта грамматики</h3>
+            <h3 className="unbounded font-bold text-xl mb-2">Карта грамматики</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Система, логика и понимание того, как устроен язык Сервантеса.</p>
             <Link href="/lessons/spanish/intro" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть введение</Link>
           </div>
           <div className="theory-card">
             <div className="stripe !bg-[#e63946]"></div>
             <div className="label !mb-2 !text-[#e63946]">Gramática · A1</div>
-            <h3 className="unbounded font-bold text-xl mb-4">Артикли и Род</h3>
+            <h3 className="unbounded font-bold text-xl mb-2">Артикли и Род</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Почему стол — это мальчик, а кровать — девочка? И как с этим жить.</p>
             <Link href="/lessons/spanish/articles" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть урок</Link>
           </div>
           <div className="theory-card">
             <div className="stripe !bg-[#2a9d8f]"></div>
             <div className="label !mb-2 !text-[#2a9d8f]">Vocabulario · A1</div>
-            <h3 className="unbounded font-bold text-xl mb-4">Мега-словарь A1</h3>
+            <h3 className="unbounded font-bold text-xl mb-2">Мега-словарь A1</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">500+ слов. Всё, что нужно для выживания, общения и навигации.</p>
             <Link href="/lessons/spanish" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Открыть словарь</Link>
           </div>
           <div className="theory-card">
             <div className="stripe !bg-[#f4a261]"></div>
             <div className="label !mb-2 !text-[#f4a261]">Gramática · A1</div>
-            <h3 className="unbounded font-bold text-xl mb-4">ESTAR и Предлоги</h3>
+            <h3 className="unbounded font-bold text-xl mb-2">ESTAR и Предлоги</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как описать свой город: где находится музей, банк или аптека.</p>
             <Link href="/lessons/spanish/estar" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
           </div>
         </div>
@@ -81,13 +85,15 @@ export default function DashboardPage() {
           <div className="theory-card">
             <div className="stripe !bg-[#2a9d8f]"></div>
             <div className="label !mb-2">Grammar · B1</div>
-            <h3 className="unbounded font-bold text-xl mb-4">Nobody & Anyone</h3>
+            <h3 className="unbounded font-bold text-xl mb-2">Nobody & Anyone</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Раз и навсегда разбираемся с безличными местоимениями.</p>
             <Link href="/lessons/english/indefinite-pronouns" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Открыть урок</Link>
           </div>
           <div className="theory-card">
             <div className="stripe !bg-[#2a9d8f]"></div>
             <div className="label !mb-2">Grammar · B1-B2</div>
-            <h3 className="unbounded font-bold text-xl mb-4">Passive Voice</h3>
+            <h3 className="unbounded font-bold text-xl mb-2">Passive Voice</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Учимся строить пассивный залог. Трансформации и перевод.</p>
             <a href="/legacy-lessons/english/english_passive_voice.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Открыть урок</a>
           </div>
         </div>
