@@ -6,7 +6,8 @@ export default function IndefinitePronounsLesson() {
   const [answers, setAnswers] = useState({})
   const [hints, setHints] = useState({})
 
-  const total = 35 // Increased number of tasks
+  const total = 50 // Increased classwork to 30 + homework 20
+
   const correctCount = Object.values(answers).filter((a) => a.isCorrect).length
   const pct = (correctCount / total) * 100
 
@@ -238,6 +239,16 @@ export default function IndefinitePronounsLesson() {
             <ExerciseItem id="ex3" num="3." problem="Are you looking for _______? (Ты кого-то ищешь?)" correctAns="somebody|someone|anybody|anyone" hintText="В вопросах обычно ANY, но если мы предлагаем помощь или уверены, можно SOME." />
             <ExerciseItem id="ex4" num="4." problem="I am bored. I have _______ to do. (Мне скучно. Мне нечего делать - без NOT)" correctAns="nothing" hintText="Нет NOT, значит нужно слово с NO-." />
             <ExerciseItem id="ex5" num="5." problem="We can go _______ you want. (Мы можем пойти куда угодно.)" correctAns="anywhere" hintText="Утверждение + 'куда угодно' = ANY." />
+            <ExerciseItem id="ex11" num="6." problem="I'm hungry. I want _______ to eat. (что-то)" correctAns="something" />
+            <ExerciseItem id="ex12" num="7." problem="Is there _______ interesting on TV? (что-нибудь)" correctAns="anything" />
+            <ExerciseItem id="ex13" num="8." problem="He lives _______ near the station. (где-то)" correctAns="somewhere" />
+            <ExerciseItem id="ex14" num="9." problem="_______ knows the truth. It's a secret. (Никто)" correctAns="nobody|no one" />
+            <ExerciseItem id="ex15" num="10." problem="I have looked _______ for my phone, but I can't find it. (везде)" correctAns="everywhere" />
+            <ExerciseItem id="ex16" num="11." problem="Please, don't tell _______ about this. (никому - с NOT)" correctAns="anybody|anyone" />
+            <ExerciseItem id="ex17" num="12." problem="There is _______ in the box. It's empty. (ничего)" correctAns="nothing" />
+            <ExerciseItem id="ex18" num="13." problem="_______ is ready for the party. The decorations are up. (Всё)" correctAns="everything" />
+            <ExerciseItem id="ex19" num="14." problem="Can _______ help me with this heavy bag? (кто-нибудь)" correctAns="somebody|someone|anybody|anyone" />
+            <ExerciseItem id="ex20" num="15." problem="She went _______ without saying goodbye. (куда-то)" correctAns="somewhere" />
           </div>
         </div>
 
@@ -248,11 +259,31 @@ export default function IndefinitePronounsLesson() {
             <span className="ml-auto text-[12px] text-gray-500 bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-sm">Внимание на глаголы и контекст</span>
           </div>
           <div className="px-6 py-2">
-            <ExerciseItem id="ex6" num="6." problem="Everyone _______ (be) happy at the party yesterday." correctAns="was" hintText="Everyone - единственное число. В прошедшем времени глагол to be для ед.ч. - was." />
-            <ExerciseItem id="ex7" num="7." problem="_______ of my classmates passed the exam. (Никто ИЗ моих одноклассников)" correctAns="none" hintText="Никто ИЗ группы = None (of)." />
-            <ExerciseItem id="ex8" num="8." problem="Does _______ know the answer? (Кто-нибудь)" correctAns="anybody|anyone" />
-            <ExerciseItem id="ex9" num="9." problem="Nobody _______ (want) to clean the house." correctAns="wants" hintText="Nobody - единственное число (ОН). Добавляем -s к глаголу в Present Simple." />
-            <ExerciseItem id="ex10" num="10." problem="I opened the box, but there was _______ inside." correctAns="nothing" />
+            <ExerciseItem id="ex6" num="16." problem="Everyone _______ (be) happy at the party yesterday." correctAns="was" hintText="Everyone - единственное число. В прошедшем времени глагол to be для ед.ч. - was." />
+            <ExerciseItem id="ex7" num="17." problem="_______ of my classmates passed the exam. (Никто ИЗ моих одноклассников)" correctAns="none" hintText="Никто ИЗ группы = None (of)." />
+            <ExerciseItem id="ex8" num="18." problem="Does _______ know the answer? (Кто-нибудь)" correctAns="anybody|anyone" />
+            <ExerciseItem id="ex9" num="19." problem="Nobody _______ (want) to clean the house." correctAns="wants" hintText="Nobody - единственное число (ОН). Добавляем -s к глаголу в Present Simple." />
+            <ExerciseItem id="ex10" num="20." problem="I opened the box, but there was _______ inside." correctAns="nothing" />
+            <ExerciseItem id="ex21" num="21." problem="Everyone _______ (have) their own opinion. (имеет)" correctAns="has" hintText="Everyone = He/She/It. В Present Simple используем has." />
+            <ExerciseItem id="ex22" num="22." problem="You can ask _______ in this office. They all know the rules. (Любого)" correctAns="anyone|anybody" />
+            <ExerciseItem id="ex23" num="23." problem="Nothing _______ (be) impossible. (Ничто не невозможно)" correctAns="is" />
+            <ExerciseItem id="ex24" num="24." problem="Nobody _______ (know) what happened yesterday. (знает)" correctAns="knows" />
+            <ExerciseItem id="ex25" num="25." problem="I asked my friends, but _______ of them knew the answer. (Никто ИЗ)" correctAns="none" />
+          </div>
+        </div>
+
+        <div id="practice-formats" className="bg-white border border-[#e5e0d5] rounded-2xl overflow-hidden mb-8 shadow-sm">
+          <div className="px-6 py-4 flex items-center gap-3 border-b border-[#e5e0d5] bg-gray-50">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#1a1a2e]"></div>
+            <h3 className="text-[16px] font-bold m-0">Блок 3: Перевод и Трансформация</h3>
+            <span className="ml-auto text-[12px] text-gray-500 bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-sm">Разные форматы заданий</span>
+          </div>
+          <div className="px-6 py-2">
+            <ExerciseItem id="ex26" num="26." problem="<b>[Переведи]</b> Я никого не знаю здесь. <br/><span class='text-gray-500 text-sm'>I don't know _______ here.</span>" correctAns="anybody|anyone" />
+            <ExerciseItem id="ex27" num="27." problem="<b>[Переведи]</b> Все были рады тебя видеть. <br/><span class='text-gray-500 text-sm'>_______ was happy to see you.</span>" correctAns="everyone|everybody" />
+            <ExerciseItem id="ex28" num="28." problem="<b>[Найди ошибку]</b> Впиши правильное слово вместо ошибочного: <br/><span class='text-gray-500 text-sm'>I don't have <u>nothing</u> to wear.</span>" correctAns="anything" hintText="В английском не бывает двойного отрицания. Don't уже есть, значит..." />
+            <ExerciseItem id="ex29" num="29." problem="<b>[Найди ошибку]</b> Впиши правильную форму глагола: <br/><span class='text-gray-500 text-sm'>Everyone <u>are</u> here.</span>" correctAns="is" hintText="Everyone - всегда единственное число (He/She/It)." />
+            <ExerciseItem id="ex30" num="30." problem="<b>[Переведи]</b> Мне некуда идти. (без NOT) <br/><span class='text-gray-500 text-sm'>I have _______ to go.</span>" correctAns="nowhere" />
           </div>
         </div>
 
