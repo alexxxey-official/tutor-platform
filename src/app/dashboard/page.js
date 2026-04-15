@@ -51,6 +51,12 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           <div className="theory-card">
             <div className="stripe !bg-[#e63946]"></div>
+            <div className="label !mb-2 !text-[#e63946]">Introducción</div>
+            <h3 className="unbounded font-bold text-xl mb-4">Карта грамматики</h3>
+            <a href="/legacy-lessons/spanish/spanish_intro.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть введение</a>
+          </div>
+          <div className="theory-card">
+            <div className="stripe !bg-[#e63946]"></div>
             <div className="label !mb-2 !text-[#e63946]">Gramática · A1</div>
             <h3 className="unbounded font-bold text-xl mb-4">Артикли и Род</h3>
             <a href="/legacy-lessons/spanish/spanish_articles.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть урок</a>
