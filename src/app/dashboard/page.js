@@ -45,6 +45,24 @@ export default function DashboardPage() {
       </div>
       
       <div className="container max-w-6xl mx-auto px-6">
+        
+        {/* ИСПАНСКИЙ */}
+        <div className="section-label">Español</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="theory-card">
+            <div className="stripe !bg-[#e63946]"></div>
+            <div className="label !mb-2 !text-[#e63946]">Gramática · A1</div>
+            <h3 className="unbounded font-bold text-xl mb-4">Артикли и Род</h3>
+            <a href="/legacy-lessons/spanish/spanish_articles.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть урок</a>
+          </div>
+          <div className="theory-card">
+            <div className="stripe !bg-[#2a9d8f]"></div>
+            <div className="label !mb-2 !text-[#2a9d8f]">Vocabulario · A1</div>
+            <h3 className="unbounded font-bold text-xl mb-4">Мега-словарь A1</h3>
+            <Link href="/lessons/spanish" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Открыть словарь</Link>
+          </div>
+        </div>
+
         {/* АНГЛИЙСКИЙ */}
         <div className="section-label">English Language</div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
@@ -56,34 +74,18 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* ИСПАНСКИЙ */}
-        <div className="section-label">Español</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2">Vocabulario · A1</div>
-            <h3 className="unbounded font-bold text-xl mb-4">Мега-словарь A1</h3>
-            <Link href="/lessons/spanish" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть словарь</Link>
-          </div>
-        </div>
-
         {/* МАТЕМАТИКА */}
         <div className="section-label">Mathematics</div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           <div className="theory-card">
             <div className="stripe !bg-[#e63946]"></div>
-            <h3 className="unbounded font-bold text-lg mb-4">Квадратные уравнения</h3>
-            <a href="/legacy-lessons/math/quadratic_equations.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors text-sm">Открыть</a>
+            <h3 className="unbounded font-bold text-lg mb-4 text-sm">Квадратные уравнения</h3>
+            <a href="/legacy-lessons/math/quadratic_equations.html" className="block py-2 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors text-xs">Открыть</a>
           </div>
           <div className="theory-card">
             <div className="stripe !bg-[#e63946]"></div>
-            <h3 className="unbounded font-bold text-lg mb-4">Неравенства</h3>
-            <a href="/legacy-lessons/math/inequalities.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors text-sm">Открыть</a>
-          </div>
-          <div className="theory-card">
-            <div className="stripe !bg-[#e63946]"></div>
-            <h3 className="unbounded font-bold text-lg mb-4">Движение (Задание 10)</h3>
-            <a href="/legacy-lessons/math/ege_task10_motion.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors text-sm">Открыть</a>
+            <h3 className="unbounded font-bold text-lg mb-4 text-sm">Неравенства</h3>
+            <a href="/legacy-lessons/math/inequalities.html" className="block py-2 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors text-xs">Открыть</a>
           </div>
         </div>
 
@@ -92,13 +94,8 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="theory-card">
             <div className="stripe !bg-purple-600"></div>
-            <h3 className="unbounded font-bold text-lg mb-4">Постоянный ток (DC)</h3>
-            <a href="/legacy-lessons/physics/physics_dc.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-purple-600 transition-colors text-sm">Открыть</a>
-          </div>
-          <div className="theory-card">
-            <div className="stripe !bg-purple-600"></div>
-            <h3 className="unbounded font-bold text-lg mb-4">Теплопередача</h3>
-            <a href="/legacy-lessons/physics/physics_heat_transfer.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-purple-600 transition-colors text-sm">Открыть</a>
+            <h3 className="unbounded font-bold text-lg mb-4 text-sm">Постоянный ток (DC)</h3>
+            <a href="/legacy-lessons/physics/physics_dc.html" className="block py-2 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-purple-600 transition-colors text-xs">Открыть</a>
           </div>
         </div>
 
