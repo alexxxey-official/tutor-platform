@@ -49,6 +49,7 @@ export default function DashboardPage() {
         {/* ИСПАНСКИЙ */}
         <div className="section-label">Español</div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          
           <div className="theory-card">
             <div className="stripe !bg-[#e63946]"></div>
             <div className="label !mb-2 !text-[#e63946]">Introducción</div>
@@ -56,6 +57,7 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Система, логика и понимание того, как устроен язык Сервантеса.</p>
             <Link href="/lessons/spanish/intro" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть введение</Link>
           </div>
+
           <div className="theory-card">
             <div className="stripe !bg-[#e63946]"></div>
             <div className="label !mb-2 !text-[#e63946]">Gramática · A1</div>
@@ -63,6 +65,7 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Почему стол — это мальчик, а кровать — девочка? И как с этим жить.</p>
             <Link href="/lessons/spanish/articles" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть урок</Link>
           </div>
+
           <div className="theory-card">
             <div className="stripe !bg-[#2a9d8f]"></div>
             <div className="label !mb-2 !text-[#2a9d8f]">Vocabulario · A1</div>
@@ -70,6 +73,7 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">500+ слов. Всё, что нужно для выживания, общения и навигации.</p>
             <Link href="/lessons/spanish" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Открыть словарь</Link>
           </div>
+
           <div className="theory-card">
             <div className="stripe !bg-[#f4a261]"></div>
             <div className="label !mb-2 !text-[#f4a261]">Fonética · A1</div>
@@ -77,6 +81,7 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как звучать круто. Гласные, хамелеоны и ритм испанского языка.</p>
             <Link href="/lessons/spanish/phonetics" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть фонетику</Link>
           </div>
+
           <div className="theory-card">
             <div className="stripe !bg-[#f4a261]"></div>
             <div className="label !mb-2 !text-[#f4a261]">Gramática · A1</div>
@@ -84,13 +89,15 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как описать свой город: где находится музей, банк или аптека.</p>
             <Link href="/lessons/spanish/estar" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
           </div>
+
           <div className="theory-card">
             <div className="stripe !bg-[#e63946]"></div>
             <div className="label !mb-2 !text-[#e63946]">Escucha · A1</div>
             <h3 className="unbounded font-bold text-xl mb-2">Интерактивный Диктант</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Учимся понимать на слух. Включай видео и заполняй пропуски в тексте.</p>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Учимся понимать на слух. Слушай диктора и заполняй пропуски в тексте.</p>
             <Link href="/lessons/spanish/listening" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть аудирование</Link>
           </div>
+
           <div className="theory-card">
             <div className="stripe !bg-[#f4a261]"></div>
             <div className="label !mb-2 !text-[#f4a261]">Gramática · A1</div>
@@ -98,6 +105,7 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Где ставить вопросительные слова и порядок слов в испанском.</p>
             <Link href="/lessons/spanish/questions" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
           </div>
+
           <div className="theory-card">
             <div className="stripe !bg-[#f4a261]"></div>
             <div className="label !mb-2 !text-[#f4a261]">Lectura · A1</div>
@@ -105,6 +113,15 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Читаем и переводим простые тексты для практики (Введение).</p>
             <Link href="/lessons/spanish/reading/intro" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть карту</Link>
           </div>
+
+          <div className="theory-card">
+            <div className="stripe !bg-[#f4a261]"></div>
+            <div className="label !mb-2 !text-[#f4a261]">Lectura · A1</div>
+            <h3 className="unbounded font-bold text-xl mb-2">Hola, me llamo...</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Базовый текст о себе. Идеально для старта! Читаем и слушаем.</p>
+            <Link href="/lessons/spanish/reading/hola" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Читать текст</Link>
+          </div>
+
         </div>
 
         {/* АНГЛИЙСКИЙ */}
