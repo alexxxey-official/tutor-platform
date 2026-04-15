@@ -51,8 +51,8 @@ export default function ReadingHolaLesson() {
 
       <div className="max-w-[860px] mx-auto px-6">
         <nav className="bg-white border border-[#e5e0d5] rounded-xl px-6 py-5 mt-8 flex flex-wrap gap-2.5 items-center shadow-sm">
-          <Link href="/dashboard" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] font-bold transition-colors hover:bg-[#f4a261] hover:text-white">
-            ← На главную
+          <Link href="/lessons/spanish/reading/intro" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] font-bold transition-colors hover:bg-[#f4a261] hover:text-white">
+            ← Карта текстов
           </Link>
           <button 
             onClick={() => speakSpanish("¡Hola! Me llamo Carlos. Soy de Madrid, España. Tengo veinticinco años y soy estudiante. Estudio historia en la universidad. Vivo con mi familia. Mi padre se llama Juan y mi madre se llama María. Tengo un hermano menor, Luis. Me gusta mucho leer y escuchar música. Los fines de semana, camino por el parque con mis amigos.")}
