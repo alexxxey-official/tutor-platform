@@ -59,7 +59,7 @@ export default function DashboardPage() {
             <div className="stripe !bg-[#e63946]"></div>
             <div className="label !mb-2 !text-[#e63946]">Gramática · A1</div>
             <h3 className="unbounded font-bold text-xl mb-4">Артикли и Род</h3>
-            <a href="/legacy-lessons/spanish/spanish_articles.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть урок</a>
+            <Link href="/lessons/spanish/articles" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть урок</Link>
           </div>
           <div className="theory-card">
             <div className="stripe !bg-[#2a9d8f]"></div>
