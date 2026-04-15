@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inequalities — Академия Алексея Гуляева</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags:['script','noscript','style','textarea','pre'] },
+    startup: { typeset: true }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  :root {
+    --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
+    --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280;
+    --card: #ffffff; --border: #e5e0d5;
+    --correct: #2a9d8f; --wrong: #e63946;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+
+  /* HERO */
+  .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
+  .hero::before { content: '< >'; position: absolute; right: 30px; top: -30px; font-size: 180px; color: rgba(255,255,255,.04); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -10px; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 em { color: var(--gold); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
+  .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; }
+  .badges { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,.7); }
+
+  /* LAYOUT & TABS */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  
+  .tabs-nav { display: flex; gap: 12px; margin: 32px 0 16px; border-bottom: 2px solid var(--border); padding-bottom: 12px; overflow-x: auto; }
+  .tab-btn { background: transparent; border: none; font-size: 16px; font-weight: 600; font-family: 'Bounded', 'Unbounded', sans-serif; color: var(--muted); cursor: pointer; padding: 10px 20px; border-radius: 12px; transition: all 0.2s; white-space: nowrap; }
+  .tab-btn.active { background: var(--ink); color: white; }
+  .tab-btn:hover:not(.active) { background: #f3f4f6; color: var(--ink); }
+  .tab-content { display: none; animation: fadeIn 0.4s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+  .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 48px 0 20px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+  h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
+
+  /* THEORY */
+  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 16px; position: relative; }
+  .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--teal); }
+  .theory-card h3 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 12px; }
+  .theory-card p { color: #374151; font-size: 15px; margin-bottom: 10px; }
+  .math-block { background: #f0faf8; border: 1px solid #b7e0db; border-radius: 10px; padding: 16px 24px; margin: 14px 0; font-size: 15px; overflow-x: auto; text-align: center; }
+  .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
+  .rule-box > strong:first-child { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .rule-box strong:not(:first-child) { display: inline; color: inherit; font-weight: 700; text-transform: none; letter-spacing: normal; font-size: inherit; margin-bottom: 0; }
+
+  /* EXAMPLES */
+  .example-grid { display: grid; gap: 16px; }
+  .example-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .example-header { background: var(--ink); color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .example-header .tag { background: var(--gold); color: var(--ink); padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .example-body { padding: 20px 24px; }
+  .problem-statement { font-size: 15px; padding: 12px 16px; background: #f8f8f8; border-radius: 8px; margin-bottom: 16px; overflow-x: auto; }
+  .step-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+  .step-num { background: var(--teal); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; margin-top: 3px; }
+  .step-content { flex: 1; font-size: 14px; color: #374151; }
+  .step-math { background: #f8f8f8; border-radius: 8px; padding: 10px 14px; margin-top: 8px; overflow-x: auto; }
+
+  /* EXERCISES */
+  .instruction-box { background: #f3f4f6; border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; font-size: 14px; color: var(--ink); margin-bottom: 20px; }
+  .instruction-box code { background: #e5e7eb; padding: 2px 6px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); }
+  .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+  .exercise-set-header { padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+  .difficulty-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .easy { background: var(--teal); } .medium { background: var(--gold); } .hard { background: var(--accent); }
+  .exercise-set-header h3 { font-size: 16px; font-weight: 600; }
+  .exercise-set-header span { margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px; }
+  .exercise-list { padding: 16px 24px; }
+  .exercise-item { border-bottom: 1px dashed var(--border); padding: 16px 0; display: flex; gap: 16px; align-items: flex-start; }
+  .exercise-item:last-child { border-bottom: none; }
+  .ex-num { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); min-width: 28px; padding-top: 4px; }
+  .ex-body { flex: 1; }
+  .ex-problem { font-size: 15px; padding: 10px 14px; background: #fafafa; border-radius: 8px; margin-bottom: 10px; overflow-x: auto; }
+  
+  /* GRID FOR HOMEWORK */
+  @media(min-width: 768px) {
+    .hw-grid .exercise-list { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .hw-grid .exercise-item { border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 0; background: #fafafa; }
+    .hw-grid .ex-problem { background: white; border: 1px solid #eee; }
+  }
+
+  .answer-box { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .answer-input { border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px; font-family: 'DM Mono', monospace; font-size: 14px; width: 220px; outline: none; transition: border-color .2s; }
+  .answer-input:focus { border-color: var(--teal); }
+  .answer-input.correct { border-color: var(--correct); background: #f0faf8; color: var(--correct); }
+  .answer-input.wrong   { border-color: var(--wrong);   background: #fff5f5; color: var(--wrong); }
+  .check-btn { background: var(--ink); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background .2s; }
+  .check-btn:hover { background: #2d2d4e; }
+  .hint-btn { background: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 14px; font-size: 12px; color: var(--muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .2s; }
+  .hint-btn:hover { border-color: var(--gold); color: #7c4a00; }
+  .hint-text { display: none; margin-top: 10px; padding: 10px 14px; background: #fff8f0; border-radius: 8px; font-size: 13px; color: #7c4a00; border-left: 3px solid var(--gold); overflow-x: auto; }
+  .feedback { display: none; margin-top: 6px; font-size: 13px; font-weight: 500; }
+  .feedback.correct { color: var(--correct); } .feedback.wrong { color: var(--wrong); }
+
+  /* CHEATSHEET */
+  .cheatsheet { background: var(--ink); border-radius: 16px; padding: 32px; color: white; margin-bottom: 16px; }
+  .cheatsheet h2 { color: var(--gold); margin-bottom: 24px; }
+  .cheat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:600px){ .cheat-grid { grid-template-columns: 1fr; } }
+  .cheat-item { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 16px; overflow-x: auto; }
+  .cheat-item h4 { color: var(--gold); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+  .cheat-item p { font-size: 13px; color: rgba(255,255,255,.85); line-height: 2.4; }
+
+  /* PROGRESS */
+  .progress-card { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; }
+  .progress-bar-wrap { background: #e5e7eb; border-radius: 10px; height: 6px; margin: 6px 0 0; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--teal); border-radius: 10px; width: 0%; transition: width .4s ease; }
+  .score-display { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* TOC */
+  .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 0 0 32px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .toc span { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-right: 8px; }
+  .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+  .toc a:hover { background: var(--ink); color: white; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">Репетиторское занятие · Патрик Уильям · YR10</div>
+  <h1>Inequalities<br><em>Неравенства</em></h1>
+  <p>Неравенства с одним неизвестным. Графический и алгебраический методы (стр. 94–96) · Mathematics 4 Anaya</p>
+  <div class="badges">
+    <span class="badge">Unit 4 · Equations & Inequations</span>
+    <span class="badge">Метод интервалов</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('classwork')">📝 Классная работа</button>
+    <button class="tab-btn" onclick="switchTab('homework')">🏠 Домашнее задание</button>
+  </div>
+
+  <div id="tab-classwork" class="tab-content active">
+    
+    <nav class="toc">
+      <span>Разделы</span>
+      <a href="#theory">📖 Теория</a>
+      <a href="#examples">✏️ Разбор</a>
+      <a href="#exercises-easy">🟢 Базовые</a>
+      <a href="#exercises-med">🟡 Средние</a>
+      <a href="#exercises-hard">🔴 Сложные</a>
+      <a href="#cheatsheet">📋 Шпаргалка</a>
+    </nav>
+
+    <div id="theory">
+      <div class="section-label">Теория</div>
+      <h2>Как решать неравенства?</h2>
+
+      <div class="theory-card">
+        <div class="stripe"></div>
+        <h3>Основы и запись ответа</h3>
+        <p>Ответом в неравенстве является не одно число, а целый <strong>интервал</strong> (промежуток). Важно правильно ставить скобки:</p>
+        <ul style="margin-left: 20px; color: #374151; font-size: 15px; margin-bottom: 10px;">
+          <li><strong>Строгие (\(<\) или \(>\)):</strong> Точки выколотые \(\circ\). Скобки круглые <code>( )</code>.</li>
+          <li><strong>Нестрогие (\(\le\) или \(\ge\)):</strong> Точки закрашенные \(\bullet\). Скобки квадратные <code>[ ]</code>.</li>
+          <li>Бесконечность (\(-\infty\) или \(+\infty\)) <strong>всегда</strong> пишется с круглой скобкой!</li>
+        </ul>
+        <div class="rule-box">
+          <strong>⚠️ Главное правило неравенств</strong>
+          Если ты умножаешь или делишь обе части неравенства на <strong>отрицательное число</strong>, знак неравенства переворачивается! (Например: \(-2x > 4 \implies x < -2\)).
+        </div>
+      </div>
+
+      <div class="theory-card">
+        <div class="stripe" style="background:var(--accent)"></div>
+        <h3>Алгебраический метод (Метод интервалов)</h3>
+        <p>Идеально подходит для любых неравенств, которые можно разложить на множители.</p>
+        <ol style="margin-left: 20px; color: #374151; font-size: 15px;">
+          <li>Перенеси всё в левую часть, чтобы справа остался \(0\).</li>
+          <li>Приравняй левую часть к нулю и найди корни (нули функции).</li>
+          <li>Отметь корни на числовой прямой (выколотые или закрашенные).</li>
+          <li>Определи знак (\(+\) или \(-\)) на каждом интервале, подставив любое число из него.</li>
+          <li>Заштрихуй нужные интервалы (если \(> 0\), то плюсы; если \(< 0\), то минусы).</li>
+        </ol>
+      </div>
+
+      <div class="theory-card">
+        <div class="stripe" style="background:var(--gold)"></div>
+        <h3>Графический метод</h3>
+        <p>Отлично работает для квадратных неравенств вида \(ax^2 + bx + c > 0\).</p>
+        <ol style="margin-left: 20px; color: #374151; font-size: 15px;">
+          <li>Найди корни уравнения \(ax^2 + bx + c = 0\) (это точки пересечения с осью X).</li>
+          <li>Нарисуй ось X и отметь на ней корни.</li>
+          <li>Схематично нарисуй параболу: если \(a > 0\) — ветви вверх \(\cup\), если \(a < 0\) — ветви вниз \(\cap\).</li>
+          <li>Всё, что выше оси X — это \(+\). Всё, что ниже — это \(-\).</li>
+        </ol>
+      </div>
+    </div>
+
+    <div id="examples">
+      <div class="section-label">Разбор</div>
+      <h2>Решённые примеры</h2>
+      <div class="example-grid">
+
+        <div class="example-card">
+          <div class="example-header">
+            <span>Пример 1 · Линейное неравенство</span><span class="tag">Алгебра</span>
+          </div>
+          <div class="example-body">
+            <div class="problem-statement">
+              Решить неравенство: \(5 - 2x \ge 11\)
+            </div>
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-content">Переносим числа вправо:
+                <div class="step-math">\(-2x \ge 11 - 5 \implies -2x \ge 6\)</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-content">Делим на \(-2\). <strong>Внимание:</strong> знак неравенства меняется на противоположный!
+                <div class="step-math">\(x \le -3\)</div>
+              </div>
+            </div>
+            <div class="rule-box"><strong>Ответ</strong>\(\;(-\infty; -3]\)</div>
+          </div>
+        </div>
+
+        <div class="example-card">
+          <div class="example-header">
+            <span>Пример 2 · Квадратное неравенство</span><span class="tag">Графический метод</span>
+          </div>
+          <div class="example-body">
+            <div class="problem-statement">
+              Решить неравенство: \(x^2 - 4x - 5 < 0\)
+            </div>
+            <div class="step-row">
+              <div class="step-num">1</div>
+              <div class="step-content">Найдём корни уравнения \(x^2 - 4x - 5 = 0\). По теореме Виета:
+                <div class="step-math">\(x_1 = 5, \quad x_2 = -1\)</div>
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">2</div>
+              <div class="step-content">Коэффициент \(a = 1 > 0\), значит ветви параболы направлены <strong>вверх</strong>.
+              </div>
+            </div>
+            <div class="step-row">
+              <div class="step-num">3</div>
+              <div class="step-content">Парабола пересекает ось в точках \(-1\) и \(5\). Часть графика, которая находится <strong>ниже</strong> оси X (так как \(< 0\)), расположена между корнями.
+              </div>
+            </div>
+            <div class="rule-box"><strong>Ответ</strong>\(\;(-1; 5)\)</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="exercises-easy">
+      <div class="section-label">Задания</div>
+      <h2>Упражнения для занятия</h2>
+
+      <div class="instruction-box">
+        💡 <strong>Как вводить ответы (Интервалы):</strong><br><br>
+        • Используй круглые <code>( )</code> или квадратные <code>[ ]</code> скобки.<br>
+        • Бесконечность пиши как <code>-inf</code> или <code>inf</code>.<br>
+        • Знак объединения (U) пиши английской буквой <code>U</code>.<br>
+        • <em>Пример сложного ответа:</em> <code>(-inf; -2] U (5; inf)</code>
+      </div>
+
+      <div class="exercise-set">
+        <div class="exercise-set-header">
+          <div class="difficulty-dot easy"></div>
+          <h3>Уровень 1 — Базовые</h3>
+          <span>Линейные неравенства</span>
+        </div>
+        <div class="exercise-list">
+
+          <div class="exercise-item">
+            <div class="ex-num">1.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(3x - 6 > 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Например: (2; inf)" data-answer="(2;inf)">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+          </div>
+
+          <div class="exercise-item">
+            <div class="ex-num">2.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(4 - 2x \ge 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Интервал" data-answer="(-inf;2]">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+              </div>
+              <div class="hint-text">Перенеси 4 вправо: \(-2x \ge -4\). При делении на \(-2\) знак перевернется: \(x \le 2\).</div>
+              <div class="feedback"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="exercises-med" class="exercise-set">
+        <div class="exercise-set-header">
+          <div class="difficulty-dot medium"></div>
+          <h3>Уровень 2 — Средние</h3>
+          <span>Квадратные неравенства</span>
+        </div>
+        <div class="exercise-list">
+
+          <div class="exercise-item">
+            <div class="ex-num">3.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \((x - 1)(x - 5) < 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Интервал" data-answer="(1;5)">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+              </div>
+              <div class="hint-text">Корни: 1 и 5. Парабола ветвями вверх. Нам нужно то, что меньше нуля (ниже оси X), то есть между корнями.</div>
+              <div class="feedback"></div>
+            </div>
+          </div>
+
+          <div class="exercise-item">
+            <div class="ex-num">4.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(x^2 - 16 \ge 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Пример: (-inf;-4] U[4;inf)" data-answer="(-inf;-4]U[4;inf)">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+          </div>
+
+          <div class="exercise-item">
+            <div class="ex-num">5.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(x^2 - 7x + 10 \le 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Интервал" data-answer="[2;5]">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+              </div>
+              <div class="feedback"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="exercises-hard" class="exercise-set">
+        <div class="exercise-set-header">
+          <div class="difficulty-dot hard"></div>
+          <h3>Уровень 3 — Сложные</h3>
+          <span>Дробно-рациональные (Метод интервалов)</span>
+        </div>
+        <div class="exercise-list">
+
+          <div class="exercise-item">
+            <div class="ex-num">6.</div>
+            <div class="ex-body">
+              <div class="ex-problem">Решить: \(\dfrac{x - 3}{x + 1} < 0\)</div>
+              <div class="answer-box">
+                <input class="answer-input" type="text" placeholder="Интервал" data-answer="(-1;3)">
+                <button class="check-btn" onclick="checkAnswer(this, 'class')">Проверить</button>
+                <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+              </div>
+              <div class="hint-text">Нуль числителя: \(x=3\). Нуль знаменателя: \(x=-1\) (всегда выколотая точка!). Отметь их на оси и расставь знаки: \(+\) \(-\) \(+\). Нам нужен минус.</div>
+              <div class="feedback"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="progress-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span style="font-weight:600;font-size:15px;">Прогресс классной работы</span>
+          <span class="score-display" id="scoreText-class">0 / 6 правильно</span>
+        </div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill-class"></div></div>
+      </div>
+    </div>
+
+    <div id="cheatsheet">
+      <div class="section-label">Справочник</div>
+      <div class="cheatsheet">
+        <h2>📋 Шпаргалка — Неравенства</h2>
+        <div class="cheat-grid">
+          <div class="cheat-item">
+            <h4>Типы скобок</h4>
+            <p>\(<\) или \(>\) \(\implies\) <code>( )</code> выколотые<br>\(\le\) или \(\ge\) \(\implies\) <code>[ ]</code> закрашенные<br>\(\pm\infty\) \(\implies\) всегда <code>( )</code></p>
+          </div>
+          <div class="cheat-item">
+            <h4>Деление на минус</h4>
+            <p>Если \(-3x > 9\)<br>Делим на \(-3\)<br>Знак меняется: \(x < -3\)</p>
+          </div>
+          <div class="cheat-item">
+            <h4>Парабола \(ax^2+bx+c\)</h4>
+            <p>\(a > 0\) \(\implies\) ветви вверх \(\cup\)<br>\(a < 0\) \(\implies\) ветви вниз \(\cap\)<br>Выше оси X — это \(+\), ниже — это \(-\).</p>
+          </div>
+          <div class="cheat-item">
+            <h4>Дроби \(\frac{A}{B} \ge 0\)</h4>
+            <p>Знаменатель \(B\) <strong>никогда не равен нулю</strong>. Точки из знаменателя всегда выколотые (круглые скобки), даже если неравенство нестрогое (\(\ge\)).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><div id="tab-homework" class="tab-content">
+    
+    <div class="section-label">Самостоятельная отработка</div>
+    <h2>Домашнее задание</h2>
+    <p style="color:var(--muted); margin-bottom: 24px;">Реши эти 8 неравенств. Помни про правила ввода интервалов: <code>( )</code>, <code>[ ]</code>, <code>inf</code>, <code>U</code>.</p>
+
+    <div class="exercise-set hw-grid">
+      <div class="exercise-list" id="hw-list">
+        <div class="exercise-item"><div class="ex-num">1.</div><div class="ex-body"><div class="ex-problem">\(5x - 15 < 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-inf;3)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">2.</div><div class="ex-body"><div class="ex-problem">\(7 - x \le 2\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="[5;inf)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">3.</div><div class="ex-body"><div class="ex-problem">\((x + 2)(x - 4) \le 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="[-2;4]"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">4.</div><div class="ex-body"><div class="ex-problem">\(x^2 - 25 > 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-inf;-5)U(5;inf)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">5.</div><div class="ex-body"><div class="ex-problem">\(x(x - 6) \ge 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-inf;0]U[6;inf)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">6.</div><div class="ex-body"><div class="ex-problem">\(x^2 + 4x + 3 < 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-3;-1)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">7.</div><div class="ex-body"><div class="ex-problem">\(\dfrac{x}{x - 2} \le 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="[0;2)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+        <div class="exercise-item"><div class="ex-num">8.</div><div class="ex-body"><div class="ex-problem">\(-x^2 + 4x - 3 < 0\)</div><div class="answer-box"><input class="answer-input" type="text" data-answer="(-inf;1)U(3;inf)"><button class="check-btn" onclick="checkAnswer(this, 'hw')">✓</button></div><div class="feedback"></div></div></div>
+      </div>
+    </div>
+
+    <div class="progress-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-weight:600;font-size:15px;">Прогресс домашнего задания</span>
+        <span class="score-display" id="scoreText-hw">0 / 8 правильно</span>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill-hw"></div></div>
+    </div>
+
+  </div></div>
+
+<script>
+  // Tab Switching Logic
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+  }
+
+  // Answer Checking Logic
+  let stats = {
+    'class': { correct: 0, total: 6, attempted: new Set() },
+    'hw':    { correct: 0, total: 8, attempted: new Set() }
+  };
+
+  // Умная нормализация для интервалов
+  function normalizeInterval(s) {
+    let res = s.toLowerCase();
+    res = res.replace(/\s+/g, ''); // Удаляем все пробелы
+    res = res.replace(/,/g, ';'); // Заменяем запятые на точки с запятой
+    res = res.replace(/\+?inf(inity)?/g, 'inf'); // Нормализуем бесконечность (убираем +, понимаем infinity)
+    res = res.replace(/бесконечность/g, 'inf');
+    res = res.replace(/[-\u2013\u2014]/g, '-'); // Нормализуем разные виды тире в обычный минус
+    res = res.replace(/[u∪vи]/g, 'U'); // Нормализуем знак объединения (U, u, ∪, v, или русская 'и')
+    return res;
+  }
+
+  function checkAnswer(btn, sectionType) {
+    const box = btn.closest('.answer-box');
+    const input = box.querySelector('.answer-input');
+    const feedback = btn.closest('.ex-body').querySelector('.feedback');
+    const exNum = btn.closest('.exercise-item').querySelector('.ex-num').textContent.trim();
+    
+    const userAns = normalizeInterval(input.value);
+    const correctAns = normalizeInterval(input.dataset.answer);
+    const isCorrect = (userAns === correctAns) && userAns !== '';
+
+    input.classList.remove('correct','wrong');
+    feedback.classList.remove('correct','wrong');
+    feedback.style.display = 'block';
+
+    if(isCorrect) {
+      input.classList.add('correct');
+      feedback.classList.add('correct');
+      feedback.textContent = '✓ Правильно!';
+      
+      if(!stats[sectionType].attempted.has(exNum)) {
+        stats[sectionType].attempted.add(exNum);
+        stats[sectionType].correct++;
+        updateProgress(sectionType);
+      }
+    } else {
+      input.classList.add('wrong');
+      feedback.classList.add('wrong');
+      feedback.textContent = '✗ Ошибка. Проверь скобки и знаки.';
+    }
+  }
+
+  function toggleHint(btn) {
+    const hint = btn.closest('.ex-body').querySelector('.hint-text');
+    hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+    btn.textContent = hint.style.display === 'block' ? 'Скрыть' : 'Подсказка';
+    if(hint.style.display === 'block' && window.MathJax) MathJax.typesetPromise([hint]);
+  }
+
+  function updateProgress(sectionType) {
+    const s = stats[sectionType];
+    const pct = (s.correct / s.total) * 100;
+    document.getElementById(`progressFill-${sectionType}`).style.width = pct + '%';
+    document.getElementById(`scoreText-${sectionType}`).textContent = s.correct + ' / ' + s.total + ' правильно';
+  }
+</script>
+</body>
+</html>

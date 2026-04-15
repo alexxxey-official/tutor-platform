@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quadratic Equations — Академия Алексея Гуляева</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+    startup: { typeset: true }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+<style>
+  :root {
+    --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
+    --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280;
+    --card: #ffffff; --border: #e5e0d5;
+    --correct: #2a9d8f; --wrong: #e63946;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+
+  /* HERO */
+  .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
+  .hero::before { content: 'x²'; position: absolute; right: 40px; top: -10px; font-size: 160px; color: rgba(255,255,255,.04); font-family: 'DM Serif Display', serif; line-height: 1; }
+  .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 em { color: var(--gold); font-style: italic; }
+  .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; }
+  .badges { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,.7); }
+
+  /* LAYOUT */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 48px 0 20px; }
+  .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+  h2 { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
+
+  /* THEORY */
+  .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 16px; position: relative; }
+  .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--teal); }
+  .theory-card h3 { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 12px; }
+  .theory-card p { color: #374151; font-size: 15px; margin-bottom: 10px; }
+  .math-block { background: #f0faf8; border: 1px solid #b7e0db; border-radius: 10px; padding: 16px 24px; margin: 14px 0; font-size: 15px; overflow-x: auto; }
+  .rule-box { background: linear-gradient(135deg,#fff8f0,#fff3e6); border: 1px solid #f4a261; border-left: 4px solid var(--gold); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #7c4a00; }
+  .rule-box > strong:first-child { color: #5c3300; display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; }
+  .rule-box strong:not(:first-child) { display: inline; color: inherit; font-weight: 700; text-transform: none; letter-spacing: normal; font-size: inherit; margin-bottom: 0; }
+
+  /* EXAMPLES */
+  .example-grid { display: grid; gap: 16px; }
+  .example-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .example-header { background: var(--ink); color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .example-header .tag { background: var(--gold); color: var(--ink); padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .example-body { padding: 20px 24px; }
+  .problem-statement { font-size: 15px; padding: 12px 16px; background: #f8f8f8; border-radius: 8px; margin-bottom: 16px; overflow-x: auto; }
+  .step-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+  .step-num { background: var(--teal); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; margin-top: 3px; }
+  .step-content { flex: 1; font-size: 14px; color: #374151; }
+  .step-math { background: #f8f8f8; border-radius: 8px; padding: 10px 14px; margin-top: 8px; overflow-x: auto; }
+
+  /* EXERCISES */
+  .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 16px; }
+  .exercise-set-header { padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+  .difficulty-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .easy { background: var(--teal); } .medium { background: var(--gold); } .hard { background: var(--accent); }
+  .exercise-set-header h3 { font-size: 16px; font-weight: 600; }
+  .exercise-set-header span { margin-left: auto; font-size: 12px; color: var(--muted); background: #f3f4f6; padding: 3px 10px; border-radius: 20px; }
+  .exercise-list { padding: 16px 24px; }
+  .exercise-item { border-bottom: 1px dashed var(--border); padding: 16px 0; display: flex; gap: 16px; align-items: flex-start; }
+  .exercise-item:last-child { border-bottom: none; }
+  .ex-num { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); min-width: 28px; padding-top: 4px; }
+  .ex-body { flex: 1; }
+  .ex-problem { font-size: 15px; padding: 10px 14px; background: #fafafa; border-radius: 8px; margin-bottom: 10px; overflow-x: auto; }
+  .answer-box { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .answer-input { border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px; font-family: 'DM Mono', monospace; font-size: 14px; width: 180px; outline: none; transition: border-color .2s; }
+  .answer-input:focus { border-color: var(--teal); }
+  .answer-input.correct { border-color: var(--correct); background: #f0faf8; color: var(--correct); }
+  .answer-input.wrong   { border-color: var(--wrong);   background: #fff5f5; color: var(--wrong); }
+  .check-btn { background: var(--ink); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background .2s; }
+  .check-btn:hover { background: #2d2d4e; }
+  .hint-btn { background: none; border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 14px; font-size: 12px; color: var(--muted); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .2s; }
+  .hint-btn:hover { border-color: var(--gold); color: #7c4a00; }
+  .hint-text { display: none; margin-top: 10px; padding: 10px 14px; background: #fff8f0; border-radius: 8px; font-size: 13px; color: #7c4a00; border-left: 3px solid var(--gold); overflow-x: auto; }
+  .feedback { display: none; margin-top: 6px; font-size: 13px; font-weight: 500; }
+  .feedback.correct { color: var(--correct); } .feedback.wrong { color: var(--wrong); }
+
+  /* CHEATSHEET */
+  .cheatsheet { background: var(--ink); border-radius: 16px; padding: 32px; color: white; margin-bottom: 16px; }
+  .cheatsheet h2 { color: var(--gold); margin-bottom: 24px; }
+  .cheat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:600px){ .cheat-grid { grid-template-columns: 1fr; } }
+  .cheat-item { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 16px; overflow-x: auto; }
+  .cheat-item h4 { color: var(--gold); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+  .cheat-item p { font-size: 13px; color: rgba(255,255,255,.85); line-height: 2.4; }
+
+  /* PROGRESS */
+  .progress-bar-wrap { background: #e5e7eb; border-radius: 10px; height: 6px; margin: 6px 0 0; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--teal); border-radius: 10px; width: 0%; transition: width .4s ease; }
+  .score-display { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* TOC */
+  .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .toc span { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-right: 8px; }
+  .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+  .toc a:hover { background: var(--ink); color: white; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="label">Репетиторское занятие · Патрик Уильям · YR10</div>
+  <h1>Quadratic<br><em>Equations</em></h1>
+  <p>Квадратные уравнения и их корни — страницы 84–86 · Mathematics 4 Anaya</p>
+  <div class="badges">
+    <span class="badge">Unit 4 · Equations</span>
+    <span class="badge">Текущая тема · 16 апреля</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <nav class="toc">
+    <span>Разделы</span>
+    <a href="#theory">📖 Теория</a>
+    <a href="#examples">✏️ Примеры</a>
+    <a href="#exercises-easy">🟢 Базовые</a>
+    <a href="#exercises-med">🟡 Средние</a>
+    <a href="#exercises-hard">🔴 Сложные</a>
+    <a href="#cheatsheet">📋 Шпаргалка</a>
+  </nav>
+
+  <!-- ═══ THEORY ═══ -->
+  <div id="theory">
+    <div class="section-label">Теория</div>
+    <h2>Что такое квадратные уравнения?</h2>
+
+    <div class="theory-card">
+      <div class="stripe"></div>
+      <h3>Стандартный вид</h3>
+      <p>Квадратное уравнение — это уравнение, старшая степень неизвестной в котором равна 2. Его общий вид:</p>
+      <div class="math-block">
+        \[ax^2 + bx + c = 0\]
+      </div>
+      <p>Где \(a\neq 0\), а коэффициенты \(a, b, c\) — любые действительные числа.</p>
+    </div>
+
+    <div class="theory-card">
+      <div class="stripe" style="background:var(--accent)"></div>
+      <h3>Формула Дискриминанта</h3>
+      <p>Универсальный способ найти корни — посчитать дискриминант \(D\).</p>
+      <div class="math-block">
+        \[D = b^2 - 4ac\]
+        \[x_{1,2} = \frac{-b \pm \sqrt{D}}{2a}\]
+      </div>
+      <div class="rule-box">
+        <strong>⚠️ Сколько корней?</strong><br>
+        Если <strong>\(D > 0\)</strong> — 2 корня.<br>
+        Если <strong>\(D = 0\)</strong> — 1 корень (или 2 совпадающих).<br>
+        Если <strong>\(D < 0\)</strong> — действительных корней нет.
+      </div>
+    </div>
+
+    <div class="theory-card">
+      <div class="stripe" style="background:var(--gold)"></div>
+      <h3>Теорема Виета</h3>
+      <p>Для <em>приведённого</em> уравнения (где \(a = 1\)), то есть \(x^2 + px + q = 0\), справедливы формулы:</p>
+      <div class="math-block">
+        \[x_1 + x_2 = -p \qquad \text{и} \qquad x_1 \cdot x_2 = q\]
+      </div>
+      <p>Это позволяет находить корни устно, подбирая множители числа \(q\), дающие в сумме \(-p\).</p>
+    </div>
+  </div>
+
+  <!-- ═══ WORKED EXAMPLES ═══ -->
+  <div id="examples">
+    <div class="section-label">Разборы</div>
+    <h2>Решённые примеры</h2>
+    <div class="example-grid">
+
+      <div class="example-card">
+        <div class="example-header">
+          <span>Пример 1 · Через дискриминант</span><span class="tag">Шаг за шагом</span>
+        </div>
+        <div class="example-body">
+          <div class="problem-statement">Решить уравнение: \(2x^2 - 5x + 3 = 0\)</div>
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-content">Выпишем коэффициенты
+              <div class="step-math">\(a = 2,\; b = -5,\; c = 3\)</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-content">Вычислим дискриминант \(D = b^2 - 4ac\)
+              <div class="step-math">\(D = (-5)^2 - 4 \cdot 2 \cdot 3 = 25 - 24 = 1\)</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-content">Найдём корни по формуле \(x = \frac{-b \pm \sqrt{D}}{2a}\)
+              <div class="step-math">
+                \(x_1 = \frac{5 + 1}{4} = \frac{6}{4} = 1.5\)<br>
+                \(x_2 = \frac{5 - 1}{4} = \frac{4}{4} = 1\)
+              </div>
+            </div>
+          </div>
+          <div class="rule-box"><strong>Ответ</strong>\(\; x_1 = 1.5,\; x_2 = 1\)</div>
+        </div>
+      </div>
+
+      <div class="example-card">
+        <div class="example-header">
+          <span>Пример 2 · Неполное квадратное (c=0)</span><span class="tag">Шаг за шагом</span>
+        </div>
+        <div class="example-body">
+          <div class="problem-statement">Решить уравнение: \(x^2 - 7x = 0\)</div>
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-content">Вынесем общий множитель \(x\) за скобку
+              <div class="step-math">\(x(x - 7) = 0\)</div>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-content">Произведение равно нулю, когда хотя бы один из множителей равен нулю
+              <div class="step-math">\(x = 0 \quad \text{или} \quad x - 7 = 0\)</div>
+            </div>
+          </div>
+          <div class="rule-box"><strong>Ответ</strong>\(\; x_1 = 0,\; x_2 = 7\)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ EXERCISES ═══ -->
+  <div id="exercises-easy">
+    <div class="section-label">Задания</div>
+    <h2>Упражнения для занятия</h2>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:20px;">
+      ℹ️ Вводи корни <strong>через запятую</strong> без пробелов (например: <code>2,-5</code>). Если корень один, введи только его (например: <code>3</code>). Порядок ввода корней не важен.
+    </p>
+
+    <!-- LEVEL 1 -->
+    <div class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot easy"></div>
+        <h3>Уровень 1 — Неполные и простые</h3>
+        <span>Без дискриминанта</span>
+      </div>
+      <div class="exercise-list">
+
+        <div class="exercise-item">
+          <div class="ex-num">1.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(x^2 - 9 = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Пример: 3,-3" data-answer="3,-3" data-alt="-3,3">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+            </div>
+            <div class="hint-text">Перенеси 9 вправо: \(x^2 = 9\). Какое число в квадрате даёт 9? Не забудь про минус!</div>
+            <div class="feedback"></div>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="ex-num">2.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(x^2 + 5x = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Корни через запятую" data-answer="0,-5" data-alt="-5,0">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+            </div>
+            <div class="hint-text">Вынеси \(x\) за скобку: \(x(x+5)=0\). Приравняй каждый множитель к нулю.</div>
+            <div class="feedback"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- LEVEL 2 -->
+    <div id="exercises-med" class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot medium"></div>
+        <h3>Уровень 2 — Полные уравнения</h3>
+        <span>Дискриминант или Виет</span>
+      </div>
+      <div class="exercise-list">
+
+        <div class="exercise-item">
+          <div class="ex-num">3.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(x^2 - 7x + 10 = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Корни" data-answer="2,5" data-alt="5,2">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+            </div>
+            <div class="hint-text">По теореме Виета: сумма равна \(7\), произведение \(10\). Какие это два числа?</div>
+            <div class="feedback"></div>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="ex-num">4.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(x^2 + 6x + 9 = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Корень" data-answer="-3" data-alt="">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+            </div>
+            <div class="hint-text">Здесь \(D=0\) или используй формулу квадрата суммы: \((x+3)^2 = 0\).</div>
+            <div class="feedback"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- LEVEL 3 -->
+    <div id="exercises-hard" class="exercise-set">
+      <div class="exercise-set-header">
+        <div class="difficulty-dot hard"></div>
+        <h3>Уровень 3 — Более сложные</h3>
+        <span>Коэффициент \(a \neq 1\)</span>
+      </div>
+      <div class="exercise-list">
+
+        <div class="exercise-item">
+          <div class="ex-num">5.</div>
+          <div class="ex-body">
+            <div class="ex-problem">Решить уравнение: \(2x^2 - 3x - 5 = 0\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Пример: 2.5,-1" data-answer="2.5,-1" data-alt="-1,2.5">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+            </div>
+            <div class="hint-text">\(D = (-3)^2 - 4(2)(-5) = 9 + 40 = 49\). Корень из \(D\) равен \(7\).</div>
+            <div class="feedback"></div>
+          </div>
+        </div>
+
+        <div class="exercise-item">
+          <div class="ex-num">6.</div>
+          <div class="ex-body">
+            <div class="ex-problem">★ Привести к квадратному и решить: \(x + \dfrac{4}{x} = 5\)</div>
+            <div class="answer-box">
+              <input class="answer-input" type="text" placeholder="Корни" data-answer="1,4" data-alt="4,1">
+              <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+              <button class="hint-btn" onclick="toggleHint(this)">Подсказка</button>
+            </div>
+            <div class="hint-text">Умножь всё уравнение на \(x\) (при условии \(x \neq 0\)). Получишь \(x^2 - 5x + 4 = 0\).</div>
+            <div class="feedback"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div style="background:white;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-weight:600;font-size:15px;">Прогресс занятия</span>
+        <span class="score-display" id="scoreText">0 / 6 правильно</span>
+      </div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+    </div>
+  </div>
+
+  <!-- ═══ CHEATSHEET ═══ -->
+  <div id="cheatsheet">
+    <div class="section-label">Справочник</div>
+    <div class="cheatsheet">
+      <h2>📋 Шпаргалка — Квадратные уравнения</h2>
+      <div class="cheat-grid">
+        <div class="cheat-item">
+          <h4>Дискриминант</h4>
+          <p>\(D = b^2 - 4ac\)<br><br>\(x_{1,2} = \dfrac{-b \pm \sqrt{D}}{2a}\)</p>
+        </div>
+        <div class="cheat-item">
+          <h4>Теорема Виета</h4>
+          <p>Для \(x^2 + px + q = 0\):<br>\(x_1 + x_2 = -p\)<br>\(x_1 \cdot x_2 = q\)</p>
+        </div>
+        <div class="cheat-item">
+          <h4>Неполное: \(c = 0\)</h4>
+          <p>\(ax^2 + bx = 0\)<br>\(x(ax + b) = 0\)<br>Корни: \(x=0\) и \(x = -b/a\)</p>
+        </div>
+        <div class="cheat-item">
+          <h4>Неполное: \(b = 0\)</h4>
+          <p>\(ax^2 + c = 0\)<br>\(ax^2 = -c\)<br>Извлекаем корень: \(x = \pm \sqrt{-c/a}\)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let correct = 0;
+  const attempted = new Set();
+  const total = 6; // Количество заданий обновлено
+
+  function normalize(s){
+    return s.replace(/\s+/g,'').toLowerCase()
+            .replace(/[·×]/g,'*').replace(/÷/g,'/');
+  }
+  function checkAnswer(btn){
+    const box = btn.closest('.answer-box');
+    const input = box.querySelector('.answer-input');
+    const feedback = btn.closest('.ex-body').querySelector('.feedback');
+    const exNum = btn.closest('.exercise-item').querySelector('.ex-num').textContent.trim();
+    
+    const userAns = normalize(input.value);
+    const correctAns = normalize(input.dataset.answer);
+    
+    // Поддержка альтернативных вариантов ответов (data-alt="...")
+    const alts = (input.dataset.alt || '').split(',').map(normalize).filter(Boolean);
+    
+    // Проверка совпадения с главным или альтернативным ответом
+    const isCorrect = [correctAns, ...alts].includes(userAns);
+    
+    input.classList.remove('correct','wrong');
+    feedback.classList.remove('correct','wrong');
+    feedback.style.display = 'block';
+    
+    if(isCorrect){
+      input.classList.add('correct');
+      feedback.classList.add('correct');
+      feedback.textContent = '✓ Правильно!';
+      if(!attempted.has(exNum)){ 
+        attempted.add(exNum); 
+        correct++; 
+        updateProgress(); 
+      }
+    } else {
+      input.classList.add('wrong');
+      feedback.classList.add('wrong');
+      feedback.textContent = '✗ Попробуй ещё раз. Посмотри подсказку!';
+    }
+  }
+  
+  function toggleHint(btn){
+    const hint = btn.closest('.ex-body').querySelector('.hint-text');
+    hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+    btn.textContent = hint.style.display === 'block' ? 'Скрыть' : 'Подсказка';
+    if(hint.style.display === 'block' && window.MathJax) MathJax.typesetPromise([hint]);
+  }
+  
+  function updateProgress(){
+    const pct = (correct / total) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('scoreText').textContent = correct + ' / ' + total + ' правильно';
+  }
+</script>
+</body>
+</html>
