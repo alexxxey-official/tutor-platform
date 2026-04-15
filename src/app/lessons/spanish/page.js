@@ -1,9 +1,11 @@
 'use client'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 export default function SpanishLesson() {
   const speakSpanish = (text) => {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
+      // Очистка текста от лишних символов для корректной озвучки
       const cleanText = text.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '').split('/')[0].trim();
       const utterance = new SpeechSynthesisUtterance(cleanText);
       utterance.lang = 'es-ES';
@@ -44,31 +46,59 @@ export default function SpanishLesson() {
             <div className="stripe"></div>
             <h3 className="unbounded text-lg font-bold mb-4">Базовые слова</h3>
             <table className="conj-table">
+              <thead><tr><th>Испанский</th><th>Русский</th></tr></thead>
               <tbody>
-                <tr><td className="font-bold text-[#2a9d8f] cursor-pointer" onClick={() => speakSpanish('Hola')}>🔊 Hola / Adiós</td><td>Привет / Пока</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f] cursor-pointer" onClick={() => speakSpanish('Buenos días')}>🔊 Buenos días</td><td>Доброе утро</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f] cursor-pointer" onClick={() => speakSpanish('Vale')}>🔊 Vale</td><td>Окей / Ладно</td></tr>
+                <tr><td><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('Hola / Adiós')}>🔊</span> <span className="font-bold text-[#2a9d8f]">Hola / Adiós</span></td><td>Привет / Пока</td></tr>
+                <tr><td><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('Buenos días')}>🔊</span> <span className="font-bold text-[#2a9d8f]">Buenos días</span></td><td>Доброе утро</td></tr>
+                <tr><td><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('Gracias')}>🔊</span> <span className="font-bold text-[#2a9d8f]">Gracias</span></td><td>Спасибо</td></tr>
+              </tbody>
+            </table>
+            
+            <h3 className="unbounded text-lg font-bold mt-8 mb-4">Как дела? (Фразы)</h3>
+            <div className="phrase-box">
+              <p><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('Qué tal')}>🔊</span> <strong>¿Qué tal?</strong> <em className="text-gray-400 not-italic text-sm">Как дела?</em></p>
+              <p><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('Cómo estás')}>🔊</span> <strong>¿Cómo estás?</strong> <em className="text-gray-400 not-italic text-sm">Как ты?</em></p>
+              <p><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('Mucho gusto')}>🔊</span> <strong>Mucho gusto</strong> <em className="text-gray-400 not-italic text-sm">Очень приятно</em></p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAMILY */}
+        <section id="family" className="scroll-mt-24">
+          <div className="section-label">Тема 2</div>
+          <h2 className="unbounded text-2xl font-bold mb-6">👨‍👩‍👧‍👦 Семья и Люди</h2>
+          <div className="theory-card">
+            <div className="stripe"></div>
+            <table className="conj-table">
+              <tbody>
+                <tr><td><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('la familia')}>🔊</span> <span className="font-bold text-[#2a9d8f]">la familia</span></td><td>семья</td></tr>
+                <tr><td><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('los padres')}>🔊</span> <span className="font-bold text-[#2a9d8f]">los padres</span></td><td>родители</td></tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        {/* TIME */}
-        <section id="time" className="scroll-mt-24">
-          <div className="section-label">Тема 7</div>
-          <h2 className="unbounded text-2xl font-bold mb-6">⏳ Время и Календарь</h2>
+        {/* CITY */}
+        <section id="city" className="scroll-mt-24">
+          <div className="section-label">Тема 3</div>
+          <h2 className="unbounded text-2xl font-bold mb-6">🏙️ Город и Навигация</h2>
           <div className="theory-card">
             <div className="stripe"></div>
-            <h3 className="unbounded text-lg font-bold mb-4">Сезоны и фразы</h3>
-            <table className="conj-table">
-              <tbody>
-                <tr><td className="font-bold text-[#2a9d8f] cursor-pointer" onClick={() => speakSpanish('la primavera')}>🔊 la primavera / el verano</td><td>весна / лето</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f] cursor-pointer" onClick={() => speakSpanish('el otoño')}>🔊 el otoño / el invierno</td><td>осень / зима</td></tr>
-              </tbody>
-            </table>
-            <div className="phrase-box mt-6">
-              <p><strong>¿Qué hora es?</strong> <em className="text-gray-400 not-italic text-sm">Который час?</em></p>
-              <p><strong>Son las tres y media.</strong> <em className="text-gray-400 not-italic text-sm">3:30.</em></p>
+            <div className="phrase-box">
+              <p><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('Dónde está')}>🔊</span> <strong>¿Dónde está...?</strong> <em className="text-gray-400 not-italic text-sm">Где находится...?</em></p>
+              <p><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('Gira a la derecha')}>🔊</span> <strong>Gira a la derecha</strong> <em className="text-gray-400 not-italic text-sm">Поверни направо</em></p>
+            </div>
+          </div>
+        </section>
+
+        {/* FOOD */}
+        <section id="food" className="scroll-mt-24">
+          <div className="section-label">Тема 4</div>
+          <h2 className="unbounded text-2xl font-bold mb-6">🥘 Еда и Ресторан</h2>
+          <div className="theory-card">
+            <div className="stripe"></div>
+            <div className="phrase-box">
+              <p><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('La cuenta por favor')}>🔊</span> <strong>La cuenta, por favor</strong> <em className="text-gray-400 not-italic text-sm">Счёт, пожалуйста</em></p>
             </div>
           </div>
         </section>
@@ -81,9 +111,8 @@ export default function SpanishLesson() {
             <div className="stripe"></div>
             <table className="conj-table">
               <tbody>
-                <tr><td className="font-bold text-[#2a9d8f] cursor-pointer" onClick={() => speakSpanish('bueno')}>🔊 bueno - malo</td><td>хороший - плохой</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f] cursor-pointer" onClick={() => speakSpanish('grande')}>🔊 grande - pequeño</td><td>большой - маленький</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f] cursor-pointer" onClick={() => speakSpanish('caro')}>🔊 caro - barato</td><td>дорогой - дешевый</td></tr>
+                <tr><td><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('bueno malo')}>🔊</span> <span className="font-bold text-[#2a9d8f]">bueno - malo</span></td><td>хороший - плохой</td></tr>
+                <tr><td><span className="cursor-pointer hover:opacity-70" onClick={() => speakSpanish('grande pequeño')}>🔊</span> <span className="font-bold text-[#2a9d8f]">grande - pequeño</span></td><td>большой - маленький</td></tr>
               </tbody>
             </table>
           </div>
