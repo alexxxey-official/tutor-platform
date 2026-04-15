@@ -233,7 +233,7 @@ export default function QuestionsLesson() {
         </div>
       </div>
 
-      <div className="max-w-[860px] mx-auto px-6">
+      <div className="max-w-[1100px] mx-auto px-6">
         <div className="flex flex-col md:flex-row gap-8 items-start relative">
           
           <div className="flex-1 w-full">
