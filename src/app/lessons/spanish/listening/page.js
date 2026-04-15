@@ -98,7 +98,7 @@ export default function ListeningLesson() {
               We add a fallback link below just in case it's a YouTube-side restriction.
             */}
             <iframe 
-              src="https://www.youtube-nocookie.com/embed/oK2w9K7q8Cg?rel=0" 
+              src="https://www.youtube.com/embed/jZf6N8G9p9A?si=G0k51O-eE2KzS_hX" 
               className="absolute top-0 left-0 w-full h-full"
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -106,7 +106,7 @@ export default function ListeningLesson() {
             </iframe>
           </div>
           <p className="text-sm text-gray-400 text-center mb-6">
-            Если видео не воспроизводится, <a href="https://www.youtube.com/watch?v=oK2w9K7q8Cg" target="_blank" rel="noreferrer" className="text-[#2a9d8f] underline">нажми сюда, чтобы посмотреть на YouTube</a>.
+            Если видео не воспроизводится, <a href="https://www.youtube.com/watch?v=jZf6N8G9p9A" target="_blank" rel="noreferrer" className="text-[#2a9d8f] underline">нажми сюда, чтобы посмотреть на YouTube</a>.
           </p>
 
           <div className="bg-gradient-to-br from-[#fff8f0] to-[#fff3e6] border border-[#f4a261] border-l-4 border-l-[#f4a261] rounded-lg p-4 my-6 text-[14px] text-[#7c4a00]">
