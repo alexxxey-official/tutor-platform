@@ -98,6 +98,13 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Где ставить вопросительные слова и порядок слов в испанском.</p>
             <Link href="/lessons/spanish/questions" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
           </div>
+          <div className="theory-card">
+            <div className="stripe !bg-[#f4a261]"></div>
+            <div className="label !mb-2 !text-[#f4a261]">Lectura · A1</div>
+            <h3 className="unbounded font-bold text-xl mb-2">Hola, me llamo...</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Базовый текст о себе. Идеально для старта! Читаем и слушаем.</p>
+            <Link href="/lessons/spanish/reading/hola" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Читать текст</Link>
+          </div>
         </div>
 
         {/* АНГЛИЙСКИЙ */}
