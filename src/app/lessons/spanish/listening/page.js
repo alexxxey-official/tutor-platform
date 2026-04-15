@@ -46,6 +46,17 @@ export default function ListeningLesson() {
     if (e.key === 'Enter') checkAll()
   }
 
+  const playDictation = () => {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel(); // Stop any current speech
+      const text = "¡Hola! Me llamo Pablo. Yo soy de España. Y vivo en España también. Tengo treinta y seis años. Me gusta mucho hablar español.";
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'es-ES';
+      utterance.rate = 0.8; // Чуть медленнее для диктанта
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+
   const getInputClass = (key) => {
     const base = "border-b-2 border-gray-400 bg-transparent font-mono text-[16px] text-[#e63946] text-center outline-none w-[120px] transition-colors px-1 py-0.5 mx-1 focus:border-[#e63946]"
     if (status[key] === 'correct') return `${base} !border-[#2a9d8f] !text-[#2a9d8f]`
@@ -88,26 +99,17 @@ export default function ListeningLesson() {
           <div className="absolute left-0 top-5 bottom-5 w-1 rounded-r-sm bg-[#f4a261]"></div>
           
           <p className="text-gray-700 text-[15px] mb-6">
-            В этом задании мы используем видео от <strong>Dreaming Spanish</strong> (самый популярный канал для начинающих). Внимательно слушай, как Пабло (носитель из Испании) произносит слова, и вписывай то, что услышишь, в пропуски (с маленькой буквы).
+            Поскольку YouTube часто блокирует видео на сторонних сайтах, мы перевели этот диктант на <strong>встроенную озвучку</strong>! Жми на кнопку ниже, внимательно слушай диктора и вписывай то, что услышишь, в пропуски (с маленькой буквы).
           </p>
 
-          <div className="relative pt-[56.25%] h-0 overflow-hidden max-w-full rounded-xl my-6 border border-[#e5e0d5] bg-gray-900">
-            {/* 
-              Fix for YouTube embed: Added generic youtube-nocookie and full URL.
-              Sometimes videos are restricted from embedding on certain domains. 
-              We add a fallback link below just in case it's a YouTube-side restriction.
-            */}
-            <iframe 
-              src="https://www.youtube.com/embed/jZf6N8G9p9A?si=G0k51O-eE2KzS_hX" 
-              className="absolute top-0 left-0 w-full h-full"
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowFullScreen>
-            </iframe>
+          <div className="flex justify-center mb-8">
+            <button 
+              onClick={playDictation}
+              className="flex items-center gap-3 bg-[#e63946] hover:bg-[#d62839] text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:-translate-y-1 transition-all"
+            >
+              <span className="text-2xl">🔊</span> Слушать диктант
+            </button>
           </div>
-          <p className="text-sm text-gray-400 text-center mb-6">
-            Если видео не воспроизводится, <a href="https://www.youtube.com/watch?v=jZf6N8G9p9A" target="_blank" rel="noreferrer" className="text-[#2a9d8f] underline">нажми сюда, чтобы посмотреть на YouTube</a>.
-          </p>
 
           <div className="bg-gradient-to-br from-[#fff8f0] to-[#fff3e6] border border-[#f4a261] border-l-4 border-l-[#f4a261] rounded-lg p-4 my-6 text-[14px] text-[#7c4a00]">
             <strong className="text-[#5c3300] block mb-2 text-[12px] tracking-[1px] uppercase">💡 Подсказка:</strong>
