@@ -21,6 +21,8 @@ export default function SpanishLesson() {
           <a href="#city" className="bg-gray-100 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-[#2a9d8f] hover:text-white transition">🏙️ Город</a>
           <a href="#food" className="bg-gray-100 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-[#2a9d8f] hover:text-white transition">🥘 Еда</a>
           <a href="#house" className="bg-gray-100 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-[#2a9d8f] hover:text-white transition">🏠 Дом</a>
+          <a href="#clothes" className="bg-gray-100 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-[#2a9d8f] hover:text-white transition">👕 Одежда</a>
+          <a href="#time" className="bg-gray-100 px-4 py-1.5 rounded-full text-xs font-bold hover:bg-[#2a9d8f] hover:text-white transition">⏳ Время</a>
         </nav>
 
         {/* GREETINGS */}
@@ -35,8 +37,8 @@ export default function SpanishLesson() {
               <tbody>
                 <tr><td className="font-bold text-[#2a9d8f]">Hola / Adiós</td><td>Привет / Пока</td></tr>
                 <tr><td className="font-bold text-[#2a9d8f]">Buenos días</td><td>Доброе утро</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f]">Por favor</td><td>Пожалуйста</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f]">Gracias</td><td>Спасибо</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">Gracias / De nada</td><td>Спасибо / Не за что</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">Vale</td><td>Окей / Ладно</td></tr>
               </tbody>
             </table>
           </div>
@@ -53,9 +55,13 @@ export default function SpanishLesson() {
               <tbody>
                 <tr><td className="font-bold text-[#2a9d8f]">la familia</td><td>семья</td></tr>
                 <tr><td className="font-bold text-[#2a9d8f]">los padres</td><td>родители</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f]">el hijo / la hija</td><td>сын / дочь</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">el marido / la mujer</td><td>муж / жена</td></tr>
               </tbody>
             </table>
+            <div className="bg-gradient-to-br from-[#fff8f0] to-[#fff3e6] border border-[#f4a261] border-l-4 border-l-[#f4a261] rounded-xl p-5 my-6 text-[#7c4a00] text-sm">
+              <strong className="block text-[#5c3300] uppercase tracking-wider text-xs mb-1">💡 Правило:</strong>
+              Мужской род мн.ч. объединяет группу (los padres = родители).
+            </div>
           </div>
         </section>
 
@@ -66,11 +72,9 @@ export default function SpanishLesson() {
           <div className="theory-card">
             <div className="stripe"></div>
             <table className="conj-table">
-              <thead><tr><th>Испанский</th><th>Русский</th></tr></thead>
               <tbody>
                 <tr><td className="font-bold text-[#2a9d8f]">la ciudad</td><td>город</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f]">la calle</td><td>улица</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f]">el hospital</td><td>больница</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">la calle / la plaza</td><td>улица / площадь</td></tr>
               </tbody>
             </table>
             <div className="phrase-box mt-6">
@@ -87,11 +91,10 @@ export default function SpanishLesson() {
           <div className="theory-card">
             <div className="stripe"></div>
             <table className="conj-table">
-              <thead><tr><th>Испанский</th><th>Русский</th></tr></thead>
               <tbody>
                 <tr><td className="font-bold text-[#2a9d8f]">el pan / el agua</td><td>хлеб / вода</td></tr>
                 <tr><td className="font-bold text-[#2a9d8f]">la carne / el pescado</td><td>мясо / рыба</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f]">la cuenta, por favor</td><td>счёт, пожалуйста</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">La cuenta, por favor</td><td>Счёт, пожалуйста</td></tr>
               </tbody>
             </table>
           </div>
@@ -103,12 +106,58 @@ export default function SpanishLesson() {
           <h2 className="unbounded text-2xl font-bold mb-6">🏠 Дом и Мебель</h2>
           <div className="theory-card">
             <div className="stripe"></div>
+            <h3 className="unbounded text-lg font-bold mb-4">Комнаты и мебель</h3>
             <table className="conj-table">
-              <thead><tr><th>Испанский</th><th>Русский</th></tr></thead>
               <tbody>
                 <tr><td className="font-bold text-[#2a9d8f]">la casa / el piso</td><td>дом / квартира</td></tr>
                 <tr><td className="font-bold text-[#2a9d8f]">la cocina / el baño</td><td>кухня / ванная</td></tr>
-                <tr><td className="font-bold text-[#2a9d8f]">la puerta / la ventana</td><td>дверь / окно</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">la cama / el armario</td><td>кровать / шкаф</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">la nevera</td><td>холодильник</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* CLOTHES */}
+        <section id="clothes" className="scroll-mt-8">
+          <div className="section-label">Тема 6</div>
+          <h2 className="unbounded text-2xl font-bold mb-6">👕 Одежда и Цвета</h2>
+          <div className="theory-card">
+            <div className="stripe"></div>
+            <h3 className="unbounded text-lg font-bold mb-4">Одежда (La ropa)</h3>
+            <table className="conj-table">
+              <tbody>
+                <tr><td className="font-bold text-[#2a9d8f]">la camiseta / la camisa</td><td>футболка / рубашка</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">los vaqueros / el vestido</td><td>джинсы / платье</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">los zapatos</td><td>туфли, ботинки</td></tr>
+              </tbody>
+            </table>
+            <h3 className="unbounded text-lg font-bold mt-8 mb-4">Цвета (Los colores)</h3>
+            <table className="conj-table">
+              <tbody>
+                <tr><td className="font-bold text-[#2a9d8f]">rojo / azul / verde</td><td>красный / синий / зеленый</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">negro / blanco</td><td>черный / белый</td></tr>
+              </tbody>
+            </table>
+            <div className="bg-gradient-to-br from-[#fff8f0] to-[#fff3e6] border border-[#f4a261] border-l-4 border-l-[#f4a261] rounded-xl p-5 my-6 text-[#7c4a00] text-sm">
+              <strong className="block text-[#5c3300] uppercase tracking-wider text-xs mb-1">💡 Правило:</strong>
+              Naranja и Rosa не меняют окончание по роду (la casa naranja).
+            </div>
+          </div>
+        </section>
+
+        {/* TIME */}
+        <section id="time" className="scroll-mt-8">
+          <div className="section-label">Тема 7</div>
+          <h2 className="unbounded text-2xl font-bold mb-6">⏳ Время и Календарь</h2>
+          <div className="theory-card">
+            <div className="stripe"></div>
+            <table className="conj-table">
+              <tbody>
+                <tr><td className="font-bold text-[#2a9d8f]">lunes, martes, miércoles</td><td>пн, вт, ср</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">jueves, viernes</td><td>чт, пт</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">sábado, domingo</td><td>сб, вс</td></tr>
+                <tr><td className="font-bold text-[#2a9d8f]">el fin de semana</td><td>выходные</td></tr>
               </tbody>
             </table>
           </div>
