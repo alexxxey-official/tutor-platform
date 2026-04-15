@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Испанский А1: Введение — Академия А. Гуляева</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+ :root {
+ --ink: #1a1a2e; --paper: #faf8f3; --accent: #e63946;
+ --gold: #f4a261; --teal: #2a9d8f; --muted: #6b7280;
+ --card: #ffffff; --border: #e5e0d5;
+ --correct: #2a9d8f; --wrong: #e63946;
+ }
+ * { box-sizing: border-box; margin: 0; padding: 0; }
+ body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px; }
+
+ /* HERO */
+ .hero { background: var(--ink); color: white; padding: 48px 40px 40px; position: relative; overflow: hidden; }
+ .hero::before { content: 'A1'; position: absolute; right: 20px; top: -20px; font-size: 150px; color: rgba(255,255,255,.03); font-family: 'Unbounded', sans-serif; font-weight: 800; line-height: 1; letter-spacing: -5px; }
+ .label { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+ .hero h1 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; }
+ .hero h1 em { color: var(--accent); font-style: italic; font-family: 'DM Serif Display', serif; font-weight: 400; }
+ .hero p { color: rgba(255,255,255,.6); font-size: 15px; max-width: 500px; }
+ .badges { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+ .badge { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: rgba(255,255,255,.7); }
+
+ /* LAYOUT */
+ .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+ .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 48px 0 20px; }
+ .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+ h2 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; color: var(--ink); margin-bottom: 20px; }
+
+ /* THEORY */
+ .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 32px 32px 40px; margin-bottom: 16px; position: relative; }
+ .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--accent); }
+ .theory-card h3 { font-family: 'Bounded', 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 12px; }
+ .theory-card p { color: #374151; font-size: 15px; margin-bottom: 10px; }
+ .rule-box { background: linear-gradient(135deg,#fff5f5,#ffe6e6); border: 1px solid #ffb3b3; border-left: 4px solid var(--accent); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #800000; }
+
+ /* ROADMAP LIST */
+ .roadmap-list { list-style: none; padding: 0; margin: 20px 0; }
+ .roadmap-list li { padding: 12px 16px; background: #f9fafb; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid var(--teal); font-size: 15px; }
+ .roadmap-list li strong { color: var(--ink); display: block; margin-bottom: 4px; }
+ .roadmap-list li span { font-size: 13px; color: var(--muted); }
+
+ .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+ .toc span { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-right: 8px; }
+ .toc a { background: #f3f4f6; color: var(--ink); text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; transition: all .2s; }
+ .toc a:hover { background: var(--accent); color: white; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+ <div class="label">🇪🇸 Введение в язык · Лингвистика</div>
+ <h1>Карта грамматики<br><em>Уровень A1</em></h1>
+ <p>Добро пожаловать на курс испанского! Здесь нет случайных фраз, только чёткая система, логика и понимание того, как устроен язык Сервантеса.</p>
+ <div class="badges">
+ <span class="badge">Грамматика</span>
+ <span class="badge">A1 Beginner</span>
+ <span class="badge">Основы</span>
+ </div>
+</div>
+
+<div class="container">
+ <nav class="toc">
+ <span>Навигация</span>
+ <a href="/dashboard">← В личный кабинет</a>
+ <a href="spanish_articles.html">Перейти к Артикалям 👉</a>
+ </nav>
+
+ <div id="theory">
+ <div class="section-label">Как устроен испанский</div>
+ <h2>Анатомия языка</h2>
+
+ <div class="theory-card">
+ <div class="stripe"></div>
+ <h3>Хорошие новости (Чего тут нет)</h3>
+ <p>Испанский язык очень логичен. В отличие от русского, здесь <strong>нет падежей</strong> (тебе не нужно менять окончания слов типа "стол-стола-столу-столом"). Слова связываются между собой с помощью коротких предлогов (de, a, en, por).</p>
+ <p>В отличие от английского, здесь <strong>как пишется, так и читается</strong>. Запомнив правила чтения за один вечер, ты сможешь прочитать вслух любую книгу, даже не зная перевода.</p>
+ </div>
+
+ <div class="theory-card" style="border-color: #f4a261;">
+ <div class="stripe" style="background: var(--gold);"></div>
+ <h3>Главные шестерёнки языка (Что нас ждёт)</h3>
+ <p>Чтобы заговорить на уровне A1 и перестать угадывать ответы в Duolingo, нам нужно освоить всего несколько базовых механизмов. Вот твой план обучения на ближайшее время:</p>
+
+ <ul class="roadmap-list">
+ <li>
+ <strong>1. Местоимения и Глаголы-фундаменты (SER, ESTAR, TENER)</strong>
+ <span>В испанском два глагола "быть" и один глагол "иметь". На них строится 50% всех базовых фраз.</span>
+ </li>
+ <li>
+ <strong>2. Существительные: Род и Число (+ Артикли)</strong>
+ <span>Всё в испанском — либо мальчик (el), либо девочка (la). Среднего рода нет. Стол — мальчик, а кровать — девочка.</span>
+ </li>
+ <li>
+ <strong>3. Правильные глаголы (Окончания -AR, -ER, -IR)</strong>
+ <span>Поняв логику спряжения (как меняется хвостик слова), ты автоматически научишься использовать тысячи новых глаголов.</span>
+ </li>
+ <li>
+ <strong>4. Предлоги и Направление</strong>
+ <span>Как сказать "Я иду В магазин", "Я возвращаюсь ИЗ магазина" и "Я нахожусь В магазине".</span>
+ </li>
+ <li>
+ <strong>5. Возвратные глаголы</strong>
+ <span>Глаголы с частичкой "ся". (Я моюсь, ты одеваешься).</span>
+ </li>
+ </ul>
+
+ <div class="rule-box">
+ <strong>💡 Совет профессора:</strong><br>
+ Испанцы — очень быстрые ребята. Чтобы говорить быстро, они часто <strong>выбрасывают личные местоимения</strong>. Вместо "Yo soy Alex" (Я есть Алекс), они скажут просто "Soy Alex". Окончание глагола уже говорит нам о том, кто совершает действие!
+ </div>
+ </div>
+ </div>
+
+ <div style="text-align: center; margin: 60px 0;">
+ <a href="/dashboard" style="background: var(--accent); color: white; text-decoration: none; padding: 16px 32px; border-radius: 12px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 12px rgba(230,57,70,0.3);">Вернуться в личный кабинет</a>
+ </div>
+
+</div>
+
+</body>
+</html>
