@@ -67,6 +67,12 @@ export default function DashboardPage() {
             <h3 className="unbounded font-bold text-xl mb-4">Мега-словарь A1</h3>
             <Link href="/lessons/spanish" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Открыть словарь</Link>
           </div>
+          <div className="theory-card">
+            <div className="stripe !bg-[#f4a261]"></div>
+            <div className="label !mb-2 !text-[#f4a261]">Gramática · A1</div>
+            <h3 className="unbounded font-bold text-xl mb-4">ESTAR и Предлоги</h3>
+            <Link href="/lessons/spanish/estar" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
+          </div>
         </div>
 
         {/* АНГЛИЙСКИЙ */}
