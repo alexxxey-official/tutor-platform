@@ -72,6 +72,13 @@ export default function DashboardPage() {
           </div>
           <div className="theory-card">
             <div className="stripe !bg-[#f4a261]"></div>
+            <div className="label !mb-2 !text-[#f4a261]">Fonética · A1</div>
+            <h3 className="unbounded font-bold text-xl mb-2">Правила чтения</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как звучать круто. Гласные, хамелеоны и ритм испанского языка.</p>
+            <Link href="/lessons/spanish/phonetics" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть фонетику</Link>
+          </div>
+          <div className="theory-card">
+            <div className="stripe !bg-[#f4a261]"></div>
             <div className="label !mb-2 !text-[#f4a261]">Gramática · A1</div>
             <h3 className="unbounded font-bold text-xl mb-2">ESTAR и Предлоги</h3>
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как описать свой город: где находится музей, банк или аптека.</p>
