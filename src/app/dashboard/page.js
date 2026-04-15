@@ -24,50 +24,57 @@ export default function DashboardPage() {
     router.push('/login')
   }
 
-  if (loading) return <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">Загрузка...</div>
+  if (loading) return <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] flex items-center justify-center">Загрузка...</div>
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-12">
-          <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-bold text-blue-400 font-mono tracking-tighter">AG ACADEMY</h1>
-            {user?.email === 'gulaevl068@gmail.com' && (
-              <Link href="/admin" className="px-3 py-1 bg-red-900/50 text-red-400 border border-red-500/50 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-red-800 transition">Admin Panel</Link>
-            )}
+    <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20">
+      <div className="hero mb-12">
+        <div className="max-w-6xl mx-auto flex justify-between items-start">
+          <div>
+            <div className="label">ESTUDIANTES · AG ACADEMY</div>
+            <h1>¡Hola, <em>{user?.email?.split('@')[0]}</em>!</h1>
+            <p>Добро пожаловать в твой учебный центр. Весь твой прогресс и уроки собраны здесь.</p>
           </div>
-          <button onClick={handleLogout} className="px-4 py-2 bg-red-600 hover:bg-red-500 rounded-lg transition text-sm font-bold shadow-lg">Выйти</button>
+          <div className="flex gap-3">
+             {user?.email === 'gulaevl068@gmail.com' && (
+              <Link href="/admin" className="px-4 py-2 bg-[#2a9d8f] text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-[#21867a] transition">Admin Panel</Link>
+            )}
+            <button onClick={handleLogout} className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold uppercase tracking-widest transition">Выйти</button>
+          </div>
         </div>
-        
-        <h3 className="text-2xl font-bold mb-8">Доступные курсы</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      </div>
+      
+      <div className="container max-w-6xl mx-auto px-6">
+        <div className="section-label">Твоё обучение</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
           {/* ENGLISH */}
-          <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 hover:border-blue-500 transition-all group">
-            <span className="text-xs text-blue-400 font-black uppercase tracking-widest">ENGLISH</span>
-            <h4 className="text-xl font-bold mt-1">Passive Voice</h4>
-            <Link href="/lessons/passive-voice" className="mt-6 block py-2 bg-blue-600 hover:bg-blue-500 text-center rounded-xl font-bold transition">Начать</Link>
+          <div className="theory-card group hover:shadow-xl transition-all duration-300">
+            <div className="stripe !bg-[#2a9d8f]"></div>
+            <div className="label !mb-2">English · B1</div>
+            <h3 className="unbounded font-bold text-xl mb-4">Passive Voice</h3>
+            <p className="text-gray-500 text-sm mb-6">Хардкорная практика пассивного залога с трансформацией и переводом.</p>
+            <Link href="/lessons/passive-voice" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Начать урок</Link>
           </div>
 
           {/* SPANISH */}
-          <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 hover:border-yellow-500 transition-all group">
-            <span className="text-xs text-yellow-400 font-black uppercase tracking-widest">SPANISH</span>
-            <h4 className="text-xl font-bold mt-1">Урок 1: Hola!</h4>
-            <Link href="/lessons/spanish" className="mt-6 block py-2 bg-yellow-600 hover:bg-yellow-500 text-center rounded-xl font-bold transition">Начать</Link>
+          <div className="theory-card group hover:shadow-xl transition-all duration-300">
+            <div className="stripe !bg-[#f4a261]"></div>
+            <div className="label !mb-2 !color-[#f4a261]">Español · A1</div>
+            <h3 className="unbounded font-bold text-xl mb-4">Vocabulario A1</h3>
+            <p className="text-gray-500 text-sm mb-6">Мега-словарь испанского языка: 500+ слов для выживания в городе.</p>
+            <Link href="/lessons/spanish" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Перейти к словарю</Link>
           </div>
 
-          {/* MATH */}
-          <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 hover:border-green-500 transition-all group">
-            <span className="text-xs text-green-400 font-black uppercase tracking-widest">MATH</span>
-            <h4 className="text-xl font-bold mt-1">Алгебра: База</h4>
-            <Link href="/lessons/math" className="mt-6 block py-2 bg-green-600 hover:bg-green-500 text-center rounded-xl font-bold transition text-white/50 pointer-events-none">В разработке</Link>
+          {/* MATH (Disabled) */}
+          <div className="theory-card opacity-60">
+            <div className="stripe !bg-[#6b7280]"></div>
+            <div className="label !mb-2">Math · Core</div>
+            <h3 className="unbounded font-bold text-xl mb-4 text-gray-400">Алгебра</h3>
+            <p className="text-gray-400 text-sm mb-6">Скоро открытие нового математического блока.</p>
+            <div className="py-3 bg-gray-100 text-gray-400 text-center rounded-xl font-bold cursor-not-allowed">В разработке</div>
           </div>
 
-          {/* PHYSICS */}
-          <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 hover:border-purple-500 transition-all group">
-            <span className="text-xs text-purple-400 font-black uppercase tracking-widest">PHYSICS</span>
-            <h4 className="text-xl font-bold mt-1">Механика</h4>
-            <Link href="/lessons/physics" className="mt-6 block py-2 bg-purple-600 hover:bg-purple-500 text-center rounded-xl font-bold transition text-white/50 pointer-events-none">В разработке</Link>
-          </div>
         </div>
       </div>
     </div>

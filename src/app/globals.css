@@ -1,3 +1,132 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --ink: #1a1a2e;
+  --paper: #faf8f3;
+  --accent: #e63946;
+  --gold: #f4a261;
+  --teal: #2a9d8f;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --border: #e5e0d5;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.unbounded {
+  font-family: 'Unbounded', sans-serif;
+}
+
+.hero {
+  background: var(--ink);
+  color: white;
+  padding: 48px 40px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 800;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.1;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.hero h1 em {
+  color: var(--teal);
+  font-style: italic;
+  font-family: serif;
+  font-weight: 400;
+}
+
+.hero p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  max-width: 500px;
+  position: relative;
+  z-index: 2;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 48px 0 20px;
+}
+
+.section-label::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--teal);
+}
+
+.theory-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 32px 32px 40px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.theory-card .stripe {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  bottom: 20px;
+  width: 4px;
+  border-radius: 0 2px 2px 0;
+  background: var(--teal);
+}
+
+.conj-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 24px;
+  font-size: 15px;
+}
+
+.conj-table th, .conj-table td {
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.conj-table th {
+  background: #f9fafb;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.phrase-box {
+  background: #f0faf8;
+  border-left: 4px solid var(--teal);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin: 16px 0;
+}
