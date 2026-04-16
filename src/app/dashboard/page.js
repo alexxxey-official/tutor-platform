@@ -123,6 +123,14 @@ export default function DashboardPage() {
           </div>
 
           <div className="theory-card">
+            <div className="stripe !bg-[#f4a261]"></div>
+            <div className="label !mb-2 !text-[#f4a261]">Урок 9 · Gramática</div>
+            <h3 className="unbounded font-bold text-xl mb-2">Глагол GUSTAR и Еда</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как сказать "Мне нравится", почему этот глагол ломает логику и еда.</p>
+            <Link href="/lessons/spanish/gustar" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
+          </div>
+
+          <div className="theory-card">
             <div className="stripe !bg-[#e63946]"></div>
             <div className="label !mb-2 !text-[#e63946]">¡HARDCORE!</div>
             <h3 className="unbounded font-bold text-xl mb-2">Тренажёр: 50 глаголов</h3>
