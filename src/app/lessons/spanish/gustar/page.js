@@ -277,15 +277,15 @@ export default function GustarLesson() {
                     </thead>
                     <tbody>
                       <AudioWord spanish="el pan" russian="хлеб" example="Comer pan (Есть хлеб)" />
-                      <AudioWord spanish="la carne" russian="мясо" example="" />
-                      <AudioWord spanish="el pescado" russian="рыба" example="" />
+                      <AudioWord spanish="la carne" russian="мясо" example="Carne con patatas (Мясо с картошкой)" />
+                      <AudioWord spanish="el pescado" russian="рыба" example="Pescado fresco (Свежая рыба)" />
                       <AudioWord spanish="el agua" russian="вода" example="Beber agua (Пить воду)" />
-                      <AudioWord spanish="el café" russian="кофе" example="" />
-                      <AudioWord spanish="el té" russian="чай" example="" />
-                      <AudioWord spanish="el zumo" russian="сок" example="" />
-                      <AudioWord spanish="la manzana" russian="яблоко" example="" />
-                      <AudioWord spanish="el queso" russian="сыр" example="" />
-                      <AudioWord spanish="el restaurante" russian="ресторан" example="" />
+                      <AudioWord spanish="el café" russian="кофе" example="Café con leche (Кофе с молоком)" />
+                      <AudioWord spanish="el té" russian="чай" example="Té verde (Зеленый чай)" />
+                      <AudioWord spanish="el zumo" russian="сок" example="Zumo de naranja (Апельсиновый сок)" />
+                      <AudioWord spanish="la manzana" russian="яблоко" example="Manzana roja (Красное яблоко)" />
+                      <AudioWord spanish="el queso" russian="сыр" example="Queso español (Испанский сыр)" />
+                      <AudioWord spanish="el restaurante" russian="ресторан" example="Cenar en el restaurante (Ужинать в ресторане)" />
                     </tbody>
                   </table>
                 </div>
