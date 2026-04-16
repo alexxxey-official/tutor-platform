@@ -3,17 +3,36 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { getLessonById } from '../../lib/lessons'
 
 export default function DashboardPage() {
   const [user, setUser] = useState(null)
+  const [profile, setProfile] = useState(null)
+  const [assignments, setAssignments] = useState([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
     const checkUser = async () => {
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) router.push('/login')
-      else setUser(user)
+      if (!user) {
+        router.push('/login')
+        return
+      }
+      setUser(user)
+      
+      // Load profile to check role
+      const { data: profileData } = await supabase.from('profiles').select('*').eq('id', user.id).single()
+      setProfile(profileData)
+      
+      // Load assigned lessons
+      const { data: assignedData } = await supabase
+        .from('student_lessons')
+        .select('*')
+        .eq('student_id', user.id)
+        .order('assigned_at', { ascending: false })
+      
+      setAssignments(assignedData || [])
       setLoading(false)
     }
     checkUser()
@@ -26,195 +45,120 @@ export default function DashboardPage() {
 
   if (loading) return <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] flex items-center justify-center font-bold font-mono">LOADING...</div>
 
+  // Group assignments by subject
+  const subjects = {}
+  assignments.forEach(a => {
+    const meta = getLessonById(a.lesson_id)
+    if (!meta) return
+    if (!subjects[meta.subject]) subjects[meta.subject] = []
+    subjects[meta.subject].push({ ...a, meta })
+  })
+
   return (
-    <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20">
-      <div className="hero mb-12">
-        <div className="max-w-6xl mx-auto flex justify-between items-start">
+    <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">
+      <div className="bg-[#1a1a2e] text-white px-10 py-12 pb-10 relative overflow-hidden mb-12">
+        <div className="max-w-[1100px] mx-auto flex justify-between items-start relative z-10">
           <div>
-            <div className="label">ESTUDIANTES · AG ACADEMY</div>
-            <h1>¡Hola, <em>{user?.email?.split('@')[0]}</em>!</h1>
-            <p>Добро пожаловать в твой учебный центр. Все твои уроки и прогресс собраны здесь.</p>
+            <div className="text-[11px] font-semibold tracking-[3px] uppercase text-[#e63946] mb-3">
+              ESTUDIANTES · AG ACADEMY
+            </div>
+            <h1 className="font-extrabold text-[clamp(32px,5vw,48px)] leading-[1.1] mb-4 unbounded">
+              ¡Hola,<br />
+              <em className="text-[#f4a261] not-italic font-normal font-serif">{user?.email?.split('@')[0]}</em>!
+            </h1>
+            <p className="text-white/70 text-[15px] max-w-[500px]">
+              Добро пожаловать в твой учебный центр. Здесь отображаются только те уроки, которые назначил преподаватель.
+            </p>
           </div>
           <div className="flex gap-3">
-             {user?.email === 'gulaevl068@gmail.com' && (
-              <Link href="/admin" className="px-4 py-2 bg-[#2a9d8f] text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-[#21867a] transition">Admin Panel</Link>
+             {profile?.role === 'admin' && (
+              <Link href="/admin" className="px-5 py-2.5 bg-[#2a9d8f] text-white rounded-xl text-[13px] font-bold uppercase tracking-widest hover:bg-[#21867a] transition-colors shadow-lg">
+                Admin Panel
+              </Link>
             )}
-            <button onClick={handleLogout} className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold uppercase tracking-widest transition">Выйти</button>
+            <button onClick={handleLogout} className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-[13px] font-bold uppercase tracking-widest transition-colors">
+              Выйти
+            </button>
           </div>
         </div>
       </div>
       
-      <div className="container max-w-6xl mx-auto px-6">
+      <div className="max-w-[1100px] mx-auto px-6">
         
-        {/* ИСПАНСКИЙ */}
-        <div className="section-label">Español</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          
-          <div className="theory-card">
-            <div className="stripe !bg-[#e63946]"></div>
-            <div className="label !mb-2 !text-[#e63946]">Introducción</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Карта грамматики</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Система, логика и понимание того, как устроен язык Сервантеса.</p>
-            <Link href="/lessons/spanish/intro" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть введение</Link>
+        {assignments.length === 0 ? (
+          <div className="bg-white border border-[#e5e0d5] rounded-3xl p-16 text-center shadow-sm max-w-[600px] mx-auto mt-10">
+            <div className="text-6xl mb-6">📚</div>
+            <h2 className="text-2xl font-bold unbounded mb-4">Пока пусто!</h2>
+            <p className="text-gray-500 text-[16px] leading-relaxed">
+              Преподаватель ещё не назначил тебе уроки. Как только он это сделает, они моментально появятся на этом экране.
+            </p>
           </div>
+        ) : (
+          Object.keys(subjects).map(subject => (
+            <div key={subject} className="mb-16">
+              <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[2.5px] uppercase text-[#1a1a2e] mb-6">
+                Предмет
+                <div className="w-[40px] h-[2px] bg-[#1a1a2e]"></div>
+              </div>
+              <h2 className="font-bold text-[32px] text-[#1a1a2e] mb-8 unbounded">{subject}</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {subjects[subject].map(({ id, status, score, total_score, meta }) => {
+                  const isComplete = status === 'completed' || (total_score > 0 && score === total_score)
+                  const pct = total_score > 0 ? Math.round((score / total_score) * 100) : 0
+                  
+                  return (
+                    <div key={id} className="bg-white border border-[#e5e0d5] rounded-2xl p-6 relative shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full">
+                      <div className="absolute left-0 top-6 bottom-6 w-1 rounded-r-sm transition-colors" style={{ backgroundColor: meta.color }}></div>
+                      
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: meta.color }}>
+                          Назначено
+                        </div>
+                        {isComplete && (
+                          <div className="bg-[#f0faf8] text-[#2a9d8f] text-[10px] px-2 py-0.5 rounded-sm font-bold border border-[#2a9d8f]/30">
+                            ПРОЙДЕН
+                          </div>
+                        )}
+                      </div>
+                      
+                      <h3 className="font-bold text-[18px] unbounded mb-3 leading-tight flex-1">
+                        {meta.title}
+                      </h3>
 
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Урок 1 · Fonética</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Правила чтения</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как звучать круто. Гласные, хамелеоны и ритм испанского языка.</p>
-            <Link href="/lessons/spanish/phonetics" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть фонетику</Link>
-          </div>
+                      {total_score > 0 ? (
+                        <div className="mt-auto mb-6">
+                          <div className="flex justify-between text-[12px] font-bold mb-1.5 text-gray-500">
+                            <span>Прогресс</span>
+                            <span>{score} / {total_score}</span>
+                          </div>
+                          <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full rounded-full transition-all duration-500" 
+                              style={{ width: `${pct}%`, backgroundColor: isComplete ? '#2a9d8f' : meta.color }}
+                            ></div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mt-auto mb-6">
+                          <div className="text-[12px] text-gray-400 font-mono italic">Теоретический материал</div>
+                        </div>
+                      )}
 
-          <div className="theory-card">
-            <div className="stripe !bg-[#e63946]"></div>
-            <div className="label !mb-2 !text-[#e63946]">Урок 2 · Gramática</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Местоимения и SER</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Фундамент языка. Кто мы такие, откуда и кем работаем.</p>
-            <Link href="/lessons/spanish/ser" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть урок</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#e63946]"></div>
-            <div className="label !mb-2 !text-[#e63946]">Урок 3 · Gramática</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Артикли и Род</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Почему стол — это мальчик, а кровать — девочка? И как с этим жить.</p>
-            <Link href="/lessons/spanish/articles" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть урок</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Урок 4 · Gramática</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Глагол TENER</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Быть голодным, иметь собаку, указывать возраст и быть должным.</p>
-            <Link href="/lessons/spanish/tener" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Урок 5 · Gramática</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Правильные глаголы</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Система спряжений -AR, -ER, -IR. Как говорить о действиях.</p>
-            <Link href="/lessons/spanish/verbs" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Урок 6 · Gramática</div>
-            <h3 className="unbounded font-bold text-xl mb-2">ESTAR и Предлоги</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как описать свой город: где находится музей, банк или аптека.</p>
-            <Link href="/lessons/spanish/estar" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Урок 7 · Gramática</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Вопросы и Порядок</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Где ставить вопросительные слова и порядок слов в испанском.</p>
-            <Link href="/lessons/spanish/questions" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Урок 8 · Gramática</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Семья и Внешность</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как рассказать о родственниках, описать внешность и сказать "моё".</p>
-            <Link href="/lessons/spanish/family" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Урок 9 · Gramática</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Глагол GUSTAR и Еда</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как сказать "Мне нравится", почему этот глагол ломает логику и еда.</p>
-            <Link href="/lessons/spanish/gustar" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#e63946]"></div>
-            <div className="label !mb-2 !text-[#e63946]">¡HARDCORE!</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Тренажёр: 50 глаголов</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Хардкорная практика на автоматизм. Спряжения -AR, -ER, -IR без остановки.</p>
-            <Link href="/lessons/spanish/verbs-trainer" className="block py-3 bg-[#e63946] text-white text-center rounded-xl font-bold hover:bg-[#1a1a2e] transition-colors">Запустить тренажёр</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#2a9d8f]"></div>
-            <div className="label !mb-2 !text-[#2a9d8f]">Vocabulario · A1</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Мега-словарь A1</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">500+ слов. Всё, что нужно для выживания, общения и навигации.</p>
-            <Link href="/lessons/spanish" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Открыть словарь</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#e63946]"></div>
-            <div className="label !mb-2 !text-[#e63946]">Escucha · A1</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Интерактивный Диктант</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Учимся понимать на слух. Слушай диктора и заполняй пропуски в тексте.</p>
-            <Link href="/lessons/spanish/listening" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors">Открыть аудирование</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Lectura · A1</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Карта текстов</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Читаем и переводим простые тексты для практики (Введение).</p>
-            <Link href="/lessons/spanish/reading/intro" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть карту</Link>
-          </div>
-
-          <div className="theory-card">
-            <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Lectura · A1</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Hola, me llamo...</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Базовый текст о себе. Идеально для старта! Читаем и слушаем.</p>
-            <Link href="/lessons/spanish/reading/hola" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Читать текст</Link>
-          </div>
-
-        </div>
-
-        {/* АНГЛИЙСКИЙ */}
-        <div className="section-label">English Language</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          <div className="theory-card">
-            <div className="stripe !bg-[#2a9d8f]"></div>
-            <div className="label !mb-2">Grammar · B1</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Nobody & Anyone</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Раз и навсегда разбираемся с безличными местоимениями.</p>
-            <Link href="/lessons/english/indefinite-pronouns" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Открыть урок</Link>
-          </div>
-          <div className="theory-card">
-            <div className="stripe !bg-[#2a9d8f]"></div>
-            <div className="label !mb-2">Grammar · B1-B2</div>
-            <h3 className="unbounded font-bold text-xl mb-2">Passive Voice</h3>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Учимся строить пассивный залог. Трансформации и перевод.</p>
-            <a href="/legacy-lessons/english/english_passive_voice.html" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#2a9d8f] transition-colors">Открыть урок</a>
-          </div>
-        </div>
-
-        {/* МАТЕМАТИКА */}
-        <div className="section-label">Mathematics</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          <div className="theory-card">
-            <div className="stripe !bg-[#e63946]"></div>
-            <h3 className="unbounded font-bold text-lg mb-4 text-sm">Квадратные уравнения</h3>
-            <a href="/legacy-lessons/math/quadratic_equations.html" className="block py-2 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors text-xs">Открыть</a>
-          </div>
-          <div className="theory-card">
-            <div className="stripe !bg-[#e63946]"></div>
-            <h3 className="unbounded font-bold text-lg mb-4 text-sm">Неравенства</h3>
-            <a href="/legacy-lessons/math/inequalities.html" className="block py-2 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#e63946] transition-colors text-xs">Открыть</a>
-          </div>
-        </div>
-
-        {/* ФИЗИКА */}
-        <div className="section-label">Physics</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="theory-card">
-            <div className="stripe !bg-purple-600"></div>
-            <h3 className="unbounded font-bold text-lg mb-4 text-sm">Постоянный ток (DC)</h3>
-            <a href="/legacy-lessons/physics/physics_dc.html" className="block py-2 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-purple-600 transition-colors text-xs">Открыть</a>
-          </div>
-        </div>
+                      <Link 
+                        href={meta.path} 
+                        className="block w-full py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold text-[14px] transition-colors group-hover:opacity-90"
+                        style={{ backgroundColor: isComplete ? '#1a1a2e' : meta.color }}
+                      >
+                        {isComplete ? 'Повторить' : (score > 0 ? 'Продолжить' : 'Начать')}
+                      </Link>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          ))
+        )}
 
       </div>
     </div>
