@@ -31,7 +31,8 @@ export default function AdminPage() {
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
-      .eq('role', 'student')
+      // УБРАЛ ФИЛЬТР, чтобы ты временно видел СЕБЯ для тестов
+      // .eq('role', 'student') 
       .order('created_at', { ascending: false })
     
     if (error) console.error("Error fetching students:", error)
