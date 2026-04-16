@@ -77,6 +77,14 @@ export default function DashboardPage() {
           <div className="theory-card">
             <div className="stripe !bg-[#f4a261]"></div>
             <div className="label !mb-2 !text-[#f4a261]">Урок 3 · Gramática</div>
+            <h3 className="unbounded font-bold text-xl mb-2">Глагол TENER</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Быть голодным, иметь собаку, указывать возраст и быть должным.</p>
+            <Link href="/lessons/spanish/tener" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
+          </div>
+
+          <div className="theory-card">
+            <div className="stripe !bg-[#f4a261]"></div>
+            <div className="label !mb-2 !text-[#f4a261]">Урок 4 · Gramática</div>
             <h3 className="unbounded font-bold text-xl mb-2">Правильные глаголы</h3>
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Система спряжений -AR, -ER, -IR. Как говорить о действиях.</p>
             <Link href="/lessons/spanish/verbs" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
@@ -84,7 +92,7 @@ export default function DashboardPage() {
 
           <div className="theory-card">
             <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Урок 4 · Gramática</div>
+            <div className="label !mb-2 !text-[#f4a261]">Урок 5 · Gramática</div>
             <h3 className="unbounded font-bold text-xl mb-2">ESTAR и Предлоги</h3>
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Как описать свой город: где находится музей, банк или аптека.</p>
             <Link href="/lessons/spanish/estar" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
@@ -92,7 +100,7 @@ export default function DashboardPage() {
 
           <div className="theory-card">
             <div className="stripe !bg-[#f4a261]"></div>
-            <div className="label !mb-2 !text-[#f4a261]">Урок 5 · Gramática</div>
+            <div className="label !mb-2 !text-[#f4a261]">Урок 6 · Gramática</div>
             <h3 className="unbounded font-bold text-xl mb-2">Вопросы и Порядок</h3>
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">Где ставить вопросительные слова и порядок слов в испанском.</p>
             <Link href="/lessons/spanish/questions" className="block py-3 bg-[#1a1a2e] text-white text-center rounded-xl font-bold hover:bg-[#f4a261] transition-colors">Открыть урок</Link>
