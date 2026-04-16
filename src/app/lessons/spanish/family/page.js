@@ -1,16 +1,11 @@
 'use client'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 
 export default function FamilyLesson() {
-  const [progress, setProgress] = useState({})
   const total = 25;
-  const correctCount = Object.values(progress).filter(Boolean).length;
-  const pct = (correctCount / total) * 100;
-
-  const markCorrect = (id, isCorrect) => {
-    setProgress(prev => ({ ...prev, [id]: isCorrect }))
-  }
+  const { progress, markCorrect, correctCount, pct } = useLessonProgress('spa_family', total);
 
   const speakSpanish = (text) => {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
