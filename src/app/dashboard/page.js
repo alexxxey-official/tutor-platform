@@ -115,6 +115,14 @@ export default function DashboardPage() {
           </div>
 
           <div className="theory-card">
+            <div className="stripe !bg-[#e63946]"></div>
+            <div className="label !mb-2 !text-[#e63946]">¡HARDCORE!</div>
+            <h3 className="unbounded font-bold text-xl mb-2">Тренажёр: 50 глаголов</h3>
+            <p className="text-sm text-gray-500 mb-6 leading-relaxed">Хардкорная практика на автоматизм. Спряжения -AR, -ER, -IR без остановки.</p>
+            <Link href="/lessons/spanish/verbs-trainer" className="block py-3 bg-[#e63946] text-white text-center rounded-xl font-bold hover:bg-[#1a1a2e] transition-colors">Запустить тренажёр</Link>
+          </div>
+
+          <div className="theory-card">
             <div className="stripe !bg-[#2a9d8f]"></div>
             <div className="label !mb-2 !text-[#2a9d8f]">Vocabulario · A1</div>
             <h3 className="unbounded font-bold text-xl mb-2">Мега-словарь A1</h3>
