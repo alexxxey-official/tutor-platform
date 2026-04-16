@@ -84,7 +84,7 @@ export default function VerbsLesson() {
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">
       <div className="bg-[#1a1a2e] text-white px-10 py-12 pb-10 relative overflow-hidden">
         <div className="text-[11px] font-semibold tracking-[3px] uppercase text-[#e63946] mb-3">
-          🇪🇸 Урок 4 · Грамматика A1
+          🇪🇸 Урок 3 · Грамматика A1
         </div>
         <h1 className="font-extrabold text-[clamp(32px,5vw,52px)] leading-[1.1] mb-4 unbounded relative z-10">
           Правильные<br />
