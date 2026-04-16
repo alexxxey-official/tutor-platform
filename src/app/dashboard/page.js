@@ -71,7 +71,7 @@ export default function DashboardPage() {
             </p>
           </div>
           <div className="flex gap-3">
-             {profile?.role === 'admin' && (
+             {user?.email === 'gulaevl068@gmail.com' && (
               <Link href="/admin" className="px-5 py-2.5 bg-[#2a9d8f] text-white rounded-xl text-[13px] font-bold uppercase tracking-widest hover:bg-[#21867a] transition-colors shadow-lg">
                 Admin Panel
               </Link>
