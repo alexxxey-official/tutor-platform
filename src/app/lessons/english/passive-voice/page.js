@@ -11,34 +11,32 @@ const CW_DATA = [
   {
     id: 'eng_passive_read_1',
     type: 'mcq',
-    problem: '<b>Reading:</b> According to the text, how are cacao beans harvested?',
+    problem: '1. According to the text, how are cacao beans harvested?',
     options: [
       { label: 'They are harvested by big machines.', value: '1' },
       { label: 'They are harvested by farmers by hand.', value: '2' },
       { label: 'They are grown in factories.', value: '3' }
     ],
     correctAnswer: '2',
-    hint: 'Посмотри первый абзац текста про шоколад.',
-    solution: 'В тексте сказано: "they are harvested by farmers by hand".'
+    solution: 'В тексте: "they are harvested by farmers by hand".'
   },
   {
     id: 'eng_passive_read_2',
     type: 'mcq',
-    problem: '<b>Reading:</b> Where are the beans roasted?',
+    problem: '2. Where are the beans roasted?',
     options: [
       { label: 'At the chocolate factories.', value: '1' },
       { label: 'On small farms in Africa.', value: '2' },
       { label: 'In the sun.', value: '3' }
     ],
     correctAnswer: '1',
-    hint: 'Посмотри второй абзац: "At the factory, the beans are roasted..."',
-    solution: 'Beans are roasted at chocolate factories.'
+    solution: 'В тексте: "At the factory, the beans are roasted...".'
   },
-  // --- BLOCK 1: FORMS OF TO BE ---
+  // --- BLOCK 1: DROPDOWN (TENSES) ---
   {
     id: 'eng_passive_be_1',
-    type: 'mcq',
-    problem: '(Every day) The office _______ cleaned at 6 PM.',
+    type: 'dropdown',
+    problem: '3. (Every day) The office _______ cleaned at 6 PM.',
     options: [
       { label: 'is', value: 'is' },
       { label: 'are', value: 'are' },
@@ -46,13 +44,13 @@ const CW_DATA = [
       { label: 'will be', value: 'will be' }
     ],
     correctAnswer: 'is',
-    hint: 'Every day указывает на Present Simple.',
-    solution: 'Present Simple Passive: is/are + V3. Office — единственное число.'
+    hint: 'Every day → Present Simple Passive (is/are + V3). Office — ед. ч.',
+    solution: 'The office is cleaned every day.'
   },
   {
     id: 'eng_passive_be_2',
-    type: 'mcq',
-    problem: '(Last night) My car _______ stolen!',
+    type: 'dropdown',
+    problem: '4. (Last night) My car _______ stolen!',
     options: [
       { label: 'is', value: 'is' },
       { label: 'was', value: 'was' },
@@ -60,80 +58,160 @@ const CW_DATA = [
       { label: 'has been', value: 'has been' }
     ],
     correctAnswer: 'was',
-    hint: 'Last night — это прошедшее время (Past Simple).',
-    solution: 'Past Simple Passive: was/were + V3.'
+    hint: 'Last night → Past Simple Passive (was/were + V3).',
+    solution: 'My car was stolen last night.'
   },
   {
     id: 'eng_passive_be_3',
-    type: 'mcq',
-    problem: '(Next year) The new bridge _______ opened to the public.',
+    type: 'dropdown',
+    problem: '5. (Next year) The new bridge _______ opened to the public.',
     options: [
       { label: 'is', value: 'is' },
       { label: 'was', value: 'was' },
       { label: 'will be', value: 'will be' }
     ],
     correctAnswer: 'will be',
-    hint: 'Next year указывает на будущее время.',
-    solution: 'Future Simple Passive: will be + V3.'
+    hint: 'Next year → Future Simple Passive (will be + V3).',
+    solution: 'The bridge will be opened next year.'
   },
   {
     id: 'eng_passive_be_4',
-    type: 'mcq',
-    problem: '(Result) Oh no! The window _______ broken!',
+    type: 'dropdown',
+    problem: '6. (Just now / Result) Oh no! The window _______ broken!',
     options: [
       { label: 'is', value: 'is' },
       { label: 'was', value: 'was' },
       { label: 'has been', value: 'has been' }
     ],
     correctAnswer: 'has been',
-    hint: 'Когда важен результат к настоящему моменту, используем Perfect.',
-    solution: 'Present Perfect Passive: has/have been + V3.'
+    hint: 'Result just now → Present Perfect Passive (has/have been + V3).',
+    solution: 'The window has been broken.'
   },
-  // --- BLOCK 2: TRANSLATIONS ---
+  {
+    id: 'eng_passive_be_5',
+    type: 'dropdown',
+    problem: '7. (Usually) Millions of emails _______ sent every day.',
+    options: [
+      { label: 'is', value: 'is' },
+      { label: 'are', value: 'are' },
+      { label: 'were', value: 'were' }
+    ],
+    correctAnswer: 'are',
+    solution: 'Emails (plural) are sent.'
+  },
+  {
+    id: 'eng_passive_be_6',
+    type: 'dropdown',
+    problem: "8. (In 1997) Harry Potter and the Philosopher's Stone _______ published.",
+    options: [
+      { label: 'is', value: 'is' },
+      { label: 'was', value: 'was' },
+      { label: 'were', value: 'were' }
+    ],
+    correctAnswer: 'was',
+    solution: 'In 1997 → was published.'
+  },
+  {
+    id: 'eng_passive_be_7',
+    type: 'dropdown',
+    problem: '9. The cake was made _______ chocolate and strawberries. (Инструмент/Ингредиент)',
+    options: [
+      { label: 'by', value: 'by' },
+      { label: 'with', value: 'with' }
+    ],
+    correctAnswer: 'with',
+    solution: 'With — для инструментов/ингредиентов.'
+  },
+  {
+    id: 'eng_passive_be_8',
+    type: 'dropdown',
+    problem: '10. The photo was taken _______ my brother. (Человек/Деятель)',
+    options: [
+      { label: 'by', value: 'by' },
+      { label: 'with', value: 'with' }
+    ],
+    correctAnswer: 'by',
+    solution: 'By — для деятеля (человека).'
+  },
+  // --- BLOCK 2: TRANSLATIONS (WORD BUILDER) ---
   {
     id: 'eng_passive_trans_1',
     type: 'text',
-    problem: 'Переведи: <b>По-английски говорят по всему миру.</b>',
-    correctAnswer: 'English is spoken all over the world',
-    hint: 'Используй Present Simple Passive: is spoken.',
-    solution: 'English is spoken all over the world.'
+    problem: '11. Письмо было написано вчера. (Translate)',
+    correctAnswer: 'The letter was written yesterday',
+    solution: 'The letter was written yesterday.'
   },
   {
     id: 'eng_passive_trans_2',
     type: 'text',
-    problem: 'Переведи: <b>Когда был построен дом?</b>',
+    problem: '12. По-английски говорят по всему миру. (Translate)',
+    correctAnswer: 'English is spoken all over the world',
+    solution: 'English is spoken all over the world.'
+  },
+  {
+    id: 'eng_passive_trans_3',
+    type: 'text',
+    problem: '13. Мой телефон украли! (К настоящему моменту)',
+    correctAnswer: 'My phone has been stolen',
+    solution: 'My phone has been stolen.'
+  },
+  {
+    id: 'eng_passive_trans_4',
+    type: 'text',
+    problem: '14. Когда был построен дом? (Вопрос)',
     correctAnswer: 'When was the house built?',
-    hint: 'Это вопрос в Past Simple Passive. Не забудь про порядок слов.',
     solution: 'When was the house built?'
+  },
+  {
+    id: 'eng_passive_trans_5',
+    type: 'text',
+    problem: '15. Отчет будет закончен завтра.',
+    correctAnswer: 'The report will be finished tomorrow',
+    solution: 'The report will be finished tomorrow.'
   },
   // --- BLOCK 3: ACTIVE OR PASSIVE ---
   {
     id: 'eng_passive_ac_1',
     type: 'mcq',
-    problem: '"Somebody cleans the room." -> Какое предложение правильно переведено в пассив?',
+    problem: '16. "Somebody cleans the room." -> Какое предложение правильно переведено в пассив?',
     options: [
       { label: 'The room cleaned somebody.', value: '1' },
       { label: 'The room is cleaned.', value: '2' },
       { label: 'The room was cleaned.', value: '3' }
     ],
     correctAnswer: '2',
-    solution: 'Somebody cleans (Present Simple) -> The room is cleaned.'
+    solution: 'Cleans (Present Simple) -> is cleaned.'
+  },
+  {
+    id: 'eng_passive_ac_2',
+    type: 'mcq',
+    problem: '17. "They built the house in 2010." -> Пассивный вариант:',
+    options: [
+      { label: 'The house is built in 2010.', value: '1' },
+      { label: 'The house built in 2010.', value: '2' },
+      { label: 'The house was built in 2010.', value: '3' }
+    ],
+    correctAnswer: '3',
+    solution: 'Built (Past Simple) -> was built.'
+  },
+  {
+    id: 'eng_passive_ac_3',
+    type: 'mcq',
+    problem: "18. I can't find my keys! I think they ________!",
+    options: [
+      { label: 'stole', value: '1' },
+      { label: 'have been stolen', value: '2' },
+      { label: 'was stolen', value: '3' }
+    ],
+    correctAnswer: '2',
+    solution: "Result just now -> have been stolen."
   },
   // --- BLOCK 4: V3 FORMS ---
-  {
-    id: 'eng_passive_v3_1',
-    type: 'text',
-    problem: 'Напиши 3-ю форму глагола (V3): <b>write</b>',
-    correctAnswer: 'written',
-    solution: 'write - wrote - written'
-  },
-  {
-    id: 'eng_passive_v3_2',
-    type: 'text',
-    problem: 'Напиши 3-ю форму глагола (V3): <b>build</b>',
-    correctAnswer: 'built',
-    solution: 'build - built - built'
-  }
+  { id: 'eng_passive_v3_1', type: 'text', problem: '19. make →', correctAnswer: 'made' },
+  { id: 'eng_passive_v3_2', type: 'text', problem: '20. write →', correctAnswer: 'written' },
+  { id: 'eng_passive_v3_3', type: 'text', problem: '21. break →', correctAnswer: 'broken' },
+  { id: 'eng_passive_v3_4', type: 'text', problem: '22. build →', correctAnswer: 'built' },
+  { id: 'eng_passive_v3_5', type: 'text', problem: '23. invent →', correctAnswer: 'invented' }
 ]
 
 const HW_VARIANTS = {
@@ -141,60 +219,109 @@ const HW_VARIANTS = {
     {
       id: 'eng_hw_1',
       type: 'text',
-      problem: 'People speak English in Australia. -> English _______ in Australia.',
+      problem: '1. English (speak) _______ in Australia.',
       correctAnswer: 'is spoken',
       hint: 'Present Simple Passive'
     },
     {
       id: 'eng_hw_2',
       type: 'text',
-      problem: 'Someone stole my wallet yesterday. -> My wallet _______ yesterday.',
-      correctAnswer: 'was stolen',
-      hint: 'Past Simple Passive'
+      problem: '2. These cars (make) _______ in Japan.',
+      correctAnswer: 'are made',
+      hint: 'Present Simple Passive (plural)'
     },
     {
       id: 'eng_hw_3',
       type: 'text',
-      problem: 'Alexander Bell invented the telephone. -> The telephone _______ by Alexander Bell.',
-      correctAnswer: 'was invented',
-      hint: 'Past Simple Passive'
-    },
-    {
-      id: 'eng_hw_4',
-      type: 'text',
-      problem: 'They will finish the project tomorrow. -> The project _______ tomorrow.',
-      correctAnswer: 'will be finished',
-      hint: 'Future Simple Passive'
-    }
-  ],
-  2: [
-    {
-      id: 'eng_hw_5',
-      type: 'text',
-      problem: 'They make these cars in Japan. -> These cars _______ in Japan.',
-      correctAnswer: 'are made',
-      hint: 'Present Simple Passive (множ. число)'
-    },
-    {
-      id: 'eng_hw_6',
-      type: 'text',
-      problem: 'Someone has painted the door. -> The door _______ .',
-      correctAnswer: 'has been painted',
-      hint: 'Present Perfect Passive'
-    },
-    {
-      id: 'eng_hw_7',
-      type: 'text',
-      problem: 'The postman delivers the mail at 9 AM. -> The mail _______ at 9 AM.',
+      problem: '3. The mail (deliver) _______ at 9 AM every day.',
       correctAnswer: 'is delivered',
       hint: 'Present Simple Passive'
     },
     {
+      id: 'eng_hw_4',
+      type: 'text',
+      problem: '4. (Question) _______ the rooms (clean) _______ every day?',
+      correctAnswer: 'Are cleaned',
+      hint: 'Are the rooms cleaned...?'
+    },
+    {
+      id: 'eng_hw_5',
+      type: 'text',
+      problem: '5. This room (not use) _______ by anybody.',
+      correctAnswer: 'is not used',
+      hint: 'Negative Present Simple Passive'
+    },
+    {
+      id: 'eng_hw_6',
+      type: 'text',
+      problem: '6. My wallet (steal) _______ yesterday.',
+      correctAnswer: 'was stolen',
+      hint: 'Past Simple Passive'
+    },
+    {
+      id: 'eng_hw_7',
+      type: 'text',
+      problem: '7. The telephone (invent) _______ by Alexander Bell.',
+      correctAnswer: 'was invented',
+      hint: 'Past Simple Passive'
+    }
+  ],
+  2: [
+    {
       id: 'eng_hw_8',
       type: 'text',
-      problem: 'Ten new people have been hired by the company. (Active: The company _______ ten new people.)',
-      correctAnswer: 'has hired',
-      hint: 'Переведи обратно в Active Voice (Present Perfect).'
+      problem: '8. These houses (build) _______ in 1950.',
+      correctAnswer: 'were built',
+      hint: 'Past Simple Passive (plural)'
+    },
+    {
+      id: 'eng_hw_9',
+      type: 'text',
+      problem: '9. (Question) _______ this play (write) _______ by Shakespeare?',
+      correctAnswer: 'Was written',
+      hint: 'Was this play written...?'
+    },
+    {
+      id: 'eng_hw_10',
+      type: 'text',
+      problem: '10. I (not invite) _______ to the party last night.',
+      correctAnswer: 'was not invited',
+      hint: 'Negative Past Simple Passive'
+    },
+    {
+      id: 'eng_hw_11',
+      type: 'text',
+      problem: '11. The project (finish) _______ tomorrow.',
+      correctAnswer: 'will be finished',
+      hint: 'Future Simple Passive'
+    },
+    {
+      id: 'eng_hw_12',
+      type: 'text',
+      problem: '12. The door (paint) _______ recently.',
+      correctAnswer: 'has been painted',
+      hint: 'Present Perfect Passive'
+    },
+    {
+      id: 'eng_hw_13',
+      type: 'text',
+      problem: '13. The tickets (send) _______ by email next week.',
+      correctAnswer: 'will be sent',
+      hint: 'Future Simple Passive'
+    },
+    {
+      id: 'eng_hw_14',
+      type: 'text',
+      problem: '14. Ten new people (hire) _______ by the company this month.',
+      correctAnswer: 'have been hired',
+      hint: 'Present Perfect Passive (plural)'
+    },
+    {
+      id: 'eng_hw_15',
+      type: 'text',
+      problem: '15. (Question) _______ dinner (serve) _______ at 8?',
+      correctAnswer: 'Will be served',
+      hint: 'Will dinner be served...?'
     }
   ]
 }
@@ -202,7 +329,7 @@ const HW_VARIANTS = {
 export default function PassiveVoicePage() {
   const lessonId = 'eng_passive'
   const cwCount = CW_DATA.length
-  const hwCount = 4
+  const hwCount = variant === 1 ? 7 : 8
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
     useLessonProgress(lessonId, cwCount, hwCount)
   const [activeTab, setActiveTab] = useState('theory')
