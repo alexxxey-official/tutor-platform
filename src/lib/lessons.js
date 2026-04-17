@@ -6,7 +6,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/intro',
       color: '#e63946',
-      totalScore: 0, // Теория, нет баллов
+      totalCW: 0,
+      totalHW: 0,
     },
     {
       id: 'spa_phonetics',
@@ -14,7 +15,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/phonetics',
       color: '#f4a261',
-      totalScore: 5,
+      totalCW: 3,
+      totalHW: 2,
     },
     {
       id: 'spa_ser',
@@ -22,7 +24,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/ser',
       color: '#e63946',
-      totalScore: 10,
+      totalCW: 5,
+      totalHW: 5,
     },
     {
       id: 'spa_articles',
@@ -30,7 +33,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/articles',
       color: '#e63946',
-      totalScore: 10,
+      totalCW: 5,
+      totalHW: 5,
     },
     {
       id: 'spa_tener',
@@ -38,7 +42,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/tener',
       color: '#f4a261',
-      totalScore: 15,
+      totalCW: 7,
+      totalHW: 8,
     },
     {
       id: 'spa_verbs',
@@ -46,7 +51,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/verbs',
       color: '#f4a261',
-      totalScore: 15,
+      totalCW: 7,
+      totalHW: 8,
     },
     {
       id: 'spa_estar',
@@ -54,7 +60,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/estar',
       color: '#f4a261',
-      totalScore: 8,
+      totalCW: 4,
+      totalHW: 4,
     },
     {
       id: 'spa_questions',
@@ -62,7 +69,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/questions',
       color: '#f4a261',
-      totalScore: 23,
+      totalCW: 10,
+      totalHW: 13,
     },
     {
       id: 'spa_family',
@@ -70,7 +78,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/family',
       color: '#f4a261',
-      totalScore: 25,
+      totalCW: 10,
+      totalHW: 15,
     },
     {
       id: 'spa_gustar',
@@ -78,7 +87,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/gustar',
       color: '#f4a261',
-      totalScore: 25,
+      totalCW: 10,
+      totalHW: 15,
     },
     {
       id: 'spa_verbs_trainer',
@@ -86,7 +96,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/verbs-trainer',
       color: '#e63946',
-      totalScore: 50,
+      totalCW: 0,
+      totalHW: 50,
     },
     {
       id: 'spa_vocab',
@@ -94,7 +105,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish',
       color: '#2a9d8f',
-      totalScore: 0,
+      totalCW: 0,
+      totalHW: 0,
     },
     {
       id: 'spa_listening',
@@ -102,7 +114,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/listening',
       color: '#e63946',
-      totalScore: 5,
+      totalCW: 0,
+      totalHW: 5,
     },
     {
       id: 'spa_reading_intro',
@@ -110,7 +123,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/reading/intro',
       color: '#f4a261',
-      totalScore: 0,
+      totalCW: 0,
+      totalHW: 0,
     },
     {
       id: 'spa_reading_hola',
@@ -118,7 +132,8 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/reading/hola',
       color: '#f4a261',
-      totalScore: 5,
+      totalCW: 2,
+      totalHW: 3,
     }
   ],
   english: [
@@ -128,15 +143,17 @@ export const LESSONS = {
       subject: 'English',
       path: '/lessons/english/indefinite-pronouns',
       color: '#2a9d8f',
-      totalScore: 10,
+      totalCW: 5,
+      totalHW: 5,
     },
     {
       id: 'eng_passive',
       title: 'Passive Voice (B1-B2)',
       subject: 'English',
-      path: '/legacy-lessons/english/english_passive_voice.html',
+      path: '/lessons/english/passive-voice',
       color: '#2a9d8f',
-      totalScore: 0, // Legacy
+      totalCW: 8,
+      totalHW: 15,
     }
   ],
   math: [
@@ -144,17 +161,19 @@ export const LESSONS = {
       id: 'math_quadratic',
       title: 'Квадратные уравнения',
       subject: 'Math',
-      path: '/legacy-lessons/math/quadratic_equations.html',
+      path: '/lessons/math/quadratic-equations',
       color: '#e63946',
-      totalScore: 0,
+      totalCW: 3,
+      totalHW: 3,
     },
     {
       id: 'math_inequal',
       title: 'Неравенства',
       subject: 'Math',
-      path: '/legacy-lessons/math/inequalities.html',
+      path: '/lessons/math/inequalities',
       color: '#e63946',
-      totalScore: 0,
+      totalCW: 6,
+      totalHW: 8,
     }
   ],
   physics: [
@@ -162,9 +181,10 @@ export const LESSONS = {
       id: 'phys_dc',
       title: 'Постоянный ток (DC)',
       subject: 'Physics',
-      path: '/legacy-lessons/physics/physics_dc.html',
-      color: '#9333ea', // Purple
-      totalScore: 0,
+      path: '/lessons/physics/dc-circuits',
+      color: '#9333ea',
+      totalCW: 2,
+      totalHW: 2,
     }
   ]
 };
