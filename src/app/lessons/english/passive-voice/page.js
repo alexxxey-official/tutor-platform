@@ -264,6 +264,13 @@ const HW_VARIANTS = {
       problem: '7. The telephone (invent) _______ by Alexander Bell.',
       correctAnswer: 'was invented',
       hint: 'Past Simple Passive'
+    },
+    {
+      id: 'eng_hw_11_alt',
+      type: 'text',
+      problem: '8. The project (finish) _______ tomorrow.',
+      correctAnswer: 'will be finished',
+      hint: 'Future Simple Passive'
     }
   ],
   2: [
@@ -289,39 +296,39 @@ const HW_VARIANTS = {
       hint: 'Negative Past Simple Passive'
     },
     {
-      id: 'eng_hw_11',
-      type: 'text',
-      problem: '11. The project (finish) _______ tomorrow.',
-      correctAnswer: 'will be finished',
-      hint: 'Future Simple Passive'
-    },
-    {
       id: 'eng_hw_12',
       type: 'text',
-      problem: '12. The door (paint) _______ recently.',
+      problem: '11. The door (paint) _______ recently.',
       correctAnswer: 'has been painted',
       hint: 'Present Perfect Passive'
     },
     {
       id: 'eng_hw_13',
       type: 'text',
-      problem: '13. The tickets (send) _______ by email next week.',
+      problem: '12. The tickets (send) _______ by email next week.',
       correctAnswer: 'will be sent',
       hint: 'Future Simple Passive'
     },
     {
       id: 'eng_hw_14',
       type: 'text',
-      problem: '14. Ten new people (hire) _______ by the company this month.',
+      problem: '13. Ten new people (hire) _______ by the company this month.',
       correctAnswer: 'have been hired',
       hint: 'Present Perfect Passive (plural)'
     },
     {
       id: 'eng_hw_15',
       type: 'text',
-      problem: '15. (Question) _______ dinner (serve) _______ at 8?',
+      problem: '14. (Question) _______ dinner (serve) _______ at 8?',
       correctAnswer: 'Will be served',
       hint: 'Will dinner be served...?'
+    },
+    {
+      id: 'eng_hw_11',
+      type: 'text',
+      problem: '15. The project (finish) _______ tomorrow.',
+      correctAnswer: 'will be finished',
+      hint: 'Future Simple Passive'
     }
   ]
 }
@@ -329,7 +336,7 @@ const HW_VARIANTS = {
 export default function PassiveVoicePage() {
   const lessonId = 'eng_passive'
   const cwCount = CW_DATA.length
-  const hwCount = variant === 1 ? 7 : 8
+  const hwCount = 8
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
     useLessonProgress(lessonId, cwCount, hwCount)
   const [activeTab, setActiveTab] = useState('theory')
