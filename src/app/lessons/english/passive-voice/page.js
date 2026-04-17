@@ -7,21 +7,132 @@ import { RefreshCcw, BookOpen, Star } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 const CW_DATA = [
+  // --- READING COMPREHENSION ---
   {
-    id: 'eng_cw_1',
-    type: 'text',
-    problem: 'Переведи в пассивный залог: <b>She writes a letter.</b>',
-    correctAnswer: 'A letter is written (by her).',
-    hint: 'В пассиве глагол «write» → «is written», субъект становится «by …».',
-    solution: 'She writes a letter → A letter is written (by her).'
+    id: 'eng_passive_read_1',
+    type: 'mcq',
+    problem: '<b>Reading:</b> According to the text, how are cacao beans harvested?',
+    options: [
+      { label: 'They are harvested by big machines.', value: '1' },
+      { label: 'They are harvested by farmers by hand.', value: '2' },
+      { label: 'They are grown in factories.', value: '3' }
+    ],
+    correctAnswer: '2',
+    hint: 'Посмотри первый абзац текста про шоколад.',
+    solution: 'В тексте сказано: "they are harvested by farmers by hand".'
   },
   {
-    id: 'eng_cw_2',
+    id: 'eng_passive_read_2',
+    type: 'mcq',
+    problem: '<b>Reading:</b> Where are the beans roasted?',
+    options: [
+      { label: 'At the chocolate factories.', value: '1' },
+      { label: 'On small farms in Africa.', value: '2' },
+      { label: 'In the sun.', value: '3' }
+    ],
+    correctAnswer: '1',
+    hint: 'Посмотри второй абзац: "At the factory, the beans are roasted..."',
+    solution: 'Beans are roasted at chocolate factories.'
+  },
+  // --- BLOCK 1: FORMS OF TO BE ---
+  {
+    id: 'eng_passive_be_1',
+    type: 'mcq',
+    problem: '(Every day) The office _______ cleaned at 6 PM.',
+    options: [
+      { label: 'is', value: 'is' },
+      { label: 'are', value: 'are' },
+      { label: 'was', value: 'was' },
+      { label: 'will be', value: 'will be' }
+    ],
+    correctAnswer: 'is',
+    hint: 'Every day указывает на Present Simple.',
+    solution: 'Present Simple Passive: is/are + V3. Office — единственное число.'
+  },
+  {
+    id: 'eng_passive_be_2',
+    type: 'mcq',
+    problem: '(Last night) My car _______ stolen!',
+    options: [
+      { label: 'is', value: 'is' },
+      { label: 'was', value: 'was' },
+      { label: 'were', value: 'were' },
+      { label: 'has been', value: 'has been' }
+    ],
+    correctAnswer: 'was',
+    hint: 'Last night — это прошедшее время (Past Simple).',
+    solution: 'Past Simple Passive: was/were + V3.'
+  },
+  {
+    id: 'eng_passive_be_3',
+    type: 'mcq',
+    problem: '(Next year) The new bridge _______ opened to the public.',
+    options: [
+      { label: 'is', value: 'is' },
+      { label: 'was', value: 'was' },
+      { label: 'will be', value: 'will be' }
+    ],
+    correctAnswer: 'will be',
+    hint: 'Next year указывает на будущее время.',
+    solution: 'Future Simple Passive: will be + V3.'
+  },
+  {
+    id: 'eng_passive_be_4',
+    type: 'mcq',
+    problem: '(Result) Oh no! The window _______ broken!',
+    options: [
+      { label: 'is', value: 'is' },
+      { label: 'was', value: 'was' },
+      { label: 'has been', value: 'has been' }
+    ],
+    correctAnswer: 'has been',
+    hint: 'Когда важен результат к настоящему моменту, используем Perfect.',
+    solution: 'Present Perfect Passive: has/have been + V3.'
+  },
+  // --- BLOCK 2: TRANSLATIONS ---
+  {
+    id: 'eng_passive_trans_1',
     type: 'text',
-    problem: 'Переведи в пассивный залог: <b>The chef cooks the soup.</b>',
-    correctAnswer: 'The soup is cooked (by the chef).',
-    hint: 'Субъект «the soup», глагол «cooks» → «is cooked».',
-    solution: 'The chef cooks the soup → The soup is cooked (by the chef).'
+    problem: 'Переведи: <b>По-английски говорят по всему миру.</b>',
+    correctAnswer: 'English is spoken all over the world',
+    hint: 'Используй Present Simple Passive: is spoken.',
+    solution: 'English is spoken all over the world.'
+  },
+  {
+    id: 'eng_passive_trans_2',
+    type: 'text',
+    problem: 'Переведи: <b>Когда был построен дом?</b>',
+    correctAnswer: 'When was the house built?',
+    hint: 'Это вопрос в Past Simple Passive. Не забудь про порядок слов.',
+    solution: 'When was the house built?'
+  },
+  // --- BLOCK 3: ACTIVE OR PASSIVE ---
+  {
+    id: 'eng_passive_ac_1',
+    type: 'mcq',
+    problem: '"Somebody cleans the room." -> Какое предложение правильно переведено в пассив?',
+    options: [
+      { label: 'The room cleaned somebody.', value: '1' },
+      { label: 'The room is cleaned.', value: '2' },
+      { label: 'The room was cleaned.', value: '3' }
+    ],
+    correctAnswer: '2',
+    solution: 'Somebody cleans (Present Simple) -> The room is cleaned.'
+  },
+  // --- BLOCK 4: V3 FORMS ---
+  {
+    id: 'eng_passive_v3_1',
+    type: 'text',
+    problem: 'Напиши 3-ю форму глагола (V3): <b>write</b>',
+    correctAnswer: 'written',
+    solution: 'write - wrote - written'
+  },
+  {
+    id: 'eng_passive_v3_2',
+    type: 'text',
+    problem: 'Напиши 3-ю форму глагола (V3): <b>build</b>',
+    correctAnswer: 'built',
+    solution: 'build - built - built'
   }
 ]
 
@@ -30,40 +141,70 @@ const HW_VARIANTS = {
     {
       id: 'eng_hw_1',
       type: 'text',
-      problem: 'Переведи в пассивный залог: <b>They will build a new bridge.</b>',
-      correctAnswer: 'A new bridge will be built (by them).',
-      hint: 'Будущее «will be built», субъект в скобках.'
+      problem: 'People speak English in Australia. -> English _______ in Australia.',
+      correctAnswer: 'is spoken',
+      hint: 'Present Simple Passive'
     },
     {
       id: 'eng_hw_2',
       type: 'text',
-      problem: 'Переведи в пассивный залог: <b>Someone has opened the window.</b>',
-      correctAnswer: 'The window has been opened (by someone).',
-      hint: 'Present perfect → «has been opened». '
+      problem: 'Someone stole my wallet yesterday. -> My wallet _______ yesterday.',
+      correctAnswer: 'was stolen',
+      hint: 'Past Simple Passive'
+    },
+    {
+      id: 'eng_hw_3',
+      type: 'text',
+      problem: 'Alexander Bell invented the telephone. -> The telephone _______ by Alexander Bell.',
+      correctAnswer: 'was invented',
+      hint: 'Past Simple Passive'
+    },
+    {
+      id: 'eng_hw_4',
+      type: 'text',
+      problem: 'They will finish the project tomorrow. -> The project _______ tomorrow.',
+      correctAnswer: 'will be finished',
+      hint: 'Future Simple Passive'
     }
   ],
   2: [
     {
-      id: 'eng_hw_1',
+      id: 'eng_hw_5',
       type: 'text',
-      problem: 'Переведи в пассивный залог: <b>People speak English worldwide.</b>',
-      correctAnswer: 'English is spoken worldwide (by people).',
-      hint: 'Общее действие → «is spoken». '
+      problem: 'They make these cars in Japan. -> These cars _______ in Japan.',
+      correctAnswer: 'are made',
+      hint: 'Present Simple Passive (множ. число)'
     },
     {
-      id: 'eng_hw_2',
+      id: 'eng_hw_6',
       type: 'text',
-      problem: 'Переведи в пассивный залог: <b>They were painting the house.</b>',
-      correctAnswer: 'The house was being painted (by them).',
-      hint: 'Past continuous → «was being painted». '
+      problem: 'Someone has painted the door. -> The door _______ .',
+      correctAnswer: 'has been painted',
+      hint: 'Present Perfect Passive'
+    },
+    {
+      id: 'eng_hw_7',
+      type: 'text',
+      problem: 'The postman delivers the mail at 9 AM. -> The mail _______ at 9 AM.',
+      correctAnswer: 'is delivered',
+      hint: 'Present Simple Passive'
+    },
+    {
+      id: 'eng_hw_8',
+      type: 'text',
+      problem: 'Ten new people have been hired by the company. (Active: The company _______ ten new people.)',
+      correctAnswer: 'has hired',
+      hint: 'Переведи обратно в Active Voice (Present Perfect).'
     }
   ]
 }
 
 export default function PassiveVoicePage() {
   const lessonId = 'eng_passive'
+  const cwCount = CW_DATA.length
+  const hwCount = 4
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
-    useLessonProgress(lessonId, 2, 2)
+    useLessonProgress(lessonId, cwCount, hwCount)
   const [activeTab, setActiveTab] = useState('theory')
 
   if (loading) return (
@@ -142,26 +283,55 @@ export default function PassiveVoicePage() {
         {/* CONTENT */}
         <div className="space-y-8">
           {activeTab === 'theory' && (
-            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
-              <h2 className="text-2xl font-black text-slate-900 mb-6">
-                Что такое пассивный залог?
-              </h2>
-              <p className="text-slate-700 leading-relaxed">
-                Пассивный залог образуется с помощью глагола «to be» + причастие III формы (past participle). Субъект действия становится объектом, а исполнитель (при необходимости) указывается после предлога <b>by</b>.
-              </p>
-              <ul className="list-disc pl-6 text-slate-700">
-                <li>Present Simple → <i>is/are + past participle</i></li>
-                <li>Past Simple → <i>was/were + past participle</i></li>
-                <li>Future → <i>will be + past participle</i></li>
-                <li>Present Perfect → <i>has/have been + past participle</i></li>
-                <li>Past Continuous → <i>was/were being + past participle</i></li>
-              </ul>
+            <div className="space-y-6">
+              <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <h2 className="text-2xl font-black text-slate-900 mb-6">
+                  Что такое пассивный залог?
+                </h2>
+                <p className="text-slate-700 leading-relaxed">
+                  Пассивный залог образуется с помощью глагола «to be» + причастие III формы (past participle). Субъект действия становится объектом, а исполнитель (при необходимости) указывается после предлога <b>by</b>.
+                </p>
+                <div className="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-xl">
+                  <strong className="text-emerald-900 block mb-2">Золотая формула:</strong>
+                  <code className="text-emerald-700 font-bold text-lg">to be + V3 (Past Participle)</code>
+                </div>
+                <ul className="list-disc pl-6 text-slate-700 space-y-2">
+                  <li><b>Present Simple</b> → <i>is/are + written</i></li>
+                  <li><b>Past Simple</b> → <i>was/were + written</i></li>
+                  <li><b>Future</b> → <i>will be + written</i></li>
+                  <li><b>Present Perfect</b> → <i>has/have been + written</i></li>
+                </ul>
+              </div>
+
+              <div className="bg-amber-50 p-8 rounded-3xl border border-amber-200 shadow-sm space-y-6">
+                <h2 className="text-2xl font-black text-amber-900 mb-4 font-serif italic">
+                  The Journey of Chocolate
+                </h2>
+                <div className="text-amber-900/80 leading-relaxed space-y-4 text-lg">
+                  <p>
+                    Chocolate <strong>is loved</strong> by people all over the world, but how is it actually made? 
+                    The process begins in tropical countries like Ivory Coast and Ghana. 
+                    Cacao beans <strong>are grown</strong> on small farms. When the pods are ripe, 
+                    they <strong>are harvested</strong> by farmers by hand.
+                  </p>
+                  <p>
+                    After that, the beans <strong>are fermented</strong> and dried in the sun. 
+                    Then, they <strong>are shipped</strong> to chocolate factories in Europe or America. 
+                    At the factory, the beans <strong>are roasted</strong> at high temperatures to bring out the flavor. 
+                    Finally, sugar and milk <strong>are added</strong>, and the mixture <strong>is turned</strong> into delicious chocolate bars.
+                  </p>
+                  <p>
+                    Many new types of chocolate <strong>will be invented</strong> in the future, 
+                    but the classic milk chocolate will always be popular!
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 
           {activeTab === 'classwork' && (
             <div className="space-y-6">
-              <AdvancedProgressBar data={progress.cw} total={2} title="Прогресс классной работы" />
+              <AdvancedProgressBar data={progress.cw} total={cwCount} title="Прогресс классной работы" />
               {CW_DATA.map((ex) => (
                 <Exercise
                   key={ex.id}
@@ -191,7 +361,7 @@ export default function PassiveVoicePage() {
                 )}
               </div>
 
-              <AdvancedProgressBar data={progress.hw} total={2} title="Прогресс домашней работы" />
+              <AdvancedProgressBar data={progress.hw} total={hwCount} title="Прогресс домашней работы" />
 
               {HW_VARIANTS[variant].map((ex) => (
                 <Exercise
