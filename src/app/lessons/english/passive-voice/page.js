@@ -53,8 +53,16 @@ export default function PassiveVoiceFullLegacyPage() {
 
         // Restore Word Builders
         if (progress.cw) {
-            const newBuilders = { ...builders }
-            const newBanks = { ...banks }
+            const newBuilders = { 
+                zone1: [], zone2: [], zone3: [], zone4: [], zone5: [] 
+            }
+            const newBanks = { 
+                bank1: ['yesterday', 'written', 'was', 'The', 'letter'],
+                bank2: ['all over', 'spoken', 'is', 'the world', 'English'],
+                bank3: ['My', 'stolen', 'phone', 'has', 'been'],
+                bank4: ['built', 'was', 'the house', 'When', '?'],
+                bank5: ['be', 'finished', 'The report', 'will', 'tomorrow']
+            }
             let builderChanged = false
 
             const builderMap = [
@@ -71,7 +79,6 @@ export default function PassiveVoiceFullLegacyPage() {
                     const words = item.value.split(' ')
                     newBuilders[m.zone] = words
                     // Filter bank to remove used words
-                    // Note: this assumes words are unique or handled simply
                     let currentBank = [...newBanks[m.bank]]
                     words.forEach(w => {
                         const idx = currentBank.indexOf(w)
@@ -167,87 +174,6 @@ export default function PassiveVoiceFullLegacyPage() {
         updateProgress(item.id, 'cw', isCorrect ? 'correct' : 'wrong', 1, val)
     })
   }
-            })
-        }
-        // Since we don't store the actual user text in progress_data (only status/attempts),
-        // we can't easily restore what they TYPED, but we can show it's correct.
-        // To be "1 in 1" and "perfect", we should probably store values too, 
-        // but useLessonProgress.js doesn't seem to support it currently.
-    }
-  }, [loading, progress])
-
-  const normalize = (s) => s.toLowerCase().replace(/\s+/g,' ').trim();
-
-  // Helper to get class for inputs
-  const getInputClass = (id, mode = 'cw') => {
-    const status = progress[mode]?.[id]?.status
-    if (status === 'correct') return 'correct'
-    if (status === 'wrong') return 'wrong'
-    return ''
-  }
-
-  const checkMcq = (exId, correctAns) => {
-    const selected = selectedMcqs[exId]
-    if (selected === undefined) return
-    const isCorrect = String(selected) === String(correctAns)
-    updateProgress(exId, 'cw', isCorrect ? 'correct' : 'wrong', 1)
-  }
-
-  const checkDropdown = (exId, correctAns) => {
-    const val = textInputs[exId]
-    if (!val) return
-    const isCorrect = normalize(val) === normalize(correctAns)
-    updateProgress(exId, 'cw', isCorrect ? 'correct' : 'wrong', 1)
-  }
-
-  const toggleWord = (word, zoneKey, bankKey, exId) => {
-    if (progress.cw?.[exId]?.status === 'correct') return
-    
-    setBuilders(prev => {
-      const inZone = prev[zoneKey].includes(word)
-      if (inZone) {
-        setBanks(b => ({ ...b, [bankKey]: [...b[bankKey], word] }))
-        return { ...prev, [zoneKey]: prev[zoneKey].filter(w => w !== word) }
-      } else {
-        setBanks(b => ({ ...b, [bankKey]: b[bankKey].filter(w => w !== word) }))
-        return { ...prev, [zoneKey]: [...prev[zoneKey], word] }
-      }
-    })
-  }
-
-  const checkBuilder = (exId, zoneKey, correctStr) => {
-    const userStr = builders[zoneKey].join(' ')
-    const isCorrect = userStr === correctStr
-    updateProgress(exId, 'cw', isCorrect ? 'correct' : 'wrong', 1)
-  }
-
-  const checkText = (exId, correctAns, mode = 'cw') => {
-    const val = textInputs[exId] || ''
-    const isCorrect = normalize(val) === normalize(correctAns)
-    updateProgress(exId, mode, isCorrect ? 'correct' : 'wrong', 1)
-    
-    if (isCorrect && mode === 'hw') {
-        const stats = getStats('hw')
-        if (stats.correct + 1 === hwCount) {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } })
-        }
-    }
-  }
-
-  const checkV3Block = () => {
-    const v3Data = [
-        { id: 'cw19', ans: 'made' },
-        { id: 'cw20', ans: 'written' },
-        { id: 'cw21', ans: 'broken' },
-        { id: 'cw22', ans: 'built' },
-        { id: 'cw23', ans: 'invented' }
-    ]
-    v3Data.forEach(item => {
-        const val = textInputs[item.id] || ''
-        const isCorrect = normalize(val) === normalize(item.ans)
-        updateProgress(item.id, 'cw', isCorrect ? 'correct' : 'wrong', 1)
-    })
-  }
 
   if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
 
@@ -321,7 +247,7 @@ export default function PassiveVoiceFullLegacyPage() {
         .drop-zone { min-height: 56px; background: #f8fafc; border: 2px dashed var(--border); border-radius: 12px; padding: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 20px; transition: border-color 0.2s; width: 100%; }
         .drop-zone.correct { background: #ecfdf5; border-color: var(--correct); border-style: solid; }
         .word-bank { display: flex; flex-wrap: wrap; gap: 10px; min-height: 48px; }
-        .draggable-word { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 18px; font-size: 15px; font-weight: 500; cursor: pointer; user-select: none; box-shadow: 0 2px 4px rgba(0,0,0,0.03); transition: transform 0.1s, box-shadow 0.1s, background 0.2s; color: var(--ink); }
+        .draggable-word { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 15px; font-weight: 500; cursor: pointer; user-select: none; box-shadow: 0 2px 4px rgba(0,0,0,0.03); transition: transform 0.1s, box-shadow 0.1s, background 0.2s; color: var(--ink); }
         .draggable-word:hover { background: #f1f5f9; border-color: var(--muted); }
 
         .mcq-grid { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; }
@@ -554,7 +480,7 @@ export default function PassiveVoiceFullLegacyPage() {
                       </button>
                     ))}
                   </div>
-                  <button className="check-btn" onClick={() => checkMcq(ex.id, ex.ans)}>Check</button>
+                  <button className="check-btn" onClick={() => checkMcq(ex.id, ex.ans)}>Check Answer</button>
                   <div className={`feedback ${progress.cw?.[ex.id] ? 'show' : ''} ${progress.cw?.[ex.id]?.status}`}>
                     {progress.cw?.[ex.id]?.status === 'correct' ? '✓ Правильно!' : '✗ Ошибка.'}
                   </div>
