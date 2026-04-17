@@ -67,23 +67,25 @@ export default function VerbsTrainer() {
   const correctCount = stats.correct
   const pct = stats.pct
 
+  // Restoration logic
   useEffect(() => {
     if (!loading && progress.hw) {
-      setAnswers(prev => {
-        const restored = { ...prev };
-        let changed = false;
-        Object.keys(progress.hw).forEach(key => {
-          const item = progress.hw[key];
-          if (item && item.status === 'correct' && !restored[key]) {
-            const ex = exercises.find(e => e.id === key);
-            if (ex) {
-              restored[key] = { value: item.value || ex.ans, isCorrect: true, checked: true };
-              changed = true;
-            }
+      console.log('Restoring Verbs Trainer progress...', progress.hw);
+      const restored = {};
+      Object.keys(progress.hw).forEach(key => {
+        const item = progress.hw[key];
+        if (item) {
+          const ex = exercises.find(e => e.id === key);
+          if (ex) {
+            restored[key] = { 
+                value: item.value || (item.status === 'correct' ? ex.ans : ''), 
+                isCorrect: item.status === 'correct', 
+                checked: true 
+            };
           }
-        });
-        return changed ? restored : prev;
+        }
       });
+      setAnswers(restored);
     }
   }, [loading, progress.hw]);
 

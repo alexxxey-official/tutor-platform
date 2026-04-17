@@ -1,0 +1,244 @@
+{
+  "pages": {
+    "/_not-found": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/app/_not-found-a8144005d6887d4d.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/css/946255b5e44da1f2.css",
+      "static/chunks/app/layout-0ce6675e434f888d.js"
+    ],
+    "/lessons/english/passive-voice/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/832-d4a13a80f88d4864.js",
+      "static/chunks/app/lessons/english/passive-voice/page-f1f6623ffa9bb4a3.js"
+    ],
+    "/admin/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/admin/page-ee3e6b7cbc25311b.js"
+    ],
+    "/lessons/english/indefinite-pronouns/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/app/lessons/english/indefinite-pronouns/page-869363c11bfc6f78.js"
+    ],
+    "/lessons/passive-voice/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/app/lessons/passive-voice/page-b61be57e45bfa023.js"
+    ],
+    "/lessons/math/quadratic-equations/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/832-d4a13a80f88d4864.js",
+      "static/chunks/138-8700bb6b26f4b1bd.js",
+      "static/chunks/app/lessons/math/quadratic-equations/page-dbc45ceb4d0d39d2.js"
+    ],
+    "/lessons/spanish/articles/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/articles/page-292143abbaf9db21.js"
+    ],
+    "/dashboard/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/dashboard/page-965a58da02cc83ad.js"
+    ],
+    "/lessons/spanish/listening/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/app/lessons/spanish/listening/page-31aad5afa9431f10.js"
+    ],
+    "/lessons/spanish/estar/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/estar/page-2789bc7bf3fb985e.js"
+    ],
+    "/lessons/spanish/intro/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/app/lessons/spanish/intro/page-0712f1ee6baf90da.js"
+    ],
+    "/lessons/spanish/family/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/family/page-e32db44729d472ea.js"
+    ],
+    "/lessons/spanish/phonetics/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/phonetics/page-75096fdbcf6cdab9.js"
+    ],
+    "/lessons/spanish/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/app/lessons/spanish/page-1188d1516dc75da1.js"
+    ],
+    "/lessons/spanish/gustar/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/gustar/page-01bbbc84b32f3a0e.js"
+    ],
+    "/lessons/spanish/ser/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/ser/page-fbb54b4bfae440cf.js"
+    ],
+    "/lessons/spanish/reading/hola/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/app/lessons/spanish/reading/hola/page-0e6aea02828e0b6c.js"
+    ],
+    "/lessons/spanish/verbs/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/verbs/page-160e75293cf064b1.js"
+    ],
+    "/lessons/spanish/tener/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/tener/page-061fb222160f10d2.js"
+    ],
+    "/login/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/login/page-8f249e87fefb5804.js"
+    ],
+    "/register/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/register/page-ba7432fec346a578.js"
+    ],
+    "/lessons/spanish/reading/intro/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/app/lessons/spanish/reading/intro/page-f47ada2d2c884696.js"
+    ],
+    "/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/app/page-dd70bab94a67faeb.js"
+    ],
+    "/lessons/spanish/questions/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/questions/page-9af9b6e8d05b442f.js"
+    ],
+    "/lessons/spanish/verbs-trainer/page": [
+      "static/chunks/webpack-85363ecb37e497ab.js",
+      "static/chunks/fd9d1056-3f67bd7f04959fd0.js",
+      "static/chunks/69-bbf9e2ce146f73dd.js",
+      "static/chunks/main-app-9e2a411ad09712fd.js",
+      "static/chunks/44530001-9505f3160d73a2fa.js",
+      "static/chunks/250-0ecde16bb07b65e9.js",
+      "static/chunks/514-3785ec692aae18cf.js",
+      "static/chunks/app/lessons/spanish/verbs-trainer/page-134fbebed7d4402f.js"
+    ]
+  }
+}

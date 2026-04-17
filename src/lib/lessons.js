@@ -8,6 +8,7 @@ export const LESSONS = {
       color: '#e63946',
       totalCW: 0,
       totalHW: 0,
+      totalScore: 0,
     },
     {
       id: 'spa_phonetics',
@@ -184,58 +185,6 @@ export const LESSONS = {
       totalCW: 2,
       totalHW: 2,
       totalScore: 4,
-    }
-  ],
-  english: [
-    {
-      id: 'eng_nobody',
-      title: 'Nobody & Anyone (B1)',
-      subject: 'English',
-      path: '/lessons/english/indefinite-pronouns',
-      color: '#2a9d8f',
-      totalCW: 5,
-      totalHW: 5,
-    },
-    {
-      id: 'eng_passive',
-      title: 'Passive Voice (B1-B2)',
-      subject: 'English',
-      path: '/lessons/english/passive-voice',
-      color: '#2a9d8f',
-      totalCW: 23,
-      totalHW: 18,
-      totalScore: 41,
-    }
-  ],
-  math: [
-    {
-      id: 'math_quadratic',
-      title: 'Квадратные уравнения',
-      subject: 'Math',
-      path: '/lessons/math/quadratic-equations',
-      color: '#e63946',
-      totalCW: 3,
-      totalHW: 3,
-    },
-    {
-      id: 'math_inequal',
-      title: 'Неравенства',
-      subject: 'Math',
-      path: '/lessons/math/inequalities',
-      color: '#e63946',
-      totalCW: 6,
-      totalHW: 8,
-    }
-  ],
-  physics: [
-    {
-      id: 'phys_dc',
-      title: 'Постоянный ток (DC)',
-      subject: 'Physics',
-      path: '/lessons/physics/dc-circuits',
-      color: '#9333ea',
-      totalCW: 2,
-      totalHW: 2,
     }
   ]
 };

@@ -8,7 +8,24 @@ export default function SerLesson() {
   const [hints, setHints] = useState({})
 
   const total = 10
-  const { progress, markCorrect, correctCount, pct } = useLessonProgress('spa_ser', total);
+  const { progress, updateProgress, getStats, loading } = useLessonProgress('spa_ser', total);
+  const stats = getStats('cw')
+  const correctCount = stats.correct
+  const pct = stats.pct
+
+  // Restoration
+  useEffect(() => {
+    if (!loading && progress.cw) {
+      const restored = {};
+      Object.keys(progress.cw).forEach(id => {
+        const item = progress.cw[id];
+        if (item) {
+          restored[id] = { value: item.value || '', isCorrect: item.status === 'correct', checked: true };
+        }
+      });
+      setAnswers(prev => ({ ...prev, ...restored }));
+    }
+  }, [loading, progress.cw]);
 
   const normalize = (s) => s.toLowerCase().replace(/\s+/g, '').trim()
 
@@ -18,7 +35,7 @@ export default function SerLesson() {
       ...prev,
       [id]: { value, isCorrect, checked: true },
     }))
-    if (isCorrect) markCorrect(id, true);
+    updateProgress(id, 'cw', isCorrect ? 'correct' : 'wrong', 1, value);
   }
 
   const toggleHint = (id) => {
@@ -79,6 +96,8 @@ export default function SerLesson() {
       </div>
     )
   }
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
 
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">
@@ -253,7 +272,7 @@ export default function SerLesson() {
             <ExerciseItem id="ex4" num="4." problem="Yo _______ de Rusia. (Я из России)" correctAns="soy" />
             <ExerciseItem id="ex5" num="5." problem="¿De dónde _______ tú? (Откуда ты?)" correctAns="eres" />
             <ExerciseItem id="ex6" num="6." problem="María y Juan _______ amigos. (Они друзья)" correctAns="son" hintText="Мария и Хуан — это ОНИ (Ellos). Посмотри в таблицу!" />
-            <ExerciseItem id="ex7" num="7." problem="Mi coche _______ muy rápido. (Моя машина очень быстрая)" correctAns="es" />
+            <ExerciseItem id="ex7" num="7." problem="Mi coche _______ очень быстрый. (Моя машина очень быстрая)" correctAns="es" />
             <ExerciseItem id="ex8" num="8." problem="Nosotros _______ estudiantes de español. (Мы студенты)" correctAns="somos" />
           </div>
         </div>
