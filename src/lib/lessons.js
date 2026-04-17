@@ -17,6 +17,7 @@ export const LESSONS = {
       color: '#f4a261',
       totalCW: 3,
       totalHW: 2,
+      totalScore: 5,
     },
     {
       id: 'spa_ser',
@@ -26,6 +27,7 @@ export const LESSONS = {
       color: '#e63946',
       totalCW: 5,
       totalHW: 5,
+      totalScore: 10,
     },
     {
       id: 'spa_articles',
@@ -35,6 +37,7 @@ export const LESSONS = {
       color: '#e63946',
       totalCW: 5,
       totalHW: 5,
+      totalScore: 10,
     },
     {
       id: 'spa_tener',
@@ -44,6 +47,7 @@ export const LESSONS = {
       color: '#f4a261',
       totalCW: 7,
       totalHW: 8,
+      totalScore: 15,
     },
     {
       id: 'spa_verbs',
@@ -53,6 +57,7 @@ export const LESSONS = {
       color: '#f4a261',
       totalCW: 7,
       totalHW: 8,
+      totalScore: 15,
     },
     {
       id: 'spa_estar',
@@ -62,6 +67,7 @@ export const LESSONS = {
       color: '#f4a261',
       totalCW: 4,
       totalHW: 4,
+      totalScore: 8,
     },
     {
       id: 'spa_questions',
@@ -71,6 +77,7 @@ export const LESSONS = {
       color: '#f4a261',
       totalCW: 10,
       totalHW: 13,
+      totalScore: 23,
     },
     {
       id: 'spa_family',
@@ -80,6 +87,7 @@ export const LESSONS = {
       color: '#f4a261',
       totalCW: 10,
       totalHW: 15,
+      totalScore: 25,
     },
     {
       id: 'spa_gustar',
@@ -89,6 +97,7 @@ export const LESSONS = {
       color: '#f4a261',
       totalCW: 10,
       totalHW: 15,
+      totalScore: 25,
     },
     {
       id: 'spa_verbs_trainer',
@@ -98,15 +107,7 @@ export const LESSONS = {
       color: '#e63946',
       totalCW: 0,
       totalHW: 50,
-    },
-    {
-      id: 'spa_vocab',
-      title: 'Мега-словарь A1',
-      subject: 'Español',
-      path: '/lessons/spanish',
-      color: '#2a9d8f',
-      totalCW: 0,
-      totalHW: 0,
+      totalScore: 50,
     },
     {
       id: 'spa_listening',
@@ -116,15 +117,7 @@ export const LESSONS = {
       color: '#e63946',
       totalCW: 0,
       totalHW: 5,
-    },
-    {
-      id: 'spa_reading_intro',
-      title: 'Чтение: Карта текстов',
-      subject: 'Español',
-      path: '/lessons/spanish/reading/intro',
-      color: '#f4a261',
-      totalCW: 0,
-      totalHW: 0,
+      totalScore: 5,
     },
     {
       id: 'spa_reading_hola',
@@ -134,6 +127,63 @@ export const LESSONS = {
       color: '#f4a261',
       totalCW: 2,
       totalHW: 3,
+      totalScore: 5,
+    }
+  ],
+  english: [
+    {
+      id: 'eng_nobody',
+      title: 'Nobody & Anyone (B1)',
+      subject: 'English',
+      path: '/lessons/english/indefinite-pronouns',
+      color: '#2a9d8f',
+      totalCW: 5,
+      totalHW: 5,
+      totalScore: 10,
+    },
+    {
+      id: 'eng_passive',
+      title: 'Passive Voice (B1-B2)',
+      subject: 'English',
+      path: '/lessons/english/passive-voice',
+      color: '#2a9d8f',
+      totalCW: 23,
+      totalHW: 18,
+      totalScore: 41,
+    }
+  ],
+  math: [
+    {
+      id: 'math_quadratic',
+      title: 'Квадратные уравнения',
+      subject: 'Math',
+      path: '/lessons/math/quadratic-equations',
+      color: '#e63946',
+      totalCW: 3,
+      totalHW: 3,
+      totalScore: 6,
+    },
+    {
+      id: 'math_inequal',
+      title: 'Неравенства',
+      subject: 'Math',
+      path: '/lessons/math/inequalities',
+      color: '#e63946',
+      totalCW: 6,
+      totalHW: 8,
+      totalScore: 14,
+    }
+  ],
+  physics: [
+    {
+      id: 'phys_dc',
+      title: 'Постоянный ток (DC)',
+      subject: 'Physics',
+      path: '/lessons/physics/dc-circuits',
+      color: '#9333ea',
+      totalCW: 2,
+      totalHW: 2,
+      totalScore: 4,
     }
   ],
   english: [
@@ -152,8 +202,9 @@ export const LESSONS = {
       subject: 'English',
       path: '/lessons/english/passive-voice',
       color: '#2a9d8f',
-      totalCW: 8,
-      totalHW: 15,
+      totalCW: 23,
+      totalHW: 18,
+      totalScore: 41,
     }
   ],
   math: [

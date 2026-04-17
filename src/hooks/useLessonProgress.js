@@ -58,6 +58,7 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
           .from('student_lessons')
           .update({ 
             score: currentScore,
+            total_score: totalExercises, // Синхронизируем общее кол-во заданий
             status: currentScore >= totalExercises ? 'completed' : 'in_progress',
             progress_data: newState,
             updated_at: new Date().toISOString()
