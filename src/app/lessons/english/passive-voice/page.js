@@ -1,522 +1,380 @@
 'use client'
-import { useState } from 'react'
-import Exercise from '../../../../components/Exercise'
-import AdvancedProgressBar from '../../../../components/AdvancedProgressBar'
+import { useState, useEffect } from 'react'
+import { supabase } from '../../../../lib/supabase'
 import { useLessonProgress } from '../../../../hooks/useLessonProgress'
-import { RefreshCcw, BookOpen, Star } from 'lucide-react'
 import confetti from 'canvas-confetti'
+import { Check, AlertCircle, RefreshCcw, BookOpen, Star, ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 
-const CW_DATA = [
-  // --- READING COMPREHENSION ---
-  {
-    id: 'eng_passive_read_1',
-    type: 'mcq',
-    problem: '1. According to the text, how are cacao beans harvested?',
-    options: [
-      { label: 'They are harvested by big machines.', value: '1' },
-      { label: 'They are harvested by farmers by hand.', value: '2' },
-      { label: 'They are grown in factories.', value: '3' }
-    ],
-    correctAnswer: '2',
-    solution: 'В тексте: "they are harvested by farmers by hand".'
-  },
-  {
-    id: 'eng_passive_read_2',
-    type: 'mcq',
-    problem: '2. Where are the beans roasted?',
-    options: [
-      { label: 'At the chocolate factories.', value: '1' },
-      { label: 'On small farms in Africa.', value: '2' },
-      { label: 'In the sun.', value: '3' }
-    ],
-    correctAnswer: '1',
-    solution: 'В тексте: "At the factory, the beans are roasted...".'
-  },
-  // --- BLOCK 1: DROPDOWN (TENSES) ---
-  {
-    id: 'eng_passive_be_1',
-    type: 'dropdown',
-    problem: '3. (Every day) The office _______ cleaned at 6 PM.',
-    options: [
-      { label: 'is', value: 'is' },
-      { label: 'are', value: 'are' },
-      { label: 'was', value: 'was' },
-      { label: 'will be', value: 'will be' }
-    ],
-    correctAnswer: 'is',
-    hint: 'Every day → Present Simple Passive (is/are + V3). Office — ед. ч.',
-    solution: 'The office is cleaned every day.'
-  },
-  {
-    id: 'eng_passive_be_2',
-    type: 'dropdown',
-    problem: '4. (Last night) My car _______ stolen!',
-    options: [
-      { label: 'is', value: 'is' },
-      { label: 'was', value: 'was' },
-      { label: 'were', value: 'were' },
-      { label: 'has been', value: 'has been' }
-    ],
-    correctAnswer: 'was',
-    hint: 'Last night → Past Simple Passive (was/were + V3).',
-    solution: 'My car was stolen last night.'
-  },
-  {
-    id: 'eng_passive_be_3',
-    type: 'dropdown',
-    problem: '5. (Next year) The new bridge _______ opened to the public.',
-    options: [
-      { label: 'is', value: 'is' },
-      { label: 'was', value: 'was' },
-      { label: 'will be', value: 'will be' }
-    ],
-    correctAnswer: 'will be',
-    hint: 'Next year → Future Simple Passive (will be + V3).',
-    solution: 'The bridge will be opened next year.'
-  },
-  {
-    id: 'eng_passive_be_4',
-    type: 'dropdown',
-    problem: '6. (Just now / Result) Oh no! The window _______ broken!',
-    options: [
-      { label: 'is', value: 'is' },
-      { label: 'was', value: 'was' },
-      { label: 'has been', value: 'has been' }
-    ],
-    correctAnswer: 'has been',
-    hint: 'Result just now → Present Perfect Passive (has/have been + V3).',
-    solution: 'The window has been broken.'
-  },
-  {
-    id: 'eng_passive_be_5',
-    type: 'dropdown',
-    problem: '7. (Usually) Millions of emails _______ sent every day.',
-    options: [
-      { label: 'is', value: 'is' },
-      { label: 'are', value: 'are' },
-      { label: 'were', value: 'were' }
-    ],
-    correctAnswer: 'are',
-    solution: 'Emails (plural) are sent.'
-  },
-  {
-    id: 'eng_passive_be_6',
-    type: 'dropdown',
-    problem: "8. (In 1997) Harry Potter and the Philosopher's Stone _______ published.",
-    options: [
-      { label: 'is', value: 'is' },
-      { label: 'was', value: 'was' },
-      { label: 'were', value: 'were' }
-    ],
-    correctAnswer: 'was',
-    solution: 'In 1997 → was published.'
-  },
-  {
-    id: 'eng_passive_be_7',
-    type: 'dropdown',
-    problem: '9. The cake was made _______ chocolate and strawberries. (Инструмент/Ингредиент)',
-    options: [
-      { label: 'by', value: 'by' },
-      { label: 'with', value: 'with' }
-    ],
-    correctAnswer: 'with',
-    solution: 'With — для инструментов/ингредиентов.'
-  },
-  {
-    id: 'eng_passive_be_8',
-    type: 'dropdown',
-    problem: '10. The photo was taken _______ my brother. (Человек/Деятель)',
-    options: [
-      { label: 'by', value: 'by' },
-      { label: 'with', value: 'with' }
-    ],
-    correctAnswer: 'by',
-    solution: 'By — для деятеля (человека).'
-  },
-  // --- BLOCK 2: TRANSLATIONS (WORD BUILDER) ---
-  {
-    id: 'eng_passive_trans_1',
-    type: 'text',
-    problem: '11. Письмо было написано вчера. (Translate)',
-    correctAnswer: 'The letter was written yesterday',
-    solution: 'The letter was written yesterday.'
-  },
-  {
-    id: 'eng_passive_trans_2',
-    type: 'text',
-    problem: '12. По-английски говорят по всему миру. (Translate)',
-    correctAnswer: 'English is spoken all over the world',
-    solution: 'English is spoken all over the world.'
-  },
-  {
-    id: 'eng_passive_trans_3',
-    type: 'text',
-    problem: '13. Мой телефон украли! (К настоящему моменту)',
-    correctAnswer: 'My phone has been stolen',
-    solution: 'My phone has been stolen.'
-  },
-  {
-    id: 'eng_passive_trans_4',
-    type: 'text',
-    problem: '14. Когда был построен дом? (Вопрос)',
-    correctAnswer: 'When was the house built?',
-    solution: 'When was the house built?'
-  },
-  {
-    id: 'eng_passive_trans_5',
-    type: 'text',
-    problem: '15. Отчет будет закончен завтра.',
-    correctAnswer: 'The report will be finished tomorrow',
-    solution: 'The report will be finished tomorrow.'
-  },
-  // --- BLOCK 3: ACTIVE OR PASSIVE ---
-  {
-    id: 'eng_passive_ac_1',
-    type: 'mcq',
-    problem: '16. "Somebody cleans the room." -> Какое предложение правильно переведено в пассив?',
-    options: [
-      { label: 'The room cleaned somebody.', value: '1' },
-      { label: 'The room is cleaned.', value: '2' },
-      { label: 'The room was cleaned.', value: '3' }
-    ],
-    correctAnswer: '2',
-    solution: 'Cleans (Present Simple) -> is cleaned.'
-  },
-  {
-    id: 'eng_passive_ac_2',
-    type: 'mcq',
-    problem: '17. "They built the house in 2010." -> Пассивный вариант:',
-    options: [
-      { label: 'The house is built in 2010.', value: '1' },
-      { label: 'The house built in 2010.', value: '2' },
-      { label: 'The house was built in 2010.', value: '3' }
-    ],
-    correctAnswer: '3',
-    solution: 'Built (Past Simple) -> was built.'
-  },
-  {
-    id: 'eng_passive_ac_3',
-    type: 'mcq',
-    problem: "18. I can't find my keys! I think they ________!",
-    options: [
-      { label: 'stole', value: '1' },
-      { label: 'have been stolen', value: '2' },
-      { label: 'was stolen', value: '3' }
-    ],
-    correctAnswer: '2',
-    solution: "Result just now -> have been stolen."
-  },
-  // --- BLOCK 4: V3 FORMS ---
-  { id: 'eng_passive_v3_1', type: 'text', problem: '19. make →', correctAnswer: 'made' },
-  { id: 'eng_passive_v3_2', type: 'text', problem: '20. write →', correctAnswer: 'written' },
-  { id: 'eng_passive_v3_3', type: 'text', problem: '21. break →', correctAnswer: 'broken' },
-  { id: 'eng_passive_v3_4', type: 'text', problem: '22. build →', correctAnswer: 'built' },
-  { id: 'eng_passive_v3_5', type: 'text', problem: '23. invent →', correctAnswer: 'invented' }
+// Данные для упражнений (те же, что в HTML)
+const CW_BLOCK1 = [
+  { id: 'cw3', problem: '3. (Every day) The office', options: ['is', 'are', 'was', 'will be'], ans: 'is', type: 'dropdown' },
+  { id: 'cw4', problem: '4. (Last night) My car', options: ['is', 'was', 'were', 'has been'], ans: 'was', type: 'dropdown' },
+  { id: 'cw5', problem: '5. (Next year) The new bridge', options: ['is', 'was', 'will be'], ans: 'will be', type: 'dropdown' },
+  { id: 'cw6', problem: '6. (Just now / Result) Oh no! The window', options: ['is', 'was', 'has been'], ans: 'has been', type: 'dropdown' },
+  { id: 'cw7', problem: '7. (Usually) Millions of emails', options: ['is', 'are', 'were'], ans: 'are', type: 'dropdown' },
+  { id: 'cw8', problem: "8. (In 1997) Harry Potter", options: ['is', 'was', 'were'], ans: 'was', type: 'dropdown' },
+  { id: 'cw9', problem: '9. The cake was made', options: ['by', 'with'], ans: 'with', type: 'dropdown', label: '(Ингредиент)' },
+  { id: 'cw10', problem: '10. The photo was taken', options: ['by', 'with'], ans: 'by', type: 'dropdown', label: '(Человек)' },
 ]
 
-const HW_VARIANTS = {
-  1: [
-    {
-      id: 'eng_hw_1',
-      type: 'text',
-      problem: '1. English (speak) _______ in Australia.',
-      correctAnswer: 'is spoken',
-      hint: 'Present Simple Passive'
-    },
-    {
-      id: 'eng_hw_2',
-      type: 'text',
-      problem: '2. These cars (make) _______ in Japan.',
-      correctAnswer: 'are made',
-      hint: 'Present Simple Passive (plural)'
-    },
-    {
-      id: 'eng_hw_3',
-      type: 'text',
-      problem: '3. The mail (deliver) _______ at 9 AM every day.',
-      correctAnswer: 'is delivered',
-      hint: 'Present Simple Passive'
-    },
-    {
-      id: 'eng_hw_4',
-      type: 'text',
-      problem: '4. (Question) _______ the rooms (clean) _______ every day?',
-      correctAnswer: 'Are cleaned',
-      hint: 'Are the rooms cleaned...?'
-    },
-    {
-      id: 'eng_hw_5',
-      type: 'text',
-      problem: '5. This room (not use) _______ by anybody.',
-      correctAnswer: 'is not used',
-      hint: 'Negative Present Simple Passive'
-    },
-    {
-      id: 'eng_hw_6',
-      type: 'text',
-      problem: '6. My wallet (steal) _______ yesterday.',
-      correctAnswer: 'was stolen',
-      hint: 'Past Simple Passive'
-    },
-    {
-      id: 'eng_hw_7',
-      type: 'text',
-      problem: '7. The telephone (invent) _______ by Alexander Bell.',
-      correctAnswer: 'was invented',
-      hint: 'Past Simple Passive'
-    },
-    {
-      id: 'eng_hw_11_alt',
-      type: 'text',
-      problem: '8. The project (finish) _______ tomorrow.',
-      correctAnswer: 'will be finished',
-      hint: 'Future Simple Passive'
-    }
-  ],
-  2: [
-    {
-      id: 'eng_hw_8',
-      type: 'text',
-      problem: '8. These houses (build) _______ in 1950.',
-      correctAnswer: 'were built',
-      hint: 'Past Simple Passive (plural)'
-    },
-    {
-      id: 'eng_hw_9',
-      type: 'text',
-      problem: '9. (Question) _______ this play (write) _______ by Shakespeare?',
-      correctAnswer: 'Was written',
-      hint: 'Was this play written...?'
-    },
-    {
-      id: 'eng_hw_10',
-      type: 'text',
-      problem: '10. I (not invite) _______ to the party last night.',
-      correctAnswer: 'was not invited',
-      hint: 'Negative Past Simple Passive'
-    },
-    {
-      id: 'eng_hw_12',
-      type: 'text',
-      problem: '11. The door (paint) _______ recently.',
-      correctAnswer: 'has been painted',
-      hint: 'Present Perfect Passive'
-    },
-    {
-      id: 'eng_hw_13',
-      type: 'text',
-      problem: '12. The tickets (send) _______ by email next week.',
-      correctAnswer: 'will be sent',
-      hint: 'Future Simple Passive'
-    },
-    {
-      id: 'eng_hw_14',
-      type: 'text',
-      problem: '13. Ten new people (hire) _______ by the company this month.',
-      correctAnswer: 'have been hired',
-      hint: 'Present Perfect Passive (plural)'
-    },
-    {
-      id: 'eng_hw_15',
-      type: 'text',
-      problem: '14. (Question) _______ dinner (serve) _______ at 8?',
-      correctAnswer: 'Will be served',
-      hint: 'Will dinner be served...?'
-    },
-    {
-      id: 'eng_hw_11',
-      type: 'text',
-      problem: '15. The project (finish) _______ tomorrow.',
-      correctAnswer: 'will be finished',
-      hint: 'Future Simple Passive'
-    }
-  ]
-}
-
-export default function PassiveVoicePage() {
-  const lessonId = 'eng_passive'
-  const cwCount = CW_DATA.length
-  const hwCount = 8
-  const { progress, updateProgress, resetHW, variant, getStats, loading } =
+export default function PassiveVoiceLegacyPage() {
+  const lessonId = 'eng_passive_v3' // Используем новый ID для чистых тестов
+  const cwCount = 23
+  const hwCount = 15
+  const { progress, updateProgress, resetHW, variant, getStats, loading } = 
     useLessonProgress(lessonId, cwCount, hwCount)
-  const [activeTab, setActiveTab] = useState('theory')
 
-  if (loading) return (
-    <div className="p-20 text-center font-mono animate-pulse">Загрузка урока…</div>
-  )
+  // Local state for inputs to avoid jumping
+  const [inputs, setInputs] = useState({})
+  const [builders, setBuilders] = useState({
+    zone1: [], zone2: [], zone3: [], zone4: [], zone5: []
+  })
+  const [banks, setBanks] = useState({
+    bank1: ['yesterday', 'written', 'was', 'The', 'letter'],
+    bank2: ['all over', 'spoken', 'is', 'the world', 'English'],
+    bank3: ['My', 'stolen', 'phone', 'has', 'been'],
+    bank4: ['built', 'was', 'the house', 'When', '?'],
+    bank5: ['be', 'finished', 'The report', 'will', 'tomorrow']
+  })
 
-  const cwStats = getStats('cw')
-  const hwStats = getStats('hw')
+  useEffect(() => {
+    // Синхронизация локального стейта с загруженным прогрессом если нужно
+  }, [loading])
 
-  const handleHWSuccess = (id, attempts, status) => {
-    updateProgress(id, 'hw', status, attempts)
+  const handleInputChange = (id, val) => {
+    setInputs(prev => ({ ...prev, [id]: val }))
   }
 
-  const triggerConfetti = () => {
-    confetti({
-      particleCount: 150,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#6366f1', '#10b981', '#f59e0b']
+  const checkExercise = (id, correctAns, mode = 'cw') => {
+    const userAns = inputs[id] || ''
+    const isCorrect = userAns.toLowerCase().trim() === correctAns.toLowerCase().trim()
+    updateProgress(id, mode, isCorrect ? 'correct' : 'wrong', 1)
+    if (isCorrect && id.startsWith('hw') && getStats('hw').correct + 1 === hwCount) {
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } })
+    }
+  }
+
+  const toggleWord = (word, zoneKey, bankKey) => {
+    if (progress.cw?.[zoneKey]?.status === 'correct') return
+    
+    setBuilders(prev => {
+      const inZone = prev[zoneKey].includes(word)
+      if (inZone) {
+        setBanks(b => ({ ...b, [bankKey]: [...b[bankKey], word] }))
+        return { ...prev, [zoneKey]: prev[zoneKey].filter(w => w !== word) }
+      } else {
+        setBanks(b => ({ ...b, [bankKey]: b[bankKey].filter(w => w !== word) }))
+        return { ...prev, [zoneKey]: [...prev[zoneKey], word] }
+      }
     })
   }
 
-  if (hwStats.isComplete && hwStats.pct >= 85 && !progress.confettiTriggered) {
-    triggerConfetti()
+  const checkBuilder = (id, zoneKey, correctStr) => {
+    const userStr = builders[zoneKey].join(' ')
+    const isCorrect = userStr === correctStr
+    updateProgress(id, 'cw', isCorrect ? 'correct' : 'wrong', 1)
   }
 
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
+
+  const cwStats = getStats('cw')
+
   return (
-    <div className="min-h-screen bg-[#fafafa] pb-20">
-      {/* HERO */}
-      <div className="bg-slate-900 text-white py-16 px-6 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto relative z-10">
-          <div className="text-indigo-400 font-bold uppercase tracking-[4px] text-xs mb-4">
-            English · B1‑B2
-          </div>
-          <h1 className="text-5xl font-black mb-6 tracking-tight">
-            Passive Voice <span className="text-indigo-400">Lesson</span>
-          </h1>
-          <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
-            Научитесь превращать активные предложения в пассивные, используя разные времена.
-          </p>
-        </div>
-        <div className="absolute right-[-5%] top-[-10%] text-[20rem] font-black text-white/[0.03] select-none pointer-events-none">
-          …
+    <div className="legacy-theme">
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+        
+        :root { 
+            --ink: #1e1b4b; --paper: #f8fafc; --accent: #2563eb; --gold: #f59e0b; 
+            --teal: #0d9488; --muted: #64748b; --card: #ffffff; --border: #e2e8f0; 
+            --correct: #059669; --wrong: #dc2626; 
+        }
+
+        .legacy-theme {
+            font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); line-height: 1.7; padding-bottom: 80px;
+        }
+
+        .hero { background: var(--ink); color: white; padding: 80px 40px 60px; position: relative; overflow: hidden; }
+        .hero .label { font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+        .hero h1 { font-family: 'Unbounded', sans-serif; font-weight: 800; font-size: clamp(32px,5vw,52px); line-height: 1.1; margin-bottom: 16px; position: relative; z-index: 2; }
+        .hero h1 em { color: var(--gold); font-style: italic; font-family: serif; font-weight: 400; }
+        .hero p { color: rgba(255,255,255,.8); font-size: 18px; max-width: 540px; position: relative; z-index: 2; }
+        .hero::before { content: 'V3'; position: absolute; right: 10px; top: -10px; font-size: 180px; color: rgba(255,255,255,.02); font-family: 'Unbounded', sans-serif; font-weight: 800; z-index: 1; pointer-events: none;}
+
+        .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+        .toc { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin: 32px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .toc a { background: #f1f5f9; color: var(--ink); text-decoration: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 500; transition: all .2s; }
+        .toc a:hover { background: var(--accent); color: white; }
+
+        .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--accent); margin: 56px 0 20px; }
+        .section-label::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); }
+        
+        h2 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 28px; margin-bottom: 24px; }
+
+        .theory-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px 40px; margin-bottom: 20px; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .theory-card .stripe { position: absolute; left: 0; top: 20px; bottom: 20px; width: 4px; border-radius: 0 2px 2px 0; background: var(--accent); }
+        .theory-card.gold .stripe { background: var(--gold); }
+        .theory-card.teal .stripe { background: var(--teal); }
+        .theory-card h3 { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 16px; }
+
+        .rule-box { background: linear-gradient(135deg,#f0fdf4,#ccfbf1); border: 1px solid #5eead4; border-left: 4px solid var(--teal); border-radius: 10px; padding: 16px 20px; margin: 16px 0; font-size: 14px; color: #115e59; }
+
+        .conj-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 15px; }
+        .conj-table th, .conj-table td { border: 1px solid var(--border); padding: 14px 16px; text-align: left; }
+        .conj-table th { background: #f8fafc; font-weight: 600; }
+
+        .reading-text { font-size: 16px; line-height: 1.8; color: #334155; background: #fffbeb; border-left: 4px solid var(--gold); padding: 24px 32px; border-radius: 0 16px 16px 0; margin-bottom: 24px; }
+
+        .exercise-set { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+        .exercise-set-header { padding: 20px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); background: #fafaf9; }
+        .difficulty-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .difficulty-dot.teal { background: var(--teal); }
+        .difficulty-dot.easy { background: var(--teal); }
+        .difficulty-dot.medium { background: var(--gold); }
+        .difficulty-dot.hard { background: var(--accent); }
+        .exercise-set-header h3 { font-size: 16px; font-weight: 700; margin: 0; }
+
+        .exercise-list { padding: 16px 24px; }
+        .exercise-item { border-bottom: 1px dashed var(--border); padding: 24px 0; display: flex; flex-direction: column; gap: 12px; }
+        .exercise-item:last-child { border-bottom: none; }
+        .ex-problem { font-size: 16px; font-weight: 500; color: var(--ink); }
+
+        .answer-input { border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 14px; font-family: 'DM Mono', monospace; font-size: 15px; min-width: 220px; outline: none; transition: all .2s; }
+        .answer-input:focus { border-color: var(--accent); }
+        .answer-input.correct { border-color: var(--correct); background: #ecfdf5; color: var(--correct); }
+        .answer-input.wrong { border-color: var(--wrong); background: #fef2f2; color: var(--wrong); }
+
+        .inline-select { appearance: none; background: #f8fafc; border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 36px 8px 14px; font-family: 'DM Mono', monospace; font-size: 15px; color: var(--accent); font-weight: 600; cursor: pointer; outline: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+        .inline-select.correct { border-color: var(--correct); color: var(--correct); background-color: #ecfdf5; }
+        .inline-select.wrong { border-color: var(--wrong); color: var(--wrong); background-color: #fef2f2; }
+
+        .mcq-grid { display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%; margin-top: 10px; }
+        .mcq-btn { background: white; border: 1.5px solid var(--border); border-radius: 10px; padding: 16px 20px; font-size: 15px; text-align: left; cursor: pointer; transition: all 0.2s; }
+        .mcq-btn:hover { border-color: var(--accent); }
+        .mcq-btn.selected { border-color: var(--accent); background: #eff6ff; }
+        .mcq-btn.correct { border-color: var(--correct); background: #ecfdf5; color: var(--correct); font-weight: 600; }
+        .mcq-btn.wrong { border-color: var(--wrong); background: #fef2f2; color: var(--wrong); }
+
+        .drop-zone { min-height: 56px; background: #f8fafc; border: 2px dashed var(--border); border-radius: 12px; padding: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+        .drop-zone.correct { background: #ecfdf5; border-color: var(--correct); border-style: solid; }
+        .word-bank { display: flex; flex-wrap: wrap; gap: 10px; }
+        .draggable-word { background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 14px; cursor: pointer; transition: all 0.1s; }
+        .draggable-word:hover { background: #f1f5f9; }
+
+        .check-btn { background: var(--ink); color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 14px; cursor: pointer; font-weight: 600; width: fit-content; margin-top: 5px; }
+        .check-btn:hover { background: #334155; }
+
+        .feedback { font-size: 14px; font-weight: 600; padding: 10px 14px; border-radius: 8px; margin-top: 10px; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: #ecfdf5; color: var(--correct); border-left: 4px solid var(--correct); }
+        .feedback.wrong { background: #fef2f2; color: var(--wrong); border-left: 4px solid var(--wrong); }
+
+        .progress-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 24px; position: sticky; top: 20px; z-index: 50; box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+        .progress-bar-wrap { background: #f1f5f9; border-radius: 10px; height: 8px; margin-top: 12px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--accent); transition: width .4s ease; }
+
+        .hw-badge { background: var(--ink); color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-right: 10px; }
+      `}</style>
+
+      <div className="hero">
+        <div className="container">
+          <div className="label">🇬🇧 Урок 1 · Грамматика B1</div>
+          <h1>The Passive<br /><em>Voice</em></h1>
+          <p>Пассивный залог — визитная карточка уровня B1. Учимся говорить не о том, кто сделал действие, а о том, что произошло с предметом.</p>
         </div>
       </div>
 
-      {/* TABS */}
-      <div className="max-w-4xl mx-auto px-6">
-        <div className="flex gap-2 p-1 bg-slate-200/50 rounded-2xl mt-8 mb-8 sticky top-4 z-40 backdrop-blur-md shadow-sm">
-          <button
-            onClick={() => setActiveTab('theory')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all ${
-              activeTab === 'theory' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
-            }`}
-          >
-            <BookOpen size={18} /> Теория
-          </button>
-          <button
-            onClick={() => setActiveTab('classwork')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all ${
-              activeTab === 'classwork' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
-            }`}
-          >
-            <Star size={18} /> Классная
-          </button>
-          <button
-            onClick={() => setActiveTab('homework')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all ${
-              activeTab === 'homework' ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
-            }`}
-          >
-            <Star size={18} /> Домашка
-          </button>
+      <div className="container">
+        <nav className="toc">
+          <Link href="/dashboard">← В Дашборд</Link>
+          <a href="#theory">📖 Теория</a>
+          <a href="#reading">📰 Чтение</a>
+          <a href="#classwork">🎯 Практика</a>
+          <a href="#homework">📝 Домашка</a>
+        </nav>
+
+        {/* PROGRESS */}
+        <div className="progress-card">
+          <div className="flex justify-between items-center">
+            <span className="font-bold text-lg">Твой прогресс (Классная работа)</span>
+            <span className="font-mono font-bold text-accent">{cwStats.correct} / {cwCount}</span>
+          </div>
+          <div className="progress-bar-wrap">
+            <div className="progress-bar-fill" style={{ width: `${(cwStats.correct / cwCount) * 100}%` }}></div>
+          </div>
         </div>
 
-        {/* CONTENT */}
-        <div className="space-y-8">
-          {activeTab === 'theory' && (
-            <div className="space-y-6">
-              <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
-                <h2 className="text-2xl font-black text-slate-900 mb-6">
-                  Что такое пассивный залог?
-                </h2>
-                <p className="text-slate-700 leading-relaxed">
-                  Пассивный залог образуется с помощью глагола «to be» + причастие III формы (past participle). Субъект действия становится объектом, а исполнитель (при необходимости) указывается после предлога <b>by</b>.
-                </p>
-                <div className="bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r-xl">
-                  <strong className="text-emerald-900 block mb-2">Золотая формула:</strong>
-                  <code className="text-emerald-700 font-bold text-lg">to be + V3 (Past Participle)</code>
-                </div>
-                <ul className="list-disc pl-6 text-slate-700 space-y-2">
-                  <li><b>Present Simple</b> → <i>is/are + written</i></li>
-                  <li><b>Past Simple</b> → <i>was/were + written</i></li>
-                  <li><b>Future</b> → <i>will be + written</i></li>
-                  <li><b>Present Perfect</b> → <i>has/have been + written</i></li>
-                </ul>
-              </div>
+        {/* THEORY */}
+        <section id="theory">
+          <div className="section-label">Теория: Пассивный залог</div>
+          <h2>Кто виноват или что сделано?</h2>
 
-              <div className="bg-amber-50 p-8 rounded-3xl border border-amber-200 shadow-sm space-y-6">
-                <h2 className="text-2xl font-black text-amber-900 mb-4 font-serif italic">
-                  The Journey of Chocolate
-                </h2>
-                <div className="text-amber-900/80 leading-relaxed space-y-4 text-lg">
-                  <p>
-                    Chocolate <strong>is loved</strong> by people all over the world, but how is it actually made? 
-                    The process begins in tropical countries like Ivory Coast and Ghana. 
-                    Cacao beans <strong>are grown</strong> on small farms. When the pods are ripe, 
-                    they <strong>are harvested</strong> by farmers by hand.
-                  </p>
-                  <p>
-                    After that, the beans <strong>are fermented</strong> and dried in the sun. 
-                    Then, they <strong>are shipped</strong> to chocolate factories in Europe or America. 
-                    At the factory, the beans <strong>are roasted</strong> at high temperatures to bring out the flavor. 
-                    Finally, sugar and milk <strong>are added</strong>, and the mixture <strong>is turned</strong> into delicious chocolate bars.
-                  </p>
-                  <p>
-                    Many new types of chocolate <strong>will be invented</strong> in the future, 
-                    but the classic milk chocolate will always be popular!
-                  </p>
-                </div>
-              </div>
+          <div className="theory-card">
+            <div className="stripe"></div>
+            <h3>1. Суть пассива (Active vs Passive)</h3>
+            <p>В активном залоге (Active Voice) мы фокусируемся на том, <strong>КТО</strong> совершает действие: <br />
+            <i>Shakespeare wrote Hamlet. (Шекспир написал Гамлета).</i></p>
+            <p>В пассивном залоге (Passive Voice) фокус смещается на сам <strong>ОБЪЕКТ</strong>: <br />
+            <i>Hamlet <strong>was written</strong> by Shakespeare. (Гамлет был написан Шекспиром).</i></p>
+            <div className="rule-box">
+              <strong>💡 Золотая формула пассива:</strong><br />
+              <strong>to be</strong> + <strong>V3</strong> (глагол в 3-й форме).<br />
+              Меняем <strong>ТОЛЬКО глагол to be</strong>. V3 остаётся неизменной!
             </div>
-          )}
+          </div>
 
-          {activeTab === 'classwork' && (
-            <div className="space-y-6">
-              <AdvancedProgressBar data={progress.cw} total={cwCount} title="Прогресс классной работы" />
-              {CW_DATA.map((ex) => (
-                <Exercise
-                  key={ex.id}
-                  {...ex}
-                  mode="cw"
-                  savedState={progress.cw?.[ex.id]}
-                  onSuccess={(attempts, status) => updateProgress(ex.id, 'cw', status, attempts)}
-                />
+          <div className="theory-card gold">
+            <div className="stripe"></div>
+            <h3>2. Времена в Пассиве</h3>
+            <table className="conj-table">
+              <thead>
+                <tr><th>Время</th><th>Формула</th><th>Пример</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Present Simple</strong></td><td>am/is/are + V3</td><td>The office <strong>is cleaned</strong> every day.</td></tr>
+                <tr><td><strong>Past Simple</strong></td><td>was/were + V3</td><td>The Mona Lisa <strong>was painted</strong> by Da Vinci.</td></tr>
+                <tr><td><strong>Future Simple</strong></td><td>will be + V3</td><td>The bridge <strong>will be finished</strong> next year.</td></tr>
+                <tr><td><strong>Present Perfect</strong></td><td>have/has been + V3</td><td>My car <strong>has been stolen</strong>!</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* READING */}
+        <section id="reading">
+          <div className="section-label">Чтение в контексте</div>
+          <h2>The Journey of Chocolate</h2>
+          <div className="reading-text">
+            <p>Chocolate <strong>is loved</strong> by people all over the world, but how is it actually made? The process begins in tropical countries like Ivory Coast and Ghana. Cacao beans <strong>are grown</strong> on small farms. When the pods are ripe, they <strong>are harvested</strong> by farmers by hand.</p>
+            <p>After that, the beans <strong>are fermented</strong> and dried in the sun. Then, they <strong>are shipped</strong> to chocolate factories in Europe or America. Finally, sugar and milk <strong>are added</strong>, and the mixture <strong>is turned</strong> into delicious chocolate bars.</p>
+          </div>
+
+          <div className="exercise-set">
+            <div className="exercise-set-header">
+                <div className="difficulty-dot teal"></div>
+                <h3>Чтение: Проверка понимания</h3>
+            </div>
+            <div className="exercise-list">
+                {[
+                  { id: 'cw1', q: '1. According to the text, how are cacao beans harvested?', options: ['They are harvested by machines.', 'They are harvested by hand.', 'They are grown in factories.'], ans: 1 },
+                  { id: 'cw2', q: '2. Where are the beans roasted?', options: ['At the chocolate factories.', 'On small farms.', 'In the sun.'], ans: 0 }
+                ].map((ex) => (
+                  <div key={ex.id} className="exercise-item">
+                    <div className="ex-problem">{ex.q}</div>
+                    <div className="mcq-grid">
+                      {ex.options.map((opt, i) => (
+                        <button 
+                          key={i} 
+                          className={`mcq-btn ${inputs[ex.id] === i ? 'selected' : ''} ${progress.cw?.[ex.id]?.status === 'correct' && i === ex.ans ? 'correct' : ''} ${progress.cw?.[ex.id]?.status === 'wrong' && inputs[ex.id] === i ? 'wrong' : ''}`}
+                          onClick={() => handleInputChange(ex.id, i)}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+                    <button className="check-btn" onClick={() => checkExercise(ex.id, String(ex.ans))}>Check Answer</button>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CLASSWORK */}
+        <section id="classwork">
+          <div className="section-label">Классная работа</div>
+          
+          <div className="exercise-set">
+            <div className="exercise-set-header">
+              <div className="difficulty-dot easy"></div>
+              <h3>Блок 1: Форма "to be"</h3>
+            </div>
+            <div className="exercise-list">
+              {CW_BLOCK1.map(ex => (
+                <div key={ex.id} className="exercise-item">
+                  <div className="ex-problem">
+                    {ex.problem} 
+                    <select 
+                      className={`inline-select mx-2 ${progress.cw?.[ex.id]?.status === 'correct' ? 'correct' : ''} ${progress.cw?.[ex.id]?.status === 'wrong' ? 'wrong' : ''}`}
+                      onChange={(e) => handleInputChange(ex.id, e.target.value)}
+                      value={inputs[ex.id] || ''}
+                    >
+                      <option value="">выбери</option>
+                      {ex.options.map(o => <option key={o} value={o}>{o}</option>)}
+                    </select>
+                    cleaned at 6 PM. {ex.label}
+                  </div>
+                  <button className="check-btn" onClick={() => checkExercise(ex.id, ex.ans)}>Check</button>
+                </div>
               ))}
             </div>
-          )}
+          </div>
 
-          {activeTab === 'homework' && (
-            <div className="space-y-6">
-              <div className="flex justify-between items-center bg-white p-6 rounded-3xl border border-slate-200 shadow-sm mb-4">
-                <div>
-                  <h3 className="font-bold text-slate-900">Вариант {variant}</h3>
-                  <p className="text-slate-500 text-sm">Один шанс пересдать (переключить вариант)</p>
-                </div>
-                {variant === 1 && (
-                  <button
-                    onClick={resetHW}
-                    className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-sm transition-all"
-                  >
-                    <RefreshCcw size={16} /> Другой вариант
-                  </button>
-                )}
-              </div>
-
-              <AdvancedProgressBar data={progress.hw} total={hwCount} title="Прогресс домашней работы" />
-
-              {HW_VARIANTS[variant].map((ex) => (
-                <Exercise
-                  key={ex.id}
-                  {...ex}
-                  mode="hw"
-                  savedState={progress.hw?.[ex.id]}
-                  onSuccess={handleHWSuccess}
-                />
-              ))}
-
-              {hwStats.isComplete && (
-                <div className="bg-indigo-600 p-8 rounded-3xl text-white text-center shadow-xl shadow-indigo-200 mt-12">
-                  <h3 className="text-3xl font-black mb-2">Урок завершён!</h3>
-                  <p className="text-indigo-100 opacity-80 mb-6">Твой результат: {hwStats.pct}%</p>
-                  {hwStats.pct >= 85 && <div className="text-5xl mb-4">🎉</div>}
-                </div>
-              )}
+          <div className="exercise-set">
+            <div className="exercise-set-header">
+              <div className="difficulty-dot medium"></div>
+              <h3>Блок 2: Порядок слов</h3>
             </div>
-          )}
-        </div>
+            <div className="exercise-list">
+              {[
+                { id: 'cw11', q: '11. Письмо было написано вчера.', ans: 'The letter was written yesterday', zone: 'zone1', bank: 'bank1' },
+                { id: 'cw12', q: '12. По-английски говорят по всему миру.', ans: 'English is spoken all over the world', zone: 'zone2', bank: 'bank2' },
+                { id: 'cw13', q: '13. Мой телефон украли!', ans: 'My phone has been stolen', zone: 'zone3', bank: 'bank3' },
+              ].map(ex => (
+                <div key={ex.id} className="exercise-item">
+                  <div className="ex-problem">{ex.q}</div>
+                  <div className={`drop-zone ${progress.cw?.[ex.id]?.status === 'correct' ? 'correct' : ''}`}>
+                    {builders[ex.zone].map((w, i) => (
+                      <span key={i} className="draggable-word" onClick={() => toggleWord(w, ex.zone, ex.bank)}>{w}</span>
+                    ))}
+                  </div>
+                  <div className="word-bank">
+                    {banks[ex.bank].map((w, i) => (
+                      <span key={i} className="draggable-word" onClick={() => toggleWord(w, ex.zone, ex.bank)}>{w}</span>
+                    ))}
+                  </div>
+                  <button className="check-btn" onClick={() => checkBuilder(ex.id, ex.zone, ex.ans)}>Check Order</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* HOMEWORK */}
+        <section id="homework">
+          <div className="section-label">Домашнее задание</div>
+          <div className="exercise-set" style={{ border: '2px solid var(--ink)' }}>
+            <div className="exercise-set-header" style={{ background: 'var(--ink)', color: 'white' }}>
+              <span className="hw-badge">Вариант {variant}</span>
+              <h3 style={{ color: 'white' }}>Rewrite in Passive Voice</h3>
+              {variant === 1 && <button onClick={resetHW} className="ml-auto text-[10px] uppercase font-bold text-accent hover:underline">Сменить вариант</button>}
+            </div>
+            <div className="exercise-list">
+               <p className="text-sm text-muted mb-4 italic">Раскрой скобки в правильном времени.</p>
+               {[
+                 { id: 'hw1', q: '1. People speak English in Australia. -> English', ans: 'is spoken', suf: 'in Australia.' },
+                 { id: 'hw2', q: '2. Someone stole my wallet. -> My wallet', ans: 'was stolen', suf: 'yesterday.' },
+                 { id: 'hw3', q: '3. They will finish the project. -> The project', ans: 'will be finished', suf: 'tomorrow.' }
+               ].map(ex => (
+                 <div key={ex.id} className="exercise-item">
+                    <div className="ex-problem">
+                      {ex.q} 
+                      <input 
+                        type="text" 
+                        className={`answer-input mx-2 ${progress.hw?.[ex.id]?.status === 'correct' ? 'correct' : ''}`}
+                        placeholder="..."
+                        value={inputs[ex.id] || ''}
+                        onChange={(e) => handleInputChange(ex.id, e.target.value)}
+                      />
+                      {ex.suf}
+                    </div>
+                    <button className="check-btn" onClick={() => checkExercise(ex.id, ex.ans, 'hw')}>Check HW</button>
+                 </div>
+               ))}
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   )
