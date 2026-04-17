@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 
 export default function FamilyLesson() {
@@ -35,6 +35,13 @@ export default function FamilyLesson() {
   const McqExercise = ({ id, num, problem, options, correctIdx, audioWord }) => {
     const [selected, setSelected] = useState(null);
     const [status, setStatus] = useState(null);
+
+    useEffect(() => {
+      if (progress[id] && status !== 'correct') {
+        setStatus('correct');
+        setSelected(correctIdx);
+      }
+    }, [progress, id, correctIdx]);
 
     const check = () => {
       if (selected === null) {
@@ -98,6 +105,13 @@ export default function FamilyLesson() {
     const [val, setVal] = useState('');
     const [status, setStatus] = useState(null);
 
+    useEffect(() => {
+      if (progress[id] && status !== 'correct') {
+        setStatus('correct');
+        setVal(correctVal);
+      }
+    }, [progress, id, correctVal]);
+
     const check = () => {
       if (!val) return;
       const isCorrect = val === correctVal;
@@ -144,6 +158,14 @@ export default function FamilyLesson() {
     const [bank, setBank] = useState(initialWords);
     const [zone, setZone] = useState([]);
     const [status, setStatus] = useState(null);
+
+    useEffect(() => {
+      if (progress[id] && status !== 'correct') {
+        setStatus('correct');
+        setZone(correctAns.split(' '));
+        setBank([]);
+      }
+    }, [progress, id, correctAns]);
 
     const check = () => {
       const userAns = zone.join(' ');

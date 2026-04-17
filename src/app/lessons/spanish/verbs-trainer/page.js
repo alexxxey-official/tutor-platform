@@ -1,30 +1,11 @@
 'use client'
 import Link from 'next/link'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 
 export default function VerbsTrainer() {
   const [answers, setAnswers] = useState({})
   const inputRefs = useRef([])
-
-  const total = 50
-  const correctCount = Object.values(answers).filter((a) => a.isCorrect).length
-  const pct = (correctCount / total) * 100
-
-  const normalize = (s) => s.toLowerCase().replace(/\s+/g, '').trim()
-
-  const checkAnswer = (id, correctAns, value, index) => {
-    const isCorrect = normalize(value) === normalize(correctAns) && value !== ''
-    setAnswers((prev) => ({
-      ...prev,
-      [id]: { value, isCorrect, checked: true },
-    }))
-
-    if (isCorrect && index < total - 1) {
-      setTimeout(() => {
-        inputRefs.current[index + 1]?.focus()
-      }, 10)
-    }
-  }
 
   const exercises = [
     { id: 'ex1', problem: 'Él/Ella/Ud. ________. (estudiar - учиться)', ans: 'estudia' },
@@ -78,6 +59,46 @@ export default function VerbsTrainer() {
     { id: 'ex49', problem: 'Nosotros ________. (bailar - танцевать)', ans: 'bailamos' },
     { id: 'ex50', problem: 'Tú ________. (comprender - понимать)', ans: 'comprendes' },
   ]
+
+  const total = 50
+  const { progress, markCorrect, correctCount, pct } = useLessonProgress('spa_verbs_trainer', total);
+
+  useEffect(() => {
+    if (Object.keys(progress).length > 0) {
+      setAnswers(prev => {
+        const restored = { ...prev };
+        let changed = false;
+        Object.keys(progress).forEach(key => {
+          if (progress[key] && !restored[key]) {
+            const ex = exercises.find(e => e.id === key);
+            if (ex) {
+              restored[key] = { value: ex.ans, isCorrect: true, checked: true };
+              changed = true;
+            }
+          }
+        });
+        return changed ? restored : prev;
+      });
+    }
+  }, [progress]);
+
+  const normalize = (s) => s.toLowerCase().replace(/\s+/g, '').trim()
+
+  const checkAnswer = (id, correctAns, value, index) => {
+    const isCorrect = normalize(value) === normalize(correctAns) && value !== ''
+    setAnswers((prev) => ({
+      ...prev,
+      [id]: { value, isCorrect, checked: true },
+    }))
+
+    if (isCorrect) markCorrect(id, true);
+
+    if (isCorrect && index < total - 1) {
+      setTimeout(() => {
+        inputRefs.current[index + 1]?.focus()
+      }, 10)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">
