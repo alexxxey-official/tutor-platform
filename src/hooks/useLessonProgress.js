@@ -29,6 +29,16 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
           if (data.variant_id) {
             setVariant(data.variant_id);
           }
+          
+          // FIX: Если total_score в базе 0, а у нас есть totalExercises, обновим в базе
+          if ((!data.total_score || data.total_score === 0) && totalExercises > 0) {
+            supabase
+              .from('student_lessons')
+              .update({ total_score: totalExercises })
+              .eq('student_id', user.id)
+              .eq('lesson_id', lessonId)
+              .then(() => {});
+          }
         }
       }
       setLoading(false);
@@ -36,19 +46,17 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
     fetchUser();
   }, [lessonId]);
 
-  const updateProgress = (exerciseId, mode, status, attempts) => {
+  const updateProgress = (exerciseId, mode, status, attempts, value = null) => {
     setProgress(prev => {
       const newState = { 
         ...prev, 
         [mode]: { 
           ...prev[mode], 
-          [exerciseId]: { status, attempts } 
+          [exerciseId]: { status, attempts, value } 
         } 
       };
       
       // Calculate score
-      // CW: revealed counts as completion point (per user requirement to "close" lesson)
-      // HW: revealed does NOT count as point
       const cwCorrect = Object.values(newState.cw).filter(ex => ex.status === 'correct' || ex.status === 'revealed').length;
       const hwCorrect = Object.values(newState.hw).filter(ex => ex.status === 'correct').length;
       const currentScore = cwCorrect + hwCorrect;
@@ -58,7 +66,7 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
           .from('student_lessons')
           .update({ 
             score: currentScore,
-            total_score: totalExercises, // Синхронизируем общее кол-во заданий
+            total_score: totalExercises, 
             status: currentScore >= totalExercises ? 'completed' : 'in_progress',
             progress_data: newState,
             updated_at: new Date().toISOString()

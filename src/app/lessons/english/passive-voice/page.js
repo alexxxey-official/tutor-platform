@@ -30,14 +30,143 @@ export default function PassiveVoiceFullLegacyPage() {
   useEffect(() => {
     if (!loading && progress) {
         const newInputs = {}
+        const newMcqs = {}
+        const restore = (mode) => {
+            if (progress[mode]) {
+                Object.keys(progress[mode]).forEach(id => {
+                    const item = progress[mode][id]
+                    if (item.value !== undefined && item.value !== null) {
+                        // Check if it's an MCQ (stored as index string in my logic)
+                        if (id.startsWith('cw1') || id.startsWith('cw2') || id.startsWith('cw16') || id.startsWith('cw17') || id.startsWith('cw18')) {
+                           newMcqs[id] = parseInt(item.value)
+                        } else {
+                           newInputs[id] = item.value
+                        }
+                    }
+                })
+            }
+        }
+        restore('cw')
+        restore('hw')
+        setTextInputs(prev => ({ ...prev, ...newInputs }))
+        setSelectedMcqs(prev => ({ ...prev, ...newMcqs }))
+
+        // Restore Word Builders
         if (progress.cw) {
-            Object.keys(progress.cw).forEach(id => {
-                // We can only restore text inputs easily
-                // For dropdowns it also works if value matches
-                if (progress.cw[id].status === 'correct') {
-                    // For now we don't know the actual string unless we find it in data
-                    // But for dropdowns we can set the known answer
+            const newBuilders = { ...builders }
+            const newBanks = { ...banks }
+            let builderChanged = false
+
+            const builderMap = [
+                { id: 'cw11', zone: 'zone1', bank: 'bank1' },
+                { id: 'cw12', zone: 'zone2', bank: 'bank2' },
+                { id: 'cw13', zone: 'zone3', bank: 'bank3' },
+                { id: 'cw14', zone: 'zone4', bank: 'bank4' },
+                { id: 'cw15', zone: 'zone5', bank: 'bank5' }
+            ]
+
+            builderMap.forEach(m => {
+                const item = progress.cw[m.id]
+                if (item && item.status === 'correct' && item.value) {
+                    const words = item.value.split(' ')
+                    newBuilders[m.zone] = words
+                    // Filter bank to remove used words
+                    // Note: this assumes words are unique or handled simply
+                    let currentBank = [...newBanks[m.bank]]
+                    words.forEach(w => {
+                        const idx = currentBank.indexOf(w)
+                        if (idx > -1) currentBank.splice(idx, 1)
+                    })
+                    newBanks[m.bank] = currentBank
+                    builderChanged = true
                 }
+            })
+
+            if (builderChanged) {
+                setBuilders(newBuilders)
+                setBanks(newBanks)
+            }
+        }
+    }
+  }, [loading, progress])
+
+  const normalize = (s) => s.toLowerCase().replace(/\s+/g,' ').trim();
+
+  // Helper to get class for inputs
+  const getInputClass = (id, mode = 'cw') => {
+    const status = progress[mode]?.[id]?.status
+    if (status === 'correct') return 'correct'
+    if (status === 'wrong') return 'wrong'
+    return ''
+  }
+
+  const handleMcqSelect = (exId, val) => {
+    if (progress.cw?.[exId]?.status === 'correct') return
+    setSelectedMcqs(prev => ({ ...prev, [exId]: val }))
+  }
+
+  const checkMcq = (exId, correctAns) => {
+    const selected = selectedMcqs[exId]
+    if (selected === undefined) return
+    const isCorrect = String(selected) === String(correctAns)
+    updateProgress(exId, 'cw', isCorrect ? 'correct' : 'wrong', 1, String(selected))
+  }
+
+  const checkDropdown = (exId, correctAns) => {
+    const val = textInputs[exId]
+    if (!val) return
+    const isCorrect = normalize(val) === normalize(correctAns)
+    updateProgress(exId, 'cw', isCorrect ? 'correct' : 'wrong', 1, val)
+  }
+
+  const toggleWord = (word, zoneKey, bankKey, exId) => {
+    if (progress.cw?.[exId]?.status === 'correct') return
+    
+    setBuilders(prev => {
+      const inZone = prev[zoneKey].includes(word)
+      if (inZone) {
+        setBanks(b => ({ ...b, [bankKey]: [...b[bankKey], word] }))
+        return { ...prev, [zoneKey]: prev[zoneKey].filter(w => w !== word) }
+      } else {
+        setBanks(b => ({ ...b, [bankKey]: b[bankKey].filter(w => w !== word) }))
+        return { ...prev, [zoneKey]: [...prev[zoneKey], word] }
+      }
+    })
+  }
+
+  const checkBuilder = (exId, zoneKey, correctStr) => {
+    const userStr = builders[zoneKey].join(' ')
+    const isCorrect = userStr === correctStr
+    updateProgress(exId, 'cw', isCorrect ? 'correct' : 'wrong', 1, userStr)
+  }
+
+  const checkText = (exId, correctAns, mode = 'cw') => {
+    const val = textInputs[exId] || ''
+    const isCorrect = normalize(val) === normalize(correctAns)
+    updateProgress(exId, mode, isCorrect ? 'correct' : 'wrong', 1, val)
+    
+    if (isCorrect && mode === 'hw') {
+        const stats = getStats('hw')
+        if (stats.correct + 1 === hwCount) {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } })
+        }
+    }
+  }
+
+  const checkV3Block = () => {
+    const v3Data = [
+        { id: 'cw19', ans: 'made' },
+        { id: 'cw20', ans: 'written' },
+        { id: 'cw21', ans: 'broken' },
+        { id: 'cw22', ans: 'built' },
+        { id: 'cw23', ans: 'invented' }
+    ]
+    v3Data.forEach(item => {
+        const val = textInputs[item.id] || ''
+        const isCorrect = normalize(val) === normalize(item.ans)
+        updateProgress(item.id, 'cw', isCorrect ? 'correct' : 'wrong', 1, val)
+    })
+  }
             })
         }
         // Since we don't store the actual user text in progress_data (only status/attempts),

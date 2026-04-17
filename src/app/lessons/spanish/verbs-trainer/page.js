@@ -61,18 +61,23 @@ export default function VerbsTrainer() {
   ]
 
   const total = 50
-  const { progress, markCorrect, correctCount, pct } = useLessonProgress('spa_verbs_trainer', total);
+  const { progress, updateProgress, getStats, loading } = useLessonProgress('spa_verbs_trainer', 0, total);
+
+  const stats = getStats('hw')
+  const correctCount = stats.correct
+  const pct = stats.pct
 
   useEffect(() => {
-    if (Object.keys(progress).length > 0) {
+    if (!loading && progress.hw) {
       setAnswers(prev => {
         const restored = { ...prev };
         let changed = false;
-        Object.keys(progress).forEach(key => {
-          if (progress[key] && !restored[key]) {
+        Object.keys(progress.hw).forEach(key => {
+          const item = progress.hw[key];
+          if (item && item.status === 'correct' && !restored[key]) {
             const ex = exercises.find(e => e.id === key);
             if (ex) {
-              restored[key] = { value: ex.ans, isCorrect: true, checked: true };
+              restored[key] = { value: item.value || ex.ans, isCorrect: true, checked: true };
               changed = true;
             }
           }
@@ -80,7 +85,7 @@ export default function VerbsTrainer() {
         return changed ? restored : prev;
       });
     }
-  }, [progress]);
+  }, [loading, progress.hw]);
 
   const normalize = (s) => s.toLowerCase().replace(/\s+/g, '').trim()
 
@@ -91,7 +96,7 @@ export default function VerbsTrainer() {
       [id]: { value, isCorrect, checked: true },
     }))
 
-    if (isCorrect) markCorrect(id, true);
+    updateProgress(id, 'hw', isCorrect ? 'correct' : 'wrong', 1, value);
 
     if (isCorrect && index < total - 1) {
       setTimeout(() => {

@@ -32,7 +32,18 @@ export default function DashboardPage() {
         .eq('student_id', user.id)
         .order('assigned_at', { ascending: false })
       
-      setAssignments(assignedData || [])
+      // FIX: Если у каких-то уроков total_score == 0, но в метаданных он есть, обновим локально и в базе
+      const fixedAssignments = (assignedData || []).map(a => {
+        const meta = getLessonById(a.lesson_id)
+        if (meta && meta.totalScore && (!a.total_score || a.total_score === 0)) {
+            // Обновляем в фоне в базе
+            supabase.from('student_lessons').update({ total_score: meta.totalScore }).eq('id', a.id).then(() => {})
+            return { ...a, total_score: meta.totalScore }
+        }
+        return a
+      })
+      
+      setAssignments(fixedAssignments)
       setLoading(false)
     }
     checkUser()
