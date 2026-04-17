@@ -191,7 +191,7 @@ export default function QuadraticEquationsPage() {
                   {...ex}
                   mode="cw"
                   savedState={progress.cw?.[ex.id]}
-                  onSuccess={(attempts, status) => updateProgress(ex.id, 'cw', status, attempts)}
+                  onSuccess={(attempts, status, value) => updateProgress(ex.id, 'cw', status, attempts, value)}
                 />
               ))}
             </div>
@@ -222,7 +222,7 @@ export default function QuadraticEquationsPage() {
                   {...ex}
                   mode="hw"
                   savedState={progress.hw?.[ex.id]}
-                  onSuccess={handleHWSuccess}
+                  onSuccess={(attempts, status, value) => updateProgress(ex.id, 'hw', status, attempts, value)}
                 />
               ))}
 

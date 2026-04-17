@@ -138,9 +138,9 @@ export const LESSONS = {
       subject: 'English',
       path: '/lessons/english/indefinite-pronouns',
       color: '#2a9d8f',
-      totalCW: 5,
-      totalHW: 5,
-      totalScore: 10,
+      totalCW: 30,
+      totalHW: 20,
+      totalScore: 50,
     },
     {
       id: 'eng_passive',

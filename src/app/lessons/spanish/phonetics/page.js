@@ -29,24 +29,25 @@ export default function PhoneticsLesson() {
   // Quiz State
   const [quizAnswers, setQuizAnswers] = useState({})
   const [showResults, setShowResults] = useState(false)
-  const { progress, markCorrect } = useLessonProgress('spa_phonetics', 5);
+  const { progress, updateProgress, getStats, loading } = useLessonProgress('spa_phonetics', 5, 0);
 
   useEffect(() => {
-    if (Object.keys(progress).length > 0) {
+    if (!loading && progress.cw) {
       const restored = {};
+      let hasData = false;
       quizQuestions.forEach(q => {
-        if (progress[q.id]) restored[q.id] = q.correct;
+        const item = progress.cw[q.id];
+        if (item && item.value !== undefined) {
+          restored[q.id] = parseInt(item.value);
+          hasData = true;
+        }
       });
-      if (Object.keys(restored).length > 0) {
+      if (hasData) {
         setQuizAnswers(restored);
-        setShowResults(true)
-    Object.keys(quizAnswers).forEach(qId => {
-      const q = quizQuestions.find(x => x.id === qId)
-      if (q.correct === quizAnswers[qId]) markCorrect(qId, true)
-    });
+        setShowResults(true);
       }
     }
-  }, [progress]);
+  }, [loading, progress.cw]);
 
   const quizQuestions = [
     { id: 'q1', word: 'hotel', options: ['hОtel', 'hotEl', 'Оtel', 'otEl'], correct: 3, hint: 'H не читается! Кончается на L, значит ударение на последний слог.' },
@@ -63,12 +64,19 @@ export default function PhoneticsLesson() {
 
   const checkQuiz = () => {
     setShowResults(true)
+    quizQuestions.forEach(q => {
+        const userIdx = quizAnswers[q.id];
+        const isCorrect = userIdx === q.correct;
+        updateProgress(q.id, 'cw', isCorrect ? 'correct' : 'wrong', 1, String(userIdx));
+    });
   }
 
   const resetQuiz = () => {
     setQuizAnswers({})
     setShowResults(false)
   }
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
 
   const score = Object.keys(quizAnswers).reduce((acc, qId) => {
     const q = quizQuestions.find(x => x.id === qId)

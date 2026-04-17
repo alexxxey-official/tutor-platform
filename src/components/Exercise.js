@@ -33,8 +33,12 @@ export default function Exercise({
     if (savedState) {
       setAttempts(savedState.attempts || 0)
       setStatus(savedState.status || 'attempting')
+      if (savedState.value) {
+        if (type === 'text') setUserAnswer(savedState.value)
+        else if (type === 'mcq' || type === 'dropdown') setSelectedMcq(savedState.value)
+      }
     }
-  }, [savedState])
+  }, [savedState, type])
 
   const normalize = (val) => val.toLowerCase().trim().replace(/\s+/g, ' ')
 
@@ -45,21 +49,24 @@ export default function Exercise({
     setAttempts(currentAttempts)
 
     let isCorrect = false
+    let currentVal = ''
     if (type === 'text') {
       isCorrect = normalize(userAnswer) === normalize(correctAnswer)
+      currentVal = userAnswer
     } else if (type === 'mcq' || type === 'dropdown') {
       isCorrect = String(selectedMcq) === String(correctAnswer)
+      currentVal = String(selectedMcq)
     }
 
     if (isCorrect) {
       setStatus('correct')
       setFeedback('¡Perfecto! ✓')
-      onSuccess(currentAttempts, 'correct')
+      onSuccess(currentAttempts, 'correct', currentVal)
     } else {
       if (currentAttempts >= maxAttempts) {
         setStatus('revealed')
         setFeedback(mode === 'cw' ? 'Посмотри решение ниже' : `Вот правильный ответ: ${correctAnswer}`)
-        onSuccess(currentAttempts, 'revealed')
+        onSuccess(currentAttempts, 'revealed', currentVal)
       } else {
         // Multi-stage feedback
         if (mode === 'cw') {

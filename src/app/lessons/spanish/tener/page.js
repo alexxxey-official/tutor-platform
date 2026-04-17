@@ -8,7 +8,24 @@ export default function TenerLesson() {
   const [hints, setHints] = useState({})
 
   const total = 15
-  const { progress, markCorrect, correctCount, pct } = useLessonProgress('spa_tener', total);
+  const { progress, updateProgress, getStats, loading } = useLessonProgress('spa_tener', total, 0);
+  const stats = getStats('cw');
+  const correctCount = stats.correct;
+  const pct = stats.pct;
+
+  // Restoration
+  useEffect(() => {
+    if (!loading && progress.cw) {
+      const restored = {};
+      Object.keys(progress.cw).forEach(id => {
+        const item = progress.cw[id];
+        if (item) {
+          restored[id] = { value: item.value || '', isCorrect: item.status === 'correct', checked: true };
+        }
+      });
+      setAnswers(prev => ({ ...prev, ...restored }));
+    }
+  }, [loading, progress.cw]);
 
   const normalize = (s) => s.toLowerCase().replace(/\s+/g, ' ').trim()
 
@@ -18,7 +35,7 @@ export default function TenerLesson() {
       ...prev,
       [id]: { value, isCorrect, checked: true },
     }))
-    if (isCorrect) markCorrect(id, true);
+    updateProgress(id, 'cw', isCorrect ? 'correct' : 'wrong', 1, value);
   }
 
   const toggleHint = (id) => {
@@ -80,6 +97,8 @@ export default function TenerLesson() {
       </div>
     )
   }
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
 
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">

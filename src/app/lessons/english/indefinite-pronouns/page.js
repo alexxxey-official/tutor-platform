@@ -1,19 +1,50 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 
 export default function IndefinitePronounsLesson() {
   const [answers, setAnswers] = useState({})
   const [hints, setHints] = useState({})
 
-  const total = 50 // Increased classwork to 30 + homework 20
+  const totalCW = 30
+  const totalHW = 20
+  const total = totalCW + totalHW
 
-  const correctCount = Object.values(answers).filter((a) => a.isCorrect).length
+  const { progress, updateProgress, getStats, loading } = useLessonProgress('eng_nobody', totalCW, totalHW)
+  
+  const statsCW = getStats('cw')
+  const statsHW = getStats('hw')
+  const correctCount = statsCW.correct + statsHW.correct
   const pct = (correctCount / total) * 100
+
+  // Restoration logic
+  useEffect(() => {
+    if (!loading && progress) {
+        const restored = {}
+        const restore = (mode) => {
+            if (progress[mode]) {
+                Object.keys(progress[mode]).forEach(id => {
+                    const item = progress[mode][id]
+                    if (item) {
+                        restored[id] = { 
+                            value: item.value || '', 
+                            isCorrect: item.status === 'correct', 
+                            checked: true 
+                        }
+                    }
+                })
+            }
+        }
+        restore('cw')
+        restore('hw')
+        setAnswers(prev => ({ ...prev, ...restored }))
+    }
+  }, [loading, progress])
 
   const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '').trim()
 
-  const checkAnswer = (id, correctAns, value) => {
+  const checkAnswer = (id, correctAns, value, mode = 'cw') => {
     // Handle multiple possible answers separated by |
     const correctOptions = correctAns.split('|').map(normalize)
     const isCorrect = correctOptions.includes(normalize(value)) && value !== ''
@@ -21,6 +52,7 @@ export default function IndefinitePronounsLesson() {
       ...prev,
       [id]: { value, isCorrect, checked: true },
     }))
+    updateProgress(id, mode, isCorrect ? 'correct' : 'wrong', 1, value)
   }
 
   const toggleHint = (id) => {
@@ -49,10 +81,10 @@ export default function IndefinitePronounsLesson() {
                     : 'border-[#e63946] bg-[#fff5f5] text-[#e63946]'
                   : 'border-[#e5e0d5] focus:border-[#e63946]'
               }`}
-              onKeyDown={(e) => { if (e.key === 'Enter') checkAnswer(id, correctAns, state.value) }}
+              onKeyDown={(e) => { if (e.key === 'Enter') checkAnswer(id, correctAns, state.value, id.startsWith('hw') ? 'hw' : 'cw') }}
             />
             <button
-              onClick={() => checkAnswer(id, correctAns, state.value)}
+              onClick={() => checkAnswer(id, correctAns, state.value, id.startsWith('hw') ? 'hw' : 'cw')}
               className="bg-[#1a1a2e] text-white border-none rounded-lg px-4 py-1.5 text-[13px] font-sans cursor-pointer hover:bg-[#2d2d4e] transition-colors"
             >
               Check
@@ -80,6 +112,8 @@ export default function IndefinitePronounsLesson() {
       </div>
     )
   }
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
 
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">

@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 
 export default function ListeningLesson() {
   const [inputs, setInputs] = useState({
@@ -11,9 +12,32 @@ export default function ListeningLesson() {
   })
   const [message, setMessage] = useState(null)
 
+  const { progress, updateProgress, getStats, loading } = useLessonProgress('spa_listening', 0, 5);
+
   const answers = {
     w1: 'llamo', w2: 'soy', w3: 'vivo', w4: 'años', w5: 'hablar'
   }
+
+  // Restoration
+  useEffect(() => {
+    if (!loading && progress.hw) {
+      const restored = {};
+      const newStatus = {};
+      let hasData = false;
+      Object.keys(answers).forEach(key => {
+        const item = progress.hw[key];
+        if (item) {
+          restored[key] = item.value || '';
+          newStatus[key] = item.status === 'correct' ? 'correct' : 'wrong';
+          hasData = true;
+        }
+      });
+      if (hasData) {
+        setInputs(prev => ({ ...prev, ...restored }));
+        setStatus(prev => ({ ...prev, ...newStatus }));
+      }
+    }
+  }, [loading, progress.hw]);
 
   const normalize = (s) => s.toLowerCase().replace(/[^a-zñáéíóúü]/g, '').trim()
 
@@ -24,6 +48,7 @@ export default function ListeningLesson() {
     Object.keys(answers).forEach((key) => {
       const isCorrect = normalize(inputs[key]) === normalize(answers[key]) && inputs[key] !== ''
       newStatus[key] = isCorrect ? 'correct' : 'wrong'
+      updateProgress(key, 'hw', isCorrect ? 'correct' : 'wrong', 1, inputs[key]);
       if (isCorrect) correctCount++
     })
 
@@ -49,13 +74,15 @@ export default function ListeningLesson() {
   const playDictation = () => {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       window.speechSynthesis.cancel(); // Stop any current speech
-      const text = "¡Hola! Me llamo Pablo. Yo soy de España. Y vivo en España también. Tengo treinta y seis años. Me gusta mucho hablar español.";
+      const text = "¡Hola! Me llamo Pablo. Yo soy de España. Y vivo en España также. Tengo treinta y seis años. Me gusta mucho hablar español.";
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'es-ES';
       utterance.rate = 0.8; // Чуть медленнее для диктанта
       window.speechSynthesis.speak(utterance);
     }
   }
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
 
   const getInputClass = (key) => {
     const base = "border-b-2 border-gray-400 bg-transparent font-mono text-[16px] text-[#e63946] text-center outline-none w-[120px] transition-colors px-1 py-0.5 mx-1 focus:border-[#e63946]"

@@ -5,7 +5,10 @@ import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 
 export default function FamilyLesson() {
   const total = 25;
-  const { progress, markCorrect, correctCount, pct } = useLessonProgress('spa_family', total);
+  const { progress, updateProgress, getStats, loading } = useLessonProgress('spa_family', total, 0);
+  const stats = getStats('cw');
+  const correctCount = stats.correct;
+  const pct = stats.pct;
 
   const speakSpanish = (text) => {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
@@ -37,11 +40,17 @@ export default function FamilyLesson() {
     const [status, setStatus] = useState(null);
 
     useEffect(() => {
-      if (progress[id] && status !== 'correct') {
-        setStatus('correct');
-        setSelected(correctIdx);
+      if (!loading && progress.cw?.[id]) {
+        const item = progress.cw[id];
+        if (item.status === 'correct') {
+            setStatus('correct');
+            setSelected(parseInt(item.value || correctIdx));
+        } else if (item.status === 'wrong') {
+            setStatus('wrong');
+            setSelected(parseInt(item.value));
+        }
       }
-    }, [progress, id, correctIdx]);
+    }, [loading, progress.cw, id, correctIdx]);
 
     const check = () => {
       if (selected === null) {
@@ -50,7 +59,7 @@ export default function FamilyLesson() {
       }
       const isCorrect = selected === correctIdx;
       setStatus(isCorrect ? 'correct' : 'wrong');
-      if (isCorrect) markCorrect(id, true);
+      updateProgress(id, 'cw', isCorrect ? 'correct' : 'wrong', 1, String(selected));
     };
 
     return (
@@ -106,17 +115,18 @@ export default function FamilyLesson() {
     const [status, setStatus] = useState(null);
 
     useEffect(() => {
-      if (progress[id] && status !== 'correct') {
-        setStatus('correct');
-        setVal(correctVal);
+      if (!loading && progress.cw?.[id]) {
+        const item = progress.cw[id];
+        setVal(item.value || '');
+        setStatus(item.status);
       }
-    }, [progress, id, correctVal]);
+    }, [loading, progress.cw, id]);
 
     const check = () => {
       if (!val) return;
       const isCorrect = val === correctVal;
       setStatus(isCorrect ? 'correct' : 'wrong');
-      if (isCorrect) markCorrect(id, true);
+      updateProgress(id, 'cw', isCorrect ? 'correct' : 'wrong', 1, val);
     }
 
     let selectClass = "appearance-none bg-gray-50 border-[1.5px] rounded-lg py-1.5 pl-3 pr-8 font-mono text-[15px] font-bold outline-none transition-colors mx-2 cursor-pointer ";
@@ -160,18 +170,28 @@ export default function FamilyLesson() {
     const [status, setStatus] = useState(null);
 
     useEffect(() => {
-      if (progress[id] && status !== 'correct') {
-        setStatus('correct');
-        setZone(correctAns.split(' '));
-        setBank([]);
+      if (!loading && progress.cw?.[id]) {
+        const item = progress.cw[id];
+        if (item.status === 'correct' && item.value) {
+            setStatus('correct');
+            const words = item.value.split(' ');
+            setZone(words);
+            // Filter bank
+            let currentBank = [...initialWords];
+            words.forEach(w => {
+                const idx = currentBank.indexOf(w);
+                if (idx > -1) currentBank.splice(idx, 1);
+            });
+            setBank(currentBank);
+        }
       }
-    }, [progress, id, correctAns]);
+    }, [loading, progress.cw, id, initialWords]);
 
     const check = () => {
       const userAns = zone.join(' ');
       const isCorrect = userAns === correctAns;
       setStatus(isCorrect ? 'correct' : 'wrong');
-      if (isCorrect) markCorrect(id, true);
+      updateProgress(id, 'cw', isCorrect ? 'correct' : 'wrong', 1, userAns);
     }
 
     const moveToZone = (word, idx) => {
@@ -229,6 +249,8 @@ export default function FamilyLesson() {
       </div>
     )
   }
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
 
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">
