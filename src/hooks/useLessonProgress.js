@@ -15,13 +15,19 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         setUserId(user.id);
+        // Запрашиваем только те колонки, которые точно должны быть. 
+        // Если variant_id нет, запрос все равно пройдет (мы добавили обработку ошибки)
         const { data, error } = await supabase
           .from('student_lessons')
-          .select('score, progress_data, variant_id')
+          .select('*') // Берем все доступные колонки
           .eq('student_id', user.id)
           .eq('lesson_id', lessonId)
           .single();
           
+        if (error && error.code !== 'PGRST116') {
+            console.error("Ошибка загрузки прогресса:", error.message);
+        }
+
         if (data) {
           if (data.progress_data) {
             setProgress(data.progress_data);
