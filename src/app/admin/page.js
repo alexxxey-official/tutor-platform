@@ -10,6 +10,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true)
   const [selectedStudent, setSelectedStudent] = useState(null)
   const [assignments, setAssignments] = useState([])
+  const [expandedAssignment, setExpandedAssignment] = useState(null)
   const router = useRouter()
 
   useEffect(() => {

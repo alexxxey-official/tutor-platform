@@ -11,18 +11,17 @@ export function useLessonProgress(lessonId, totalExercises) {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         setUserId(user.id);
-        // Загружаем предыдущий балл (если он есть в базе)
+        // Загружаем предыдущий балл и детальный прогресс (если он есть в базе)
         const { data, error } = await supabase
           .from('student_lessons')
-          .select('score')
+          .select('score, progress_data')
           .eq('student_id', user.id)
           .eq('lesson_id', lessonId)
           .single();
           
-        if (data && data.score > 0) {
-          // Чтобы ползунок не был пустым, если ученик вернулся, мы могли бы 
-          // сымитировать "пройденные" задания, но в идеале нужно сохранять JSON 
-          // ответов. Пока мы просто знаем его общий балл в базе.
+        if (data && data.progress_data) {
+          // Если есть детализация, восстанавливаем галочки
+          setProgress(data.progress_data);
         }
       }
     };
@@ -35,12 +34,13 @@ export function useLessonProgress(lessonId, totalExercises) {
       const currentCorrectCount = Object.values(newState).filter(Boolean).length;
       
       if (userId) {
-        // Фоновое сохранение прогресса
+        // Фоновое сохранение прогресса и ДЕТАЛИЗАЦИИ
         supabase
           .from('student_lessons')
           .update({ 
             score: currentCorrectCount,
             status: currentCorrectCount === totalExercises ? 'completed' : 'in_progress',
+            progress_data: newState, // Сохраняем каждый конкретный ответ
             updated_at: new Date().toISOString()
           })
           .eq('student_id', userId)
