@@ -1,14 +1,14 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 
 export default function ArticlesLesson() {
   const [answers, setAnswers] = useState({})
   const [hints, setHints] = useState({})
 
   const total = 10
-  const correctCount = Object.values(answers).filter((a) => a.isCorrect).length
-  const pct = (correctCount / total) * 100
+  const { progress, markCorrect, correctCount, pct } = useLessonProgress('spa_ser', total);
 
   const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '').trim()
 
@@ -18,6 +18,7 @@ export default function ArticlesLesson() {
       ...prev,
       [id]: { value, isCorrect, checked: true },
     }))
+    if (isCorrect) markCorrect(id, true);
   }
 
   const toggleHint = (id) => {

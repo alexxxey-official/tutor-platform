@@ -1,18 +1,13 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 
 export default function QuestionsLesson() {
-  const [progress, setProgress] = useState({})
   const total = 23;
-  const correctCount = Object.values(progress).filter(Boolean).length;
-  const pct = (correctCount / total) * 100;
+  const { progress, markCorrect, correctCount, pct } = useLessonProgress('spa_questions', total);
 
-  const markCorrect = (id, isCorrect) => {
-    setProgress(prev => ({ ...prev, [id]: isCorrect }))
-  }
-
-  const speakSpanish = (text) => {
+    const speakSpanish = (text) => {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
       window.speechSynthesis.cancel();
       const cleanText = text.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '').trim();
@@ -42,6 +37,13 @@ export default function QuestionsLesson() {
   const McqExercise = ({ id, num, problem, options, correctIdx, audioWord }) => {
     const [selected, setSelected] = useState(null);
     const [status, setStatus] = useState(null);
+
+    useEffect(() => {
+      if (progress[id] && status !== 'correct') {
+        setStatus('correct');
+        setSelected(correctIdx);
+      }
+    }, [progress, id, correctIdx]);
 
     const check = () => {
       if (selected === null) {
@@ -105,6 +107,13 @@ export default function QuestionsLesson() {
     const [val, setVal] = useState('');
     const [status, setStatus] = useState(null);
 
+    useEffect(() => {
+      if (progress[id] && status !== 'correct') {
+        setStatus('correct');
+        setVal(correctVal);
+      }
+    }, [progress, id, correctVal]);
+
     const check = () => {
       if (!val) return;
       const isCorrect = val === correctVal;
@@ -151,6 +160,14 @@ export default function QuestionsLesson() {
     const [bank, setBank] = useState(initialWords);
     const [zone, setZone] = useState([]);
     const [status, setStatus] = useState(null);
+
+    useEffect(() => {
+      if (progress[id] && status !== 'correct') {
+        setStatus('correct');
+        setZone(correctAns.split(' '));
+        setBank([]);
+      }
+    }, [progress, id, correctAns]);
 
     const check = () => {
       const userAns = zone.join(' ');

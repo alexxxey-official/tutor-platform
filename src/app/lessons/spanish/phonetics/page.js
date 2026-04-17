@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 
 export default function PhoneticsLesson() {
   const speakSpanish = (text) => {
@@ -28,6 +29,24 @@ export default function PhoneticsLesson() {
   // Quiz State
   const [quizAnswers, setQuizAnswers] = useState({})
   const [showResults, setShowResults] = useState(false)
+  const { progress, markCorrect } = useLessonProgress('spa_phonetics', 5);
+
+  useEffect(() => {
+    if (Object.keys(progress).length > 0) {
+      const restored = {};
+      quizQuestions.forEach(q => {
+        if (progress[q.id]) restored[q.id] = q.correct;
+      });
+      if (Object.keys(restored).length > 0) {
+        setQuizAnswers(restored);
+        setShowResults(true)
+    Object.keys(quizAnswers).forEach(qId => {
+      const q = quizQuestions.find(x => x.id === qId)
+      if (q.correct === quizAnswers[qId]) markCorrect(qId, true)
+    });
+      }
+    }
+  }, [progress]);
 
   const quizQuestions = [
     { id: 'q1', word: 'hotel', options: ['hОtel', 'hotEl', 'Оtel', 'otEl'], correct: 3, hint: 'H не читается! Кончается на L, значит ударение на последний слог.' },
