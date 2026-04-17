@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { useLessonProgress } from '../../../../hooks/useLessonProgress'
+import { useLessonProgress } from '../../../../../hooks/useLessonProgress'
 
 export default function ReadingHolaLesson() {
   const totalCW = 2
