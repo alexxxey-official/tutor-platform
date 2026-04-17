@@ -30,7 +30,9 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
 
         if (data) {
           if (data.progress_data) {
-            setProgress(data.progress_data);
+            // Убеждаемся, что в данных есть нужные ключи
+            const validData = { cw: {}, hw: {}, ...data.progress_data };
+            setProgress(validData);
           }
           if (data.variant_id) {
             setVariant(data.variant_id);
@@ -54,17 +56,23 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
 
   const updateProgress = (exerciseId, mode, status, attempts, value = null) => {
     setProgress(prev => {
+      // Убеждаемся, что prev имеет структуру { cw: {}, hw: {} }
+      const safePrev = { cw: {}, hw: {}, ...prev };
+      
       const newState = { 
-        ...prev, 
+        ...safePrev, 
         [mode]: { 
-          ...prev[mode], 
+          ...(safePrev[mode] || {}), 
           [exerciseId]: { status, attempts, value } 
         } 
       };
       
       // Calculate score
-      const cwCorrect = Object.values(newState.cw).filter(ex => ex.status === 'correct' || ex.status === 'revealed').length;
-      const hwCorrect = Object.values(newState.hw).filter(ex => ex.status === 'correct').length;
+      const cwData = newState.cw || {};
+      const hwData = newState.hw || {};
+      
+      const cwCorrect = Object.values(cwData).filter(ex => ex && (ex.status === 'correct' || ex.status === 'revealed')).length;
+      const hwCorrect = Object.values(hwData).filter(ex => ex && ex.status === 'correct').length;
       const currentScore = cwCorrect + hwCorrect;
 
       if (userId) {
@@ -102,7 +110,8 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
     const newVariant = variant === 1 ? 2 : 1;
     
     // Clear HW progress only
-    const newState = { ...progress, hw: {} };
+    const safePrev = { cw: {}, hw: {}, ...progress };
+    const newState = { ...safePrev, hw: {} };
     setProgress(newState);
     setVariant(newVariant);
 
@@ -111,7 +120,7 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
       .update({ 
         progress_data: newState,
         variant_id: newVariant,
-        score: Object.values(newState.cw).filter(ex => ex.status === 'correct' || ex.status === 'revealed').length, 
+        score: Object.values(newState.cw || {}).filter(ex => ex && (ex.status === 'correct' || ex.status === 'revealed')).length, 
         updated_at: new Date().toISOString()
       })
       .eq('student_id', userId)
@@ -119,10 +128,10 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
   };
 
   const getStats = (mode) => {
-    const data = progress[mode] || {};
+    const data = (progress && progress[mode]) || {};
     const exercises = Object.values(data);
-    const correct = exercises.filter(ex => ex.status === 'correct').length;
-    const revealed = exercises.filter(ex => ex.status === 'revealed').length;
+    const correct = exercises.filter(ex => ex && ex.status === 'correct').length;
+    const revealed = exercises.filter(ex => ex && ex.status === 'revealed').length;
     const total = mode === 'cw' ? totalExercisesCW : totalExercisesHW;
     
     return {
