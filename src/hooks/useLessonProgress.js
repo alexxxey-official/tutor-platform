@@ -62,6 +62,7 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
       const currentScore = cwCorrect + hwCorrect;
 
       if (userId) {
+        console.log('Saving progress to Supabase...', { lessonId, userId, currentScore, newState });
         supabase
           .from('student_lessons')
           .update({ 
@@ -73,8 +74,16 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
           })
           .eq('student_id', userId)
           .eq('lesson_id', lessonId)
-          .then(({ error }) => {
-            if (error) console.error("Ошибка сохранения прогресса:", error.message);
+          .select() // Добавляем select для проверки результата
+          .then(({ data, error }) => {
+            if (error) {
+                console.error("Ошибка сохранения прогресса (Supabase Error):", error);
+            } else {
+                console.log("Прогресс успешно сохранен:", data);
+            }
+          })
+          .catch(err => {
+            console.error("Критическая ошибка при сохранении:", err);
           });
       }
       
