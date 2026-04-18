@@ -57,7 +57,7 @@ export default function PassiveVoicePage() {
 
         {/* Navigation */}
         <nav className="flex flex-wrap gap-2 mb-12">
-          <Link href="/" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all">
+          <Link href="/dashboard" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all">
             <Home size={16} /> Home
           </Link>
           <a href="#theory" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all">
