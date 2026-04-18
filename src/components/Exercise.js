@@ -62,6 +62,10 @@ export default function Exercise({
     if (feedback === 'correct' || feedback === 'revealed') return;
 
     const valToCheck = customVal !== null ? customVal : input;
+    
+    // Prevent empty submissions
+    if (!valToCheck || valToCheck.trim() === '') return;
+
     const isCorrect = normalize(valToCheck) === normalize(correctAnswer);
     const newAttempts = localAttempts + 1;
     setLocalAttempts(newAttempts);
@@ -102,6 +106,7 @@ export default function Exercise({
 
   const isLocked = feedback === 'correct' || feedback === 'revealed';
   const isError = feedback === 'attempting' && localAttempts > 0;
+  const isInputEmpty = type === 'text' || type === 'dropdown' ? !input.trim() : (type === 'builder' ? builderZone.length === 0 : !input);
 
   return (
     <div className={`${compact ? 'p-2 mb-2 flex-1' : 'p-4 mb-4'} rounded-xl border-2 transition-all duration-300 ${isShaking ? 'animate-shake' : ''} ${
@@ -138,12 +143,13 @@ export default function Exercise({
                   isLocked ? 'bg-slate-100 border-slate-200 text-slate-500' : 
                   isError ? 'border-amber-300 focus:border-amber-500 bg-white' : 'border-slate-200 focus:border-indigo-400 bg-white'
                 }`}
-                onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
+                onKeyDown={(e) => e.key === 'Enter' && !isInputEmpty && checkAnswer()}
               />
               {!isLocked && (
                 <button 
                   onClick={() => checkAnswer()} 
-                  className={`${compact ? 'px-3' : 'px-6'} bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all font-bold uppercase tracking-widest text-[10px] shadow-sm active:scale-95`}
+                  disabled={isInputEmpty}
+                  className={`${compact ? 'px-3' : 'px-6'} bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all font-bold uppercase tracking-widest text-[10px] shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   Check
                 </button>
@@ -183,7 +189,13 @@ export default function Exercise({
                 {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
               </select>
               {!isLocked && (
-                <button onClick={() => checkAnswer()} className={`${compact ? 'px-3 py-2' : 'px-6 py-2.5'} bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all font-bold uppercase tracking-widest text-[10px] shadow-sm`}>Check</button>
+                <button 
+                  onClick={() => checkAnswer()} 
+                  disabled={isInputEmpty}
+                  className={`${compact ? 'px-3 py-2' : 'px-6 py-2.5'} bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all font-bold uppercase tracking-widest text-[10px] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed`}
+                >
+                  Check
+                </button>
               )}
             </div>
           )}
@@ -210,7 +222,13 @@ export default function Exercise({
                 </div>
               )}
               {!isLocked && (
-                <button onClick={() => checkAnswer()} className="w-full py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-bold uppercase tracking-widest text-[10px] shadow-md active:scale-[0.98]">Check Sentence</button>
+                <button 
+                  onClick={() => checkAnswer()} 
+                  disabled={isInputEmpty}
+                  className="w-full py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-bold uppercase tracking-widest text-[10px] shadow-md active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Check Sentence
+                </button>
               )}
             </div>
           )}
