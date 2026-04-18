@@ -184,7 +184,7 @@ export default function QuadraticEquationsPage() {
 
           {activeTab === 'classwork' && (
             <div className="space-y-6">
-              <AdvancedProgressBar data={progress.cw} total={3} title="Прогресс классной работы" />
+              <AdvancedProgressBar data={progress.cw} total={3} title="Прогресс классной работы" mode="cw" />
               {CW_DATA.map(ex => (
                 <Exercise 
                   key={ex.id}
@@ -199,6 +199,7 @@ export default function QuadraticEquationsPage() {
 
           {activeTab === 'homework' && (
             <div className="space-y-6">
+              {/* ... variant selector ... */}
               <div className="flex justify-between items-center bg-white p-6 rounded-3xl border border-slate-200 shadow-sm mb-4">
                 <div>
                   <h3 className="font-bold text-slate-900">Вариант {variant}</h3>
@@ -214,7 +215,7 @@ export default function QuadraticEquationsPage() {
                 )}
               </div>
 
-              <AdvancedProgressBar data={progress.hw} total={3} title="Прогресс домашней работы" />
+              <AdvancedProgressBar data={progress.hw} total={3} title="Прогресс домашней работы" mode="hw" />
               
               {HW_VARIANTS[variant].map(ex => (
                 <Exercise 

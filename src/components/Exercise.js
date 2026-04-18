@@ -1,186 +1,219 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { Check, AlertCircle, HelpCircle, ArrowRight } from 'lucide-react'
-import { clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { useState, useEffect } from 'react';
 
-function cn(...inputs) {
-  return twMerge(clsx(inputs))
-}
-
+/**
+ * Универсальный компонент для заданий v2
+ */
 export default function Exercise({ 
   id, 
-  mode = 'cw', // 'cw' or 'hw'
-  type = 'text', // 'text', 'mcq', 'dropdown'
-  problem, 
-  hint, 
-  solution, 
+  mode, 
+  type = 'text', // 'text', 'mcq', 'dropdown', 'builder'
   correctAnswer, 
-  options, // for mcq/dropdown
-  onSuccess, // callback(attempts, status)
-  savedState // { attempts, status }
+  options = [], // For mcq and dropdown
+  solution, 
+  hint, 
+  progressItem, 
+  onUpdate,
+  maxAttempts: customMaxAttempts,
+  placeholder = "Введите ответ...",
+  label = "" // Текст задания
 }) {
-  const [userAnswer, setUserAnswer] = useState('')
-  const [selectedMcq, setSelectedMcq] = useState(null)
-  const [attempts, setAttempts] = useState(0)
-  const [status, setStatus] = useState('attempting') // 'attempting', 'correct', 'revealed'
-  const [feedback, setFeedback] = useState('')
-  const [showHint, setShowHint] = useState(false)
-
-  const maxAttempts = mode === 'cw' ? 2 : 3
+  const maxAttempts = customMaxAttempts || (mode === 'cw' ? 2 : 3);
+  const [input, setInput] = useState('');
+  const [localAttempts, setLocalAttempts] = useState(0);
+  const [showHint, setShowHint] = useState(false);
+  const [feedback, setFeedback] = useState(null); // 'correct', 'error', 'revealed'
+  
+  // For Builder
+  const [builderBank, setBuilderBank] = useState([]);
+  const [builderZone, setBuilderZone] = useState([]);
 
   useEffect(() => {
-    if (savedState) {
-      setAttempts(savedState.attempts || 0)
-      setStatus(savedState.status || 'attempting')
-      if (savedState.value) {
-        if (type === 'text') setUserAnswer(savedState.value)
-        else if (type === 'mcq' || type === 'dropdown') setSelectedMcq(savedState.value)
+    if (type === 'builder' && options.length > 0) {
+      setBuilderBank(options);
+    }
+  }, [type, options]);
+
+  // Восстановление состояния из БД
+  useEffect(() => {
+    if (progressItem) {
+      const val = progressItem.value || '';
+      setInput(val);
+      setLocalAttempts(progressItem.attempts || 0);
+      setFeedback(progressItem.status);
+      
+      if (type === 'builder' && val) {
+        const words = val.split(' ');
+        setBuilderZone(words);
+        let currentBank = [...options];
+        words.forEach(w => {
+          const idx = currentBank.indexOf(w);
+          if (idx > -1) currentBank.splice(idx, 1);
+        });
+        setBuilderBank(currentBank);
       }
     }
-  }, [savedState, type])
+  }, [progressItem, type, options]);
 
-  const normalize = (val) => val.toLowerCase().trim().replace(/\s+/g, ' ')
+  const normalize = (s) => s.toString().toLowerCase().replace(/\s+/g,' ').trim();
 
-  const check = () => {
-    if (status !== 'attempting') return
+  const checkAnswer = (customVal = null) => {
+    if (feedback === 'correct' || feedback === 'revealed') return;
 
-    const currentAttempts = attempts + 1
-    setAttempts(currentAttempts)
-
-    let isCorrect = false
-    let currentVal = ''
-    if (type === 'text') {
-      isCorrect = normalize(userAnswer) === normalize(correctAnswer)
-      currentVal = userAnswer
-    } else if (type === 'mcq' || type === 'dropdown') {
-      isCorrect = String(selectedMcq) === String(correctAnswer)
-      currentVal = String(selectedMcq)
-    }
+    const valToCheck = customVal !== null ? customVal : input;
+    const isCorrect = normalize(valToCheck) === normalize(correctAnswer);
+    const newAttempts = localAttempts + 1;
+    setLocalAttempts(newAttempts);
 
     if (isCorrect) {
-      setStatus('correct')
-      setFeedback('¡Perfecto! ✓')
-      onSuccess(currentAttempts, 'correct', currentVal)
+      setFeedback('correct');
+      onUpdate(id, mode, 'correct', newAttempts, valToCheck);
     } else {
-      if (currentAttempts >= maxAttempts) {
-        setStatus('revealed')
-        setFeedback(mode === 'cw' ? 'Посмотри решение ниже' : `Вот правильный ответ: ${correctAnswer}`)
-        onSuccess(currentAttempts, 'revealed', currentVal)
+      if (newAttempts >= maxAttempts) {
+        setFeedback('revealed');
+        // При раскрытии показываем правильный ответ в builder
+        if (type === 'builder') setBuilderZone(correctAnswer.split(' '));
+        onUpdate(id, mode, 'revealed', newAttempts, valToCheck);
       } else {
-        // Multi-stage feedback
-        if (mode === 'cw') {
-          setFeedback('Неверно. Попробуй ещё раз!')
-        } else {
-          // HW logic
-          if (currentAttempts === 1) {
-            setFeedback('Неверно. Попробуй ещё раз!')
-          } else if (currentAttempts === 2) {
-            setFeedback('Почти! Посмотри подсказку.')
-            setShowHint(true)
-          }
-        }
+        setFeedback('error');
+        onUpdate(id, mode, 'attempting', newAttempts, valToCheck);
+        if (newAttempts >= 1) setShowHint(true);
       }
     }
-  }
+  };
 
-  const isCompleted = status === 'correct' || status === 'revealed'
+  const handleBuilderClick = (word, fromBank) => {
+    if (isLocked) return;
+    let newZone, newBank;
+    if (fromBank) {
+      newZone = [...builderZone, word];
+      newBank = builderBank.filter((w, i) => i !== builderBank.indexOf(word));
+    } else {
+      newBank = [...builderBank, word];
+      newZone = builderZone.filter((w, i) => i !== builderZone.lastIndexOf(word));
+    }
+    setBuilderZone(newZone);
+    setBuilderBank(newBank);
+    setInput(newZone.join(' '));
+  };
+
+  const isLocked = feedback === 'correct' || feedback === 'revealed';
 
   return (
-    <div className={cn(
-      "p-6 rounded-2xl border transition-all duration-300 mb-4",
-      status === 'attempting' ? "bg-white border-slate-200 shadow-sm" : 
-      status === 'correct' ? "bg-emerald-50 border-emerald-200" : 
-      "bg-rose-50 border-rose-200"
-    )}>
-      <div className="flex items-start gap-4">
-        <div className={cn(
-          "w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-1",
-          status === 'attempting' ? "bg-slate-100 text-slate-500" :
-          status === 'correct' ? "bg-emerald-500 text-white" :
-          "bg-rose-500 text-white"
-        )}>
-          {status === 'correct' ? <Check size={18} /> : 
-           status === 'revealed' ? <AlertCircle size={18} /> : 
-           <HelpCircle size={18} />}
-        </div>
+    <div className={`p-4 mb-4 rounded-xl border-2 transition-all ${
+      feedback === 'correct' ? 'border-green-500 bg-green-50' : 
+      feedback === 'revealed' ? 'border-orange-500 bg-orange-50' : 
+      feedback === 'error' ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white'
+    }`}>
+      <div className="flex flex-col gap-3">
+        {label && <div className="text-sm font-semibold text-indigo-900 mb-1">{label}</div>}
         
-        <div className="flex-1">
-          <div className="text-slate-800 font-medium text-lg mb-4" dangerouslySetInnerHTML={{ __html: problem }} />
-
-          {/* INPUT AREA */}
-          <div className="flex flex-col gap-4">
-            {type === 'text' && (
-              <input 
+        <div className="flex flex-col gap-2">
+          {/* TEXT INPUT */}
+          {type === 'text' && (
+            <div className="flex gap-2">
+              <input
                 type="text"
-                disabled={isCompleted}
-                value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
-                placeholder="Твой ответ..."
-                className={cn(
-                  "px-4 py-3 rounded-xl border font-mono outline-none transition-all w-full md:w-80",
-                  status === 'attempting' ? "border-slate-200 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100" :
-                  status === 'correct' ? "border-emerald-300 bg-emerald-10" :
-                  "border-rose-300 bg-rose-10"
-                )}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={isLocked}
+                placeholder={placeholder}
+                className={`flex-1 p-2 rounded-lg border focus:outline-none transition-all ${
+                  isLocked ? 'bg-gray-100' : 'focus:ring-2 focus:ring-blue-400'
+                }`}
+                onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
               />
-            )}
+              {!isLocked && (
+                <button onClick={() => checkAnswer()} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-bold">Check</button>
+              )}
+            </div>
+          )}
 
-            {type === 'mcq' && (
-              <div className="grid grid-cols-1 gap-2">
-                {options.map((opt, idx) => (
-                  <button
-                    key={idx}
-                    disabled={isCompleted}
-                    onClick={() => setSelectedMcq(opt.value)}
-                    className={cn(
-                      "text-left px-5 py-3 rounded-xl border transition-all",
-                      selectedMcq === opt.value ? "bg-indigo-50 border-indigo-500 border-2" : "bg-white border-slate-200 hover:border-slate-300",
-                      isCompleted && opt.value === correctAnswer ? "bg-emerald-100 border-emerald-500" : ""
-                    )}
-                  >
-                    {opt.label}
+          {/* MCQ */}
+          {type === 'mcq' && (
+            <div className="grid grid-cols-1 gap-2">
+              {options.map((opt, i) => (
+                <button
+                  key={i}
+                  disabled={isLocked}
+                  onClick={() => { setInput(opt); checkAnswer(opt); }}
+                  className={`p-3 text-left rounded-lg border-2 transition-all ${
+                    input === opt ? 'border-blue-500 bg-blue-50' : 'border-gray-100 bg-white hover:border-blue-200'
+                  } ${isLocked && opt === correctAnswer ? 'border-green-500 bg-green-100' : ''}`}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* DROPDOWN */}
+          {type === 'dropdown' && (
+            <div className="flex gap-2 items-center">
+              <select
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={isLocked}
+                className="p-2 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-400 outline-none"
+              >
+                <option value="">Выберите...</option>
+                {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
+              </select>
+              {!isLocked && (
+                <button onClick={() => checkAnswer()} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-bold">Check</button>
+              )}
+            </div>
+          )}
+
+          {/* BUILDER */}
+          {type === 'builder' && (
+            <div className="flex flex-col gap-4">
+              <div className={`min-h-[50px] p-2 bg-gray-50 border-2 border-dashed rounded-lg flex flex-wrap gap-2 ${isLocked ? 'border-green-200' : 'border-gray-300'}`}>
+                {builderZone.map((word, i) => (
+                  <button key={i} onClick={() => handleBuilderClick(word, false)} disabled={isLocked} className="px-3 py-1 bg-white border border-gray-200 rounded shadow-sm hover:bg-gray-50 transition-colors">
+                    {word}
                   </button>
                 ))}
               </div>
-            )}
-
-            {!isCompleted && (
-              <button 
-                onClick={check}
-                className="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-600 transition-colors inline-flex items-center gap-2 w-fit"
-              >
-                Проверить <ArrowRight size={18} />
-              </button>
-            )}
-          </div>
-
-          {/* FEEDBACK */}
-          {feedback && (
-            <div className={cn(
-              "mt-4 text-sm font-semibold",
-              status === 'correct' ? "text-emerald-600" : "text-rose-600"
-            )}>
-              {feedback}
-            </div>
-          )}
-
-          {/* HINT & SOLUTION */}
-          {showHint && hint && (
-            <div className="mt-4 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-xl text-amber-800 text-sm">
-              <span className="font-bold uppercase text-[10px] tracking-widest block mb-1">ПОДСКАЗКА:</span>
-              <div dangerouslySetInnerHTML={{ __html: hint }} />
-            </div>
-          )}
-
-          {status === 'revealed' && mode === 'cw' && solution && (
-            <div className="mt-4 p-5 bg-indigo-50 border-indigo-200 border rounded-2xl">
-              <span className="font-bold uppercase text-xs tracking-widest text-indigo-600 block mb-2">РЕШЕНИЕ:</span>
-              <div className="text-slate-700 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: solution }} />
+              {!isLocked && (
+                <div className="flex flex-wrap gap-2">
+                  {builderBank.map((word, i) => (
+                    <button key={i} onClick={() => handleBuilderClick(word, true)} className="px-3 py-1 bg-blue-50 text-blue-700 border border-blue-100 rounded hover:bg-blue-100 transition-colors">
+                      {word}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {!isLocked && (
+                <button onClick={() => checkAnswer()} className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-bold mt-2">Check Order</button>
+              )}
             </div>
           )}
         </div>
+
+        {/* Info & Feedback */}
+        <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-gray-400">
+           <div>Attempts: {localAttempts} / {maxAttempts}</div>
+           {showHint && hint && !isLocked && <div className="text-blue-500 animate-pulse">💡 Hint available</div>}
+        </div>
+
+        {showHint && hint && !isLocked && (
+          <div className="text-sm text-blue-600 italic bg-blue-50 p-2 rounded-lg border border-blue-100">
+            💡 {hint}
+          </div>
+        )}
+
+        {feedback === 'revealed' && (
+          <div className="mt-2 p-3 bg-white rounded-lg border border-orange-200 text-sm shadow-sm animate-in slide-in-from-top-2 duration-300">
+            <div className="text-xs font-bold text-orange-500 uppercase mb-1">
+              {mode === 'cw' ? 'Разбор задания:' : 'Правильный ответ:'}
+            </div>
+            <div className="text-gray-800 leading-relaxed">
+              {mode === 'cw' ? (solution || `Правильный ответ: ${correctAnswer}`) : correctAnswer}
+            </div>
+          </div>
+        )}
       </div>
     </div>
-  )
+  );
 }

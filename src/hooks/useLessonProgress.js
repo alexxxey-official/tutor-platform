@@ -71,7 +71,9 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
       const cwData = newState.cw || {};
       const hwData = newState.hw || {};
       
+      // В CW засчитываем и верные, и разобранные (revealed) задания
       const cwCorrect = Object.values(cwData).filter(ex => ex && (ex.status === 'correct' || ex.status === 'revealed')).length;
+      // В HW засчитываем ТОЛЬКО верные решения
       const hwCorrect = Object.values(hwData).filter(ex => ex && ex.status === 'correct').length;
       const currentScore = cwCorrect + hwCorrect;
 

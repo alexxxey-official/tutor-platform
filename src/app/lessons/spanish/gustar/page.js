@@ -42,33 +42,38 @@ export default function GustarLesson() {
   // EXERCISE COMPONENTS
   const McqExercise = ({ id, num, problem, options, correctIdx, audioWord }) => {
     const [selected, setSelected] = useState(null);
-    const [status, setStatus] = useState(null);
+    const [status, setStatus] = useState('attempting');
+    const [attempts, setAttempts] = useState(0);
 
     useEffect(() => {
       if (!loading && progress.cw?.[id]) {
         const item = progress.cw[id];
-        if (item.status === 'correct') {
-            setStatus('correct');
-            setSelected(parseInt(item.value || correctIdx));
-        } else if (item.status === 'wrong') {
-            setStatus('wrong');
-            setSelected(parseInt(item.value));
-        }
+        setStatus(item.status || 'attempting');
+        setAttempts(item.attempts || 0);
+        if (item.value !== undefined) setSelected(parseInt(item.value));
       }
-    }, [loading, progress.cw, id, correctIdx]);
+    }, [loading, progress.cw, id]);
 
     const check = () => {
-      if (selected === null) {
-        alert("Сначала выбери вариант ответа!");
-        return;
-      }
+      if (selected === null || status !== 'attempting') return;
+      const curAttempts = attempts + 1;
+      setAttempts(curAttempts);
       const isCorrect = selected === correctIdx;
-      setStatus(isCorrect ? 'correct' : 'wrong');
-      updateProgress(id, 'cw', isCorrect ? 'correct' : 'wrong', 1, String(selected));
+      
+      let newStatus = 'attempting';
+      if (isCorrect) newStatus = 'correct';
+      else if (curAttempts >= 2) newStatus = 'revealed';
+
+      setStatus(newStatus);
+      if (newStatus !== 'attempting') {
+        updateProgress(id, 'cw', newStatus, curAttempts, String(selected));
+      }
     };
 
+    const isDone = status === 'correct' || status === 'revealed';
+
     return (
-      <div className="border-b border-dashed border-[#e5e0d5] py-6 flex flex-col gap-3 last:border-none">
+      <div className={`border-b border-dashed border-[#e5e0d5] py-6 flex flex-col gap-3 last:border-none transition-colors ${status === 'correct' ? 'bg-emerald-50/30' : status === 'revealed' ? 'bg-rose-50/30' : ''}`}>
         <div className="flex items-center gap-3 text-[16px] font-medium mb-1">
           {num} {problem}
           {audioWord && (
@@ -83,7 +88,9 @@ export default function GustarLesson() {
             let btnClass = "bg-white border-[1.5px] rounded-xl p-4 text-[15px] text-left transition-all font-sans flex items-center gap-3 ";
             if (status === 'correct' && selected === idx) {
               btnClass += "border-[#2a9d8f] bg-[#f0faf8] text-[#2a9d8f] font-bold pointer-events-none";
-            } else if (status === 'wrong' && selected === idx) {
+            } else if (status === 'revealed' && idx === correctIdx) {
+              btnClass += "border-[#2a9d8f] bg-[#f0faf8] text-[#2a9d8f]";
+            } else if (status === 'revealed' && selected === idx) {
               btnClass += "border-[#e63946] bg-[#fff5f5] text-[#e63946] pointer-events-none opacity-70";
             } else if (selected === idx) {
               btnClass += "border-[#e63946] bg-[#fff5f5] text-[#1a1a2e]";
@@ -94,21 +101,23 @@ export default function GustarLesson() {
             return (
               <button 
                 key={idx} 
-                onClick={() => { setSelected(idx); setStatus(null); }}
+                onClick={() => { if(!isDone) { setSelected(idx); } }}
                 className={btnClass}
-                disabled={status === 'correct'}
+                disabled={isDone}
               >
                 {opt}
               </button>
             )
           })}
         </div>
-        <button onClick={check} className="bg-[#1a1a2e] text-white rounded-lg px-5 py-2.5 text-[14px] font-bold w-fit mt-2 hover:bg-[#2d2d4e] transition-colors">
-          Проверить
-        </button>
-        {status && (
+        {!isDone && (
+            <button onClick={check} className="bg-[#1a1a2e] text-white rounded-lg px-5 py-2.5 text-[14px] font-bold w-fit mt-2 hover:bg-[#2d2d4e] transition-colors">
+            Проверить
+            </button>
+        )}
+        {status !== 'attempting' && (
           <div className={`mt-2 p-3 rounded-lg text-[14px] font-medium border-l-4 ${status === 'correct' ? 'bg-[#f0faf8] text-[#2a9d8f] border-[#2a9d8f]' : 'bg-[#fff5f5] text-[#e63946] border-[#e63946]'}`}>
-            {status === 'correct' ? '✓ Правильно!' : '✗ Неверно. Попробуй другой вариант.'}
+            {status === 'correct' ? '✓ ¡Muy bien!' : `✗ Решение: ${options[correctIdx]}`}
           </div>
         )}
       </div>
@@ -117,52 +126,67 @@ export default function GustarLesson() {
 
   const DropdownExercise = ({ id, num, prefix, suffix, options, correctVal }) => {
     const [val, setVal] = useState('');
-    const [status, setStatus] = useState(null);
+    const [status, setStatus] = useState('attempting');
+    const [attempts, setAttempts] = useState(0);
 
     useEffect(() => {
       if (!loading && progress.cw?.[id]) {
         const item = progress.cw[id];
         setVal(item.value || '');
-        setStatus(item.status);
+        setStatus(item.status || 'attempting');
+        setAttempts(item.attempts || 0);
       }
     }, [loading, progress.cw, id]);
 
     const check = () => {
-      if (!val) return;
+      if (!val || status !== 'attempting') return;
+      const curAttempts = attempts + 1;
+      setAttempts(curAttempts);
       const isCorrect = val === correctVal;
-      setStatus(isCorrect ? 'correct' : 'wrong');
-      updateProgress(id, 'cw', isCorrect ? 'correct' : 'wrong', 1, val);
+      
+      let newStatus = 'attempting';
+      if (isCorrect) newStatus = 'correct';
+      else if (curAttempts >= 2) newStatus = 'revealed';
+
+      setStatus(newStatus);
+      if (newStatus !== 'attempting') {
+        updateProgress(id, 'cw', newStatus, curAttempts, val);
+      }
     }
+
+    const isDone = status === 'correct' || status === 'revealed';
 
     let selectClass = "appearance-none bg-gray-50 border-[1.5px] rounded-lg py-1.5 pl-3 pr-8 font-mono text-[15px] font-bold outline-none transition-colors mx-2 cursor-pointer ";
     if (status === 'correct') selectClass += "border-[#2a9d8f] text-[#2a9d8f] bg-[#f0faf8]";
-    else if (status === 'wrong') selectClass += "border-[#e63946] text-[#e63946] bg-[#fff5f5]";
+    else if (status === 'revealed') selectClass += "border-[#e63946] text-[#e63946] bg-[#fff5f5]";
     else selectClass += "border-[#e5e0d5] text-[#e63946] focus:border-[#e63946]";
 
     const arrowSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`;
 
     return (
-      <div className="border-b border-dashed border-[#e5e0d5] py-6 flex flex-col gap-3 last:border-none">
+      <div className={`border-b border-dashed border-[#e5e0d5] py-6 flex flex-col gap-3 last:border-none ${status === 'correct' ? 'bg-emerald-50/20' : ''}`}>
         <div className="text-[16px] font-medium mb-1 flex items-center flex-wrap">
           {num} {prefix}
           <select 
             value={val} 
-            onChange={e => { setVal(e.target.value); setStatus(null); }}
+            onChange={e => setVal(e.target.value)}
             className={selectClass}
             style={{ backgroundImage: arrowSvg, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center' }}
-            disabled={status === 'correct'}
+            disabled={isDone}
           >
             <option value="" disabled>выбери</option>
             {options.map(o => <option key={o} value={o}>{o}</option>)}
           </select>
           {suffix}
         </div>
-        <button onClick={check} className="bg-[#1a1a2e] text-white rounded-lg px-5 py-2.5 text-[14px] font-bold w-fit mt-2 hover:bg-[#2d2d4e] transition-colors">
-          Проверить
-        </button>
-        {status && (
-          <div className={`mt-2 p-3 rounded-lg text-[14px] font-medium border-l-4 ${status === 'correct' ? 'bg-[#f0faf8] text-[#2a9d8f] border-[#2a9d8f]' : 'bg-[#fff5f5] text-[#e63946] border-[#e63946]'}`}>
-            {status === 'correct' ? '✓ Правильно!' : '✗ Ошибка. Подумай еще раз.'}
+        {!isDone && (
+            <button onClick={check} className="bg-[#1a1a2e] text-white rounded-lg px-5 py-2.5 text-[14px] font-bold w-fit mt-2 hover:bg-[#2d2d4e] transition-colors">
+            Проверить
+            </button>
+        )}
+        {status === 'revealed' && (
+          <div className="mt-2 p-3 rounded-lg text-[14px] font-medium border-l-4 bg-[#f0faf8] text-[#2a9d8f] border-[#2a9d8f]">
+            ✓ Правильный ответ: {correctVal}
           </div>
         )}
       </div>
@@ -172,16 +196,17 @@ export default function GustarLesson() {
   const BuilderExercise = ({ id, num, problem, initialWords, correctAns }) => {
     const [bank, setBank] = useState(initialWords);
     const [zone, setZone] = useState([]);
-    const [status, setStatus] = useState(null);
+    const [status, setStatus] = useState('attempting');
+    const [attempts, setAttempts] = useState(0);
 
     useEffect(() => {
       if (!loading && progress.cw?.[id]) {
         const item = progress.cw[id];
-        if (item.status === 'correct' && item.value) {
-            setStatus('correct');
+        setStatus(item.status || 'attempting');
+        setAttempts(item.attempts || 0);
+        if ((item.status === 'correct' || item.status === 'revealed') && item.value) {
             const words = item.value.split(' ');
             setZone(words);
-            // Filter bank
             let currentBank = [...initialWords];
             words.forEach(w => {
                 const idx = currentBank.indexOf(w);
@@ -193,10 +218,24 @@ export default function GustarLesson() {
     }, [loading, progress.cw, id, initialWords]);
 
     const check = () => {
+      if (status !== 'attempting') return;
+      const curAttempts = attempts + 1;
+      setAttempts(curAttempts);
       const userAns = zone.join(' ');
       const isCorrect = userAns === correctAns;
-      setStatus(isCorrect ? 'correct' : 'wrong');
-      updateProgress(id, 'cw', isCorrect ? 'correct' : 'wrong', 1, userAns);
+      
+      let newStatus = 'attempting';
+      if (isCorrect) newStatus = 'correct';
+      else if (curAttempts >= 2) newStatus = 'revealed';
+
+      setStatus(newStatus);
+      if (newStatus !== 'attempting') {
+        updateProgress(id, 'cw', newStatus, curAttempts, isCorrect ? userAns : correctAns);
+        if (!isCorrect && curAttempts >= 2) {
+            setZone(correctAns.split(' '));
+            setBank([]);
+        }
+      }
     }
 
     const moveToZone = (word, idx) => {

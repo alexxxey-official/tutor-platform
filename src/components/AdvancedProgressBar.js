@@ -1,54 +1,82 @@
 'use client'
-import { clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { useEffect, useState } from 'react';
+import confetti from 'canvas-confetti';
 
-function cn(...inputs) {
-  return twMerge(clsx(inputs))
-}
+export default function AdvancedProgressBar({ statsCW, statsHW }) {
+  const [hasCelebrated, setHasCelebrated] = useState(false);
 
-export default function AdvancedProgressBar({ data, total, title }) {
-  // data: { id: { status, attempts }, ... }
-  const exercises = Object.values(data || {})
-  const correct = exercises.filter(ex => ex.status === 'correct').length
-  const revealed = exercises.filter(ex => ex.status === 'revealed').length
-  
-  const segments = []
-  for (let i = 0; i < total; i++) {
-    const ex = exercises[i]
-    if (!ex) segments.push('empty')
-    else if (ex.status === 'correct') segments.push('correct')
-    else if (ex.status === 'revealed') segments.push('revealed')
-    else segments.push('attempting')
-  }
+  const total = (statsCW?.total || 0) + (statsHW?.total || 0);
+  const correct = (statsCW?.correct || 0) + (statsHW?.correct || 0);
+  const revealedCW = statsCW?.revealed || 0;
+  const revealedHW = statsHW?.revealed || 0;
 
-  const pct = total > 0 ? Math.round((correct / total) * 100) : 0
+  // В CW revealed считается "пройденным" (зеленым или светло-зеленым), 
+  // в HW revealed — это "красная зона" (ошибка без балла).
+  const progressPct = total > 0 ? Math.round(((correct + revealedCW) / total) * 100) : 0;
+  const scorePct = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+  useEffect(() => {
+    if (progressPct >= 90 && !hasCelebrated) {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#22c55e', '#3b82f6', '#f59e0b']
+      });
+      setHasCelebrated(true);
+    }
+  }, [progressPct, hasCelebrated]);
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="font-bold text-slate-800 uppercase tracking-wider text-xs">{title}</h3>
-        <span className="text-2xl font-black text-slate-900 font-mono">{pct}%</span>
+    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
+      <div className="flex justify-between items-end mb-4">
+        <div>
+          <h3 className="text-lg font-bold text-gray-800">Ваш прогресс</h3>
+          <p className="text-sm text-gray-500">
+            Решено верно: {correct} из {total}
+          </p>
+        </div>
+        <div className="text-right">
+          <span className="text-3xl font-black text-blue-600">{progressPct}%</span>
+        </div>
       </div>
 
-      <div className="flex gap-1.5 h-3">
-        {segments.map((type, idx) => (
-          <div 
-            key={idx}
-            className={cn(
-              "flex-1 rounded-full transition-all duration-500",
-              type === 'empty' ? "bg-slate-100" :
-              type === 'correct' ? "bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]" :
-              type === 'revealed' ? "bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.3)]" :
-              "bg-indigo-300 animate-pulse"
-            )}
-          />
-        ))}
+      {/* Многослойный прогресс-бар */}
+      <div className="h-4 w-full bg-gray-100 rounded-full overflow-hidden flex">
+        {/* Зеленый - Верно */}
+        <div 
+          className="h-full bg-green-500 transition-all duration-1000" 
+          style={{ width: `${(correct / total) * 100}%` }}
+        />
+        {/* Светло-зеленый - CW revealed (зачтено) */}
+        <div 
+          className="h-full bg-green-300 transition-all duration-1000" 
+          style={{ width: `${(revealedCW / total) * 100}%` }}
+        />
+        {/* Красный - HW revealed (не зачтено) */}
+        <div 
+          className="h-full bg-red-400 transition-all duration-1000" 
+          style={{ width: `${(revealedHW / total) * 100}%` }}
+        />
       </div>
-      
-      <div className="flex justify-between mt-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-        <span>{correct} / {total} верно</span>
-        {revealed > 0 && <span className="text-rose-400">{revealed} провалено</span>}
+
+      <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[10px] uppercase tracking-wider font-bold text-gray-400">
+        <div className="flex items-center justify-center gap-1">
+          <div className="w-2 h-2 bg-green-500 rounded-full" /> Верно
+        </div>
+        <div className="flex items-center justify-center gap-1">
+          <div className="w-2 h-2 bg-green-300 rounded-full" /> Разобрано (CW)
+        </div>
+        <div className="flex items-center justify-center gap-1">
+          <div className="w-2 h-2 bg-red-400 rounded-full" /> Ошибки (HW)
+        </div>
       </div>
+
+      {scorePct < 60 && statsHW?.isComplete && (
+        <div className="mt-4 p-3 bg-blue-50 border border-blue-100 rounded-xl text-sm text-blue-700">
+          💡 Результат меньше 60%. У вас есть возможность **сбросить ДЗ** и попробовать другой вариант!
+        </div>
+      )}
     </div>
-  )
+  );
 }

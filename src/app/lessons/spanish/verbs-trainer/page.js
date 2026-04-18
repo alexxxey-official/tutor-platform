@@ -2,6 +2,8 @@
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
 import { useLessonProgress } from '../../../../hooks/useLessonProgress'
+import AdvancedProgressBar from '../../../../components/AdvancedProgressBar'
+import confetti from 'canvas-confetti'
 
 export default function VerbsTrainer() {
   const [answers, setAnswers] = useState({})
@@ -62,27 +64,26 @@ export default function VerbsTrainer() {
 
   const total = 50
   const { progress, updateProgress, getStats, loading } = useLessonProgress('spa_verbs_trainer', 0, total);
-
   const stats = getStats('hw')
-  const correctCount = stats.correct
-  const pct = stats.pct
+
+  useEffect(() => {
+    if (stats.isComplete && stats.pct >= 85) {
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } })
+    }
+  }, [stats.isComplete, stats.pct])
 
   // Restoration logic
   useEffect(() => {
     if (!loading && progress.hw) {
-      console.log('Restoring Verbs Trainer progress...', progress.hw);
       const restored = {};
       Object.keys(progress.hw).forEach(key => {
         const item = progress.hw[key];
         if (item) {
-          const ex = exercises.find(e => e.id === key);
-          if (ex) {
-            restored[key] = { 
-                value: item.value || (item.status === 'correct' ? ex.ans : ''), 
-                isCorrect: item.status === 'correct', 
-                checked: true 
-            };
-          }
+          restored[key] = { 
+            value: item.value || '', 
+            status: item.status,
+            attempts: item.attempts || 0
+          };
         }
       });
       setAnswers(restored);
@@ -91,14 +92,28 @@ export default function VerbsTrainer() {
 
   const normalize = (s) => s.toLowerCase().replace(/\s+/g, '').trim()
 
-  const checkAnswer = (id, correctAns, value, index) => {
+  const checkItem = (id, correctAns, value, index) => {
+    const saved = answers[id] || { status: 'attempting', attempts: 0 }
+    if (saved.status !== 'attempting') return
+
+    const curAttempts = (saved.attempts || 0) + 1
     const isCorrect = normalize(value) === normalize(correctAns) && value !== ''
-    setAnswers((prev) => ({
-      ...prev,
-      [id]: { value, isCorrect, checked: true },
+    
+    let newStatus = 'attempting'
+    if (isCorrect) {
+        newStatus = 'correct'
+    } else if (curAttempts >= 3) {
+        newStatus = 'revealed'
+    }
+
+    setAnswers(prev => ({ 
+        ...prev, 
+        [id]: { value, status: newStatus, attempts: curAttempts } 
     }))
 
-    updateProgress(id, 'hw', isCorrect ? 'correct' : 'wrong', 1, value);
+    if (newStatus !== 'attempting') {
+        updateProgress(id, 'hw', newStatus, curAttempts, value);
+    }
 
     if (isCorrect && index < total - 1) {
       setTimeout(() => {
@@ -107,47 +122,25 @@ export default function VerbsTrainer() {
     }
   }
 
+  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
+
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">
       <div className="bg-[#e63946] text-white px-10 py-12 pb-10 relative overflow-hidden">
-        <div className="text-[11px] font-semibold tracking-[3px] uppercase text-[#ffb3b3] mb-3">
-          🇪🇸 Хардкор Тренажёр
-        </div>
-        <h1 className="font-extrabold text-[clamp(32px,5vw,52px)] leading-[1.1] mb-4 unbounded relative z-10">
-          50 глаголов<br />
-          <em className="text-white not-italic font-normal font-serif">на выживание</em>
-        </h1>
-        <p className="text-white/80 text-[15px] max-w-[500px] relative z-10">
-          Чтобы больше никогда не путаться в окончаниях -AR, -ER, -IR. Вбивай глаголы строчными буквами, не думай — делай на автоматизме!
-        </p>
+        <h1 className="font-extrabold text-[clamp(32px,5vw,52px)] leading-[1.1] mb-4 unbounded">50 глаголов</h1>
       </div>
 
       <div className="max-w-[860px] mx-auto px-6">
-        <nav className="bg-white border border-[#e5e0d5] rounded-xl px-6 py-5 mt-8 flex flex-wrap gap-2.5 items-center shadow-sm">
-          <Link href="/dashboard" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] font-bold transition-colors hover:bg-[#e63946] hover:text-white">
-            ← Дашборд
-          </Link>
-          <Link href="/lessons/spanish/verbs" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#e63946] hover:text-white">
-            ← Урок 5 (Теория)
-          </Link>
-        </nav>
-
-        <div className="bg-white border border-[#e5e0d5] rounded-2xl p-6 mb-4 mt-8 sticky top-5 z-20 shadow-lg">
-          <div className="flex justify-between items-center mb-2">
-            <span className="font-semibold text-[15px]">Твой прогресс в Тренажёре</span>
-            <span className="font-bold text-[#1a1a2e] bg-gray-100 px-3 py-1 rounded-full">{correctCount} / {total}</span>
-          </div>
-          <div className="bg-gray-200 rounded-full h-2.5 mt-2 overflow-hidden">
-            <div className="h-full bg-[#e63946] rounded-full transition-all duration-400 ease-out" style={{ width: `${pct}%` }}></div>
-          </div>
-        </div>
+        <AdvancedProgressBar data={progress.hw} total={total} title="Тренажёр" mode="hw" />
 
         <div className="bg-white border border-[#e5e0d5] rounded-2xl overflow-hidden mb-4 shadow-sm mt-8">
           <div className="px-6 py-4">
             {exercises.map((ex, index) => {
-              const state = answers[ex.id] || { value: '', checked: false }
+              const state = answers[ex.id] || { value: '', status: 'attempting', attempts: 0 }
+              const isDone = state.status === 'correct' || state.status === 'revealed'
+              
               return (
-                <div key={ex.id} className="border-b border-dashed border-[#e5e0d5] py-5 flex gap-4 items-start last:border-none">
+                <div key={ex.id} className={`border-b border-dashed border-[#e5e0d5] py-5 flex gap-4 items-start last:border-none transition-colors ${state.status === 'correct' ? 'bg-emerald-50/30' : state.status === 'revealed' ? 'bg-rose-50/30' : ''}`}>
                   <div className="font-mono text-[13px] text-gray-500 min-w-[28px] pt-1">{index + 1}.</div>
                   <div className="flex-1">
                     <div className="text-[15px] px-3.5 py-2.5 bg-gray-50 rounded-lg mb-2.5">
@@ -157,29 +150,32 @@ export default function VerbsTrainer() {
                       <input
                         ref={el => inputRefs.current[index] = el}
                         type="text"
+                        disabled={isDone}
                         value={state.value}
-                        onChange={(e) => setAnswers(prev => ({...prev, [ex.id]: { value: e.target.value, checked: false }}))}
+                        onChange={(e) => setAnswers(prev => ({...prev, [ex.id]: { ...state, value: e.target.value }}))}
                         className={`border-[1.5px] rounded-lg px-3 py-1.5 font-mono text-[14px] w-[200px] outline-none transition-colors ${
-                          state.checked
-                            ? state.isCorrect
+                          isDone
+                            ? state.status === 'correct'
                               ? 'border-[#2a9d8f] bg-[#f0faf8] text-[#2a9d8f]'
                               : 'border-[#e63946] bg-[#fff5f5] text-[#e63946]'
                             : 'border-[#e5e0d5] focus:border-[#e63946]'
                         }`}
                         onKeyDown={(e) => { 
-                          if (e.key === 'Enter') checkAnswer(ex.id, ex.ans, state.value, index) 
+                          if (e.key === 'Enter') checkItem(ex.id, ex.ans, state.value, index) 
                         }}
                       />
-                      <button
-                        onClick={() => checkAnswer(ex.id, ex.ans, state.value, index)}
-                        className="bg-[#1a1a2e] text-white border-none rounded-lg px-4 py-1.5 text-[13px] font-sans cursor-pointer hover:bg-[#2d2d4e] transition-colors"
-                      >
-                        Проверить
-                      </button>
+                      {!isDone && (
+                        <button
+                          onClick={() => checkItem(ex.id, ex.ans, state.value, index)}
+                          className="bg-[#1a1a2e] text-white border-none rounded-lg px-4 py-1.5 text-[13px] font-sans cursor-pointer hover:bg-[#2d2d4e] transition-colors"
+                        >
+                          Check
+                        </button>
+                      )}
                     </div>
-                    {state.checked && (
-                      <div className={`mt-1.5 text-[13px] font-medium ${state.isCorrect ? 'text-[#2a9d8f]' : 'text-[#e63946]'}`}>
-                        {state.isCorrect ? '✓ ¡Perfecto!' : `✗ Ошибка. Правильный ответ: ${ex.ans}`}
+                    {isDone && (
+                      <div className={`mt-1.5 text-[13px] font-medium ${state.status === 'correct' ? 'text-[#2a9d8f]' : 'text-[#e63946]'}`}>
+                        {state.status === 'correct' ? '✓ ¡Perfecto!' : `✗ Правильный ответ: ${ex.ans}`}
                       </div>
                     )}
                   </div>
@@ -188,15 +184,6 @@ export default function VerbsTrainer() {
             })}
           </div>
         </div>
-
-        {pct === 100 && (
-          <div className="mt-8 p-10 bg-[#f0faf8] text-[#2a9d8f] font-bold text-center rounded-2xl border-2 border-[#2a9d8f] shadow-xl">
-            <div className="text-4xl mb-4">🏆</div>
-            <div className="text-2xl mb-2">¡HÉROE DE VERBOS!</div>
-            <div>Ты прошел хардкор-тренажёр без единой ошибки. Теперь ты машина по спряжению глаголов!</div>
-          </div>
-        )}
-
       </div>
     </div>
   )
