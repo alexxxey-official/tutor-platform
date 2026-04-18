@@ -15,7 +15,7 @@ export default function Exercise({
   progressItem, 
   onUpdate,
   maxAttempts: customMaxAttempts,
-  placeholder = "...",
+  placeholder = "Type your answer...",
   label = "",
   compact = false,
   variant = 'default' // 'default' or 'inline'
@@ -124,7 +124,7 @@ export default function Exercise({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={isLocked}
-          placeholder={placeholder === "..." ? "Введите..." : placeholder}
+          placeholder={placeholder}
           className={`w-full p-2 px-3 text-sm md:text-base rounded-xl border-2 focus:outline-none transition-all text-slate-900 font-bold text-center ${
             isLocked ? 'bg-emerald-50 border-emerald-500 text-emerald-700 shadow-inner' : 
             isError ? 'border-amber-400 bg-amber-50 shadow-md' : 'border-slate-700 bg-slate-800 focus:border-blue-400 focus:bg-slate-700 text-white'
