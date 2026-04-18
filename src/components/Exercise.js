@@ -15,7 +15,7 @@ export default function Exercise({
   progressItem, 
   onUpdate,
   maxAttempts: customMaxAttempts,
-  placeholder = "...",
+  placeholder = "Enter answer",
   label = "",
   compact = false,
   variant = 'default' // 'default' or 'inline'
@@ -124,7 +124,7 @@ export default function Exercise({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={isLocked}
-          placeholder={placeholder === "..." ? "Введите..." : placeholder}
+          placeholder={placeholder}
           className={`w-full p-2 px-3 text-sm md:text-base rounded-xl border-2 focus:outline-none transition-all text-slate-900 font-bold text-center ${
             isLocked ? 'bg-emerald-50 border-emerald-500 text-emerald-700 shadow-inner' : 
             isError ? 'border-amber-400 bg-amber-50 shadow-md' : 'border-slate-700 bg-slate-800 focus:border-blue-400 focus:bg-slate-700 text-white'
@@ -213,7 +213,7 @@ export default function Exercise({
                   isError ? 'border-amber-300 bg-white' : 'border-slate-200 focus:border-indigo-400 bg-white'
                 }`}
               >
-                <option value="">Выберите вариант...</option>
+                <option value="">Enter answer</option>
                 {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
               </select>
               {!isLocked && (
@@ -270,14 +270,14 @@ export default function Exercise({
           
           {feedback === 'correct' && (
             <div className="text-sm font-black text-emerald-600 bg-emerald-100 px-3 py-1 rounded-full">
-              ВЕРНО! ✨
+              CORRECT! ✨
             </div>
           )}
         </div>
 
         {showHint && hint && !isLocked && (
           <div className="text-base text-indigo-700 italic bg-indigo-50 p-4 rounded-xl border-l-4 border-indigo-500 animate-in fade-in duration-500">
-            <span className="font-black uppercase text-[10px] tracking-widest block mb-1 opacity-50">Подсказка</span>
+            <span className="font-black uppercase text-[10px] tracking-widest block mb-1 opacity-50">Hint</span>
             {hint}
           </div>
         )}
@@ -285,10 +285,10 @@ export default function Exercise({
         {feedback === 'revealed' && (
           <div className="mt-2 p-5 bg-white rounded-2xl border-2 border-orange-200 shadow-lg animate-in slide-in-from-top-4">
             <div className="text-[10px] font-black text-orange-500 uppercase mb-3 tracking-[0.2em]">
-              {mode === 'cw' ? 'Разбор задания:' : 'Правильный ответ:'}
+              {mode === 'cw' ? 'Task Analysis:' : 'Correct Answer:'}
             </div>
             <div className="text-slate-800 text-lg leading-relaxed font-bold">
-              {mode === 'cw' ? (solution || `Правильный ответ: ${correctAnswer}`) : correctAnswer}
+              {mode === 'cw' ? (solution || `Correct Answer: ${correctAnswer}`) : correctAnswer}
             </div>
           </div>
         )}
