@@ -95,20 +95,14 @@ export default function Exercise({
     }
   };
 
-  const handleBuilderClick = (word, fromBank) => {
-    if (isLocked) return;
-    let newZone, newBank;
-    if (fromBank) {
-      newZone = [...builderZone, word];
-      newBank = builderBank.filter((w, i) => i !== builderBank.indexOf(word));
-    } else {
-      newBank = [...builderBank, word];
-      newZone = builderZone.filter((w, i) => i !== builderZone.lastIndexOf(word));
-    }
-    setBuilderZone(newZone);
-    setBuilderBank(newBank);
-    setInput(newZone.join(' '));
-  };
+  // Экспортируем функцию проверки для внешнего использования через кастомное событие
+  useEffect(() => {
+    const handleTrigger = (e) => {
+      if (e.detail.id === id) checkAnswer();
+    };
+    window.addEventListener('trigger-check', handleTrigger);
+    return () => window.removeEventListener('trigger-check', handleTrigger);
+  }, [id, input, feedback, localAttempts]);
 
   const isLocked = feedback === 'correct' || feedback === 'revealed';
   const isError = feedback === 'attempting' && localAttempts > 0;
@@ -116,7 +110,7 @@ export default function Exercise({
 
   if (variant === 'inline') {
     return (
-      <div className={`inline-block align-middle ${isShaking ? 'animate-shake' : ''}`}>
+      <div className={`inline-block align-middle ${isShaking ? 'animate-shake' : ''} w-full`}>
         <style jsx>{`
           @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -130,10 +124,10 @@ export default function Exercise({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={isLocked}
-          placeholder={placeholder}
-          className={`w-full p-1.5 px-3 text-base rounded-lg border-2 focus:outline-none transition-all text-slate-900 font-bold text-center ${
-            isLocked ? 'bg-emerald-50 border-emerald-500 text-emerald-700' : 
-            isError ? 'border-amber-400 bg-amber-50' : 'border-slate-300 bg-white focus:border-indigo-400'
+          placeholder={placeholder === "..." ? "Введите..." : placeholder}
+          className={`w-full p-2 px-3 text-sm md:text-base rounded-xl border-2 focus:outline-none transition-all text-slate-900 font-bold text-center ${
+            isLocked ? 'bg-emerald-50 border-emerald-500 text-emerald-700 shadow-inner' : 
+            isError ? 'border-amber-400 bg-amber-50 shadow-md' : 'border-slate-700 bg-slate-800 focus:border-blue-400 focus:bg-slate-700 text-white'
           } ${feedback === 'revealed' ? 'border-orange-500 bg-orange-50 text-orange-700' : ''}`}
           onKeyDown={(e) => e.key === 'Enter' && !isInputEmpty && checkAnswer()}
         />
@@ -142,7 +136,7 @@ export default function Exercise({
   }
 
   return (
-    <div className={`${compact ? 'p-3 mb-3' : 'p-5 mb-6'} rounded-2xl border-2 transition-all duration-300 ${isShaking ? 'animate-shake' : ''} ${
+    <div className={`${compact ? 'p-3 mb-3' : 'p-4 mb-4'} rounded-2xl border-2 transition-all duration-300 ${isShaking ? 'animate-shake' : ''} ${
       feedback === 'correct' ? 'border-emerald-500 bg-emerald-50' : 
       feedback === 'revealed' ? 'border-orange-500 bg-orange-50' : 
       isError ? 'border-amber-400 bg-amber-50 shadow-md scale-[1.01]' : 'border-slate-200 bg-white'

@@ -345,24 +345,39 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw2" mode="hw" label="2. These cars (make) in Japan." correctAnswer="are made" progressItem={progress.hw?.hw2} onUpdate={updateProgress} />
                           <Exercise id="hw3" mode="hw" label="3. The mail (deliver) at 9 AM." correctAnswer="is delivered" progressItem={progress.hw?.hw3} onUpdate={updateProgress} />
                           
-                      <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
-                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-6 flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div> 4. Question Transformation
-                        </div>
-                        <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
-                          "Do they clean the rooms every day?"
+                      <div className="bg-slate-900 p-8 rounded-[2rem] border border-slate-800 shadow-2xl relative overflow-hidden group">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-50"></div>
+                        <div className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-8 flex items-center gap-3">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div> 
+                          4. Question Transformation
                         </div>
                         
-                        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
-                          <div className="w-32">
+                        <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
+                          <span className="opacity-30 text-3xl font-serif">“</span>
+                          Do they clean the rooms every day?
+                          <span className="opacity-30 text-3xl font-serif">”</span>
+                        </div>
+                        
+                        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 mb-10">
+                          <div className="w-36">
                             <Exercise id="hw4_1" mode="hw" placeholder="To be..." correctAnswer="Are" progressItem={progress.hw?.hw4_1} onUpdate={updateProgress} variant="inline" />
                           </div>
-                          <span className="text-slate-300">the rooms</span>
-                          <div className="w-44">
+                          <span className="text-slate-500 font-bold text-lg">the rooms</span>
+                          <div className="w-48">
                             <Exercise id="hw4_2" mode="hw" placeholder="V3 form..." correctAnswer="cleaned" progressItem={progress.hw?.hw4_2} onUpdate={updateProgress} variant="inline" />
                           </div>
-                          <span className="text-slate-300">every day?</span>
+                          <span className="text-slate-500 font-bold text-lg">every day?</span>
                         </div>
+
+                        <button 
+                          onClick={() => {
+                            window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw4_1' } }));
+                            window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw4_2' } }));
+                          }}
+                          className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-blue-400 font-black uppercase tracking-widest text-xs transition-all active:scale-[0.98] hover:border-blue-500/50"
+                        >
+                          Check Sentence
+                        </button>
                       </div>
 
                           <Exercise id="hw5" mode="hw" label="5. This room (not use)." correctAnswer="is not used" hint="Можно использовать isn't used" progressItem={progress.hw?.hw5} onUpdate={updateProgress} />
@@ -376,24 +391,39 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw7" mode="hw" label="7. The telephone (invent) by Bell." correctAnswer="was invented" progressItem={progress.hw?.hw7} onUpdate={updateProgress} />
                           <Exercise id="hw8" mode="hw" label="8. These houses (build) in 1950." correctAnswer="were built" progressItem={progress.hw?.hw8} onUpdate={updateProgress} />
                           
-                      <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
-                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-400 mb-6 flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div> 9. Question Transformation
-                        </div>
-                        <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
-                          "Did Shakespeare write this play?"
+                      <div className="bg-slate-900 p-8 rounded-[2rem] border border-slate-800 shadow-2xl relative overflow-hidden group">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-orange-600 opacity-50"></div>
+                        <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500 mb-8 flex items-center gap-3">
+                          <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div> 
+                          9. Question Transformation
                         </div>
                         
-                        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
-                          <div className="w-32">
+                        <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
+                          <span className="opacity-30 text-3xl font-serif">“</span>
+                          Did Shakespeare write this play?
+                          <span className="opacity-30 text-3xl font-serif">”</span>
+                        </div>
+                        
+                        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 mb-10">
+                          <div className="w-36">
                             <Exercise id="hw9_1" mode="hw" placeholder="To be..." correctAnswer="Was" progressItem={progress.hw?.hw9_1} onUpdate={updateProgress} variant="inline" />
                           </div>
-                          <span className="text-slate-300">this play</span>
-                          <div className="w-44">
+                          <span className="text-slate-500 font-bold text-lg">this play</span>
+                          <div className="w-48">
                             <Exercise id="hw9_2" mode="hw" placeholder="V3 form..." correctAnswer="written" progressItem={progress.hw?.hw9_2} onUpdate={updateProgress} variant="inline" />
                           </div>
-                          <span className="text-slate-300">by Shakespeare?</span>
+                          <span className="text-slate-500 font-bold text-lg">by Shakespeare?</span>
                         </div>
+
+                        <button 
+                          onClick={() => {
+                            window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw9_1' } }));
+                            window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw9_2' } }));
+                          }}
+                          className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-amber-400 font-black uppercase tracking-widest text-xs transition-all active:scale-[0.98] hover:border-amber-500/50"
+                        >
+                          Check Sentence
+                        </button>
                       </div>
 
                           <Exercise id="hw10" mode="hw" label="10. I (not invite) to the party." correctAnswer="was not invited" progressItem={progress.hw?.hw10} onUpdate={updateProgress} />
@@ -408,24 +438,39 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw13" mode="hw" label="13. The tickets (will / send) by email." correctAnswer="will be sent" progressItem={progress.hw?.hw13} onUpdate={updateProgress} />
                           <Exercise id="hw14" mode="hw" label="14. Ten new people (have / hire)." correctAnswer="have been hired" progressItem={progress.hw?.hw14} onUpdate={updateProgress} />
                           
-                          <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
-                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-400 mb-6 flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-teal-400 rounded-full"></div> 15. Future Question
-                            </div>
-                            <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
-                              "Will they serve dinner at 8?"
+                          <div className="bg-slate-900 p-8 rounded-[2rem] border border-slate-800 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-50"></div>
+                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-400 mb-8 flex items-center gap-3">
+                              <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div> 
+                              15. Future Question
                             </div>
                             
-                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
-                              <div className="w-32">
+                            <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
+                              <span className="opacity-30 text-3xl font-serif">“</span>
+                              Will they serve dinner at 8?
+                              <span className="opacity-30 text-3xl font-serif">”</span>
+                            </div>
+                            
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 mb-10">
+                              <div className="w-36">
                                 <Exercise id="hw15_1" mode="hw" placeholder="Will...?" correctAnswer="Will" progressItem={progress.hw?.hw15_1} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="text-slate-300">dinner</span>
-                              <div className="w-44">
+                              <span className="text-slate-500 font-bold text-lg">dinner</span>
+                              <div className="w-48">
                                 <Exercise id="hw15_2" mode="hw" placeholder="be + V3..." correctAnswer="be served" progressItem={progress.hw?.hw15_2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="text-slate-300">at 8?</span>
+                              <span className="text-slate-500 font-bold text-lg">at 8?</span>
                             </div>
+
+                            <button 
+                              onClick={() => {
+                                window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw15_1' } }));
+                                window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw15_2' } }));
+                              }}
+                              className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-teal-400 font-black uppercase tracking-widest text-xs transition-all active:scale-[0.98] hover:border-teal-500/50"
+                            >
+                              Check Sentence
+                            </button>
                           </div>
                       </div>
                     </div>
@@ -440,24 +485,39 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw2_v2" mode="hw" label="2. These smartphones (design) in California." correctAnswer="are designed" progressItem={progress.hw?.hw2_v2} onUpdate={updateProgress} />
                           <Exercise id="hw3_v2" mode="hw" label="3. Fresh bread (sell) here every morning." correctAnswer="is sold" progressItem={progress.hw?.hw3_v2} onUpdate={updateProgress} />
                           
-                          <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
-                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-6 flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div> 4. Question Transformation
-                            </div>
-                            <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
-                              "Does he help you every day?"
+                          <div className="bg-slate-900 p-8 rounded-[2rem] border border-slate-800 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-50"></div>
+                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-8 flex items-center gap-3">
+                              <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div> 
+                              4. Question Transformation
                             </div>
                             
-                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
-                              <div className="w-32">
+                            <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
+                              <span className="opacity-30 text-3xl font-serif">“</span>
+                              Does he help you every day?
+                              <span className="opacity-30 text-3xl font-serif">”</span>
+                            </div>
+                            
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 mb-10">
+                              <div className="w-36">
                                 <Exercise id="hw4_1_v2" mode="hw" placeholder="To be..." correctAnswer="Are" progressItem={progress.hw?.hw4_1_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="text-slate-300">you</span>
-                              <div className="w-44">
+                              <span className="text-slate-500 font-bold text-lg">you</span>
+                              <div className="w-48">
                                 <Exercise id="hw4_2_v2" mode="hw" placeholder="V3 form..." correctAnswer="helped" progressItem={progress.hw?.hw4_2_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="text-slate-300">every day?</span>
+                              <span className="text-slate-500 font-bold text-lg">every day?</span>
                             </div>
+
+                            <button 
+                              onClick={() => {
+                                window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw4_1_v2' } }));
+                                window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw4_2_v2' } }));
+                              }}
+                              className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-blue-400 font-black uppercase tracking-widest text-xs transition-all active:scale-[0.98] hover:border-blue-500/50"
+                            >
+                              Check Sentence
+                            </button>
                           </div>
 
                           <Exercise id="hw5_v2" mode="hw" label="5. Rules (not / break) in this school." correctAnswer="are not broken" progressItem={progress.hw?.hw5_v2} onUpdate={updateProgress} />
@@ -471,24 +531,39 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw7_v2" mode="hw" label="7. The first email (send) in 1971." correctAnswer="was sent" progressItem={progress.hw?.hw7_v2} onUpdate={updateProgress} />
                           <Exercise id="hw8_v2" mode="hw" label="8. These photos (take) during the holiday." correctAnswer="were taken" progressItem={progress.hw?.hw8_v2} onUpdate={updateProgress} />
                           
-                          <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
-                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-400 mb-6 flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div> 9. Question Transformation
-                            </div>
-                            <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
-                              "Did they fix the computer?"
+                          <div className="bg-slate-900 p-8 rounded-[2rem] border border-slate-800 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-orange-600 opacity-50"></div>
+                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-400 mb-8 flex items-center gap-3">
+                              <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div> 
+                              9. Question Transformation
                             </div>
                             
-                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
-                              <div className="w-32">
+                            <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
+                              <span className="opacity-30 text-3xl font-serif">“</span>
+                              Did they fix the computer?
+                              <span className="opacity-30 text-3xl font-serif">”</span>
+                            </div>
+                            
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 mb-10">
+                              <div className="w-36">
                                 <Exercise id="hw9_1_v2" mode="hw" placeholder="To be..." correctAnswer="Was" progressItem={progress.hw?.hw9_1_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="text-slate-300">the computer</span>
-                              <div className="w-44">
+                              <span className="text-slate-500 font-bold text-lg">the computer</span>
+                              <div className="w-48">
                                 <Exercise id="hw9_2_v2" mode="hw" placeholder="V3 form..." correctAnswer="fixed" progressItem={progress.hw?.hw9_2_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="text-slate-300">?</span>
+                              <span className="text-slate-500 font-bold text-lg">?</span>
                             </div>
+
+                            <button 
+                              onClick={() => {
+                                window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw9_1_v2' } }));
+                                window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw9_2_v2' } }));
+                              }}
+                              className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-amber-400 font-black uppercase tracking-widest text-xs transition-all active:scale-[0.98] hover:border-amber-500/50"
+                            >
+                              Check Sentence
+                            </button>
                           </div>
 
                           <Exercise id="hw10_v2" mode="hw" label="10. I (not inform) about the meeting." correctAnswer="was not informed" progressItem={progress.hw?.hw10_v2} onUpdate={updateProgress} />
@@ -503,24 +578,39 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw13_v2" mode="hw" label="13. The test (will / grade) by tomorrow." correctAnswer="will be graded" progressItem={progress.hw?.hw13_v2} onUpdate={updateProgress} />
                           <Exercise id="hw14_v2" mode="hw" label="14. The lost keys (have / find)." correctAnswer="have been found" progressItem={progress.hw?.hw14_v2} onUpdate={updateProgress} />
                           
-                          <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
-                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-400 mb-6 flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 bg-teal-400 rounded-full"></div> 15. Future Question
-                            </div>
-                            <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
-                              "Will the company build a new office?"
+                          <div className="bg-slate-900 p-8 rounded-[2rem] border border-slate-800 shadow-2xl relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-50"></div>
+                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-400 mb-8 flex items-center gap-3">
+                              <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div> 
+                              15. Future Question
                             </div>
                             
-                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
-                              <div className="w-32">
+                            <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
+                              <span className="opacity-30 text-3xl font-serif">“</span>
+                              Will the company build a new office?
+                              <span className="opacity-30 text-3xl font-serif">”</span>
+                            </div>
+                            
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 mb-10">
+                              <div className="w-36">
                                 <Exercise id="hw15_1_v2" mode="hw" placeholder="Will...?" correctAnswer="Will" progressItem={progress.hw?.hw15_1_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="text-slate-300">a new office</span>
-                              <div className="w-44">
+                              <span className="text-slate-500 font-bold text-lg">a new office</span>
+                              <div className="w-48">
                                 <Exercise id="hw15_2_v2" mode="hw" placeholder="be + V3..." correctAnswer="be built" progressItem={progress.hw?.hw15_2_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="text-slate-300">?</span>
+                              <span className="text-slate-500 font-bold text-lg">?</span>
                             </div>
+
+                            <button 
+                              onClick={() => {
+                                window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw15_1_v2' } }));
+                                window.dispatchEvent(new CustomEvent('trigger-check', { detail: { id: 'hw15_2_v2' } }));
+                              }}
+                              className="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-teal-400 font-black uppercase tracking-widest text-xs transition-all active:scale-[0.98] hover:border-teal-500/50"
+                            >
+                              Check Sentence
+                            </button>
                           </div>
                       </div>
                     </div>
