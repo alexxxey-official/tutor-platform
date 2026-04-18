@@ -153,7 +153,7 @@ export default function Exercise({
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLocked}
                 placeholder={placeholder}
-                className={`flex-1 ${compact ? 'p-1.5 text-sm' : 'p-2.5 text-base'} rounded-lg border-2 focus:outline-none transition-all ${
+                className={`flex-1 ${compact ? 'p-1.5 text-sm' : 'p-2.5 text-base'} rounded-lg border-2 focus:outline-none transition-all text-slate-900 ${
                   isLocked ? 'bg-slate-100 border-slate-200 text-slate-500' : 
                   isError ? 'border-amber-300 focus:border-amber-500 bg-white' : 'border-slate-200 focus:border-indigo-400 bg-white'
                 }`}
