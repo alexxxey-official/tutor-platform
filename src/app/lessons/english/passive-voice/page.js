@@ -42,7 +42,7 @@ export default function PassiveVoicePage() {
             The Passive <br/><span className="text-amber-400 italic">Voice</span>
           </h1>
           <p className="text-slate-300 text-lg max-w-2xl mx-auto font-medium">
-            The Passive Voice is a hallmark of the B1 level. We learn to talk not about who did the action, but about what happened to the object.
+            Пассивный залог — визитная карточка уровня B1. Мы учимся говорить не о том, кто совершил действие, а о том, что произошло с объектом.
           </p>
         </div>
       </header>
@@ -76,35 +76,35 @@ export default function PassiveVoicePage() {
           <div className="flex items-center gap-3 text-blue-600 font-bold tracking-[0.2em] uppercase text-xs mb-4">
             Theory <div className="h-[2px] w-12 bg-blue-600"></div>
           </div>
-          <h2 className="text-3xl font-black unbounded mb-8">Who's to blame or what's done?</h2>
+          <h2 className="text-3xl font-black unbounded mb-8">Кто виноват или что сделано?</h2>
           
           <div className="grid gap-6">
             <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600"></div>
-              <h3 className="text-xl font-bold mb-4">1. The Essence of Passive (Active vs Passive)</h3>
-              <p className="mb-4">In Active voice we focus on <strong>WHO</strong> performs the action:</p>
-              <p className="italic text-slate-500 mb-6">Shakespeare wrote Hamlet.</p>
+              <h3 className="text-xl font-bold mb-4">1. Суть пассивного залога (Active vs Passive)</h3>
+              <p className="mb-4">В активном залоге (Active voice) мы фокусируемся на том, <strong>КТО</strong> выполняет действие:</p>
+              <p className="italic text-slate-500 mb-6">Shakespeare wrote Hamlet. (Шекспир написал Гамлета)</p>
               
-              <p className="mb-4">In Passive voice the focus is on the <strong>OBJECT</strong>:</p>
-              <p className="italic text-slate-500 mb-6">Hamlet <strong>was written</strong> by Shakespeare.</p>
+              <p className="mb-4">В пассивном залоге (Passive voice) фокус внимания смещается на <strong>ОБЪЕКТ</strong>:</p>
+              <p className="italic text-slate-500 mb-6">Hamlet <strong>was written</strong> by Shakespeare. (Гамлет был написан Шекспиром)</p>
 
               <div className="p-4 bg-teal-50 border border-teal-100 rounded-xl text-teal-900 text-sm leading-relaxed">
-                <strong className="block text-[10px] uppercase tracking-widest text-teal-600 mb-2">💡 Golden Formula:</strong>
+                <strong className="block text-[10px] uppercase tracking-widest text-teal-600 mb-2">💡 Золотая формула:</strong>
                 <div className="text-lg font-bold">to be + V3</div>
-                To change the tense, we change <strong>ONLY the verb to be</strong>. The third form (V3) stays the same!
+                Чтобы изменить время, мы меняем <strong>ТОЛЬКО глагол to be</strong>. Третья форма (V3) всегда остается неизменной!
               </div>
             </div>
 
             <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-400"></div>
-              <h3 className="text-xl font-bold mb-4">2. Tenses in Passive</h3>
+              <h3 className="text-xl font-bold mb-4">2. Времена в пассивном залоге</h3>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-slate-100">
-                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Tense</th>
-                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Formula</th>
-                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Example</th>
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Время</th>
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Формула</th>
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Пример</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-50">
@@ -192,12 +192,12 @@ export default function PassiveVoicePage() {
             Practice <div className="h-[2px] w-12 bg-indigo-600"></div>
           </div>
           <h2 className="text-3xl font-black unbounded mb-4 text-indigo-950">Classwork</h2>
-          <p className="text-slate-500 mb-8">Practicing tenses and verb forms.</p>
+          <p className="text-slate-500 mb-8">Практикуем времена и формы глаголов.</p>
 
           <div className="space-y-12">
             {/* Block 1: Dropdown */}
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-              <h3 className="text-xl font-bold mb-6">Block 1: Choose the correct "to be"</h3>
+              <h3 className="text-xl font-bold mb-6">Блок 1: Выберите правильный глагол "to be"</h3>
               <div className="space-y-4">
                 {[
                   { id: 'cw3', q: "(Every day) The office ___ cleaned at 6 PM.", ans: 'is', opts: ['is', 'are', 'was', 'will be'] },
@@ -226,7 +226,7 @@ export default function PassiveVoicePage() {
 
             {/* Block 2: Word Builder */}
             <div className="bg-slate-900 p-8 rounded-3xl text-white shadow-xl">
-              <h3 className="text-xl font-bold mb-6 unbounded text-amber-400">Block 2: Word Order</h3>
+              <h3 className="text-xl font-bold mb-6 unbounded text-amber-400">Блок 2: Порядок слов</h3>
               <div className="space-y-6">
                 {[
                   { id: 'cw11', q: "The letter was written yesterday.", ans: "The letter was written yesterday", opts: ['yesterday', 'written', 'was', 'The', 'letter'] },
@@ -252,7 +252,7 @@ export default function PassiveVoicePage() {
 
             {/* Block 3: MCQ */}
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-               <h3 className="text-xl font-bold mb-6">Block 3: Active or Passive?</h3>
+               <h3 className="text-xl font-bold mb-6">Блок 3: Актив или Пассив?</h3>
                <div className="space-y-4">
                   <Exercise
                     id="cw16"
@@ -289,7 +289,7 @@ export default function PassiveVoicePage() {
 
             {/* Block 4: V3 */}
             <div className="bg-white p-8 rounded-3xl border-2 border-indigo-100 shadow-sm">
-               <h3 className="text-xl font-bold mb-6 text-indigo-600">Block 4: Write the 3rd verb form (V3)</h3>
+               <h3 className="text-xl font-bold mb-6 text-indigo-600">Блок 4: Напишите 3-ю форму глагола (V3)</h3>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {[
                     { id: 'cw19', v: 'make', ans: 'made' },
@@ -330,8 +330,8 @@ export default function PassiveVoicePage() {
               
               <p className="text-slate-400 mb-8 max-w-xl">
                 {variant === 1 
-                  ? "Independent practice. Fill in the blanks by putting the verb in the Passive Voice in the correct tense."
-                  : "Second chance! Solve new tasks to improve your result. Remember: this is the last attempt."}
+                  ? "Самостоятельная практика. Раскройте скобки, поставив глагол в пассивный залог в нужном времени."
+                  : "Второй шанс! Решите новые задания, чтобы улучшить результат. Помните: это последняя попытка."}
               </p>
 
               <div className="space-y-12">
@@ -339,7 +339,7 @@ export default function PassiveVoicePage() {
                   <>
                     {/* --- VARIANT 1 CONTENT --- */}
                     <div>
-                      <h4 className="text-blue-400 font-bold text-xs uppercase tracking-widest mb-6">Part 1: Present Simple (am/is/are + V3)</h4>
+                      <h4 className="text-blue-400 font-bold text-xs uppercase tracking-widest mb-6">Часть 1: Present Simple (am/is/are + V3)</h4>
                       <div className="space-y-4">
                           <Exercise id="hw1" mode="hw" label="1. English (speak) in Australia." correctAnswer="is spoken" progressItem={progress.hw?.hw1} onUpdate={updateProgress} />
                           <Exercise id="hw2" mode="hw" label="2. These cars (make) in Japan." correctAnswer="are made" progressItem={progress.hw?.hw2} onUpdate={updateProgress} />
@@ -349,7 +349,7 @@ export default function PassiveVoicePage() {
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-50"></div>
                         <div className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-8 flex items-center gap-3">
                           <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div> 
-                          4. Question Transformation
+                          4. Трансформация вопроса
                         </div>
                         
                         <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
@@ -385,7 +385,7 @@ export default function PassiveVoicePage() {
                     </div>
 
                     <div>
-                      <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Part 2: Past Simple (was/were + V3)</h4>
+                      <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Часть 2: Past Simple (was/were + V3)</h4>
                       <div className="space-y-4">
                           <Exercise id="hw6" mode="hw" label="6. My wallet (steal) yesterday." correctAnswer="was stolen" progressItem={progress.hw?.hw6} onUpdate={updateProgress} />
                           <Exercise id="hw7" mode="hw" label="7. The telephone (invent) by Bell." correctAnswer="was invented" progressItem={progress.hw?.hw7} onUpdate={updateProgress} />
@@ -395,7 +395,7 @@ export default function PassiveVoicePage() {
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-orange-600 opacity-50"></div>
                         <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500 mb-8 flex items-center gap-3">
                           <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div> 
-                          9. Question Transformation
+                          9. Трансформация вопроса
                         </div>
                         
                         <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
@@ -431,7 +431,7 @@ export default function PassiveVoicePage() {
                     </div>
 
                     <div>
-                      <h4 className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Part 3: Future & Present Perfect</h4>
+                      <h4 className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Часть 3: Future & Present Perfect</h4>
                       <div className="space-y-4">
                           <Exercise id="hw11" mode="hw" label="11. The project (will / finish) tomorrow." correctAnswer="will be finished" progressItem={progress.hw?.hw11} onUpdate={updateProgress} />
                           <Exercise id="hw12" mode="hw" label="12. The door (has / paint)." correctAnswer="has been painted" progressItem={progress.hw?.hw12} onUpdate={updateProgress} />
@@ -442,7 +442,7 @@ export default function PassiveVoicePage() {
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-50"></div>
                             <div className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-400 mb-8 flex items-center gap-3">
                               <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div> 
-                              15. Future Question
+                              15. Вопрос в будущем времени
                             </div>
                             
                             <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
@@ -479,7 +479,7 @@ export default function PassiveVoicePage() {
                   <>
                     {/* --- VARIANT 2 CONTENT (NEW QUESTIONS) --- */}
                     <div>
-                      <h4 className="text-blue-400 font-bold text-xs uppercase tracking-widest mb-6">Part 1: Present Simple (am/is/are + V3)</h4>
+                      <h4 className="text-blue-400 font-bold text-xs uppercase tracking-widest mb-6">Часть 1: Present Simple (am/is/are + V3)</h4>
                       <div className="space-y-4">
                           <Exercise id="hw1_v2" mode="hw" label="1. Spanish (speak) in Mexico." correctAnswer="is spoken" progressItem={progress.hw?.hw1_v2} onUpdate={updateProgress} />
                           <Exercise id="hw2_v2" mode="hw" label="2. These smartphones (design) in California." correctAnswer="are designed" progressItem={progress.hw?.hw2_v2} onUpdate={updateProgress} />
@@ -489,7 +489,7 @@ export default function PassiveVoicePage() {
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-50"></div>
                             <div className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-8 flex items-center gap-3">
                               <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div> 
-                              4. Question Transformation
+                              4. Трансформация вопроса
                             </div>
                             
                             <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
@@ -525,7 +525,7 @@ export default function PassiveVoicePage() {
                     </div>
 
                     <div>
-                      <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Part 2: Past Simple (was/were + V3)</h4>
+                      <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Часть 2: Past Simple (was/were + V3)</h4>
                       <div className="space-y-4">
                           <Exercise id="hw6_v2" mode="hw" label="6. The Pyramids (build) thousands of years ago." correctAnswer="were built" progressItem={progress.hw?.hw6_v2} onUpdate={updateProgress} />
                           <Exercise id="hw7_v2" mode="hw" label="7. The first email (send) in 1971." correctAnswer="was sent" progressItem={progress.hw?.hw7_v2} onUpdate={updateProgress} />
@@ -535,7 +535,7 @@ export default function PassiveVoicePage() {
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-orange-600 opacity-50"></div>
                             <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-400 mb-8 flex items-center gap-3">
                               <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div> 
-                              9. Question Transformation
+                              9. Трансформация вопроса
                             </div>
                             
                             <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
@@ -571,7 +571,7 @@ export default function PassiveVoicePage() {
                     </div>
 
                     <div>
-                      <h4 className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Part 3: Future & Present Perfect</h4>
+                      <h4 className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Часть 3: Future & Present Perfect</h4>
                       <div className="space-y-4">
                           <Exercise id="hw11_v2" mode="hw" label="11. The new mall (will / open) next month." correctAnswer="will be opened" progressItem={progress.hw?.hw11_v2} onUpdate={updateProgress} />
                           <Exercise id="hw12_v2" mode="hw" label="12. Your order (has / ship)." correctAnswer="has been shipped" progressItem={progress.hw?.hw12_v2} onUpdate={updateProgress} />
@@ -582,7 +582,7 @@ export default function PassiveVoicePage() {
                             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 to-emerald-600 opacity-50"></div>
                             <div className="text-[10px] font-black uppercase tracking-[0.3em] text-teal-400 mb-8 flex items-center gap-3">
                               <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div> 
-                              15. Future Question
+                              15. Вопрос в будущем времени
                             </div>
                             
                             <div className="text-xl md:text-2xl font-black text-white mb-10 text-center leading-tight tracking-tight">
