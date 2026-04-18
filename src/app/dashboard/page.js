@@ -43,9 +43,23 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
           >
             <div className="p-4 sm:p-8 flex flex-col gap-3">
               {lessons.map((lesson, idx) => {
-                const isComplete = lesson.status === 'completed'
+                const progressData = lesson.original?.progress_data || {}
+                
+                // Helper to calculate stats
+                const calcStats = (mode, total) => {
+                  const data = progressData[mode] || {}
+                  const exercises = Object.values(data)
+                  const correct = exercises.filter(ex => ex && ex.status === 'correct').length
+                  const revealed = exercises.filter(ex => ex && ex.status === 'revealed').length
+                  const isComplete = (correct + revealed) >= total && total > 0
+                  return { correct, revealed, total, pct: total > 0 ? Math.round((correct / total) * 100) : 0, isComplete }
+                }
+
+                const cwStats = calcStats('cw', lesson.meta?.totalCW || 0)
+                const hwStats = calcStats('hw', lesson.meta?.totalHW || 0)
+                
+                const isComplete = cwStats.isComplete && hwStats.isComplete
                 const isStarted = lesson.score > 0
-                const pct = lesson.total_score > 0 ? Math.round((lesson.score / lesson.total_score) * 100) : 0
 
                 return (
                   <Link 
@@ -66,25 +80,43 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
 
                     {/* Название и прогресс */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline justify-between mb-2">
+                      <div className="flex items-baseline justify-between mb-3">
                         <h3 className="font-bold text-base sm:text-lg text-slate-900 truncate pr-4">
                           <span className="text-slate-400 font-normal mr-2">{idx + 1}.</span>
                           {lesson.title}
                         </h3>
-                        {lesson.total_score > 0 && (
-                          <span className="text-xs font-black text-slate-400 whitespace-nowrap">
-                            {lesson.score} / {lesson.total_score}
-                          </span>
-                        )}
                       </div>
                       
-                      {/* Полоска прогресса */}
-                      {lesson.total_score > 0 ? (
-                        <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full rounded-full transition-all duration-1000 ${isComplete ? 'bg-emerald-500' : 'bg-amber-400'}`}
-                            style={{ width: `${pct}%` }}
-                          ></div>
+                      {/* Полоски прогресса */}
+                      {(lesson.meta?.totalCW > 0 || lesson.meta?.totalHW > 0) ? (
+                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                          {/* Classwork */}
+                          {lesson.meta?.totalCW > 0 && (
+                            <div className="flex-1">
+                              <div className="flex justify-between items-center mb-1.5">
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Classwork</span>
+                                <span className="text-[10px] font-black text-slate-600">{cwStats.pct}%</span>
+                              </div>
+                              <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex">
+                                <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${(cwStats.correct / cwStats.total) * 100}%` }}></div>
+                                <div className="h-full bg-emerald-300 transition-all duration-1000" style={{ width: `${(cwStats.revealed / cwStats.total) * 100}%` }}></div>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {/* Homework */}
+                          {lesson.meta?.totalHW > 0 && (
+                            <div className="flex-1">
+                              <div className="flex justify-between items-center mb-1.5">
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Homework</span>
+                                <span className="text-[10px] font-black text-slate-600">{hwStats.pct}%</span>
+                              </div>
+                              <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex">
+                                <div className="h-full bg-blue-500 transition-all duration-1000" style={{ width: `${(hwStats.correct / hwStats.total) * 100}%` }}></div>
+                                <div className="h-full bg-red-400 transition-all duration-1000" style={{ width: `${(hwStats.revealed / hwStats.total) * 100}%` }}></div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       ) : (
                         <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
@@ -177,7 +209,9 @@ export default function DashboardPage() {
       link: meta.path,
       status: isComplete ? 'completed' : 'available',
       score: a.score,
-      total_score: a.total_score
+      total_score: a.total_score,
+      meta: meta,
+      original: a
     })
   })
 
@@ -190,8 +224,8 @@ export default function DashboardPage() {
       level: 'Уровень B1',
       color: 'bg-indigo-600',
       lessons: [
-        { id: 'm1', title: 'Passive Voice', link: '/lessons/english/passive-voice', status: 'completed', score: 41, total_score: 41 },
-        { id: 'm2', title: 'Indefinite Pronouns', link: '/lessons/english/indefinite-pronouns', status: 'available', score: 10, total_score: 50 }
+        { id: 'm1', title: 'Passive Voice', link: '/lessons/english/passive-voice', status: 'completed', score: 41, total_score: 41, meta: { totalCW: 23, totalHW: 18 }, original: { progress_data: { cw: { 'hw1': { status: 'correct' } }, hw: { 'hw1': { status: 'correct' } } } } },
+        { id: 'm2', title: 'Indefinite Pronouns', link: '/lessons/english/indefinite-pronouns', status: 'available', score: 10, total_score: 50, meta: { totalCW: 30, totalHW: 20 }, original: { progress_data: { cw: {}, hw: {} } } }
       ]
     },
     {
@@ -199,8 +233,8 @@ export default function DashboardPage() {
       level: 'Уровень A1',
       color: 'bg-rose-500',
       lessons: [
-        { id: 's1', title: 'Введение: Карта грамматики', link: '/lessons/spanish/intro', status: 'completed', score: 0, total_score: 0 },
-        { id: 's2', title: 'Урок 1: Правила чтения', link: '/lessons/spanish/phonetics', status: 'available', score: 0, total_score: 5 }
+        { id: 's1', title: 'Введение: Карта грамматики', link: '/lessons/spanish/intro', status: 'completed', score: 0, total_score: 0, meta: { totalCW: 0, totalHW: 0 }, original: {} },
+        { id: 's2', title: 'Урок 1: Правила чтения', link: '/lessons/spanish/phonetics', status: 'available', score: 0, total_score: 5, meta: { totalCW: 3, totalHW: 2 }, original: {} }
       ]
     }
   ]
