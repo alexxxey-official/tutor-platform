@@ -48,13 +48,17 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                 
                 // Helper to calculate stats safely
                 const calcStats = (mode, total) => {
-                  const data = progressData ? progressData[mode] : {}
-                  const safeData = data || {}
-                  const exercises = Object.values(safeData)
-                  const correct = exercises.filter(ex => ex && ex.status === 'correct').length
-                  const revealed = exercises.filter(ex => ex && ex.status === 'revealed').length
-                  const isComplete = (correct + revealed) >= total && total > 0
-                  return { correct, revealed, total, pct: total > 0 ? Math.round((correct / total) * 100) : 0, isComplete }
+                  try {
+                    const data = progressData ? progressData[mode] : {}
+                    const safeData = data || {}
+                    const exercises = Object.values(safeData)
+                    const correct = exercises.filter(ex => ex && ex.status === 'correct').length
+                    const revealed = exercises.filter(ex => ex && ex.status === 'revealed').length
+                    const isComplete = (correct + revealed) >= total && total > 0
+                    return { correct, revealed, total, pct: total > 0 ? Math.round((correct / total) * 100) : 0, isComplete }
+                  } catch (e) {
+                    return { correct: 0, revealed: 0, total: total || 0, pct: 0, isComplete: false }
+                  }
                 }
 
                 // Safely access lesson.meta
@@ -108,8 +112,8 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                                 <span className="text-[10px] font-black text-slate-600">{cwStats.pct}%</span>
                               </div>
                               <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex">
-                                <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${(cwStats.correct / cwStats.total) * 100}%` }}></div>
-                                <div className="h-full bg-emerald-300 transition-all duration-1000" style={{ width: `${(cwStats.revealed / cwStats.total) * 100}%` }}></div>
+                                <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${cwStats.total > 0 ? (cwStats.correct / cwStats.total) * 100 : 0}%` }}></div>
+                                <div className="h-full bg-emerald-300 transition-all duration-1000" style={{ width: `${cwStats.total > 0 ? (cwStats.revealed / cwStats.total) * 100 : 0}%` }}></div>
                               </div>
                             </div>
                           )}
@@ -122,8 +126,8 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                                 <span className="text-[10px] font-black text-slate-600">{hwStats.pct}%</span>
                               </div>
                               <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex">
-                                <div className="h-full bg-blue-500 transition-all duration-1000" style={{ width: `${(hwStats.correct / hwStats.total) * 100}%` }}></div>
-                                <div className="h-full bg-red-400 transition-all duration-1000" style={{ width: `${(hwStats.revealed / hwStats.total) * 100}%` }}></div>
+                                <div className="h-full bg-blue-500 transition-all duration-1000" style={{ width: `${hwStats.total > 0 ? (hwStats.correct / hwStats.total) * 100 : 0}%` }}></div>
+                                <div className="h-full bg-red-400 transition-all duration-1000" style={{ width: `${hwStats.total > 0 ? (hwStats.revealed / hwStats.total) * 100 : 0}%` }}></div>
                               </div>
                             </div>
                           )}
@@ -251,8 +255,12 @@ export default function DashboardPage() {
 
   // По умолчанию открываем первый предмет
   useEffect(() => {
-    if (renderSubjects.length > 0 && !openSubject) {
-      setOpenSubject(renderSubjects[0].name)
+    try {
+      if (renderSubjects && renderSubjects.length > 0 && !openSubject) {
+        setOpenSubject(renderSubjects[0].name)
+      }
+    } catch (e) {
+      // ignore
     }
   }, [renderSubjects, openSubject])
 
