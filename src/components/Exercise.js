@@ -37,7 +37,7 @@ export default function Exercise({
   }, [type, options]);
 
   useEffect(() => {
-    if (progressItem) {
+    if (progressItem && (progressItem.attempts > 0 || progressItem.status)) {
       const val = progressItem.value || '';
       setInput(val);
       setLocalAttempts(progressItem.attempts || 0);
@@ -52,6 +52,16 @@ export default function Exercise({
           if (idx > -1) currentBank.splice(idx, 1);
         });
         setBuilderBank(currentBank);
+      }
+    } else {
+      // Hard Reset if no progress or reset happened
+      setInput('');
+      setFeedback(null);
+      setLocalAttempts(0);
+      setShowHint(false);
+      if (type === 'builder') {
+        setBuilderZone([]);
+        setBuilderBank(options);
       }
     }
   }, [progressItem, type, options]);

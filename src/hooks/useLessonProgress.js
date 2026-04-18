@@ -15,11 +15,9 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         setUserId(user.id);
-        // Запрашиваем только те колонки, которые точно должны быть. 
-        // Если variant_id нет, запрос все равно пройдет (мы добавили обработку ошибки)
         const { data, error } = await supabase
           .from('student_lessons')
-          .select('*') // Берем все доступные колонки
+          .select('*')
           .eq('student_id', user.id)
           .eq('lesson_id', lessonId)
           .single();
@@ -29,16 +27,30 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
         }
 
         if (data) {
+          let currentVariant = data.variant_id || 1;
+          
           if (data.progress_data) {
-            // Убеждаемся, что в данных есть нужные ключи
             const validData = { cw: {}, hw: {}, ...data.progress_data };
+            
+            // FIX: Если ДЗ пустое, но вариант 2 — сбрасываем на вариант 1
+            const hwKeys = Object.keys(validData.hw || {});
+            if (hwKeys.length === 0 && currentVariant === 2) {
+              currentVariant = 1;
+              setVariant(1);
+              // Синхронизируем с базой, чтобы убрать "зависание"
+              supabase
+                .from('student_lessons')
+                .update({ variant_id: 1 })
+                .eq('student_id', user.id)
+                .eq('lesson_id', lessonId)
+                .then();
+            } else {
+              setVariant(currentVariant);
+            }
+            
             setProgress(validData);
           }
-          if (data.variant_id) {
-            setVariant(data.variant_id);
-          }
           
-          // FIX: Если total_score в базе 0, а у нас есть totalExercises, обновим в базе
           if ((!data.total_score || data.total_score === 0) && totalExercises > 0) {
             supabase
               .from('student_lessons')
@@ -56,29 +68,31 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
 
   const updateProgress = (exerciseId, mode, status, attempts, value = null) => {
     setProgress(prev => {
-      // Убеждаемся, что prev имеет структуру { cw: {}, hw: {} }
       const safePrev = { cw: {}, hw: {}, ...prev };
-      
+      const currentModeData = { ...safePrev[mode] };
+      const currentItem = currentModeData[exerciseId] || { history: [] };
+
+      const newHistory = [
+        ...(currentItem.history || []),
+        { value, status, at: new Date().toISOString(), attemptNum: attempts }
+      ];
+
       const newState = { 
         ...safePrev, 
         [mode]: { 
-          ...(safePrev[mode] || {}), 
-          [exerciseId]: { status, attempts, value } 
+          ...currentModeData, 
+          [exerciseId]: { status, attempts, value, history: newHistory } 
         } 
       };
       
       // Calculate score
       const cwData = newState.cw || {};
       const hwData = newState.hw || {};
-      
-      // В CW засчитываем и верные, и разобранные (revealed) задания
       const cwCorrect = Object.values(cwData).filter(ex => ex && (ex.status === 'correct' || ex.status === 'revealed')).length;
-      // В HW засчитываем ТОЛЬКО верные решения
       const hwCorrect = Object.values(hwData).filter(ex => ex && ex.status === 'correct').length;
       const currentScore = cwCorrect + hwCorrect;
 
       if (userId) {
-        console.log('Saving progress to Supabase...', { lessonId, userId, currentScore, newState });
         supabase
           .from('student_lessons')
           .update({ 
@@ -90,17 +104,7 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
           })
           .eq('student_id', userId)
           .eq('lesson_id', lessonId)
-          .select() // Добавляем select для проверки результата
-          .then(({ data, error }) => {
-            if (error) {
-                console.error("Ошибка сохранения прогресса (Supabase Error):", error);
-            } else {
-                console.log("Прогресс успешно сохранен:", data);
-            }
-          })
-          .catch(err => {
-            console.error("Критическая ошибка при сохранении:", err);
-          });
+          .then();
       }
       
       return newState;
@@ -111,9 +115,13 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
     if (!userId || variant !== 1) return;
     const newVariant = 2;
     
-    // Clear HW progress only
     const safePrev = { cw: {}, hw: {}, ...progress };
-    const newState = { ...safePrev, hw: {} };
+    const newState = { 
+      ...safePrev, 
+      hw_v1: safePrev.hw, // Сохраняем историю варианта 1
+      hw: {} 
+    };
+    
     setProgress(newState);
     setVariant(newVariant);
 
