@@ -21,13 +21,17 @@
   - Disable retake after the second attempt is used.
 
 ## 3. Advanced UI Patterns
-- **Multi-Input Exercises (Questions/Transformations):**
-  - Wrap in a card: `bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50`.
-  - Use `compact` prop for the `Exercise` components inside.
-  - Structure: `[Topic Label] -> [Original Sentence (Italic)] -> [Inputs]`.
+- **Multi-Input Exercises (Gap Fill / Transformation):**
+  - Wrap in a card: `bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50`.
+  - Use a flex-wrap container to mix text and inputs: `<div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">`.
+  - Use `compact` prop for `Exercise` components.
+  - **CRITICAL:** `placeholder` must NEVER contain the correct answer or spoilers. Use hints like "To be...", "V3 form...", etc.
+- **Input Behavior:**
+  - Inputs must block submission if empty (enforced by `Exercise.js`).
+  - Text color must be `text-slate-900` for visibility on white background.
 - **Feedback:**
-  - Blocks must turn **YELLOW** (`bg-amber-50`) and **SHAKE** on incorrect attempt (if attempts left).
-  - Status messages: "AGAIN! 🧐" for errors, "OK! ✨" for success.
+  - Blocks turn **YELLOW** (`bg-amber-50`) and **SHAKE** on incorrect attempts.
+  - Status messages: "AGAIN! 🧐" (error), "OK! ✨" (success).
 
 ## 4. Technical Integration
 ```javascript
