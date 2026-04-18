@@ -4,13 +4,110 @@ import { supabase } from '../../lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getLessonById } from '../../lib/lessons'
-import SkillTree from '../../components/SkillTree'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ChevronDown, PlayCircle, CheckCircle2, Circle } from 'lucide-react'
+
+// Компонент аккордеона для каждого предмета
+const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) => {
+  return (
+    <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mb-6 transition-all">
+      {/* Шапка Аккордеона */}
+      <button 
+        onClick={onToggle}
+        className="w-full px-6 py-6 sm:px-8 sm:py-8 flex items-center justify-between hover:bg-slate-50 transition-colors"
+      >
+        <div className="flex items-center gap-4 sm:gap-6">
+          <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-white text-xl sm:text-2xl font-black shadow-lg ${color}`}>
+            {subject.charAt(0)}
+          </div>
+          <div className="text-left">
+            <h2 className="text-xl sm:text-2xl font-black unbounded text-slate-900 mb-1">{subject}</h2>
+            <div className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest">
+              {level} • {lessons.length} уроков
+            </div>
+          </div>
+        </div>
+        <div className={`p-2 rounded-full transition-transform duration-300 ${isOpen ? 'rotate-180 bg-slate-100 text-slate-900' : 'text-slate-400'}`}>
+          <ChevronDown size={24} />
+        </div>
+      </button>
+
+      {/* Тело Аккордеона */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden border-t border-slate-100 bg-slate-50/50"
+          >
+            <div className="p-4 sm:p-8 flex flex-col gap-3">
+              {lessons.map((lesson, idx) => {
+                const isComplete = lesson.status === 'completed'
+                const isStarted = lesson.score > 0
+                const pct = lesson.total_score > 0 ? Math.round((lesson.score / lesson.total_score) * 100) : 0
+
+                return (
+                  <Link 
+                    href={lesson.link} 
+                    key={lesson.id}
+                    className="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all flex items-center gap-4 sm:gap-6"
+                  >
+                    {/* Иконка статуса */}
+                    <div className="flex-shrink-0">
+                      {isComplete ? (
+                        <CheckCircle2 size={32} className="text-emerald-500" />
+                      ) : isStarted ? (
+                        <PlayCircle size={32} className="text-amber-500" />
+                      ) : (
+                        <Circle size={32} className="text-slate-300 group-hover:text-indigo-400 transition-colors" />
+                      )}
+                    </div>
+
+                    {/* Название и прогресс */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline justify-between mb-2">
+                        <h3 className="font-bold text-base sm:text-lg text-slate-900 truncate pr-4">
+                          <span className="text-slate-400 font-normal mr-2">{idx + 1}.</span>
+                          {lesson.title}
+                        </h3>
+                        {lesson.total_score > 0 && (
+                          <span className="text-xs font-black text-slate-400 whitespace-nowrap">
+                            {lesson.score} / {lesson.total_score}
+                          </span>
+                        )}
+                      </div>
+                      
+                      {/* Полоска прогресса */}
+                      {lesson.total_score > 0 ? (
+                        <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                          <div 
+                            className={`h-full rounded-full transition-all duration-1000 ${isComplete ? 'bg-emerald-500' : 'bg-amber-400'}`}
+                            style={{ width: `${pct}%` }}
+                          ></div>
+                        </div>
+                      ) : (
+                        <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
+                          Теория / Введение
+                        </div>
+                      )}
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
 
 export default function DashboardPage() {
   const [user, setUser] = useState(null)
-  const [profile, setProfile] = useState(null)
   const [assignments, setAssignments] = useState([])
   const [loading, setLoading] = useState(true)
+  const [openSubject, setOpenSubject] = useState(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -21,9 +118,6 @@ export default function DashboardPage() {
         return
       }
       setUser(user)
-      
-      const { data: profileData } = await supabase.from('profiles').select('*').eq('id', user.id).single()
-      setProfile(profileData)
       
       const { data: assignedData } = await supabase
         .from('student_lessons')
@@ -53,36 +147,70 @@ export default function DashboardPage() {
 
   if (loading) return <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] flex items-center justify-center font-bold font-mono">LOADING...</div>
 
-  // Group assignments by subject
-  const subjects = {}
+  // Настройка уровней и цветов для предметов
+  const subjectConfig = {
+    'Español': { level: 'Уровень A1', color: 'bg-rose-500' },
+    'English': { level: 'Уровень B1', color: 'bg-indigo-600' },
+    'Math': { level: 'Общий курс', color: 'bg-emerald-500' },
+    'Physics': { level: 'Общий курс', color: 'bg-violet-500' }
+  }
+
+  // Группировка
+  const subjectsMap = {}
   assignments.forEach(a => {
     const meta = getLessonById(a.lesson_id)
     if (!meta) return
-    if (!subjects[meta.subject]) subjects[meta.subject] = []
+    if (!subjectsMap[meta.subject]) {
+      subjectsMap[meta.subject] = {
+        name: meta.subject,
+        level: subjectConfig[meta.subject]?.level || 'Общий курс',
+        color: subjectConfig[meta.subject]?.color || 'bg-slate-800',
+        lessons: []
+      }
+    }
     
-    // Map to SkillTree node format
     const isComplete = a.status === 'completed' || (a.total_score > 0 && a.score === a.total_score)
     
-    subjects[meta.subject].push({
+    subjectsMap[meta.subject].lessons.push({
       id: a.id,
       title: meta.title,
       link: meta.path,
       status: isComplete ? 'completed' : 'available',
-      original: a
+      score: a.score,
+      total_score: a.total_score
     })
   })
 
-  // For testing UI if student has no lessons assigned yet
   const hasLessons = assignments.length > 0
-  const renderSubjects = hasLessons ? subjects : {
-    "English": [
-      { id: 'mock1', title: 'Passive Voice', status: 'completed', link: '/lessons/english/passive-voice' },
-      { id: 'mock2', title: 'Indefinite Pronouns', status: 'available', link: '/lessons/english/indefinite-pronouns' },
-      { id: 'mock3', title: 'Conditionals (0 & 1)', status: 'available', link: '/lessons/english/conditionals' },
-      { id: 'mock4', title: 'Present Perfect', status: 'available', link: '/lessons/english/present-perfect' },
-      { id: 'mock5', title: 'Reported Speech', status: 'available', link: '/lessons/english/reported-speech' }
-    ]
-  }
+  
+  // Для тестирования дизайна, если нет уроков
+  const renderSubjects = hasLessons ? Object.values(subjectsMap) : [
+    {
+      name: 'English',
+      level: 'Уровень B1',
+      color: 'bg-indigo-600',
+      lessons: [
+        { id: 'm1', title: 'Passive Voice', link: '/lessons/english/passive-voice', status: 'completed', score: 41, total_score: 41 },
+        { id: 'm2', title: 'Indefinite Pronouns', link: '/lessons/english/indefinite-pronouns', status: 'available', score: 10, total_score: 50 }
+      ]
+    },
+    {
+      name: 'Español',
+      level: 'Уровень A1',
+      color: 'bg-rose-500',
+      lessons: [
+        { id: 's1', title: 'Введение: Карта грамматики', link: '/lessons/spanish/intro', status: 'completed', score: 0, total_score: 0 },
+        { id: 's2', title: 'Урок 1: Правила чтения', link: '/lessons/spanish/phonetics', status: 'available', score: 0, total_score: 5 }
+      ]
+    }
+  ]
+
+  // По умолчанию открываем первый предмет
+  useEffect(() => {
+    if (renderSubjects.length > 0 && !openSubject) {
+      setOpenSubject(renderSubjects[0].name)
+    }
+  }, [renderSubjects, openSubject])
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] pb-20 font-sans">
@@ -91,19 +219,16 @@ export default function DashboardPage() {
         .unbounded { font-family: 'Unbounded', sans-serif; }
       `}</style>
       
-      <div className="bg-indigo-950 text-white px-10 py-12 pb-10 relative overflow-hidden mb-8 shadow-md">
-        <div className="max-w-6xl mx-auto flex justify-between items-start relative z-10">
+      <div className="bg-indigo-950 text-white px-6 sm:px-10 py-10 relative overflow-hidden mb-10 shadow-md">
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-start gap-6 relative z-10">
           <div>
-            <div className="text-[11px] font-semibold tracking-[3px] uppercase text-amber-400 mb-3">
-              STUDENT DASHBOARD
+            <div className="text-[10px] font-bold tracking-[3px] uppercase text-amber-400 mb-3">
+              Дашборд Ученика
             </div>
-            <h1 className="font-black text-4xl leading-[1.1] mb-4 unbounded">
-              Hello,<br />
+            <h1 className="font-black text-3xl sm:text-4xl leading-[1.1] mb-2 unbounded">
+              Привет,<br />
               <em className="text-emerald-400 not-italic font-normal">{user?.email?.split('@')[0]}</em>!
             </h1>
-            <p className="text-white/70 text-[15px] max-w-[500px]">
-              {hasLessons ? "Welcome to your Skill Map. Your assigned lessons are ready." : "This is a preview of your Skill Map. Your teacher will assign real lessons soon."}
-            </p>
           </div>
           <div className="flex gap-3">
              {user?.email === 'gulaevl068@gmail.com' && (
@@ -112,23 +237,29 @@ export default function DashboardPage() {
               </Link>
             )}
             <button onClick={handleLogout} className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-[13px] font-bold uppercase tracking-widest transition-colors">
-              Logout
+              Выйти
             </button>
           </div>
         </div>
       </div>
       
-      <main className="max-w-6xl mx-auto px-4 sm:px-6">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6">
         {!hasLessons && (
            <div className="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl text-center mb-8 font-bold text-sm shadow-sm mx-2">
-             You don't have assigned lessons yet. Showing a preview Map.
+             Вам пока не назначены реальные уроки. Показан пример интерфейса.
            </div>
         )}
 
-        {Object.keys(renderSubjects).map(subject => (
-          <div key={subject} className="bg-white rounded-[2rem] shadow-sm border border-slate-200 p-4 sm:p-8 mb-8 relative overflow-hidden">
-             <SkillTree subject={subject} lessons={renderSubjects[subject]} />
-          </div>
+        {renderSubjects.map((subj) => (
+          <SubjectAccordion 
+            key={subj.name}
+            subject={subj.name}
+            level={subj.level}
+            color={subj.color}
+            lessons={subj.lessons}
+            isOpen={openSubject === subj.name}
+            onToggle={() => setOpenSubject(openSubject === subj.name ? null : subj.name)}
+          />
         ))}
       </main>
     </div>
