@@ -25,7 +25,7 @@
   - Wrap in a card: `bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50`.
   - Use a flex-wrap container to mix text and inputs: `<div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">`.
   - Use `compact` prop for `Exercise` components.
-  - **CRITICAL:** `placeholder` must NEVER contain the correct answer or spoilers. Use hints like "To be...", "V3 form...", etc.
+  - **CRITICAL:** `placeholder` must NEVER contain the answer, hints, or ellipses. Always use strictly: `placeholder="Enter answer"`. Do not use "To be...", "V3 form...", "Type your answer...", etc.
 - **Input Behavior:**
   - Inputs must block submission if empty (enforced by `Exercise.js`).
   - Text color must be `text-slate-900` for visibility on white background.
@@ -45,6 +45,6 @@ const { progress, updateProgress, resetHW, variant, getStats, loading } = useLes
 )}
 ```
 
-## 5. File Naming
+## 7. File Naming
 Keep English lessons under `src/app/lessons/english/[topic]/page.js`.
 Ensure `src/lib/lessons.js` is updated with correct totals.
