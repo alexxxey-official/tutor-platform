@@ -57,74 +57,25 @@ export default function PassiveVoicePage() {
 
         {/* Navigation */}
         <nav className="flex flex-wrap gap-2 mb-12">
-          {/* ... (navigation stays the same) ... */}
+          <Link href="/" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all">
+            <Home size={16} /> На главную
+          </Link>
+          <a href="#theory" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all">
+            <BookOpen size={16} /> Теория
+          </a>
+          <a href="#classwork" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all">
+            <PenTool size={16} /> Практика
+          </a>
+          <a href="#homework" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all">
+            <CheckCircle size={16} /> Домашнее задание
+          </a>
         </nav>
 
-        {/* ... (Theory, Reading, Classwork stay the same) ... */}
-
-        {/* HOMEWORK SECTION */}
-        <section id="homework" className="mb-20 scroll-mt-10">
-          <div className="flex items-center gap-3 text-slate-900 font-bold tracking-[0.2em] uppercase text-xs mb-4">
-            Homework <div className="h-[2px] w-12 bg-slate-900"></div>
+        {/* THEORY SECTION */}
+        <section id="theory" className="mb-20 scroll-mt-10">
+          <div className="flex items-center gap-3 text-blue-600 font-bold tracking-[0.2em] uppercase text-xs mb-4">
+            Теория <div className="h-[2px] w-12 bg-blue-600"></div>
           </div>
-          <div className="bg-slate-900 text-white p-8 rounded-3xl relative overflow-hidden shadow-2xl">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-black unbounded uppercase text-amber-400">
-                  Homework {variant === 2 && <span className="text-sm bg-white/10 px-3 py-1 rounded-full text-white align-middle ml-4">Variant 2</span>}
-                </h2>
-              </div>
-              
-              <p className="text-slate-400 mb-8 max-w-xl">
-                {variant === 1 
-                  ? "Самостоятельная отработка. Раскрой скобки, поставив глагол в Пассивный залог в правильном времени."
-                  : "Второй шанс! Реши новые задачи, чтобы улучшить свой результат. Помни: это последняя попытка."}
-              </p>
-
-              <div className="space-y-12">
-                {variant === 1 ? (
-                  <>
-                    {/* --- VARIANT 1 CONTENT --- */}
-                    <div>
-                      <h4 className="text-blue-400 font-bold text-xs uppercase tracking-widest mb-6">Part 1: Present Simple (am/is/are + V3)</h4>
-                      <div className="space-y-4">
-                          <Exercise id="hw1" mode="hw" label="1. English (speak) in Australia." correctAnswer="is spoken" progressItem={progress.hw?.hw1} onUpdate={updateProgress} />
-                          <Exercise id="hw2" mode="hw" label="2. These cars (make) in Japan." correctAnswer="are made" progressItem={progress.hw?.hw2} onUpdate={updateProgress} />
-                          {/* ... more v1 exercises ... */}
-                      </div>
-                    </div>
-                    {/* ... (rest of v1) ... */}
-                  </>
-                ) : (
-                  <>
-                    {/* --- VARIANT 2 CONTENT (NEW QUESTIONS) --- */}
-                    <div>
-                      <h4 className="text-emerald-400 font-bold text-xs uppercase tracking-widest mb-6">Variant 2: Practice Set A</h4>
-                      <div className="space-y-4">
-                          <Exercise id="hw1_v2" mode="hw" label="1. Spanish (speak) in Mexico." correctAnswer="is spoken" progressItem={progress.hw?.hw1_v2} onUpdate={updateProgress} />
-                          <Exercise id="hw2_v2" mode="hw" label="2. These smartphones (design) in California." correctAnswer="are designed" progressItem={progress.hw?.hw2_v2} onUpdate={updateProgress} />
-                          <Exercise id="hw3_v2" mode="hw" label="3. Fresh bread (sell) here every morning." correctAnswer="is sold" progressItem={progress.hw?.hw3_v2} onUpdate={updateProgress} />
-                          <Exercise id="hw4_v2" mode="hw" label="4. The results (publish) on the website." correctAnswer="are published" progressItem={progress.hw?.hw4_v2} onUpdate={updateProgress} />
-                          <Exercise id="hw5_v2" mode="hw" label="5. Rules (not / break) in this school." correctAnswer="are not broken" progressItem={progress.hw?.hw5_v2} onUpdate={updateProgress} />
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Variant 2: Practice Set B (Past)</h4>
-                      <div className="space-y-4">
-                          <Exercise id="hw6_v2" mode="hw" label="6. The Pyramids (build) thousands of years ago." correctAnswer="were built" progressItem={progress.hw?.hw6_v2} onUpdate={updateProgress} />
-                          <Exercise id="hw7_v2" mode="hw" label="7. The first email (send) in 1971." correctAnswer="was sent" progressItem={progress.hw?.hw7_v2} onUpdate={updateProgress} />
-                          <Exercise id="hw8_v2" mode="hw" label="8. These photos (take) during the holiday." correctAnswer="were taken" progressItem={progress.hw?.hw8_v2} onUpdate={updateProgress} />
-                          <Exercise id="hw9_v2" mode="hw" label="9. (Was) the window (break) by the wind?" correctAnswer="Was ... broken" hint="Write 'Was broken'" progressItem={progress.hw?.hw9_v2} onUpdate={updateProgress} />
-                          <Exercise id="hw10_v2" mode="hw" label="10. I (not inform) about the meeting." correctAnswer="was not informed" progressItem={progress.hw?.hw10_v2} onUpdate={updateProgress} />
-                      </div>
-                    </div>
-                    {/* ... (additional questions to reach 18 points) ... */}
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
           <h2 className="text-3xl font-black unbounded mb-8">Кто виноват или что сделано?</h2>
           
           <div className="grid gap-6">
@@ -372,77 +323,105 @@ export default function PassiveVoicePage() {
           <div className="bg-slate-900 text-white p-8 rounded-3xl relative overflow-hidden shadow-2xl">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-black unbounded uppercase text-amber-400">Homework</h2>
-                <button 
-                  onClick={resetHW}
-                  className="p-2 hover:bg-slate-800 rounded-lg transition-colors text-slate-400 flex items-center gap-2 text-xs font-bold"
-                >
-                  <RefreshCcw size={16} /> Сбросить ДЗ
-                </button>
+                <h2 className="text-3xl font-black unbounded uppercase text-amber-400">
+                  Homework {variant === 2 && <span className="text-sm bg-white/10 px-3 py-1 rounded-full text-white align-middle ml-4">Variant 2</span>}
+                </h2>
               </div>
               
               <p className="text-slate-400 mb-8 max-w-xl">
-                Самостоятельная отработка. Раскрой скобки, поставив глагол в Пассивный залог в правильном времени.
-                Помни: <strong>to be + V3</strong>.
+                {variant === 1 
+                  ? "Самостоятельная отработка. Раскрой скобки, поставив глагол в Пассивный залог в правильном времени."
+                  : "Второй шанс! Реши новые задачи, чтобы улучшить свой результат. Помни: это последняя попытка."}
               </p>
 
-              <div className="space-y-8">
-                {/* Part 1: Present Simple */}
-                <div>
-                   <h4 className="text-blue-400 font-bold text-xs uppercase tracking-widest mb-6">Part 1: Present Simple (am/is/are + V3)</h4>
-                   <div className="space-y-4">
-                      <Exercise id="hw1" mode="hw" label="1. English (speak) in Australia." correctAnswer="is spoken" progressItem={progress.hw?.hw1} onUpdate={updateProgress} />
-                      <Exercise id="hw2" mode="hw" label="2. These cars (make) in Japan." correctAnswer="are made" progressItem={progress.hw?.hw2} onUpdate={updateProgress} />
-                      <Exercise id="hw3" mode="hw" label="3. The mail (deliver) at 9 AM." correctAnswer="is delivered" progressItem={progress.hw?.hw3} onUpdate={updateProgress} />
-                  <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
-                    <div className="text-[10px] font-black uppercase tracking-widest text-blue-400 mb-2">4. Question Transformation</div>
-                    <div className="text-sm font-bold text-white mb-4 italic">Do they clean the rooms every day?</div>
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <Exercise id="hw4_1" mode="hw" placeholder="Are" correctAnswer="Are" progressItem={progress.hw?.hw4_1} onUpdate={updateProgress} compact />
-                      <Exercise id="hw4_2" mode="hw" placeholder="cleaned" correctAnswer="cleaned" progressItem={progress.hw?.hw4_2} onUpdate={updateProgress} compact />
-                    </div>
-                  </div>
-                  <Exercise id="hw5" mode="hw" label="5. This room (not use)." correctAnswer="is not used" hint="Можно использовать isn't used" progressItem={progress.hw?.hw5} onUpdate={updateProgress} />
-               </div>
-            </div>
+              <div className="space-y-12">
+                {variant === 1 ? (
+                  <>
+                    {/* --- VARIANT 1 CONTENT --- */}
+                    <div>
+                      <h4 className="text-blue-400 font-bold text-xs uppercase tracking-widest mb-6">Part 1: Present Simple (am/is/are + V3)</h4>
+                      <div className="space-y-4">
+                          <Exercise id="hw1" mode="hw" label="1. English (speak) in Australia." correctAnswer="is spoken" progressItem={progress.hw?.hw1} onUpdate={updateProgress} />
+                          <Exercise id="hw2" mode="hw" label="2. These cars (make) in Japan." correctAnswer="are made" progressItem={progress.hw?.hw2} onUpdate={updateProgress} />
+                          <Exercise id="hw3" mode="hw" label="3. The mail (deliver) at 9 AM." correctAnswer="is delivered" progressItem={progress.hw?.hw3} onUpdate={updateProgress} />
+                          
+                          <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                            <div className="text-[10px] font-black uppercase tracking-widest text-blue-400 mb-2">4. Question Transformation</div>
+                            <div className="text-sm font-bold text-white mb-4 italic">Do they clean the rooms every day?</div>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                              <Exercise id="hw4_1" mode="hw" placeholder="Are" correctAnswer="Are" progressItem={progress.hw?.hw4_1} onUpdate={updateProgress} compact />
+                              <Exercise id="hw4_2" mode="hw" placeholder="cleaned" correctAnswer="cleaned" progressItem={progress.hw?.hw4_2} onUpdate={updateProgress} compact />
+                            </div>
+                          </div>
 
-            {/* Part 2: Past Simple */}
-            <div>
-               <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Part 2: Past Simple (was/were + V3)</h4>
-               <div className="space-y-4">
-                  <Exercise id="hw6" mode="hw" label="6. My wallet (steal) yesterday." correctAnswer="was stolen" progressItem={progress.hw?.hw6} onUpdate={updateProgress} />
-                  <Exercise id="hw7" mode="hw" label="7. The telephone (invent) by Bell." correctAnswer="was invented" progressItem={progress.hw?.hw7} onUpdate={updateProgress} />
-                  <Exercise id="hw8" mode="hw" label="8. These houses (build) in 1950." correctAnswer="were built" progressItem={progress.hw?.hw8} onUpdate={updateProgress} />
-                  <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
-                    <div className="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-2">9. Question Transformation</div>
-                    <div className="text-sm font-bold text-white mb-4 italic">Did Shakespeare write this play?</div>
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <Exercise id="hw9_1" mode="hw" placeholder="Was" correctAnswer="Was" progressItem={progress.hw?.hw9_1} onUpdate={updateProgress} compact />
-                      <Exercise id="hw9_2" mode="hw" placeholder="written" correctAnswer="written" progressItem={progress.hw?.hw9_2} onUpdate={updateProgress} compact />
+                          <Exercise id="hw5" mode="hw" label="5. This room (not use)." correctAnswer="is not used" hint="Можно использовать isn't used" progressItem={progress.hw?.hw5} onUpdate={updateProgress} />
+                      </div>
                     </div>
-                  </div>
-                  <Exercise id="hw10" mode="hw" label="10. I (not invite) to the party." correctAnswer="was not invited" progressItem={progress.hw?.hw10} onUpdate={updateProgress} />
-               </div>
-            </div>
 
-            {/* Part 3: Future & Perfect */}
-            <div>
-               <h4 className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Part 3: Future & Present Perfect</h4>
-               <div className="space-y-4">
-                  <Exercise id="hw11" mode="hw" label="11. The project (will / finish) tomorrow." correctAnswer="will be finished" progressItem={progress.hw?.hw11} onUpdate={updateProgress} />
-                  <Exercise id="hw12" mode="hw" label="12. The door (has / paint)." correctAnswer="has been painted" progressItem={progress.hw?.hw12} onUpdate={updateProgress} />
-                  <Exercise id="hw13" mode="hw" label="13. The tickets (will / send) by email." correctAnswer="will be sent" progressItem={progress.hw?.hw13} onUpdate={updateProgress} />
-                  <Exercise id="hw14" mode="hw" label="14. Ten new people (have / hire)." correctAnswer="have been hired" progressItem={progress.hw?.hw14} onUpdate={updateProgress} />
-                  <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
-                    <div className="text-[10px] font-black uppercase tracking-widest text-teal-400 mb-2">15. Future Question</div>
-                    <div className="text-sm font-bold text-white mb-4 italic">Will they serve dinner at 8?</div>
-                    <div className="flex flex-col sm:flex-row gap-2">
-                      <Exercise id="hw15_1" mode="hw" placeholder="Will" correctAnswer="Will" progressItem={progress.hw?.hw15_1} onUpdate={updateProgress} compact />
-                      <Exercise id="hw15_2" mode="hw" placeholder="be served" correctAnswer="be served" progressItem={progress.hw?.hw15_2} onUpdate={updateProgress} compact />
+                    <div>
+                      <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Part 2: Past Simple (was/were + V3)</h4>
+                      <div className="space-y-4">
+                          <Exercise id="hw6" mode="hw" label="6. My wallet (steal) yesterday." correctAnswer="was stolen" progressItem={progress.hw?.hw6} onUpdate={updateProgress} />
+                          <Exercise id="hw7" mode="hw" label="7. The telephone (invent) by Bell." correctAnswer="was invented" progressItem={progress.hw?.hw7} onUpdate={updateProgress} />
+                          <Exercise id="hw8" mode="hw" label="8. These houses (build) in 1950." correctAnswer="were built" progressItem={progress.hw?.hw8} onUpdate={updateProgress} />
+                          
+                          <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                            <div className="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-2">9. Question Transformation</div>
+                            <div className="text-sm font-bold text-white mb-4 italic">Did Shakespeare write this play?</div>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                              <Exercise id="hw9_1" mode="hw" placeholder="Was" correctAnswer="Was" progressItem={progress.hw?.hw9_1} onUpdate={updateProgress} compact />
+                              <Exercise id="hw9_2" mode="hw" placeholder="written" correctAnswer="written" progressItem={progress.hw?.hw9_2} onUpdate={updateProgress} compact />
+                            </div>
+                          </div>
+
+                          <Exercise id="hw10" mode="hw" label="10. I (not invite) to the party." correctAnswer="was not invited" progressItem={progress.hw?.hw10} onUpdate={updateProgress} />
+                      </div>
                     </div>
-                  </div>
-                   </div>
-                </div>
+
+                    <div>
+                      <h4 className="text-teal-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Part 3: Future & Present Perfect</h4>
+                      <div className="space-y-4">
+                          <Exercise id="hw11" mode="hw" label="11. The project (will / finish) tomorrow." correctAnswer="will be finished" progressItem={progress.hw?.hw11} onUpdate={updateProgress} />
+                          <Exercise id="hw12" mode="hw" label="12. The door (has / paint)." correctAnswer="has been painted" progressItem={progress.hw?.hw12} onUpdate={updateProgress} />
+                          <Exercise id="hw13" mode="hw" label="13. The tickets (will / send) by email." correctAnswer="will be sent" progressItem={progress.hw?.hw13} onUpdate={updateProgress} />
+                          <Exercise id="hw14" mode="hw" label="14. Ten new people (have / hire)." correctAnswer="have been hired" progressItem={progress.hw?.hw14} onUpdate={updateProgress} />
+                          
+                          <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50">
+                            <div className="text-[10px] font-black uppercase tracking-widest text-teal-400 mb-2">15. Future Question</div>
+                            <div className="text-sm font-bold text-white mb-4 italic">Will they serve dinner at 8?</div>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                              <Exercise id="hw15_1" mode="hw" placeholder="Will" correctAnswer="Will" progressItem={progress.hw?.hw15_1} onUpdate={updateProgress} compact />
+                              <Exercise id="hw15_2" mode="hw" placeholder="be served" correctAnswer="be served" progressItem={progress.hw?.hw15_2} onUpdate={updateProgress} compact />
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* --- VARIANT 2 CONTENT (NEW QUESTIONS) --- */}
+                    <div>
+                      <h4 className="text-emerald-400 font-bold text-xs uppercase tracking-widest mb-6">Variant 2: Practice Set A</h4>
+                      <div className="space-y-4">
+                          <Exercise id="hw1_v2" mode="hw" label="1. Spanish (speak) in Mexico." correctAnswer="is spoken" progressItem={progress.hw?.hw1_v2} onUpdate={updateProgress} />
+                          <Exercise id="hw2_v2" mode="hw" label="2. These smartphones (design) in California." correctAnswer="are designed" progressItem={progress.hw?.hw2_v2} onUpdate={updateProgress} />
+                          <Exercise id="hw3_v2" mode="hw" label="3. Fresh bread (sell) here every morning." correctAnswer="is sold" progressItem={progress.hw?.hw3_v2} onUpdate={updateProgress} />
+                          <Exercise id="hw4_v2" mode="hw" label="4. The results (publish) on the website." correctAnswer="are published" progressItem={progress.hw?.hw4_v2} onUpdate={updateProgress} />
+                          <Exercise id="hw5_v2" mode="hw" label="5. Rules (not / break) in this school." correctAnswer="are not broken" progressItem={progress.hw?.hw5_v2} onUpdate={updateProgress} />
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-6 border-t border-slate-800 pt-8">Variant 2: Practice Set B (Past)</h4>
+                      <div className="space-y-4">
+                          <Exercise id="hw6_v2" mode="hw" label="6. The Pyramids (build) thousands of years ago." correctAnswer="were built" progressItem={progress.hw?.hw6_v2} onUpdate={updateProgress} />
+                          <Exercise id="hw7_v2" mode="hw" label="7. The first email (send) in 1971." correctAnswer="was sent" progressItem={progress.hw?.hw7_v2} onUpdate={updateProgress} />
+                          <Exercise id="hw8_v2" mode="hw" label="8. These photos (take) during the holiday." correctAnswer="were taken" progressItem={progress.hw?.hw8_v2} onUpdate={updateProgress} />
+                          <Exercise id="hw9_v2" mode="hw" label="9. (Was) the window (break) by the wind?" correctAnswer="Was ... broken" hint="Write 'Was broken'" progressItem={progress.hw?.hw9_v2} onUpdate={updateProgress} />
+                          <Exercise id="hw10_v2" mode="hw" label="10. I (not inform) about the meeting." correctAnswer="was not informed" progressItem={progress.hw?.hw10_v2} onUpdate={updateProgress} />
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
