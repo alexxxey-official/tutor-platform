@@ -118,9 +118,12 @@ Reactions are lightweight social signals. Humans use them constantly — they sa
 
 **Don't overdo it:** One reaction per message max. Pick the one that fits best.
 
-## Tools
+## Tools & Skills
 
-Skills provide your tools. When you need one, check its `SKILL.md`. Keep local notes (camera names, SSH details, voice preferences) in `TOOLS.md`.
+Skills provide your tools and context. Check `docs/` for specialized knowledge:
+- `SKILL_ENGLISH_LESSON.md`: Content creation for English.
+- `SKILL_UI_UX.md`: Visual design, styling, and UX principles.
+- `SKILL_PLATFORM_DEV.md`: Technical architecture and development workflow.
 
 **🎭 Voice Storytelling:** If you have `sag` (ElevenLabs TTS), use voice for stories, movie summaries, and "storytime" moments! Way more engaging than walls of text. Surprise people with funny voices.
 
@@ -195,6 +198,7 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 - Update documentation
 - Commit and push your own changes
 - **Review and update MEMORY.md** (see below)
+- **Architecture Continuity:** Always refer to `IDEAS.md` for deferred features (like Telegram Admin Bot) and `docs/SKILL_PLATFORM_DEV.md` for current Database/Env context (e.g., `.env.local` requirements) when resuming a session.
 
 ### 🔄 Memory Maintenance (During Heartbeats)
 
@@ -208,6 +212,12 @@ Periodically (every few days), use a heartbeat to:
 Think of it like a human reviewing their journal and updating their mental model. Daily files are raw notes; MEMORY.md is curated wisdom.
 
 The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.
+
+## 🚀 Workflow Rules (Learned)
+
+- **Always test locally before deploying:** Before committing changes intended for production, run the local build command (e.g., `npm run build`) to ensure there are no compilation errors.
+- **Auto-Deploy on Success:** If a change has been requested by the user, verified to work, and built successfully locally, automatically commit and push the changes (which triggers the Vercel deploy) without waiting for explicit permission.
+- **Self-Documentation:** Always update `AGENTS.md` (or relevant memory files) when instructed by the user to perform constant/recurring actions or adopt new permanent workflows.
 
 ## Make It Yours
 

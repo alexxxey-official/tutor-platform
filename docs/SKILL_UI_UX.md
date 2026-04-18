@@ -29,7 +29,9 @@ This skill defines the visual identity, user experience principles, and styling 
   - Bold, uppercase, tracking-widest (`uppercase tracking-widest font-black`).
   - Active states must feel tactile (`active:scale-[0.98]`, `active:scale-95`).
 
-## 4. Layout Patterns
+## 4. Layout Patterns & Features
+- **Student Dashboard (Skill Tree):** A visual map (Duolingo style) utilizing `framer-motion` for node animations. Lessons are presented as points on a path (Locked, Current, Completed) rather than a boring list.
+- **Admin Dashboard:** Focuses on global analytics and detailed student profiles (using `recharts` for Radar Charts and progression tracking).
 - **Gap-Fill / Transformation:** When mixing text and inputs, use flex-wrap containers (`flex flex-wrap items-center gap-3`) so the text naturally flows around the inputs. Use `variant="inline"` for these inputs.
 - **Sectioning:** Clear visual separation between Theory (light, informative), Classwork (interactive, light/neutral), and Homework (dark mode, high stakes).
 
