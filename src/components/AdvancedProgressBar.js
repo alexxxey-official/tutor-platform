@@ -28,21 +28,25 @@ export default function AdvancedProgressBar({ statsCW, statsHW }) {
   }, [progressPct, hasCelebrated]);
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8">
-      <div className="flex justify-between items-end mb-4">
-        <div>
-          <h3 className="text-lg font-bold text-gray-800">Ваш прогресс</h3>
-          <p className="text-sm text-gray-500">
-            Решено верно: {correct} из {total}
-          </p>
+    <div className="sticky top-4 z-50 mb-8 transition-all duration-300">
+      <div className="bg-white/80 backdrop-blur-md p-4 md:p-6 rounded-2xl shadow-lg border border-white/20">
+        <div className="flex justify-between items-end mb-3">
+          <div>
+            <h3 className="text-sm md:text-lg font-bold text-gray-800 flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" />
+              Ваш прогресс
+            </h3>
+            <p className="hidden md:block text-[10px] text-gray-500 uppercase tracking-wider font-bold">
+              Решено верно: {correct} из {total}
+            </p>
+          </div>
+          <div className="text-right">
+            <span className="text-2xl md:text-3xl font-black text-blue-600 unbounded">{progressPct}%</span>
+          </div>
         </div>
-        <div className="text-right">
-          <span className="text-3xl font-black text-blue-600">{progressPct}%</span>
-        </div>
-      </div>
 
-      {/* Многослойный прогресс-бар */}
-      <div className="h-4 w-full bg-gray-100 rounded-full overflow-hidden flex">
+        {/* Многослойный прогресс-бар */}
+        <div className="h-3 w-full bg-gray-100/50 rounded-full overflow-hidden flex shadow-inner">
         {/* Зеленый - Верно */}
         <div 
           className="h-full bg-green-500 transition-all duration-1000" 
