@@ -2,29 +2,30 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Универсальный компонент для заданий v2
+ * Универсальный компонент для заданий v2.1 (Enhanced Feedback)
  */
 export default function Exercise({ 
   id, 
   mode, 
-  type = 'text', // 'text', 'mcq', 'dropdown', 'builder'
+  type = 'text', 
   correctAnswer, 
-  options = [], // For mcq and dropdown
+  options = [], 
   solution, 
   hint, 
   progressItem, 
   onUpdate,
   maxAttempts: customMaxAttempts,
   placeholder = "Введите ответ...",
-  label = "" // Текст задания
+  label = "" 
 }) {
   const maxAttempts = customMaxAttempts || (mode === 'cw' ? 2 : 3);
   const [input, setInput] = useState('');
   const [localAttempts, setLocalAttempts] = useState(0);
   const [showHint, setShowHint] = useState(false);
   const [feedback, setFeedback] = useState(null); // 'correct', 'error', 'revealed'
-  
-  // For Builder
+  const [isShaking, setIsShaking] = useState(false);
+
+  // Builder state
   const [builderBank, setBuilderBank] = useState([]);
   const [builderZone, setBuilderZone] = useState([]);
 
@@ -34,7 +35,6 @@ export default function Exercise({
     }
   }, [type, options]);
 
-  // Восстановление состояния из БД
   useEffect(() => {
     if (progressItem) {
       const val = progressItem.value || '';
@@ -69,9 +69,12 @@ export default function Exercise({
       setFeedback('correct');
       onUpdate(id, mode, 'correct', newAttempts, valToCheck);
     } else {
+      // Trigger shake animation
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 500);
+
       if (newAttempts >= maxAttempts) {
         setFeedback('revealed');
-        // При раскрытии показываем правильный ответ в builder
         if (type === 'builder') setBuilderZone(correctAnswer.split(' '));
         onUpdate(id, mode, 'revealed', newAttempts, valToCheck);
       } else {
@@ -100,16 +103,24 @@ export default function Exercise({
   const isLocked = feedback === 'correct' || feedback === 'revealed';
 
   return (
-    <div className={`p-4 mb-4 rounded-xl border-2 transition-all ${
-      feedback === 'correct' ? 'border-green-500 bg-green-50' : 
+    <div className={`p-4 mb-4 rounded-xl border-2 transition-all duration-300 ${isShaking ? 'animate-shake' : ''} ${
+      feedback === 'correct' ? 'border-emerald-500 bg-emerald-50 shadow-sm' : 
       feedback === 'revealed' ? 'border-orange-500 bg-orange-50' : 
-      feedback === 'error' ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-white'
+      feedback === 'error' ? 'border-amber-400 bg-amber-50 shadow-md scale-[1.01]' : 'border-slate-200 bg-white'
     }`}>
+      <style jsx>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-5px); }
+          75% { transform: translateX(5px); }
+        }
+        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+      `}</style>
+
       <div className="flex flex-col gap-3">
-        {label && <div className="text-sm font-semibold text-indigo-900 mb-1">{label}</div>}
+        {label && <div className="text-sm font-bold text-slate-800 mb-1 leading-relaxed">{label}</div>}
         
         <div className="flex flex-col gap-2">
-          {/* TEXT INPUT */}
           {type === 'text' && (
             <div className="flex gap-2">
               <input
@@ -118,13 +129,14 @@ export default function Exercise({
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLocked}
                 placeholder={placeholder}
-                className={`flex-1 p-2 rounded-lg border focus:outline-none transition-all ${
-                  isLocked ? 'bg-gray-100' : 'focus:ring-2 focus:ring-blue-400'
+                className={`flex-1 p-2.5 rounded-lg border-2 focus:outline-none transition-all ${
+                  isLocked ? 'bg-slate-100 border-slate-200' : 
+                  feedback === 'error' ? 'border-amber-300 focus:border-amber-500' : 'border-slate-200 focus:border-blue-400'
                 }`}
                 onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
               />
               {!isLocked && (
-                <button onClick={() => checkAnswer()} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-bold">Check</button>
+                <button onClick={() => checkAnswer()} className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all font-bold shadow-sm active:scale-95">Check</button>
               )}
             </div>
           )}
@@ -137,9 +149,10 @@ export default function Exercise({
                   key={i}
                   disabled={isLocked}
                   onClick={() => { setInput(opt); checkAnswer(opt); }}
-                  className={`p-3 text-left rounded-lg border-2 transition-all ${
-                    input === opt ? 'border-blue-500 bg-blue-50' : 'border-gray-100 bg-white hover:border-blue-200'
-                  } ${isLocked && opt === correctAnswer ? 'border-green-500 bg-green-100' : ''}`}
+                  className={`p-3 text-left rounded-lg border-2 transition-all font-medium ${
+                    input === opt && feedback !== 'correct' ? 'border-amber-400 bg-amber-50' : 
+                    input === opt ? 'border-blue-500 bg-blue-50' : 'border-slate-100 bg-slate-50 hover:border-slate-300'
+                  } ${isLocked && opt === correctAnswer ? 'border-emerald-500 bg-emerald-100 text-emerald-900' : ''}`}
                 >
                   {opt}
                 </button>
@@ -147,68 +160,85 @@ export default function Exercise({
             </div>
           )}
 
-          {/* DROPDOWN */}
+          {/* ... other types (dropdown, builder) stay similar but benefit from wrapper styles ... */}
           {type === 'dropdown' && (
             <div className="flex gap-2 items-center">
               <select
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLocked}
-                className="p-2 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-400 outline-none"
+                className={`p-2.5 rounded-lg border-2 outline-none transition-all ${
+                  feedback === 'error' ? 'border-amber-300' : 'border-slate-200 focus:border-blue-400'
+                }`}
               >
                 <option value="">Выберите...</option>
                 {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
               </select>
               {!isLocked && (
-                <button onClick={() => checkAnswer()} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-bold">Check</button>
+                <button onClick={() => checkAnswer()} className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all font-bold">Check</button>
               )}
             </div>
           )}
 
-          {/* BUILDER */}
           {type === 'builder' && (
             <div className="flex flex-col gap-4">
-              <div className={`min-h-[50px] p-2 bg-gray-50 border-2 border-dashed rounded-lg flex flex-wrap gap-2 ${isLocked ? 'border-green-200' : 'border-gray-300'}`}>
+              <div className={`min-h-[60px] p-3 bg-slate-50 border-2 border-dashed rounded-xl flex flex-wrap gap-2 transition-colors ${
+                feedback === 'error' ? 'border-amber-300 bg-amber-50/50' : 
+                isLocked ? 'border-emerald-200 bg-emerald-50/30' : 'border-slate-200'
+              }`}>
                 {builderZone.map((word, i) => (
-                  <button key={i} onClick={() => handleBuilderClick(word, false)} disabled={isLocked} className="px-3 py-1 bg-white border border-gray-200 rounded shadow-sm hover:bg-gray-50 transition-colors">
+                  <button key={i} onClick={() => handleBuilderClick(word, false)} disabled={isLocked} className="px-4 py-1.5 bg-white border-2 border-slate-200 rounded-lg shadow-sm hover:border-slate-400 transition-all font-medium">
                     {word}
                   </button>
                 ))}
               </div>
               {!isLocked && (
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 p-2 bg-white rounded-lg border border-slate-100">
                   {builderBank.map((word, i) => (
-                    <button key={i} onClick={() => handleBuilderClick(word, true)} className="px-3 py-1 bg-blue-50 text-blue-700 border border-blue-100 rounded hover:bg-blue-100 transition-colors">
+                    <button key={i} onClick={() => handleBuilderClick(word, true)} className="px-4 py-1.5 bg-slate-100 text-slate-700 border-2 border-transparent rounded-lg hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-200 transition-all font-medium">
                       {word}
                     </button>
                   ))}
                 </div>
               )}
               {!isLocked && (
-                <button onClick={() => checkAnswer()} className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-bold mt-2">Check Order</button>
+                <button onClick={() => checkAnswer()} className="w-full py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-widest shadow-md">Check Order</button>
               )}
             </div>
           )}
         </div>
 
-        {/* Info & Feedback */}
-        <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-gray-400">
-           <div>Attempts: {localAttempts} / {maxAttempts}</div>
-           {showHint && hint && !isLocked && <div className="text-blue-500 animate-pulse">💡 Hint available</div>}
+        {/* FEEDBACK MESSAGES */}
+        <div className="flex justify-between items-center min-h-[20px]">
+          <div className="text-[10px] font-black uppercase tracking-wider text-slate-400">
+             Attempt: {localAttempts} / {maxAttempts}
+          </div>
+          
+          {feedback === 'error' && !isLocked && (
+            <div className="text-xs font-bold text-amber-600 animate-bounce">
+              Попробуй еще раз! 🧐
+            </div>
+          )}
+          
+          {feedback === 'correct' && (
+            <div className="text-xs font-bold text-emerald-600 flex items-center gap-1">
+              <span>Отлично! ✨</span>
+            </div>
+          )}
         </div>
 
         {showHint && hint && !isLocked && (
-          <div className="text-sm text-blue-600 italic bg-blue-50 p-2 rounded-lg border border-blue-100">
-            💡 {hint}
+          <div className="text-sm text-indigo-600 italic bg-indigo-50/50 p-3 rounded-lg border border-indigo-100 animate-in fade-in duration-500">
+            💡 <span className="font-semibold text-indigo-800">Подсказка:</span> {hint}
           </div>
         )}
 
         {feedback === 'revealed' && (
-          <div className="mt-2 p-3 bg-white rounded-lg border border-orange-200 text-sm shadow-sm animate-in slide-in-from-top-2 duration-300">
-            <div className="text-xs font-bold text-orange-500 uppercase mb-1">
+          <div className="mt-2 p-4 bg-white rounded-xl border-2 border-orange-200 text-sm shadow-sm animate-in slide-in-from-top-2">
+            <div className="text-[10px] font-black text-orange-500 uppercase mb-2 tracking-widest">
               {mode === 'cw' ? 'Разбор задания:' : 'Правильный ответ:'}
             </div>
-            <div className="text-gray-800 leading-relaxed">
+            <div className="text-slate-800 leading-relaxed font-medium">
               {mode === 'cw' ? (solution || `Правильный ответ: ${correctAnswer}`) : correctAnswer}
             </div>
           </div>
