@@ -81,6 +81,7 @@ export default function AdvancedProgressBar({ statsCW, statsHW }) {
           💡 Результат меньше 60%. У вас есть возможность **сбросить ДЗ** и попробовать другой вариант!
         </div>
       )}
+      </div>
     </div>
   );
 }
