@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Универсальный компонент для заданий v2.4 (Downscaled & Refined)
+ * Универсальный компонент для заданий v2.5 (Stable, Downscaled, Type-your-answer)
  */
 export default function Exercise({ 
   id, 
@@ -64,7 +64,7 @@ export default function Exercise({
         setBuilderBank(options);
       }
     }
-  }, [progressItem?.status, progressItem?.attempts, progressItem?.value, type, options, localAttempts]);
+  }, [progressItem?.status, progressItem?.attempts, progressItem?.value, type, options]);
 
   const normalize = (s) => s.toString().toLowerCase().replace(/\s+/g,' ').trim();
 
@@ -101,7 +101,7 @@ export default function Exercise({
     };
     window.addEventListener('trigger-check', handleTrigger);
     return () => window.removeEventListener('trigger-check', handleTrigger);
-  }, [id, input, feedback, localAttempts, correctAnswer, mode, onUpdate]);
+  }, [id, input, feedback, localAttempts, correctAnswer]);
 
   const isLocked = feedback === 'correct' || feedback === 'revealed';
   const isError = feedback === 'attempting' && localAttempts > 0;
@@ -138,7 +138,7 @@ export default function Exercise({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={isLocked}
-          placeholder={placeholder}
+          placeholder={placeholder === "..." ? "Type answer..." : placeholder}
           className={`w-full p-2 px-3 text-sm md:text-base rounded-xl border-2 focus:outline-none transition-all text-slate-900 font-bold text-center ${
             isLocked ? 'bg-emerald-50 border-emerald-500 text-emerald-700 shadow-inner' : 
             isError ? 'border-amber-400 bg-amber-50 shadow-md' : 'border-slate-700 bg-slate-800 focus:border-blue-400 focus:bg-slate-700 text-white'
@@ -180,7 +180,7 @@ export default function Exercise({
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLocked}
                 placeholder={placeholder}
-                className={`flex-1 ${compact ? 'p-2 text-xs' : 'p-2.5 text-sm'} rounded-lg border-2 focus:outline-none transition-all text-slate-900 ${
+                className={`flex-1 ${compact ? 'p-2 text-sm' : 'p-2.5 text-base'} rounded-lg border-2 focus:outline-none transition-all text-slate-900 ${
                   isLocked ? 'bg-slate-100 border-slate-200 text-slate-500' : 
                   isError ? 'border-amber-300 focus:border-amber-500 bg-white' : 'border-slate-200 focus:border-indigo-400 bg-white'
                 }`}
@@ -205,7 +205,7 @@ export default function Exercise({
                   key={i}
                   disabled={isLocked}
                   onClick={() => { setInput(opt); checkAnswer(opt); }}
-                  className={`${compact ? 'p-2.5 text-xs' : 'p-3 text-sm'} text-left rounded-lg border-2 transition-all font-semibold ${
+                  className={`${compact ? 'p-2.5 text-sm' : 'p-3 text-base'} text-left rounded-lg border-2 transition-all font-semibold ${
                     input === opt && isError ? 'border-amber-400 bg-amber-100/50' : 
                     input === opt ? 'border-indigo-500 bg-indigo-50' : 'border-slate-100 bg-slate-50/50 hover:border-slate-300'
                   } ${isLocked && opt === correctAnswer ? 'border-emerald-500 bg-emerald-100 text-emerald-900 shadow-inner' : ''}`}
@@ -222,11 +222,11 @@ export default function Exercise({
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLocked}
-                className={`${compact ? 'p-2 text-xs' : 'p-2.5 text-sm'} rounded-lg border-2 outline-none transition-all flex-1 md:flex-none md:min-w-[160px] text-slate-900 ${
+                className={`${compact ? 'p-2 text-sm' : 'p-2.5 text-base'} rounded-lg border-2 outline-none transition-all flex-1 md:flex-none md:min-w-[160px] text-slate-900 ${
                   isError ? 'border-amber-300 bg-white' : 'border-slate-200 focus:border-indigo-400 bg-white'
                 }`}
               >
-                <option value="">Choose...</option>
+                <option value="">Type answer...</option>
                 {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
               </select>
               {!isLocked && (
@@ -248,7 +248,7 @@ export default function Exercise({
                 isLocked ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-200'
               }`}>
                 {builderZone.map((word, i) => (
-                  <button key={i} onClick={() => handleBuilderClick(word, false)} disabled={isLocked} className={`${compact ? 'px-3 py-1 text-xs' : 'px-4 py-1.5 text-sm'} bg-white border-2 border-slate-200 rounded-lg shadow-sm hover:border-indigo-400 transition-all font-bold text-slate-900`}>
+                  <button key={i} onClick={() => handleBuilderClick(word, false)} disabled={isLocked} className={`${compact ? 'px-3 py-1 text-sm' : 'px-4 py-1.5 text-base'} bg-white border-2 border-slate-200 rounded-lg shadow-sm hover:border-indigo-400 transition-all font-bold text-slate-900`}>
                     {word}
                   </button>
                 ))}
@@ -256,14 +256,14 @@ export default function Exercise({
               {!isLocked && (
                 <div className="flex flex-wrap gap-2 p-2 bg-slate-100/50 rounded-xl border border-slate-200">
                   {builderBank.map((word, i) => (
-                    <button key={i} onClick={() => handleBuilderClick(word, true)} className={`${compact ? 'px-3 py-1 text-xs' : 'px-4 py-1.5 text-sm'} bg-white text-slate-700 border-2 border-transparent rounded-lg hover:bg-indigo-600 hover:text-white transition-all font-bold shadow-sm`}>
+                    <button key={i} onClick={() => handleBuilderClick(word, true)} className={`${compact ? 'px-3 py-1 text-sm' : 'px-4 py-1.5 text-base'} bg-white text-slate-700 border-2 border-transparent rounded-lg hover:bg-indigo-600 hover:text-white transition-all font-bold shadow-sm`}>
                       {word}
                     </button>
                   ))}
                 </div>
               )}
               {!isLocked && (
-                <button onClick={() => checkAnswer()} disabled={isInputEmpty} className="w-full py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-[0.2em] text-[10px] shadow-xl active:scale-[0.98] disabled:opacity-50">Check Sentence</button>
+                <button onClick={() => checkAnswer()} disabled={isInputEmpty} className="w-full py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-[0.2em] text-[10px] shadow-xl active:scale-[0.98] disabled:opacity-50">Check Sentence</button>
               )}
             </div>
           )}
