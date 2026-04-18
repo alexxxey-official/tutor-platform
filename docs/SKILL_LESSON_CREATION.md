@@ -12,7 +12,8 @@
   - Homework section: **ALWAYS** `bg-slate-900` (Dark Mode) to separate from classwork.
 
 ## 2. Core Components
-- **Progress:** Use `AdvancedProgressBar` right after the header.
+- **Progress:** Use `AdvancedProgressBar` right after the header. 
+  - **IMPORTANT:** Ensure the component has `sticky top-4 z-50` and `backdrop-blur` logic to remain visible during scroll.
 - **Interaction:** Use `Exercise` component for EVERYTHING that requires input.
   - `type="text"`: For single word answers (V3 forms, etc.).
   - `type="mcq"`: For multiple choice.
