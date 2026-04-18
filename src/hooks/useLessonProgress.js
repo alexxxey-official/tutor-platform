@@ -108,8 +108,8 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
   };
 
   const resetHW = async () => {
-    if (!userId) return;
-    const newVariant = variant === 1 ? 2 : 1;
+    if (!userId || variant !== 1) return;
+    const newVariant = 2;
     
     // Clear HW progress only
     const safePrev = { cw: {}, hw: {}, ...progress };
