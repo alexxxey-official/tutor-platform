@@ -93,17 +93,19 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
       const currentScore = cwCorrect + hwCorrect;
 
       if (userId) {
+        // Используем upsert, чтобы запись создалась, если её ещё нет
         supabase
           .from('student_lessons')
-          .update({ 
+          .upsert({ 
+            student_id: userId,
+            lesson_id: lessonId,
             score: currentScore,
             total_score: totalExercises, 
             status: currentScore >= totalExercises ? 'completed' : 'in_progress',
             progress_data: newState,
+            variant_id: variant, // Сохраняем текущий вариант
             updated_at: new Date().toISOString()
-          })
-          .eq('student_id', userId)
-          .eq('lesson_id', lessonId)
+          }, { onConflict: 'student_id, lesson_id' })
           .then();
       }
       

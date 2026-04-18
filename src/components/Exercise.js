@@ -36,6 +36,7 @@ export default function Exercise({
     }
   }, [type, options]);
 
+  // Восстановление состояния из БД (синхронизация)
   useEffect(() => {
     if (progressItem && (progressItem.attempts > 0 || progressItem.status)) {
       const val = progressItem.value || '';
@@ -53,9 +54,11 @@ export default function Exercise({
         });
         setBuilderBank(currentBank);
       }
-    } else {
-      // Hard Reset if no progress or reset happened
-      setInput('');
+    } else if (!progressItem || (progressItem.attempts === 0 && !progressItem.status)) {
+      // Срабатывает только если в базе реально ПУСТО (после сброса)
+      // Мы не затираем ввод, если он уже есть локально, но в базе еще нет
+      // Но если мы получили сигнал о полном сбросе, тогда чистим.
+      setInput(prev => (localAttempts > 0 ? '' : prev)); 
       setFeedback(null);
       setLocalAttempts(0);
       setShowHint(false);
@@ -64,7 +67,8 @@ export default function Exercise({
         setBuilderBank(options);
       }
     }
-  }, [progressItem, type, options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progressItem?.status, progressItem?.attempts, progressItem?.value, type]);
 
   const normalize = (s) => s.toString().toLowerCase().replace(/\s+/g,' ').trim();
 
