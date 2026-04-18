@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Универсальный компонент для заданий v2.2 (Refined UI & Logic)
+ * Универсальный компонент для заданий v2.3 (Inline Support)
  */
 export default function Exercise({ 
   id, 
@@ -15,9 +15,10 @@ export default function Exercise({
   progressItem, 
   onUpdate,
   maxAttempts: customMaxAttempts,
-  placeholder = "Введите ответ...",
+  placeholder = "...",
   label = "",
-  compact = false
+  compact = false,
+  variant = 'default' // 'default' or 'inline'
 }) {
   const maxAttempts = customMaxAttempts || (mode === 'cw' ? 2 : 3);
   const [input, setInput] = useState('');
@@ -36,7 +37,6 @@ export default function Exercise({
     }
   }, [type, options]);
 
-  // Восстановление состояния из БД (синхронизация)
   useEffect(() => {
     if (progressItem && (progressItem.attempts > 0 || progressItem.status)) {
       const val = progressItem.value || '';
@@ -55,9 +55,6 @@ export default function Exercise({
         setBuilderBank(currentBank);
       }
     } else if (!progressItem || (progressItem.attempts === 0 && !progressItem.status)) {
-      // Срабатывает только если в базе реально ПУСТО (после сброса)
-      // Мы не затираем ввод, если он уже есть локально, но в базе еще нет
-      // Но если мы получили сигнал о полном сбросе, тогда чистим.
       setInput(prev => (localAttempts > 0 ? '' : prev)); 
       setFeedback(null);
       setLocalAttempts(0);
@@ -67,17 +64,13 @@ export default function Exercise({
         setBuilderBank(options);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progressItem?.status, progressItem?.attempts, progressItem?.value, type]);
 
   const normalize = (s) => s.toString().toLowerCase().replace(/\s+/g,' ').trim();
 
   const checkAnswer = (customVal = null) => {
     if (feedback === 'correct' || feedback === 'revealed') return;
-
     const valToCheck = customVal !== null ? customVal : input;
-    
-    // Prevent empty submissions
     if (!valToCheck || valToCheck.trim() === '') return;
 
     const isCorrect = normalize(valToCheck) === normalize(correctAnswer);
@@ -90,13 +83,12 @@ export default function Exercise({
     } else {
       setIsShaking(true);
       setTimeout(() => setIsShaking(false), 500);
-
       if (newAttempts >= maxAttempts) {
         setFeedback('revealed');
         if (type === 'builder') setBuilderZone(correctAnswer.split(' '));
         onUpdate(id, mode, 'revealed', newAttempts, valToCheck);
       } else {
-        setFeedback('attempting'); // Sync with DB status
+        setFeedback('attempting');
         onUpdate(id, mode, 'attempting', newAttempts, valToCheck);
         if (newAttempts >= 1) setShowHint(true);
       }
@@ -122,29 +114,56 @@ export default function Exercise({
   const isError = feedback === 'attempting' && localAttempts > 0;
   const isInputEmpty = type === 'text' || type === 'dropdown' ? !input.trim() : (type === 'builder' ? builderZone.length === 0 : !input);
 
+  if (variant === 'inline') {
+    return (
+      <div className={`inline-block align-middle ${isShaking ? 'animate-shake' : ''}`}>
+        <style jsx>{`
+          @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+          }
+          .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+        `}</style>
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          disabled={isLocked}
+          placeholder={placeholder}
+          className={`w-full p-1.5 px-3 text-base rounded-lg border-2 focus:outline-none transition-all text-slate-900 font-bold text-center ${
+            isLocked ? 'bg-emerald-50 border-emerald-500 text-emerald-700' : 
+            isError ? 'border-amber-400 bg-amber-50' : 'border-slate-300 bg-white focus:border-indigo-400'
+          } ${feedback === 'revealed' ? 'border-orange-500 bg-orange-50 text-orange-700' : ''}`}
+          onKeyDown={(e) => e.key === 'Enter' && !isInputEmpty && checkAnswer()}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className={`${compact ? 'p-2 mb-2 flex-1' : 'p-4 mb-4'} rounded-xl border-2 transition-all duration-300 ${isShaking ? 'animate-shake' : ''} ${
+    <div className={`${compact ? 'p-3 mb-3' : 'p-5 mb-6'} rounded-2xl border-2 transition-all duration-300 ${isShaking ? 'animate-shake' : ''} ${
       feedback === 'correct' ? 'border-emerald-500 bg-emerald-50' : 
       feedback === 'revealed' ? 'border-orange-500 bg-orange-50' : 
-      isError ? 'border-amber-400 bg-amber-50' : 'border-slate-200 bg-white'
+      isError ? 'border-amber-400 bg-amber-50 shadow-md scale-[1.01]' : 'border-slate-200 bg-white'
     }`}>
       <style jsx>{`
         @keyframes shake {
           0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-3px); }
-          75% { transform: translateX(3px); }
+          25% { transform: translateX(-5px); }
+          75% { transform: translateX(5px); }
         }
         .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
       `}</style>
 
-      <div className={`flex flex-col ${compact ? 'gap-2' : 'gap-3'}`}>
+      <div className="flex flex-col gap-4">
         {label && (
-          <div className={`${compact ? 'text-sm' : 'text-base md:text-lg'} font-bold text-slate-800 leading-snug`}>
+          <div className="text-lg font-bold text-slate-800 leading-snug">
             {label}
           </div>
         )}
         
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           {type === 'text' && (
             <div className="flex gap-2">
               <input
@@ -153,7 +172,7 @@ export default function Exercise({
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLocked}
                 placeholder={placeholder}
-                className={`flex-1 ${compact ? 'p-1.5 text-sm' : 'p-2.5 text-base'} rounded-lg border-2 focus:outline-none transition-all text-slate-900 ${
+                className={`flex-1 p-3 text-lg rounded-xl border-2 focus:outline-none transition-all text-slate-900 ${
                   isLocked ? 'bg-slate-100 border-slate-200 text-slate-500' : 
                   isError ? 'border-amber-300 focus:border-amber-500 bg-white' : 'border-slate-200 focus:border-indigo-400 bg-white'
                 }`}
@@ -163,7 +182,7 @@ export default function Exercise({
                 <button 
                   onClick={() => checkAnswer()} 
                   disabled={isInputEmpty}
-                  className={`${compact ? 'px-3' : 'px-6'} bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all font-bold uppercase tracking-widest text-[10px] shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className="px-8 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-widest text-xs shadow-lg active:scale-95 disabled:opacity-50"
                 >
                   Check
                 </button>
@@ -171,14 +190,15 @@ export default function Exercise({
             </div>
           )}
 
+          {/* ... MCQ, Dropdown, Builder remain same ... */}
           {type === 'mcq' && (
-            <div className="grid grid-cols-1 gap-2">
+            <div className="grid grid-cols-1 gap-2.5">
               {options.map((opt, i) => (
                 <button
                   key={i}
                   disabled={isLocked}
                   onClick={() => { setInput(opt); checkAnswer(opt); }}
-                  className={`${compact ? 'p-2 text-sm' : 'p-3 text-base'} text-left rounded-lg border-2 transition-all font-semibold ${
+                  className={`p-4 text-left rounded-xl border-2 transition-all text-lg font-semibold ${
                     input === opt && isError ? 'border-amber-400 bg-amber-100/50' : 
                     input === opt ? 'border-indigo-500 bg-indigo-50' : 'border-slate-100 bg-slate-50/50 hover:border-slate-300'
                   } ${isLocked && opt === correctAnswer ? 'border-emerald-500 bg-emerald-100 text-emerald-900 shadow-inner' : ''}`}
@@ -190,23 +210,23 @@ export default function Exercise({
           )}
 
           {type === 'dropdown' && (
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-3 items-center">
               <select
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLocked}
-                className={`${compact ? 'p-1.5 text-sm' : 'p-2.5 text-base'} rounded-lg border-2 outline-none transition-all flex-1 md:flex-none ${
+                className={`p-3.5 text-lg rounded-xl border-2 outline-none transition-all flex-1 md:flex-none md:min-w-[200px] text-slate-900 ${
                   isError ? 'border-amber-300 bg-white' : 'border-slate-200 focus:border-indigo-400 bg-white'
                 }`}
               >
-                <option value="">Выберите...</option>
+                <option value="">Выберите вариант...</option>
                 {options.map((opt, i) => <option key={i} value={opt}>{opt}</option>)}
               </select>
               {!isLocked && (
                 <button 
                   onClick={() => checkAnswer()} 
                   disabled={isInputEmpty}
-                  className={`${compact ? 'px-3 py-2' : 'px-6 py-2.5'} bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all font-bold uppercase tracking-widest text-[10px] shadow-sm disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className="px-8 py-4 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-widest text-xs shadow-lg disabled:opacity-50"
                 >
                   Check
                 </button>
@@ -215,68 +235,66 @@ export default function Exercise({
           )}
 
           {type === 'builder' && (
-            <div className="flex flex-col gap-3">
-              <div className={`min-h-[50px] ${compact ? 'p-2' : 'p-3'} bg-white border-2 border-dashed rounded-xl flex flex-wrap gap-2 transition-colors ${
+            <div className="flex flex-col gap-5">
+              <div className={`min-h-[70px] p-4 bg-white border-2 border-dashed rounded-2xl flex flex-wrap gap-2.5 transition-colors ${
                 isError ? 'border-amber-400 bg-amber-50/30' : 
                 isLocked ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-200'
               }`}>
                 {builderZone.map((word, i) => (
-                  <button key={i} onClick={() => handleBuilderClick(word, false)} disabled={isLocked} className={`${compact ? 'px-3 py-1 text-sm' : 'px-4 py-1.5 text-base'} bg-white border-2 border-slate-200 rounded-lg shadow-sm hover:border-indigo-400 transition-all font-bold`}>
+                  <button key={i} onClick={() => handleBuilderClick(word, false)} disabled={isLocked} className="px-5 py-2 bg-white border-2 border-slate-200 rounded-xl shadow-sm hover:border-indigo-400 transition-all font-bold text-lg text-slate-900">
                     {word}
                   </button>
                 ))}
               </div>
               {!isLocked && (
-                <div className="flex flex-wrap gap-2 p-2 bg-slate-100/50 rounded-xl border border-slate-200">
+                <div className="flex flex-wrap gap-2.5 p-3 bg-slate-100/50 rounded-2xl border border-slate-200">
                   {builderBank.map((word, i) => (
-                    <button key={i} onClick={() => handleBuilderClick(word, true)} className={`${compact ? 'px-3 py-1 text-sm' : 'px-4 py-1.5 text-base'} bg-white text-slate-700 border-2 border-transparent rounded-lg hover:bg-indigo-600 hover:text-white transition-all font-bold shadow-sm`}>
+                    <button key={i} onClick={() => handleBuilderClick(word, true)} className="px-5 py-2 bg-white text-slate-700 border-2 border-transparent rounded-xl hover:bg-indigo-600 hover:text-white transition-all font-bold text-lg shadow-sm">
                       {word}
                     </button>
                   ))}
                 </div>
               )}
               {!isLocked && (
-                <button 
-                  onClick={() => checkAnswer()} 
-                  disabled={isInputEmpty}
-                  className="w-full py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-bold uppercase tracking-widest text-[10px] shadow-md active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Check Sentence
-                </button>
+                <button onClick={() => checkAnswer()} disabled={isInputEmpty} className="w-full py-4 bg-indigo-600 text-white rounded-2xl hover:bg-indigo-700 transition-all font-black uppercase tracking-[0.2em] shadow-xl active:scale-[0.98] disabled:opacity-50">Check Sentence</button>
               )}
             </div>
           )}
         </div>
 
         {/* FEEDBACK & ATTEMPTS */}
-        <div className="flex justify-between items-center">
-          <div className="text-[8px] font-black uppercase tracking-wider text-slate-400">
-             Att. {localAttempts}/{maxAttempts}
+        <div className="flex justify-between items-center mt-1">
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+             Attempt {localAttempts} of {maxAttempts}
           </div>
           
           {isError && (
-            <div className="text-[10px] font-black text-amber-600 animate-pulse bg-amber-100 px-2 py-0.5 rounded-full">
+            <div className="text-sm font-black text-amber-600 animate-pulse bg-amber-100 px-3 py-1 rounded-full">
               AGAIN! 🧐
             </div>
           )}
           
           {feedback === 'correct' && (
-            <div className="text-[10px] font-black text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">
-              OK! ✨
+            <div className="text-sm font-black text-emerald-600 bg-emerald-100 px-3 py-1 rounded-full">
+              ВЕРНО! ✨
             </div>
           )}
         </div>
 
         {showHint && hint && !isLocked && (
-          <div className="text-sm text-indigo-700 italic bg-indigo-50 p-3 rounded-lg border-l-4 border-indigo-500 animate-in fade-in duration-500">
+          <div className="text-base text-indigo-700 italic bg-indigo-50 p-4 rounded-xl border-l-4 border-indigo-500 animate-in fade-in duration-500">
+            <span className="font-black uppercase text-[10px] tracking-widest block mb-1 opacity-50">Подсказка</span>
             {hint}
           </div>
         )}
 
         {feedback === 'revealed' && (
-          <div className="mt-1 p-3 bg-white rounded-xl border-2 border-orange-200 shadow-sm animate-in slide-in-from-top-2">
-            <div className="text-slate-800 text-sm leading-relaxed font-bold">
-              {mode === 'cw' ? (solution || `Ans: ${correctAnswer}`) : correctAnswer}
+          <div className="mt-2 p-5 bg-white rounded-2xl border-2 border-orange-200 shadow-lg animate-in slide-in-from-top-4">
+            <div className="text-[10px] font-black text-orange-500 uppercase mb-3 tracking-[0.2em]">
+              {mode === 'cw' ? 'Разбор задания:' : 'Правильный ответ:'}
+            </div>
+            <div className="text-slate-800 text-lg leading-relaxed font-bold">
+              {mode === 'cw' ? (solution || `Правильный ответ: ${correctAnswer}`) : correctAnswer}
             </div>
           </div>
         )}

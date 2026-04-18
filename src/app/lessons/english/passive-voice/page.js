@@ -345,19 +345,23 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw2" mode="hw" label="2. These cars (make) in Japan." correctAnswer="are made" progressItem={progress.hw?.hw2} onUpdate={updateProgress} />
                           <Exercise id="hw3" mode="hw" label="3. The mail (deliver) at 9 AM." correctAnswer="is delivered" progressItem={progress.hw?.hw3} onUpdate={updateProgress} />
                           
-                      <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
-                        <div className="text-[10px] font-black uppercase tracking-widest text-blue-400 mb-4">4. Question Transformation</div>
-                        <div className="text-sm font-bold text-slate-400 mb-6 italic underline decoration-slate-600 decoration-2 underline-offset-4">Do they clean the rooms every day?</div>
+                      <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-6 flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div> 4. Question Transformation
+                        </div>
+                        <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
+                          "Do they clean the rooms every day?"
+                        </div>
                         
-                        <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
+                        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
                           <div className="w-32">
-                            <Exercise id="hw4_1" mode="hw" placeholder="To be..." correctAnswer="Are" progressItem={progress.hw?.hw4_1} onUpdate={updateProgress} compact />
+                            <Exercise id="hw4_1" mode="hw" placeholder="To be..." correctAnswer="Are" progressItem={progress.hw?.hw4_1} onUpdate={updateProgress} variant="inline" />
                           </div>
-                          <span>the rooms</span>
-                          <div className="w-40">
-                            <Exercise id="hw4_2" mode="hw" placeholder="V3 form..." correctAnswer="cleaned" progressItem={progress.hw?.hw4_2} onUpdate={updateProgress} compact />
+                          <span className="text-slate-300">the rooms</span>
+                          <div className="w-44">
+                            <Exercise id="hw4_2" mode="hw" placeholder="V3 form..." correctAnswer="cleaned" progressItem={progress.hw?.hw4_2} onUpdate={updateProgress} variant="inline" />
                           </div>
-                          <span>every day?</span>
+                          <span className="text-slate-300">every day?</span>
                         </div>
                       </div>
 
@@ -372,19 +376,23 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw7" mode="hw" label="7. The telephone (invent) by Bell." correctAnswer="was invented" progressItem={progress.hw?.hw7} onUpdate={updateProgress} />
                           <Exercise id="hw8" mode="hw" label="8. These houses (build) in 1950." correctAnswer="were built" progressItem={progress.hw?.hw8} onUpdate={updateProgress} />
                           
-                      <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
-                        <div className="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-4">9. Question Transformation</div>
-                        <div className="text-sm font-bold text-slate-400 mb-6 italic underline decoration-slate-600 decoration-2 underline-offset-4">Did Shakespeare write this play?</div>
+                      <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-400 mb-6 flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div> 9. Question Transformation
+                        </div>
+                        <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
+                          "Did Shakespeare write this play?"
+                        </div>
                         
-                        <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
+                        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
                           <div className="w-32">
-                            <Exercise id="hw9_1" mode="hw" placeholder="To be..." correctAnswer="Was" progressItem={progress.hw?.hw9_1} onUpdate={updateProgress} compact />
+                            <Exercise id="hw9_1" mode="hw" placeholder="To be..." correctAnswer="Was" progressItem={progress.hw?.hw9_1} onUpdate={updateProgress} variant="inline" />
                           </div>
-                          <span>this play</span>
-                          <div className="w-40">
-                            <Exercise id="hw9_2" mode="hw" placeholder="V3 form..." correctAnswer="written" progressItem={progress.hw?.hw9_2} onUpdate={updateProgress} compact />
+                          <span className="text-slate-300">this play</span>
+                          <div className="w-44">
+                            <Exercise id="hw9_2" mode="hw" placeholder="V3 form..." correctAnswer="written" progressItem={progress.hw?.hw9_2} onUpdate={updateProgress} variant="inline" />
                           </div>
-                          <span>by Shakespeare?</span>
+                          <span className="text-slate-300">by Shakespeare?</span>
                         </div>
                       </div>
 
@@ -400,19 +408,23 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw13" mode="hw" label="13. The tickets (will / send) by email." correctAnswer="will be sent" progressItem={progress.hw?.hw13} onUpdate={updateProgress} />
                           <Exercise id="hw14" mode="hw" label="14. Ten new people (have / hire)." correctAnswer="have been hired" progressItem={progress.hw?.hw14} onUpdate={updateProgress} />
                           
-                          <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
-                            <div className="text-[10px] font-black uppercase tracking-widest text-teal-400 mb-4">15. Future Question</div>
-                            <div className="text-sm font-bold text-slate-400 mb-6 italic underline decoration-slate-600 decoration-2 underline-offset-4">Will they serve dinner at 8?</div>
+                          <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
+                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-400 mb-6 flex items-center gap-2">
+                              <div className="w-1.5 h-1.5 bg-teal-400 rounded-full"></div> 15. Future Question
+                            </div>
+                            <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
+                              "Will they serve dinner at 8?"
+                            </div>
                             
-                            <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
                               <div className="w-32">
-                                <Exercise id="hw15_1" mode="hw" placeholder="Will...?" correctAnswer="Will" progressItem={progress.hw?.hw15_1} onUpdate={updateProgress} compact />
+                                <Exercise id="hw15_1" mode="hw" placeholder="Will...?" correctAnswer="Will" progressItem={progress.hw?.hw15_1} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span>dinner</span>
+                              <span className="text-slate-300">dinner</span>
                               <div className="w-44">
-                                <Exercise id="hw15_2" mode="hw" placeholder="be + V3..." correctAnswer="be served" progressItem={progress.hw?.hw15_2} onUpdate={updateProgress} compact />
+                                <Exercise id="hw15_2" mode="hw" placeholder="be + V3..." correctAnswer="be served" progressItem={progress.hw?.hw15_2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span>at 8?</span>
+                              <span className="text-slate-300">at 8?</span>
                             </div>
                           </div>
                       </div>
@@ -428,19 +440,23 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw2_v2" mode="hw" label="2. These smartphones (design) in California." correctAnswer="are designed" progressItem={progress.hw?.hw2_v2} onUpdate={updateProgress} />
                           <Exercise id="hw3_v2" mode="hw" label="3. Fresh bread (sell) here every morning." correctAnswer="is sold" progressItem={progress.hw?.hw3_v2} onUpdate={updateProgress} />
                           
-                          <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
-                            <div className="text-[10px] font-black uppercase tracking-widest text-blue-400 mb-4">4. Question Transformation</div>
-                            <div className="text-sm font-bold text-slate-400 mb-6 italic underline decoration-slate-600 decoration-2 underline-offset-4">Does he help you every day?</div>
+                          <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
+                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-6 flex items-center gap-2">
+                              <div className="w-1.5 h-1.5 bg-blue-400 rounded-full"></div> 4. Question Transformation
+                            </div>
+                            <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
+                              "Does he help you every day?"
+                            </div>
                             
-                            <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
                               <div className="w-32">
-                                <Exercise id="hw4_1_v2" mode="hw" placeholder="To be..." correctAnswer="Are" progressItem={progress.hw?.hw4_1_v2} onUpdate={updateProgress} compact />
+                                <Exercise id="hw4_1_v2" mode="hw" placeholder="To be..." correctAnswer="Are" progressItem={progress.hw?.hw4_1_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span>you</span>
-                              <div className="w-40">
-                                <Exercise id="hw4_2_v2" mode="hw" placeholder="V3 form..." correctAnswer="helped" progressItem={progress.hw?.hw4_2_v2} onUpdate={updateProgress} compact />
+                              <span className="text-slate-300">you</span>
+                              <div className="w-44">
+                                <Exercise id="hw4_2_v2" mode="hw" placeholder="V3 form..." correctAnswer="helped" progressItem={progress.hw?.hw4_2_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span>every day?</span>
+                              <span className="text-slate-300">every day?</span>
                             </div>
                           </div>
 
@@ -455,19 +471,23 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw7_v2" mode="hw" label="7. The first email (send) in 1971." correctAnswer="was sent" progressItem={progress.hw?.hw7_v2} onUpdate={updateProgress} />
                           <Exercise id="hw8_v2" mode="hw" label="8. These photos (take) during the holiday." correctAnswer="were taken" progressItem={progress.hw?.hw8_v2} onUpdate={updateProgress} />
                           
-                          <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
-                            <div className="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-4">9. Question Transformation</div>
-                            <div className="text-sm font-bold text-slate-400 mb-6 italic underline decoration-slate-600 decoration-2 underline-offset-4">Did they fix the computer?</div>
+                          <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
+                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-400 mb-6 flex items-center gap-2">
+                              <div className="w-1.5 h-1.5 bg-amber-400 rounded-full"></div> 9. Question Transformation
+                            </div>
+                            <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
+                              "Did they fix the computer?"
+                            </div>
                             
-                            <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
                               <div className="w-32">
-                                <Exercise id="hw9_1_v2" mode="hw" placeholder="To be..." correctAnswer="Was" progressItem={progress.hw?.hw9_1_v2} onUpdate={updateProgress} compact />
+                                <Exercise id="hw9_1_v2" mode="hw" placeholder="To be..." correctAnswer="Was" progressItem={progress.hw?.hw9_1_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span>the computer</span>
-                              <div className="w-40">
-                                <Exercise id="hw9_2_v2" mode="hw" placeholder="V3 form..." correctAnswer="fixed" progressItem={progress.hw?.hw9_2_v2} onUpdate={updateProgress} compact />
+                              <span className="text-slate-300">the computer</span>
+                              <div className="w-44">
+                                <Exercise id="hw9_2_v2" mode="hw" placeholder="V3 form..." correctAnswer="fixed" progressItem={progress.hw?.hw9_2_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span>?</span>
+                              <span className="text-slate-300">?</span>
                             </div>
                           </div>
 
@@ -483,19 +503,23 @@ export default function PassiveVoicePage() {
                           <Exercise id="hw13_v2" mode="hw" label="13. The test (will / grade) by tomorrow." correctAnswer="will be graded" progressItem={progress.hw?.hw13_v2} onUpdate={updateProgress} />
                           <Exercise id="hw14_v2" mode="hw" label="14. The lost keys (have / find)." correctAnswer="have been found" progressItem={progress.hw?.hw14_v2} onUpdate={updateProgress} />
                           
-                          <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
-                            <div className="text-[10px] font-black uppercase tracking-widest text-teal-400 mb-4">15. Future Question</div>
-                            <div className="text-sm font-bold text-slate-400 mb-6 italic underline decoration-slate-600 decoration-2 underline-offset-4">Will the company build a new office?</div>
+                          <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700/50 shadow-inner">
+                            <div className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-400 mb-6 flex items-center gap-2">
+                              <div className="w-1.5 h-1.5 bg-teal-400 rounded-full"></div> 15. Future Question
+                            </div>
+                            <div className="text-sm font-bold text-slate-400 mb-8 italic text-center">
+                              "Will the company build a new office?"
+                            </div>
                             
-                            <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-xl">
                               <div className="w-32">
-                                <Exercise id="hw15_1_v2" mode="hw" placeholder="Will...?" correctAnswer="Will" progressItem={progress.hw?.hw15_1_v2} onUpdate={updateProgress} compact />
+                                <Exercise id="hw15_1_v2" mode="hw" placeholder="Will...?" correctAnswer="Will" progressItem={progress.hw?.hw15_1_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span>a new office</span>
+                              <span className="text-slate-300">a new office</span>
                               <div className="w-44">
-                                <Exercise id="hw15_2_v2" mode="hw" placeholder="be + V3..." correctAnswer="be built" progressItem={progress.hw?.hw15_2_v2} onUpdate={updateProgress} compact />
+                                <Exercise id="hw15_2_v2" mode="hw" placeholder="be + V3..." correctAnswer="be built" progressItem={progress.hw?.hw15_2_v2} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span>?</span>
+                              <span className="text-slate-300">?</span>
                             </div>
                           </div>
                       </div>
