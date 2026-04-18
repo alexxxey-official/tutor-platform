@@ -43,22 +43,32 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
           >
             <div className="p-4 sm:p-8 flex flex-col gap-3">
               {lessons.map((lesson, idx) => {
+                // Safely access progress_data
                 const progressData = lesson.original?.progress_data || {}
                 
-                // Helper to calculate stats
+                // Helper to calculate stats safely
                 const calcStats = (mode, total) => {
-                  const data = progressData[mode] || {}
-                  const exercises = Object.values(data)
+                  const data = progressData ? progressData[mode] : {}
+                  const safeData = data || {}
+                  const exercises = Object.values(safeData)
                   const correct = exercises.filter(ex => ex && ex.status === 'correct').length
                   const revealed = exercises.filter(ex => ex && ex.status === 'revealed').length
                   const isComplete = (correct + revealed) >= total && total > 0
                   return { correct, revealed, total, pct: total > 0 ? Math.round((correct / total) * 100) : 0, isComplete }
                 }
 
-                const cwStats = calcStats('cw', lesson.meta?.totalCW || 0)
-                const hwStats = calcStats('hw', lesson.meta?.totalHW || 0)
+                // Safely access lesson.meta
+                const safeTotalCW = lesson.meta ? (lesson.meta.totalCW || 0) : 0
+                const safeTotalHW = lesson.meta ? (lesson.meta.totalHW || 0) : 0
+
+                const cwStats = calcStats('cw', safeTotalCW)
+                const hwStats = calcStats('hw', safeTotalHW)
                 
-                const isComplete = cwStats.isComplete && hwStats.isComplete
+                // Fallback to original score calculation if meta is missing
+                const isComplete = (lesson.meta && safeTotalCW + safeTotalHW > 0) 
+                  ? (cwStats.isComplete && hwStats.isComplete) 
+                  : (lesson.status === 'completed' || (lesson.total_score > 0 && lesson.score === lesson.total_score))
+
                 const isStarted = lesson.score > 0
 
                 return (
@@ -88,10 +98,10 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                       </div>
                       
                       {/* Полоски прогресса */}
-                      {(lesson.meta?.totalCW > 0 || lesson.meta?.totalHW > 0) ? (
+                      {(safeTotalCW > 0 || safeTotalHW > 0) ? (
                         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                           {/* Classwork */}
-                          {lesson.meta?.totalCW > 0 && (
+                          {safeTotalCW > 0 && (
                             <div className="flex-1">
                               <div className="flex justify-between items-center mb-1.5">
                                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Classwork</span>
@@ -105,7 +115,7 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                           )}
                           
                           {/* Homework */}
-                          {lesson.meta?.totalHW > 0 && (
+                          {safeTotalHW > 0 && (
                             <div className="flex-1">
                               <div className="flex justify-between items-center mb-1.5">
                                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Homework</span>
