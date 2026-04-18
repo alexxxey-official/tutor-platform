@@ -61,28 +61,27 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                   }
                 }
 
-                // Safely access lesson.meta
-                const safeTotalCW = lesson.meta ? (lesson.meta.totalCW || 0) : 0
-                const safeTotalHW = lesson.meta ? (lesson.meta.totalHW || 0) : 0
+                const safeTotalCW = lesson.meta?.totalCW || 0
+                const safeTotalHW = lesson.meta?.totalHW || 0
 
                 const cwStats = calcStats('cw', safeTotalCW)
                 const hwStats = calcStats('hw', safeTotalHW)
                 
                 // Fallback to original score calculation if meta is missing
-                const isComplete = (lesson.meta && safeTotalCW + safeTotalHW > 0) 
+                const isComplete = (safeTotalCW + safeTotalHW > 0) 
                   ? (cwStats.isComplete && hwStats.isComplete) 
-                  : (lesson.status === 'completed' || (lesson.total_score > 0 && lesson.score === lesson.total_score))
+                  : (lesson.status === 'completed' || (lesson.total_score && lesson.total_score > 0 && lesson.score >= lesson.total_score))
 
                 const isStarted = lesson.score > 0
 
                 return (
                   <Link 
-                    href={lesson.link} 
+                    href={lesson.link || '#'} 
                     key={lesson.id}
-                    className="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all flex items-center gap-4 sm:gap-6"
+                    className="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6"
                   >
                     {/* Иконка статуса */}
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 self-start sm:self-center">
                       {isComplete ? (
                         <CheckCircle2 size={32} className="text-emerald-500" />
                       ) : isStarted ? (
@@ -93,7 +92,7 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                     </div>
 
                     {/* Название и прогресс */}
-                    <div className="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0 w-full">
                       <div className="flex items-baseline justify-between mb-3">
                         <h3 className="font-bold text-base sm:text-lg text-slate-900 truncate pr-4">
                           <span className="text-slate-400 font-normal mr-2">{idx + 1}.</span>
@@ -103,7 +102,7 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                       
                       {/* Полоски прогресса */}
                       {(safeTotalCW > 0 || safeTotalHW > 0) ? (
-                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+                        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-3">
                           {/* Classwork */}
                           {safeTotalCW > 0 && (
                             <div className="flex-1">
@@ -112,8 +111,8 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                                 <span className="text-[10px] font-black text-slate-600">{cwStats.pct}%</span>
                               </div>
                               <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex">
-                                <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${cwStats.total > 0 ? (cwStats.correct / cwStats.total) * 100 : 0}%` }}></div>
-                                <div className="h-full bg-emerald-300 transition-all duration-1000" style={{ width: `${cwStats.total > 0 ? (cwStats.revealed / cwStats.total) * 100 : 0}%` }}></div>
+                                <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${Math.min(100, cwStats.total > 0 ? (cwStats.correct / cwStats.total) * 100 : 0)}%` }}></div>
+                                <div className="h-full bg-emerald-300 transition-all duration-1000" style={{ width: `${Math.min(100, cwStats.total > 0 ? (cwStats.revealed / cwStats.total) * 100 : 0)}%` }}></div>
                               </div>
                             </div>
                           )}
@@ -126,14 +125,14 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                                 <span className="text-[10px] font-black text-slate-600">{hwStats.pct}%</span>
                               </div>
                               <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden flex">
-                                <div className="h-full bg-blue-500 transition-all duration-1000" style={{ width: `${hwStats.total > 0 ? (hwStats.correct / hwStats.total) * 100 : 0}%` }}></div>
-                                <div className="h-full bg-red-400 transition-all duration-1000" style={{ width: `${hwStats.total > 0 ? (hwStats.revealed / hwStats.total) * 100 : 0}%` }}></div>
+                                <div className="h-full bg-blue-500 transition-all duration-1000" style={{ width: `${Math.min(100, hwStats.total > 0 ? (hwStats.correct / hwStats.total) * 100 : 0)}%` }}></div>
+                                <div className="h-full bg-red-400 transition-all duration-1000" style={{ width: `${Math.min(100, hwStats.total > 0 ? (hwStats.revealed / hwStats.total) * 100 : 0)}%` }}></div>
                               </div>
                             </div>
                           )}
                         </div>
                       ) : (
-                        <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
+                        <div className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mt-3">
                           Теория / Введение
                         </div>
                       )}
@@ -215,7 +214,7 @@ export default function DashboardPage() {
       }
     }
     
-    const isComplete = a.status === 'completed' || (a.total_score > 0 && a.score === a.total_score)
+    const isComplete = (a.status === 'completed') || (a.total_score && a.total_score > 0 && a.score >= a.total_score)
     
     subjectsMap[meta.subject].lessons.push({
       id: a.id,
