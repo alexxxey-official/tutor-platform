@@ -231,26 +231,7 @@ export default function DashboardPage() {
   const hasLessons = assignments.length > 0
   
   // Для тестирования дизайна, если нет уроков
-  const renderSubjects = hasLessons ? Object.values(subjectsMap) : [
-    {
-      name: 'English',
-      level: 'Уровень B1',
-      color: 'bg-indigo-600',
-      lessons: [
-        { id: 'm1', title: 'Passive Voice', link: '/lessons/english/passive-voice', status: 'completed', score: 41, total_score: 41, meta: { totalCW: 23, totalHW: 18 }, original: { progress_data: { cw: { 'hw1': { status: 'correct' } }, hw: { 'hw1': { status: 'correct' } } } } },
-        { id: 'm2', title: 'Indefinite Pronouns', link: '/lessons/english/indefinite-pronouns', status: 'available', score: 10, total_score: 50, meta: { totalCW: 30, totalHW: 20 }, original: { progress_data: { cw: {}, hw: {} } } }
-      ]
-    },
-    {
-      name: 'Español',
-      level: 'Уровень A1',
-      color: 'bg-rose-500',
-      lessons: [
-        { id: 's1', title: 'Введение: Карта грамматики', link: '/lessons/spanish/intro', status: 'completed', score: 0, total_score: 0, meta: { totalCW: 0, totalHW: 0 }, original: {} },
-        { id: 's2', title: 'Урок 1: Правила чтения', link: '/lessons/spanish/phonetics', status: 'available', score: 0, total_score: 5, meta: { totalCW: 3, totalHW: 2 }, original: {} }
-      ]
-    }
-  ]
+  const renderSubjects = hasLessons ? Object.values(subjectsMap) : []
 
   // По умолчанию открываем первый предмет
   useEffect(() => {
@@ -261,7 +242,7 @@ export default function DashboardPage() {
     } catch (e) {
       // ignore
     }
-  }, [renderSubjects, openSubject])
+  }, [renderSubjects.length, openSubject]) // Изменил зависимость, чтобы не вызывало ререндер
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] pb-20 font-sans">
@@ -296,8 +277,10 @@ export default function DashboardPage() {
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6">
         {!hasLessons && (
-           <div className="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl text-center mb-8 font-bold text-sm shadow-sm mx-2">
-             Вам пока не назначены реальные уроки. Показан пример интерфейса.
+           <div className="bg-white border border-slate-200 text-slate-500 p-8 rounded-3xl text-center mb-8 shadow-sm">
+             <div className="text-4xl mb-4">📚</div>
+             <h2 className="text-xl font-bold unbounded text-slate-900 mb-2">Пока пусто!</h2>
+             <p className="text-sm">Преподаватель ещё не назначил тебе уроки. Как только он это сделает, они моментально появятся здесь.</p>
            </div>
         )}
 
