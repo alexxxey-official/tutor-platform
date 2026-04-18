@@ -62,13 +62,12 @@ export default function DashboardPage() {
     
     // Map to SkillTree node format
     const isComplete = a.status === 'completed' || (a.total_score > 0 && a.score === a.total_score)
-    const isStarted = a.score > 0
     
     subjects[meta.subject].push({
       id: a.id,
       title: meta.title,
       link: meta.path,
-      status: isComplete ? 'completed' : (isStarted ? 'current' : 'locked'),
+      status: isComplete ? 'completed' : 'available',
       original: a
     })
   })
@@ -78,8 +77,10 @@ export default function DashboardPage() {
   const renderSubjects = hasLessons ? subjects : {
     "English": [
       { id: 'mock1', title: 'Passive Voice', status: 'completed', link: '/lessons/english/passive-voice' },
-      { id: 'mock2', title: 'Indefinite Pronouns', status: 'current', link: '/lessons/english/indefinite-pronouns' },
-      { id: 'mock3', title: 'Conditionals (Zero & 1st)', status: 'locked' }
+      { id: 'mock2', title: 'Indefinite Pronouns', status: 'available', link: '/lessons/english/indefinite-pronouns' },
+      { id: 'mock3', title: 'Conditionals (0 & 1)', status: 'available', link: '/lessons/english/conditionals' },
+      { id: 'mock4', title: 'Present Perfect', status: 'available', link: '/lessons/english/present-perfect' },
+      { id: 'mock5', title: 'Reported Speech', status: 'available', link: '/lessons/english/reported-speech' }
     ]
   }
 
@@ -90,8 +91,8 @@ export default function DashboardPage() {
         .unbounded { font-family: 'Unbounded', sans-serif; }
       `}</style>
       
-      <div className="bg-indigo-950 text-white px-10 py-12 pb-10 relative overflow-hidden mb-12 shadow-md">
-        <div className="max-w-4xl mx-auto flex justify-between items-start relative z-10">
+      <div className="bg-indigo-950 text-white px-10 py-12 pb-10 relative overflow-hidden mb-8 shadow-md">
+        <div className="max-w-6xl mx-auto flex justify-between items-start relative z-10">
           <div>
             <div className="text-[11px] font-semibold tracking-[3px] uppercase text-amber-400 mb-3">
               STUDENT DASHBOARD
@@ -117,15 +118,15 @@ export default function DashboardPage() {
         </div>
       </div>
       
-      <main className="max-w-4xl mx-auto px-6">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6">
         {!hasLessons && (
-           <div className="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl text-center mb-8 font-bold text-sm shadow-sm">
+           <div className="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl text-center mb-8 font-bold text-sm shadow-sm mx-2">
              You don't have assigned lessons yet. Showing a preview Map.
            </div>
         )}
 
         {Object.keys(renderSubjects).map(subject => (
-          <div key={subject} className="bg-white rounded-[2.5rem] shadow-sm border border-slate-200 p-8 md:p-12 mb-12 relative overflow-hidden">
+          <div key={subject} className="bg-white rounded-[2rem] shadow-sm border border-slate-200 p-4 sm:p-8 mb-8 relative overflow-hidden">
              <SkillTree subject={subject} lessons={renderSubjects[subject]} />
           </div>
         ))}
