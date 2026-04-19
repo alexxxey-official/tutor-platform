@@ -206,8 +206,6 @@ export default function DashboardPage() {
     router.push('/login')
   }
 
-  if (loading || !mounted) return <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] flex items-center justify-center font-bold font-mono">LOADING...</div>
-
   // Настройка уровней и цветов для предметов
   const subjectConfig = {
     'Español': { level: 'Уровень A1', color: 'bg-rose-500' },
@@ -249,11 +247,13 @@ export default function DashboardPage() {
 
   // По умолчанию открываем первый предмет только один раз после загрузки
   useEffect(() => {
-    if (!loading && renderSubjects.length > 0 && !hasAutoOpened) {
+    if (!loading && mounted && renderSubjects.length > 0 && !hasAutoOpened) {
       setOpenSubject(renderSubjects[0].name)
       setHasAutoOpened(true)
     }
-  }, [loading, renderSubjects.length, hasAutoOpened]) // Изменил зависимость, чтобы не вызывало ререндер
+  }, [loading, mounted, renderSubjects.length, hasAutoOpened])
+
+  if (loading || !mounted) return <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] flex items-center justify-center font-bold font-mono">LOADING...</div>
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] pb-20 font-sans">

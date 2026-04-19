@@ -1,1 +1,0 @@
-self.__BUILD_MANIFEST={__rewrites:{afterFiles:[{has:void 0,source:"/legacy-lessons/english/english_passive_voice.html",destination:"/lessons/english/passive-voice"}],beforeFiles:[],fallback:[]},"/_error":["static/chunks/pages/_error-9a890acb1e81c3fc.js"],sortedPages:["/_app","/_error"]},self.__BUILD_MANIFEST_CB&&self.__BUILD_MANIFEST_CB();
