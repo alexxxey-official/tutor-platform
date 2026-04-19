@@ -157,30 +157,40 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const checkUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        router.push('/login')
-        return
-      }
-      setUser(user)
-      
-      const { data: assignedData } = await supabase
-        .from('student_lessons')
-        .select('*')
-        .eq('student_id', user.id)
-        .order('assigned_at', { ascending: false })
-      
-      const fixedAssignments = (assignedData || []).map(a => {
-        const meta = getLessonById(a.lesson_id)
-        if (meta && meta.totalScore && (!a.total_score || a.total_score === 0)) {
-            supabase.from('student_lessons').update({ total_score: meta.totalScore }).eq('id', a.id).then(() => {})
-            return { ...a, total_score: meta.totalScore }
+      try {
+        const { data, error: authError } = await supabase.auth.getUser()
+        if (authError || !data?.user) {
+          router.push('/login')
+          return
         }
-        return a
-      })
-      
-      setAssignments(fixedAssignments)
-      setLoading(false)
+        
+        const user = data.user
+        setUser(user)
+        
+        const { data: assignedData, error: dbError } = await supabase
+          .from('student_lessons')
+          .select('*')
+          .eq('student_id', user.id)
+          .order('assigned_at', { ascending: false })
+        
+        if (dbError) throw dbError
+
+        const fixedAssignments = (assignedData || []).map(a => {
+          const meta = getLessonById(a.lesson_id)
+          if (meta && meta.totalScore && (!a.total_score || a.total_score === 0)) {
+              // Фоновое обновление, не блокируем рендер
+              supabase.from('student_lessons').update({ total_score: meta.totalScore }).eq('id', a.id).then(() => {})
+              return { ...a, total_score: meta.totalScore }
+          }
+          return a
+        })
+        
+        setAssignments(fixedAssignments)
+      } catch (err) {
+        console.error("Dashboard error:", err)
+      } finally {
+        setLoading(false)
+      }
     }
     checkUser()
   }, [router])
@@ -199,6 +209,8 @@ export default function DashboardPage() {
     'Math': { level: 'Общий курс', color: 'bg-emerald-500' },
     'Physics': { level: 'Общий курс', color: 'bg-violet-500' }
   }
+
+  const [hasAutoOpened, setHasAutoOpened] = useState(false)
 
   // Группировка
   const subjectsMap = {}
@@ -229,20 +241,15 @@ export default function DashboardPage() {
   })
 
   const hasLessons = assignments.length > 0
-  
-  // Для тестирования дизайна, если нет уроков
   const renderSubjects = hasLessons ? Object.values(subjectsMap) : []
 
-  // По умолчанию открываем первый предмет
+  // По умолчанию открываем первый предмет только один раз после загрузки
   useEffect(() => {
-    try {
-      if (renderSubjects && renderSubjects.length > 0 && !openSubject) {
-        setOpenSubject(renderSubjects[0].name)
-      }
-    } catch (e) {
-      // ignore
+    if (!loading && renderSubjects.length > 0 && !hasAutoOpened) {
+      setOpenSubject(renderSubjects[0].name)
+      setHasAutoOpened(true)
     }
-  }, [renderSubjects.length, openSubject]) // Изменил зависимость, чтобы не вызывало ререндер
+  }, [loading, renderSubjects.length, hasAutoOpened]) // Изменил зависимость, чтобы не вызывало ререндер
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] pb-20 font-sans">

@@ -23,7 +23,7 @@ export default function IndefinitePronounsLesson() {
 
   const normalize = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '').trim()
 
-  const ExerciseItem = ({ id, num, problem, correctAns, hintText, placeholder = "", mode = 'cw' }) => {
+  const ExerciseItem = ({ id, num, problem, correctAns, hintText, placeholder = "Type your answer...", mode = 'cw' }) => {
     const saved = progress[mode]?.[id] || { attempts: 0, status: 'attempting', value: '' }
     const [inputValue, setInputValue] = useState(saved.value || '')
     const [status, setStatus] = useState(saved.status || 'attempting')
@@ -49,7 +49,7 @@ export default function IndefinitePronounsLesson() {
 
         if (isCorrect) {
             setStatus('correct')
-            setFeedback('¡Perfecto! ✓')
+            setFeedback('Perfect! ✓')
             updateProgress(id, mode, 'correct', currentAttempts, inputValue)
         } else {
             if (currentAttempts >= maxAttempts) {
@@ -57,7 +57,7 @@ export default function IndefinitePronounsLesson() {
                 setFeedback(mode === 'cw' ? `Correct: ${correctAns.split('|')[0]}` : `Failed. Answer: ${correctAns.split('|')[0]}`)
                 updateProgress(id, mode, 'revealed', currentAttempts, inputValue)
             } else {
-                setFeedback('Try again!')
+                setFeedback('Try again! 🧐')
                 if (mode === 'hw' && currentAttempts === 2) setShowHint(true)
             }
         }
@@ -135,37 +135,37 @@ export default function IndefinitePronounsLesson() {
       <div className="max-w-[860px] mx-auto px-6">
         <nav className="bg-white border border-[#e5e0d5] rounded-xl px-6 py-5 mt-8 flex flex-wrap gap-2.5 items-center sticky top-4 z-20 shadow-sm">
           <Link href="/dashboard" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#2a9d8f] hover:text-white font-bold">
-            ← Дашборд
+            ← Dashboard
           </Link>
-          <a href="#theory" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#2a9d8f] hover:text-white">📖 Теория</a>
-          <a href="#classwork" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#2a9d8f] hover:text-white">🎯 Классная работа</a>
-          <a href="#homework" className="bg-[#1a1a2e] text-white no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#2a9d8f]">📝 Домашка</a>
+          <a href="#theory" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#2a9d8f] hover:text-white">📖 Theory</a>
+          <a href="#classwork" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#2a9d8f] hover:text-white">🎯 Classwork</a>
+          <a href="#homework" className="bg-[#1a1a2e] text-white no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#2a9d8f]">📝 Homework</a>
         </nav>
 
         {/* PROGRESS BARS */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-            <AdvancedProgressBar data={progress.cw} total={totalCW} title="Классная работа" mode="cw" />
-            <AdvancedProgressBar data={progress.hw} total={totalHW} title="Домашнее задание" mode="hw" />
+            <AdvancedProgressBar data={progress.cw} total={totalCW} title="Classwork" mode="cw" />
+            <AdvancedProgressBar data={progress.hw} total={totalHW} title="Homework" mode="hw" />
         </div>
 
         {/* THEORY SECTION OMITTED FOR BREVITY IN REWRITE BUT SHOULD BE KEPT */}
         {/* ... keeping original theory ... */}
         <div id="theory" className="mt-12">
-            <h2 className="font-bold text-[28px] text-[#1a1a2e] mb-5 unbounded">Теория</h2>
+            <h2 className="font-bold text-[28px] text-[#1a1a2e] mb-5 unbounded">Theory</h2>
             <div className="bg-white border border-[#e5e0d5] rounded-2xl p-8 relative">
-                 <p className="mb-4">Местоимения SOME-, ANY-, NO-, EVERY- комбинируются с -BODY, -ONE, -THING, -WHERE.</p>
+                 <p className="mb-4">Indefinite pronouns SOME-, ANY-, NO-, EVERY- combine with -BODY, -ONE, -THING, -WHERE.</p>
                  <ul className="list-disc pl-5 space-y-2">
-                    <li><strong>SOME-</strong>: Утверждения (+)</li>
-                    <li><strong>ANY-</strong>: Вопросы (?) и Отрицания (-) с NOT</li>
-                    <li><strong>NO-</strong>: Отрицания (-) без NOT (двойное отрицание запрещено)</li>
-                    <li><strong>EVERY-</strong>: Все/Всё</li>
+                    <li><strong>SOME-</strong>: Affirmative (+)</li>
+                    <li><strong>ANY-</strong>: Questions (?) and Negatives (-) with NOT</li>
+                    <li><strong>NO-</strong>: Negatives (-) without NOT (double negative is forbidden)</li>
+                    <li><strong>EVERY-</strong>: All/Everything</li>
                  </ul>
             </div>
         </div>
 
         <div id="classwork" className="mt-12">
             <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[2.5px] uppercase text-[#2a9d8f] mb-5">
-              Классная работа (CW)
+              Classwork (CW)
               <div className="w-[40px] h-[2px] bg-[#2a9d8f]"></div>
             </div>
             <div className="bg-white border border-[#e5e0d5] rounded-2xl overflow-hidden shadow-sm px-6 py-2">
@@ -181,7 +181,7 @@ export default function IndefinitePronounsLesson() {
 
         <div id="homework" className="mt-12">
             <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[2.5px] uppercase text-[#e63946] mb-5">
-              Домашнее задание (HW)
+              Homework (HW)
               <div className="w-[40px] h-[2px] bg-[#e63946]"></div>
             </div>
             <div className="bg-white border border-[#e5e0d5] rounded-2xl overflow-hidden shadow-sm px-6 py-2 border-t-4 border-t-[#e63946]">

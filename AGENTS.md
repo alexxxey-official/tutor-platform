@@ -216,8 +216,9 @@ The goal: Be helpful without being annoying. Check in a few times a day, do usef
 ## 🚀 Workflow Rules (Learned)
 
 - **Always test locally before deploying:** Before committing changes intended for production, run the local build command (e.g., `npm run build`) to ensure there are no compilation errors.
-- **Auto-Deploy on Success:** If a change has been requested by the user, verified to work, and built successfully locally, automatically commit and push the changes (which triggers the Vercel deploy) without waiting for explicit permission.
-- **Self-Documentation:** Always update `AGENTS.md` (or relevant memory files) when instructed by the user to perform constant/recurring actions or adopt new permanent workflows.
+- **Auto-Deploy on Success:** After making changes and verifying them (including `npm run build`), automatically commit and push to `main` to trigger Vercel deployment.
+- **Mandatory Reporting:** Create a detailed log in `отчеты/YYYY-MM-DD/log.md` after every significant fix, refactor, or feature implementation.
+- **Self-Documentation:** Always update `AGENTS.md` or relevant `docs/SKILL_*.md` files when new permanent workflows are adopted.
 
 ## Make It Yours
 

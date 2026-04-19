@@ -1,91 +1,88 @@
 'use client'
 import { motion } from 'framer-motion'
-import { Check, Lock, Play, Star } from 'lucide-react'
+import { Check, Star, BookOpen } from 'lucide-react'
 import Link from 'next/link'
 
-const SkillNode = ({ item, index, isLeft }) => {
+const SkillNode = ({ item, index }) => {
+  // Чередуем узлы: один выше линии, другой ниже (создаем красивую "змейку")
+  const isUp = index % 2 === 0
+  
   const statusColors = {
-    completed: 'bg-emerald-500 shadow-emerald-500/50',
-    current: 'bg-amber-400 shadow-amber-400/50 ring-4 ring-amber-400/30',
-    locked: 'bg-slate-200 border-4 border-slate-300'
-  }
-
-  const iconColors = {
-    completed: 'text-white',
-    current: 'text-white',
-    locked: 'text-slate-400'
+    completed: 'bg-emerald-500 shadow-emerald-500/30 text-white border-2 border-emerald-400',
+    available: 'bg-white shadow-md text-slate-700 border-4 border-amber-400 hover:bg-amber-50'
   }
 
   const StatusIcon = () => {
-    if (item.status === 'completed') return <Check size={32} strokeWidth={3} />
-    if (item.status === 'current') return <Star size={32} fill="currentColor" />
-    return <Lock size={28} />
+    if (item.status === 'completed') return <Check size={20} strokeWidth={4} />
+    return <Star size={18} fill="#fbbf24" stroke="none" />
   }
 
-  const NodeContent = (
-    <div className={`relative flex flex-col items-center group w-24 h-24 sm:w-28 sm:h-28`}>
-      {/* Tooltip */}
-      <div className="absolute -top-14 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-900 text-white text-xs font-bold py-2 px-4 rounded-xl whitespace-nowrap pointer-events-none z-20 shadow-xl">
-        {item.title}
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 rotate-45"></div>
-      </div>
-
-      {/* Button */}
-      <motion.div 
-        whileHover={item.status !== 'locked' ? { scale: 1.1 } : {}}
-        whileTap={item.status !== 'locked' ? { scale: 0.95 } : {}}
-        className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center text-white shadow-xl transition-colors z-10 ${statusColors[item.status]} cursor-${item.status === 'locked' ? 'not-allowed' : 'pointer'}`}
-      >
-        <div className={iconColors[item.status]}>
-          <StatusIcon />
-        </div>
-      </motion.div>
-    </div>
-  )
-
-  // Align nodes left or right to create a winding path
   return (
-    <div className={`flex w-full ${isLeft ? 'justify-start sm:pl-[20%]' : 'justify-end sm:pr-[20%]'} mb-8 relative`}>
-      {item.status !== 'locked' ? (
-        <Link href={item.link || '#'} className="relative z-10 block">
-          {NodeContent}
-        </Link>
-      ) : (
-        <div className="relative z-10 opacity-70">
-          {NodeContent}
+    <div className={`relative flex flex-col items-center min-w-[100px] sm:min-w-[120px] ${isUp ? 'mb-12' : 'mt-12'}`}>
+      <Link href={item.link || '#'} className="relative z-10 flex flex-col items-center group">
+        
+        {/* Кнопка-узел */}
+        <motion.div 
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all z-10 ${statusColors[item.status] || statusColors.available}`}
+        >
+          <StatusIcon />
+        </motion.div>
+        
+        {/* Постоянно видимая подпись */}
+        <div className={`absolute ${isUp ? 'top-full mt-2' : 'bottom-full mb-2'} w-24 sm:w-28 text-center`}>
+          <span className="text-[10px] sm:text-[11px] font-bold text-slate-600 leading-tight block group-hover:text-indigo-600 transition-colors">
+            {item.title}
+          </span>
         </div>
-      )}
+
+      </Link>
     </div>
   )
 }
 
 export default function SkillTree({ subject, lessons }) {
   return (
-    <div className="w-full max-w-md mx-auto py-12 relative">
-      {/* Background Path Line */}
-      <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-4 bg-slate-200 rounded-full z-0 opacity-50"></div>
-      
-      {/* Decorative Title */}
-      <div className="text-center mb-12 relative z-10">
-        <h2 className="text-4xl font-black unbounded uppercase text-indigo-950 mb-2">
+    <div className="w-full py-4">
+      {/* Заголовок предмета */}
+      <div className="mb-8 px-4 flex items-center gap-3">
+        <h2 className="text-xl sm:text-2xl font-black unbounded uppercase text-indigo-950">
           {subject}
         </h2>
-        <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-700 px-4 py-1.5 rounded-full font-bold text-sm tracking-widest uppercase">
-          <Star size={16} fill="currentColor" /> Level B1
+        <div className="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-bold text-[10px] tracking-widest uppercase">
+          <BookOpen size={12} /> {lessons.length} уроков
         </div>
       </div>
 
-      {/* Nodes */}
-      <div className="relative flex flex-col items-center">
-        {lessons.map((lesson, idx) => (
-          <SkillNode 
-            key={lesson.id} 
-            item={lesson} 
-            index={idx} 
-            isLeft={idx % 2 === 0} 
-          />
-        ))}
+      {/* Горизонтальный скролл-контейнер */}
+      <div className="relative w-full overflow-x-auto pb-16 pt-16 px-4 sm:px-8 hide-scrollbar">
+        
+        {/* Фоновая линия (Горизонтальная) */}
+        <div className="absolute left-8 right-8 top-1/2 -translate-y-1/2 h-1.5 bg-slate-100 rounded-full z-0"></div>
+        
+        {/* Сами узлы (выстраиваются в ряд) */}
+        <div className="flex items-center gap-6 sm:gap-10 min-w-max relative z-10 px-4">
+          {lessons.map((lesson, idx) => (
+            <SkillNode 
+              key={lesson.id} 
+              item={lesson} 
+              index={idx} 
+            />
+          ))}
+        </div>
       </div>
+      
+      {/* Скрываем скроллбар для красоты, но оставляем функциональность */}
+      <style jsx>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </div>
   )
 }

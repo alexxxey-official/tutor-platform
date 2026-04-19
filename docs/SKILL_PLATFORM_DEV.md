@@ -35,7 +35,8 @@ To support deep analytics and tracking, the database follows this relational str
 
 ## 4. Development Workflow (DevOps)
 - **Local Verification:** NEVER push to production without running a local build (`npm run build`) to catch compilation or routing errors.
-- **Continuous Deployment:** The project is linked to Vercel. Pushing to the `main` branch triggers a production build.
+- **Continuous Deployment:** Every verified change MUST be committed and pushed to `main` immediately to trigger the Vercel build.
+- **Reporting:** Post-implementation, document changes in `/отчеты/YYYY-MM-DD/log.md`.
 - **Commit Standards:** Clear, descriptive commit messages (e.g., `fix(english): update placeholders`, `feat(core): add attempt history tracking`).
 
 ## 5. Decision Making
