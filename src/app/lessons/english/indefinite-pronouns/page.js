@@ -86,93 +86,157 @@ export default function IndefinitePronounsPage() {
             <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600"></div>
               <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <Info size={20} className="text-blue-600" /> 1. Основные группы
+                <Info size={20} className="text-blue-600" /> Шаг 1: Выбери «КТО / ЧТО» (Окончание)
               </h3>
-              <p className="mb-6 leading-relaxed">
-                Неопределенные местоимения в английском строятся как конструктор: мы берем <strong>основу</strong> (Some, Any, No, Every) и добавляем к ней <strong>категорию</strong>.
+              <p className="mb-6 leading-relaxed text-slate-600">
+                Неопределенные местоимения в английском собираются как конструктор. Сначала решаем, о ком или о чем идет речь.
               </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                  <div className="text-2xl mb-2">👤</div>
+                  <strong className="text-blue-600 font-mono text-lg">-body / -one</strong>
+                  <p className="text-sm text-slate-500 mt-2">Люди (кто-то, никто)</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                  <div className="text-2xl mb-2">📦</div>
+                  <strong className="text-emerald-600 font-mono text-lg">-thing</strong>
+                  <p className="text-sm text-slate-500 mt-2">Вещи (что-то, ничто)</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                  <div className="text-2xl mb-2">🌍</div>
+                  <strong className="text-amber-600 font-mono text-lg">-where</strong>
+                  <p className="text-sm text-slate-500 mt-2">Места (где-то, везде)</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2: Usage Rules */}
+            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-indigo-600"></div>
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Star size={20} className="text-indigo-500" /> Шаг 2: Выбери «ЛОГИКУ» (Приставка)
+              </h3>
               
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-slate-100">
-                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Категория</th>
-                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Окончание</th>
-                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Значение</th>
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Приставка</th>
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Тип предложения</th>
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Перевод</th>
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Пример</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-50">
-                    <tr>
-                      <td className="py-4 font-bold">Люди</td>
-                      <td className="py-4 text-blue-600 font-mono">-body / -one</td>
-                      <td className="py-4 text-slate-600 italic">Somebody / Everyone</td>
+                    <tr className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 font-black text-blue-600 text-lg">SOME-</td>
+                      <td className="py-4"><span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-md font-bold text-xs">Утверждение (+)</span></td>
+                      <td className="py-4 font-medium text-slate-700">Кое-кто / Что-то</td>
+                      <td className="py-4 text-slate-600 italic">I have <strong className="text-indigo-600 font-normal">something</strong>.<br/><span className="text-xs text-slate-400">(У меня кое-что есть)</span></td>
                     </tr>
-                    <tr>
-                      <td className="py-4 font-bold">Предметы</td>
-                      <td className="py-4 text-blue-600 font-mono">-thing</td>
-                      <td className="py-4 text-slate-600 italic">Something / Nothing</td>
+                    <tr className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 font-black text-amber-500 text-lg">ANY-</td>
+                      <td className="py-4 flex flex-col gap-1 items-start">
+                        <span className="bg-amber-100 text-amber-700 px-2 py-1 rounded-md font-bold text-xs">Вопрос (?)</span>
+                        <span className="bg-amber-100 text-amber-700 px-2 py-1 rounded-md font-bold text-xs">Отрицание (-)</span>
+                      </td>
+                      <td className="py-4 font-medium text-slate-700">Кто-нибудь / Никто</td>
+                      <td className="py-4 text-slate-600 italic">
+                        Do you have <strong className="text-indigo-600 font-normal">anything</strong>?<br/><span className="text-xs text-slate-400">(Есть что-нибудь?)</span>
+                        <div className="mt-2 border-t border-slate-200 pt-2"></div>
+                        I don't have <strong className="text-indigo-600 font-normal">anything</strong>.<br/><span className="text-xs text-slate-400">(У меня ничего нет)</span>
+                      </td>
                     </tr>
-                    <tr>
-                      <td className="py-4 font-bold">Места</td>
-                      <td className="py-4 text-blue-600 font-mono">-where</td>
-                      <td className="py-4 text-slate-600 italic">Somewhere / Anywhere</td>
+                    <tr className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 font-black text-rose-500 text-lg">NO-</td>
+                      <td className="py-4"><span className="bg-rose-100 text-rose-700 px-2 py-1 rounded-md font-bold text-xs">Отрицание (-)</span></td>
+                      <td className="py-4 font-medium text-slate-700">Никто / Ничто</td>
+                      <td className="py-4 text-slate-600 italic">I have <strong className="text-indigo-600 font-normal">nothing</strong>.<br/><span className="text-xs text-slate-400">(У меня ничего нет)</span></td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 font-black text-emerald-500 text-lg">EVERY-</td>
+                      <td className="py-4"><span className="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-md font-bold text-xs">Все (100%)</span></td>
+                      <td className="py-4 font-medium text-slate-700">Все / Всё / Везде</td>
+                      <td className="py-4 text-slate-600 italic">I have <strong className="text-indigo-600 font-normal">everything</strong>.<br/><span className="text-xs text-slate-400">(У меня есть всё)</span></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
 
-            {/* Card 2: Usage Rules */}
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-400"></div>
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <Star size={20} className="text-amber-500" /> 2. Правила выбора основы
-              </h3>
+            {/* Card 3: The 3 Secrets */}
+            <div className="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
+              <h3 className="text-2xl font-black mb-8 text-amber-400 unbounded text-center">ТРИ ВАЖНЫХ СЕКРЕТА</h3>
               
-              <div className="space-y-4">
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                  <div className="flex items-center justify-between mb-2">
-                    <strong className="text-blue-600 uppercase tracking-widest text-xs">Some-</strong>
-                    <span className="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-bold">Affirmative (+)</span>
-                  </div>
-                  <p className="text-sm">Используем в утверждениях или когда что-то предлагаем.</p>
-                  <p className="text-xs italic text-slate-500 mt-2">Example: Would you like <span className="text-indigo-600 font-bold">something</span> to drink?</p>
+              <div className="space-y-6">
+                {/* Secret 1 */}
+                <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <div className="text-emerald-400 font-bold uppercase tracking-widest text-xs mb-2">Секрет №1</div>
+                  <h4 className="text-lg font-bold text-white mb-3">ANY в утверждении (+)</h4>
+                  <p className="text-slate-300 text-sm mb-3">Если поставить Any- в обычное (утвердительное) предложение, оно меняет значение на <strong className="text-white bg-amber-500/20 px-2 py-1 rounded">«ЛЮБОЙ / КТО УГОДНО»</strong>.</p>
+                  <ul className="text-sm text-slate-400 space-y-2 font-mono">
+                    <li><span className="text-amber-400">Take anything!</span> (Бери что угодно!)</li>
+                    <li><span className="text-amber-400">Ask anyone.</span> (Спроси любого).</li>
+                  </ul>
                 </div>
 
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                  <div className="flex items-center justify-between mb-2">
-                    <strong className="text-amber-600 uppercase tracking-widest text-xs">Any-</strong>
-                    <span className="text-[10px] bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full font-bold">Questions (?) & Negatives (-)</span>
-                  </div>
-                  <p className="text-sm">Используем в вопросах и отрицаниях с частицей NOT.</p>
-                  <p className="text-xs italic text-slate-500 mt-2">Example: I don't know <span className="text-indigo-600 font-bold">anybody</span> here.</p>
+                {/* Secret 2 */}
+                <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <div className="text-blue-400 font-bold uppercase tracking-widest text-xs mb-2">Секрет №2</div>
+                  <h4 className="text-lg font-bold text-white mb-3">Грамматика: Всегда «ОН»</h4>
+                  <p className="text-slate-300 text-sm mb-3">Все эти слова (даже everyone — «все») в английском считаются <strong className="text-white border-b-2 border-blue-500">единственным числом</strong>.</p>
+                  <ul className="text-sm text-slate-400 space-y-2 font-mono">
+                    <li>Everyone <strong className="text-rose-400 underline decoration-wavy underline-offset-4">is</strong> happy. (Все счастливы).</li>
+                    <li>Nothing <strong className="text-rose-400 underline decoration-wavy underline-offset-4">works</strong>. (Ничего не работает).</li>
+                  </ul>
                 </div>
 
-                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                  <div className="flex items-center justify-between mb-2">
-                    <strong className="text-rose-600 uppercase tracking-widest text-xs">No-</strong>
-                    <span className="text-[10px] bg-rose-100 text-rose-600 px-2 py-0.5 rounded-full font-bold">Hard Negatives (-)</span>
-                  </div>
-                  <p className="text-sm">Используем для отрицания БЕЗ частицы NOT. <strong>Двойное отрицание запрещено!</strong></p>
-                  <p className="text-xs italic text-slate-500 mt-2">Example: <span className="text-indigo-600 font-bold">Nobody</span> called me. (NOT: Nobody didn't call)</p>
+                {/* Secret 3 */}
+                <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <div className="text-rose-400 font-bold uppercase tracking-widest text-xs mb-2">Секрет №3</div>
+                  <h4 className="text-lg font-bold text-white mb-3">NONE vs NO ONE</h4>
+                  <ul className="text-sm text-slate-300 space-y-4">
+                    <li>
+                      <strong className="text-white">No one / Nobody</strong> = Никто (вообще в мире, абстрактно).
+                    </li>
+                    <li className="pt-4 border-t border-white/10">
+                      <strong className="text-white bg-rose-500/20 px-2 py-1 rounded">None</strong> = Ни один <strong className="text-rose-400">ИЗ</strong> (конкретной группы) или Нисколько (в ответ на вопрос «сколько?»).
+                      <div className="mt-3 pl-4 border-l-2 border-rose-500/50 space-y-2 font-mono text-slate-400">
+                        <p><span className="text-rose-300">None</span> of my friends. (Никто из моих друзей).</p>
+                        <p>— How much water? — <span className="text-rose-300">None</span>. (— Сколько воды? — Нисколько).</p>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
 
-            {/* Card 3: The Singularity Rule */}
-            <div className="bg-indigo-950 p-8 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
-              <div className="absolute right-0 top-0 p-4 opacity-10 text-white">
-                <AlertCircle size={80} />
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-amber-400">⚠️ Правило "Единственного числа"</h3>
-              <p className="text-slate-300 leading-relaxed mb-6">
-                Даже если местоимение означает "все" (Everyone) или "всё" (Everything), грамматически это всегда <strong>ОН/ОНО</strong>.
-              </p>
-              <div className="p-4 bg-white/5 border border-white/10 rounded-xl font-mono text-emerald-400">
-                Everyone <span className="underline text-white">is</span> happy. (NOT: Everyone are)<br/>
-                Nothing <span className="underline text-white">happens</span> by chance.
-              </div>
+            {/* Cheat Sheet */}
+            <div className="bg-teal-50 p-8 rounded-2xl border-2 border-teal-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-teal-900">
+                <AlertCircle size={24} className="text-teal-600" /> Шпаргалка для выбора:
+              </h3>
+              <ul className="space-y-4 text-teal-900 font-medium">
+                <li className="flex items-center gap-3">
+                  <span className="bg-teal-200 text-teal-800 w-6 h-6 flex items-center justify-center rounded-full text-sm font-bold">1</span>
+                  Если в предложении <strong className="bg-rose-100 text-rose-700 px-2 py-0.5 rounded">есть NOT</strong> ➡️ используй <strong>ANY</strong> <span className="text-teal-600/70 font-normal italic ml-2">(I don't know anyone).</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="bg-teal-200 text-teal-800 w-6 h-6 flex items-center justify-center rounded-full text-sm font-bold">2</span>
+                  Если в предложении <strong className="bg-teal-200 px-2 py-0.5 rounded">нет NOT</strong>, но смысл отрицательный ➡️ используй <strong>NO</strong> <span className="text-teal-600/70 font-normal italic ml-2">(I know no one).</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="bg-teal-200 text-teal-800 w-6 h-6 flex items-center justify-center rounded-full text-sm font-bold">3</span>
+                  Если спрашиваешь <strong className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded">«Кто-нибудь?»</strong> ➡️ используй <strong>ANY</strong> <span className="text-teal-600/70 font-normal italic ml-2">(Is anyone there?).</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="bg-teal-200 text-teal-800 w-6 h-6 flex items-center justify-center rounded-full text-sm font-bold">4</span>
+                  Если утверждаешь <strong className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded">«Кто-то есть»</strong> ➡️ используй <strong>SOME</strong> <span className="text-teal-600/70 font-normal italic ml-2">(Someone is there).</span>
+                </li>
+              </ul>
             </div>
+
           </div>
         </section>
 
