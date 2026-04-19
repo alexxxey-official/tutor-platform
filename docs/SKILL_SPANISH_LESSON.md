@@ -1,4 +1,4 @@
-# Skill: Spanish Lesson Creation (Fiesta Standard v1.1) 🇪🇸💃
+# Skill: Spanish Lesson Creation (Fiesta Standard v1.2) 🇪🇸💃
 
 ## 1. Structural Integrity (The Anatomy of a Lesson)
 Based on the Golden Standard v2.6, every Spanish lesson MUST contain:
@@ -6,6 +6,7 @@ Based on the Golden Standard v2.6, every Spanish lesson MUST contain:
 2.  **Theory (Deep Dive & Visuals):**
     -   **Detailed Color-Coded Tables:** MANDATORY. Conjugation tables, rules, and exceptions. Red/Rose for exceptions, Emerald for regular forms.
     -   **"Las Reglas" (Правила) Block:** A dark mode (`bg-slate-900`) section for strict rules, false friends, or pronunciation traps. NO "Secrets".
+    -   **Audio Pronunciation:** Whenever introducing core vocabulary, conjugations, or tricky rules in the Theory section, use the `<AudioPlayer />` component (or standard HTML5 `<audio>` tags if custom component is unavailable) to provide native pronunciation. No Russian transcriptions.
     -   **Cheat Sheet (¡Ojo! / Внимание!):** Algorithm boxes in vibrant colors (e.g., `bg-rose-50`).
 3.  **Classwork (CW):** Minimum 25-30 items (must NOT decrease from original).
     -   Must include immersive cultural context where possible.
