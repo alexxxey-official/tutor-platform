@@ -12,56 +12,62 @@ export function useLessonProgress(lessonId, totalExercisesCW, totalExercisesHW) 
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setUserId(user.id);
-        const { data, error } = await supabase
-          .from('student_lessons')
-          .select('*')
-          .eq('student_id', user.id)
-          .eq('lesson_id', lessonId)
-          .single();
-          
-        if (error && error.code !== 'PGRST116') {
-            console.error("Ошибка загрузки прогресса:", error.message);
-        }
-
-        if (data) {
-          let currentVariant = data.variant_id || 1;
-          
-          if (data.progress_data) {
-            const validData = { cw: {}, hw: {}, ...data.progress_data };
+      try {
+        const { data, error: authError } = await supabase.auth.getUser();
+        const user = data?.user;
+        if (user) {
+          setUserId(user.id);
+          const { data: lessonData, error } = await supabase
+            .from('student_lessons')
+            .select('*')
+            .eq('student_id', user.id)
+            .eq('lesson_id', lessonId)
+            .single();
             
-            // FIX: Если ДЗ пустое, но вариант 2 — сбрасываем на вариант 1
-            const hwKeys = Object.keys(validData.hw || {});
-            if (hwKeys.length === 0 && currentVariant === 2) {
-              currentVariant = 1;
-              setVariant(1);
-              // Синхронизируем с базой, чтобы убрать "зависание"
-              supabase
-                .from('student_lessons')
-                .update({ variant_id: 1 })
-                .eq('student_id', user.id)
-                .eq('lesson_id', lessonId)
-                .then();
-            } else {
-              setVariant(currentVariant);
+          if (error && error.code !== 'PGRST116') {
+              console.error("Ошибка загрузки прогресса:", error.message);
+          }
+  
+          if (lessonData) {
+            let currentVariant = lessonData.variant_id || 1;
+            
+            if (lessonData.progress_data) {
+              const validData = { cw: {}, hw: {}, ...lessonData.progress_data };
+              
+              // FIX: Если ДЗ пустое, но вариант 2 — сбрасываем на вариант 1
+              const hwKeys = Object.keys(validData.hw || {});
+              if (hwKeys.length === 0 && currentVariant === 2) {
+                currentVariant = 1;
+                setVariant(1);
+                // Синхронизируем с базой, чтобы убрать "зависание"
+                supabase
+                  .from('student_lessons')
+                  .update({ variant_id: 1 })
+                  .eq('student_id', user.id)
+                  .eq('lesson_id', lessonId)
+                  .then();
+              } else {
+                setVariant(currentVariant);
+              }
+              
+              setProgress(validData);
             }
             
-            setProgress(validData);
-          }
-          
-          if ((!data.total_score || data.total_score === 0) && totalExercises > 0) {
-            supabase
-              .from('student_lessons')
-              .update({ total_score: totalExercises })
-              .eq('student_id', user.id)
-              .eq('lesson_id', lessonId)
-              .then(() => {});
+            if ((!lessonData.total_score || lessonData.total_score === 0) && totalExercises > 0) {
+              supabase
+                .from('student_lessons')
+                .update({ total_score: totalExercises })
+                .eq('student_id', user.id)
+                .eq('lesson_id', lessonId)
+                .then(() => {});
+            }
           }
         }
+      } catch (err) {
+        console.error("Hook error:", err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     fetchUser();
   }, [lessonId]);

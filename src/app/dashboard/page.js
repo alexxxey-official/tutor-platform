@@ -12,25 +12,25 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mb-6 transition-all">
       {/* Шапка Аккордеона */}
-      <button 
+      <div 
         onClick={onToggle}
-        className="w-full px-6 py-6 sm:px-8 sm:py-8 flex items-center justify-between hover:bg-slate-50 transition-colors"
+        className="w-full px-6 py-6 sm:px-8 sm:py-8 flex items-center justify-between hover:bg-slate-50 transition-colors cursor-pointer"
       >
         <div className="flex items-center gap-4 sm:gap-6">
-          <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-white text-xl sm:text-2xl font-black shadow-lg ${color}`}>
-            {subject.charAt(0)}
+          <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center text-white text-xl sm:text-2xl font-black shadow-lg ${color || 'bg-slate-500'}`}>
+            {subject ? subject.charAt(0) : '?'}
           </div>
           <div className="text-left">
-            <h2 className="text-xl sm:text-2xl font-black unbounded text-slate-900 mb-1">{subject}</h2>
+            <h2 className="text-xl sm:text-2xl font-black unbounded text-slate-900 mb-1">{subject || 'Без названия'}</h2>
             <div className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest">
-              {level} • {lessons.length} уроков
+              {level} • {lessons?.length || 0} уроков
             </div>
           </div>
         </div>
         <div className={`p-2 rounded-full transition-transform duration-300 ${isOpen ? 'rotate-180 bg-slate-100 text-slate-900' : 'text-slate-400'}`}>
           <ChevronDown size={24} />
         </div>
-      </button>
+      </div>
 
       {/* Тело Аккордеона */}
       <AnimatePresence>
@@ -153,7 +153,13 @@ export default function DashboardPage() {
   const [assignments, setAssignments] = useState([])
   const [loading, setLoading] = useState(true)
   const [openSubject, setOpenSubject] = useState(null)
+  const [hasAutoOpened, setHasAutoOpened] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const checkUser = async () => {
@@ -200,7 +206,7 @@ export default function DashboardPage() {
     router.push('/login')
   }
 
-  if (loading) return <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] flex items-center justify-center font-bold font-mono">LOADING...</div>
+  if (loading || !mounted) return <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] flex items-center justify-center font-bold font-mono">LOADING...</div>
 
   // Настройка уровней и цветов для предметов
   const subjectConfig = {
@@ -209,8 +215,6 @@ export default function DashboardPage() {
     'Math': { level: 'Общий курс', color: 'bg-emerald-500' },
     'Physics': { level: 'Общий курс', color: 'bg-violet-500' }
   }
-
-  const [hasAutoOpened, setHasAutoOpened] = useState(false)
 
   // Группировка
   const subjectsMap = {}
@@ -253,10 +257,10 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] pb-20 font-sans">
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800;900&display=swap');
         .unbounded { font-family: 'Unbounded', sans-serif; }
-      `}</style>
+      `}} />
       
       <div className="bg-indigo-950 text-white px-6 sm:px-10 py-10 relative overflow-hidden mb-10 shadow-md">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-start gap-6 relative z-10">
@@ -266,7 +270,7 @@ export default function DashboardPage() {
             </div>
             <h1 className="font-black text-3xl sm:text-4xl leading-[1.1] mb-2 unbounded">
               Привет,<br />
-              <em className="text-emerald-400 not-italic font-normal">{user?.email?.split('@')[0]}</em>!
+              <em className="text-emerald-400 not-italic font-normal">{(user?.email?.split('@') || [])[0] || 'ученик'}</em>!
             </h1>
           </div>
           <div className="flex gap-3">

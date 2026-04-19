@@ -16,12 +16,18 @@ export default function AdminPage() {
 
   useEffect(() => {
     const checkAdmin = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user || user.email !== 'gulaevl068@gmail.com') {
+      try {
+        const { data, error: authError } = await supabase.auth.getUser()
+        const user = data?.user
+        if (authError || !user || user.email !== 'gulaevl068@gmail.com') {
+          router.push('/dashboard')
+          return
+        }
+        fetchStudents()
+      } catch (err) {
+        console.error("Admin check error:", err)
         router.push('/dashboard')
-        return
       }
-      fetchStudents()
     }
     checkAdmin()
   }, [router])
