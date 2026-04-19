@@ -26,7 +26,7 @@ Based on the Golden Standard v2.6, every Spanish lesson MUST contain:
 
 ## 4. Checklist of Grammatical Lessons for Overhaul
 1. [x] `spa_ser` (Урок 2: Местоимения и глагол SER) - V1.2
-2. [ ] `spa_articles` (Урок 3: Артикли и Род)
+2. [x] `spa_articles` (Урок 3: Артикли и Род) - V1.2
 3. [ ] `spa_tener` (Урок 4: Глагол TENER)
 4. [ ] `spa_verbs` (Урок 5: Правильные глаголы)
 5. [ ] `spa_estar` (Урок 6: ESTAR и Предлоги)
