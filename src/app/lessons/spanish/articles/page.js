@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 import AdvancedProgressBar from '../../../../components/AdvancedProgressBar'
 import Exercise from '../../../../components/Exercise'
@@ -15,7 +16,12 @@ export default function ArticlesLessonPage() {
   const { progress, updateProgress, resetHW, variant, getStats, loading } = 
     useLessonProgress(lessonId, totalCW, totalHW)
 
-  if (loading) return (
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (loading || !mounted) return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50">
       <div className="flex flex-col items-center gap-4">
         <div className="w-12 h-12 border-4 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
