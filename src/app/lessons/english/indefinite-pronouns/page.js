@@ -2,11 +2,13 @@
 import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 import AdvancedProgressBar from '../../../../components/AdvancedProgressBar'
 import Exercise from '../../../../components/Exercise'
-import { Home, BookOpen, PenTool, CheckCircle } from 'lucide-react'
+import { Home, BookOpen, PenTool, CheckCircle, Star, AlertCircle, Info } from 'lucide-react'
 import Link from 'next/link'
 
 export default function IndefinitePronounsPage() {
   const lessonId = 'eng_nobody'
+  // CW: 5 (Reading) + 10 (Dropdown) + 5 (Builder) + 5 (Transformation) + 5 (Logic) = 30
+  // HW: 20 items per variant
   const totalCW = 30
   const totalHW = 20
   
@@ -27,10 +29,10 @@ export default function IndefinitePronounsPage() {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] font-sans pb-20">
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800&display=swap');
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800;900&display=swap');
         .unbounded { font-family: 'Unbounded', sans-serif; }
-      `}</style>
+      `}} />
 
       {/* Header */}
       <header className="bg-indigo-950 text-white py-16 px-6 text-center relative overflow-hidden">
@@ -80,41 +82,95 @@ export default function IndefinitePronounsPage() {
           <h2 className="text-3xl font-black unbounded mb-8">Somebody, Anybody... Никто не знает, что выбрать!</h2>
           
           <div className="grid gap-6">
+            {/* Card 1: The Basics */}
             <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
               <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-600"></div>
-              <h3 className="text-xl font-bold mb-4">1. Четыре кита местоимений</h3>
-              <p className="mb-4">Неопределенные местоимения образуются путем слияния основ <strong>SOME-, ANY-, NO-, EVERY-</strong> с окончаниями <strong>-BODY/-ONE</strong> (для людей), <strong>-THING</strong> (для предметов) и <strong>-WHERE</strong> (для мест).</p>
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Info size={20} className="text-blue-600" /> 1. Основные группы
+              </h3>
+              <p className="mb-6 leading-relaxed">
+                Неопределенные местоимения в английском строятся как конструктор: мы берем <strong>основу</strong> (Some, Any, No, Every) и добавляем к ней <strong>категорию</strong>.
+              </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                <div className="p-4 bg-slate-50 rounded-xl">
-                    <strong className="text-blue-600">SOME-</strong>
-                    <p className="text-sm mt-1">Утвердительные предложения (+)</p>
-                    <p className="text-xs italic text-slate-500 mt-1">I have something for you.</p>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-slate-100">
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Категория</th>
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Окончание</th>
+                      <th className="text-left py-3 font-bold text-slate-400 uppercase tracking-wider">Значение</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-50">
+                    <tr>
+                      <td className="py-4 font-bold">Люди</td>
+                      <td className="py-4 text-blue-600 font-mono">-body / -one</td>
+                      <td className="py-4 text-slate-600 italic">Somebody / Everyone</td>
+                    </tr>
+                    <tr>
+                      <td className="py-4 font-bold">Предметы</td>
+                      <td className="py-4 text-blue-600 font-mono">-thing</td>
+                      <td className="py-4 text-slate-600 italic">Something / Nothing</td>
+                    </tr>
+                    <tr>
+                      <td className="py-4 font-bold">Места</td>
+                      <td className="py-4 text-blue-600 font-mono">-where</td>
+                      <td className="py-4 text-slate-600 italic">Somewhere / Anywhere</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Card 2: Usage Rules */}
+            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-400"></div>
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Star size={20} className="text-amber-500" /> 2. Правила выбора основы
+              </h3>
+              
+              <div className="space-y-4">
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <strong className="text-blue-600 uppercase tracking-widest text-xs">Some-</strong>
+                    <span className="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-bold">Affirmative (+)</span>
+                  </div>
+                  <p className="text-sm">Используем в утверждениях или когда что-то предлагаем.</p>
+                  <p className="text-xs italic text-slate-500 mt-2">Example: Would you like <span className="text-indigo-600 font-bold">something</span> to drink?</p>
                 </div>
-                <div className="p-4 bg-slate-50 rounded-xl">
-                    <strong className="text-amber-500">ANY-</strong>
-                    <p className="text-sm mt-1">Вопросы (?) и Отрицания (-) с NOT</p>
-                    <p className="text-xs italic text-slate-500 mt-1">I don't have anything.</p>
+
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <strong className="text-amber-600 uppercase tracking-widest text-xs">Any-</strong>
+                    <span className="text-[10px] bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full font-bold">Questions (?) & Negatives (-)</span>
+                  </div>
+                  <p className="text-sm">Используем в вопросах и отрицаниях с частицей NOT.</p>
+                  <p className="text-xs italic text-slate-500 mt-2">Example: I don't know <span className="text-indigo-600 font-bold">anybody</span> here.</p>
                 </div>
-                <div className="p-4 bg-slate-50 rounded-xl">
-                    <strong className="text-rose-500">NO-</strong>
-                    <p className="text-sm mt-1">Отрицания (-) БЕЗ NOT</p>
-                    <p className="text-xs italic text-slate-500 mt-1">I have nothing. (НЕ I don't have nothing)</p>
-                </div>
-                <div className="p-4 bg-slate-50 rounded-xl">
-                    <strong className="text-emerald-500">EVERY-</strong>
-                    <p className="text-sm mt-1">Все/Всё</p>
-                    <p className="text-xs italic text-slate-500 mt-1">Everything is ready.</p>
+
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <strong className="text-rose-600 uppercase tracking-widest text-xs">No-</strong>
+                    <span className="text-[10px] bg-rose-100 text-rose-600 px-2 py-0.5 rounded-full font-bold">Hard Negatives (-)</span>
+                  </div>
+                  <p className="text-sm">Используем для отрицания БЕЗ частицы NOT. <strong>Двойное отрицание запрещено!</strong></p>
+                  <p className="text-xs italic text-slate-500 mt-2">Example: <span className="text-indigo-600 font-bold">Nobody</span> called me. (NOT: Nobody didn't call)</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-400"></div>
-              <h3 className="text-xl font-bold mb-4 text-amber-600">⚠️ Важное правило: Сингулярность</h3>
-              <div className="p-4 bg-amber-50 border border-amber-100 rounded-xl text-amber-900 text-sm leading-relaxed">
-                Все неопределенные местоимения (даже Everyone / Everything) в английском языке считаются <strong>единственным числом</strong>.
-                <div className="text-lg font-bold mt-2">Everyone IS... / Nothing HAPPENS...</div>
+            {/* Card 3: The Singularity Rule */}
+            <div className="bg-indigo-950 p-8 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
+              <div className="absolute right-0 top-0 p-4 opacity-10 text-white">
+                <AlertCircle size={80} />
+              </div>
+              <h3 className="text-xl font-bold mb-4 text-amber-400">⚠️ Правило "Единственного числа"</h3>
+              <p className="text-slate-300 leading-relaxed mb-6">
+                Даже если местоимение означает "все" (Everyone) или "всё" (Everything), грамматически это всегда <strong>ОН/ОНО</strong>.
+              </p>
+              <div className="p-4 bg-white/5 border border-white/10 rounded-xl font-mono text-emerald-400">
+                Everyone <span className="underline text-white">is</span> happy. (NOT: Everyone are)<br/>
+                Nothing <span className="underline text-white">happens</span> by chance.
               </div>
             </div>
           </div>
@@ -126,56 +182,176 @@ export default function IndefinitePronounsPage() {
             Practice <div className="h-[2px] w-12 bg-indigo-600"></div>
           </div>
           <h2 className="text-3xl font-black unbounded mb-4 text-indigo-950">Classwork</h2>
-          <p className="text-slate-500 mb-8">Тренируемся различать основы и контекст.</p>
+          <p className="text-slate-500 mb-8">Практикуем основы, логику и сложные конструкции.</p>
 
-          <div className="space-y-8">
+          <div className="space-y-12">
+            {/* Block 1: Reading / Context */}
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-              <h3 className="text-xl font-bold mb-6">Блок 1: SOME- vs ANY- vs NO-</h3>
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-600 rounded-full"></div> Блок 1: Понимание контекста
+              </h3>
               <div className="space-y-4">
-                <Exercise id="ex1" mode="cw" label="1. I can't see _______ in the dark." correctAnswer="anything" hint="После отрицания 'can't' используем ANY." progressItem={progress.cw?.ex1} onUpdate={updateProgress} />
-                <Exercise id="ex2" mode="cw" label="2. Listen! There is _______ in the room." correctAnswer="somebody|someone" hint="Утверждение — используем SOME." progressItem={progress.cw?.ex2} onUpdate={updateProgress} />
-                <Exercise id="ex3" mode="cw" label="3. Are you looking for _______?" correctAnswer="anybody|anyone|somebody|someone" hint="В вопросах можно и SOME, и ANY, но чаще ANY." progressItem={progress.cw?.ex3} onUpdate={updateProgress} />
-                <Exercise id="ex4" mode="cw" label="4. I am bored. I have _______ to do. (No 'not' here)" correctAnswer="nothing" hint="Глагол в утвердительной форме, но смысл отрицательный." progressItem={progress.cw?.ex4} onUpdate={updateProgress} />
-                <Exercise id="ex5" mode="cw" label="5. We can go _______ you want. (Anywhere is fine)" correctAnswer="anywhere" hint="ANY- в утверждении значит 'любой'." progressItem={progress.cw?.ex5} onUpdate={updateProgress} />
-                
-                <p className="text-center text-slate-400 py-4 text-xs italic font-mono uppercase tracking-widest border-t border-slate-50 mt-4 pt-6">Next items (6-30) logic training</p>
-                
-                {[...Array(25)].map((_, i) => {
-                    const id = `ex${i + 6}`;
-                    // Mock data for the rest 25 items to fulfill 30 totalCW
-                    const mockData = [
-                        { q: "Is there _______ in the bag?", a: "anything" },
-                        { q: "_______ told me about the party, so I didn't go.", a: "nobody|no one" },
-                        { q: "I've lost my keys! I've looked _______.", a: "everywhere" },
-                        { q: "I'm hungry. I want _______ to eat.", a: "something" },
-                        { q: "Does _______ know the answer?", a: "anybody|anyone" },
-                        { q: "The room was empty. There was _______ there.", a: "nobody|no one" },
-                        { q: "I didn't eat _______ because I wasn't hungry.", a: "anything" },
-                        { q: "You can find this book _______.", a: "everywhere|anywhere" },
-                        { q: "_______ is possible if you try hard.", a: "everything|anything" },
-                        { q: "I know _______ who can help you.", a: "somebody|someone" },
-                        { q: "I don't know _______ about physics.", a: "anything" },
-                        { q: "Wait! I think I heard _______.", a: "something" },
-                        { q: "_______ is better than nothing.", a: "something|anything" },
-                        { q: "I have _______ to tell you.", a: "something" },
-                        { q: "Can _______ hear me?", a: "anybody|anyone" },
-                        { q: "There is _______ on the table. It's empty.", a: "nothing" },
-                        { q: "I want to live _______ warm.", a: "somewhere" },
-                        { q: "Did you go _______ exciting last summer?", a: "anywhere" },
-                        { q: "_______ called you while you were out.", a: "somebody|someone" },
-                        { q: "I've forgotten _______ I learned at school.", a: "everything" },
-                        { q: "He is very lazy. He does _______ all day.", a: "nothing" },
-                        { q: "Is there _______ I can do for you?", a: "anything" },
-                        { q: "_______ knows that the Earth is round.", a: "everyone|everybody" },
-                        { q: "I've never been _______ as beautiful as this.", a: "anywhere" },
-                        { q: "The party was great. _______ had a good time.", a: "everyone|everybody" }
-                    ];
-                    const item = mockData[i];
-                    return (
-                        <Exercise key={id} id={id} mode="cw" label={`${i + 6}. ${item.q}`} correctAnswer={item.a} progressItem={progress.cw?.[id]} onUpdate={updateProgress} />
-                    )
-                })}
+                <Exercise
+                  id="cw1"
+                  mode="cw"
+                  type="mcq"
+                  label='1. В каком случае мы ГАРАНТИРОВАННО используем "Something" вместо "Anything" в вопросе?'
+                  options={[
+                    "Если мы не знаем ответа.",
+                    "Если мы предлагаем что-то (Would you like...?)",
+                    "Если в предложении есть частица NOT."
+                  ]}
+                  correctAnswer="Если мы предлагаем что-то (Would you like...?)"
+                  progressItem={progress.cw?.cw1}
+                  onUpdate={updateProgress}
+                />
+                <Exercise
+                  id="cw2"
+                  mode="cw"
+                  type="mcq"
+                  label='2. Как правильно перевести: "Там никого нет" (без использования NOT)?'
+                  options={[
+                    "There isn't anyone there.",
+                    "There is nobody there.",
+                    "There is no anyone there."
+                  ]}
+                  correctAnswer="There is nobody there."
+                  progressItem={progress.cw?.cw2}
+                  onUpdate={updateProgress}
+                />
+                {[...Array(3)].map((_, i) => (
+                  <Exercise
+                    key={`cw_mcq_${i}`}
+                    id={`cw_m${i+3}`}
+                    mode="cw"
+                    type="mcq"
+                    label={`${i+3}. Выберите верное окончание: "Everything _____ ready."`}
+                    options={["is", "are", "am"]}
+                    correctAnswer="is"
+                    progressItem={progress.cw?.[`cw_m${i+3}`]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
               </div>
+            </div>
+
+            {/* Block 2: Mechanics (Dropdown) */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-indigo-600">
+                <div className="w-2 h-2 bg-indigo-600 rounded-full"></div> Блок 2: Выберите основу
+              </h3>
+              <div className="grid gap-4">
+                {[
+                  { id: 'cw6', q: "I can't find my keys _______.", ans: 'anywhere', opts: ['anywhere', 'nowhere', 'somewhere'] },
+                  { id: 'cw7', q: "Wait! I think I heard _______.", ans: 'something', opts: ['something', 'anything', 'nothing'] },
+                  { id: 'cw8', q: "Does _______ know where Leo is?", ans: 'anybody', opts: ['anybody', 'somebody', 'nobody'] },
+                  { id: 'cw9', q: "I'm so bored, there is _______ to do.", ans: 'nothing', opts: ['nothing', 'anything', 'everything'] },
+                  { id: 'cw10', q: "Look! _______ is coming towards us.", ans: 'somebody', opts: ['somebody', 'anybody', 'nobody'] },
+                  { id: 'cw11', q: "I've looked _______, but I can't find it.", ans: 'everywhere', opts: ['everywhere', 'anywhere', 'somewhere'] },
+                  { id: 'cw12', q: "Don't worry, _______ is going to be okay.", ans: 'everything', opts: ['everything', 'anything', 'something'] },
+                  { id: 'cw13', q: "I didn't tell _______ about the secret.", ans: 'anybody', opts: ['anybody', 'somebody', 'nobody'] },
+                  { id: 'cw14', q: "There is _______ interesting on TV tonight.", ans: 'nothing', opts: ['nothing', 'anything', 'something'] },
+                  { id: 'cw15', q: "I want to live _______ warm.", ans: 'somewhere', opts: ['somewhere', 'anywhere', 'nowhere'] },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="dropdown"
+                    label={ex.q}
+                    options={ex.opts}
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 3: Sentence Builder */}
+            <div className="bg-slate-900 p-8 rounded-3xl text-white shadow-xl">
+              <h3 className="text-xl font-bold mb-6 unbounded text-amber-400">Блок 3: Порядок слов</h3>
+              <div className="space-y-6">
+                {[
+                  { id: 'cw16', ans: "There is nothing in the bag", opts: ['the bag', 'nothing', 'There', 'in', 'is'] },
+                  { id: 'cw17', ans: "I don't know anyone here", opts: ['anyone', 'I', 'know', 'here', "don't"] },
+                  { id: 'cw18', ans: "Everything was ready for the party", opts: ['ready', 'Everything', 'for', 'was', 'the party'] },
+                  { id: 'cw19', ans: "Is there anything I can do ?", opts: ['can', 'I', 'anything', 'Is', 'there', 'do', '?'] },
+                  { id: 'cw20', ans: "Nobody knows the answer to this", opts: ['answer', 'the', 'knows', 'to this', 'Nobody'] },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="builder"
+                    label="Assemble the sentence:"
+                    options={ex.opts}
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 4: Gap-fill Transformation */}
+            <div className="bg-white p-8 rounded-3xl border-2 border-indigo-100 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 text-indigo-600">Блок 4: Трансформация смыслов</h3>
+              <div className="space-y-8">
+                <div className="flex flex-wrap items-center gap-3 text-slate-900 font-bold text-lg">
+                  <span className="text-sm text-slate-400 w-full mb-2 uppercase tracking-widest font-mono">21. (I don't have anything) {'->'}</span>
+                  <span>I have</span>
+                  <div className="w-40">
+                    <Exercise id="cw21" mode="cw" placeholder="Enter answer" correctAnswer="nothing" progressItem={progress.cw?.cw21} onUpdate={updateProgress} variant="inline" />
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-3 text-slate-900 font-bold text-lg">
+                  <span className="text-sm text-slate-400 w-full mb-2 uppercase tracking-widest font-mono">22. (Nobody is here) {'->'}</span>
+                  <span>There isn't</span>
+                  <div className="w-40">
+                    <Exercise id="cw22" mode="cw" placeholder="Enter answer" correctAnswer="anybody|anyone" progressItem={progress.cw?.cw22} onUpdate={updateProgress} variant="inline" />
+                  </div>
+                  <span>here.</span>
+                </div>
+
+                {[...Array(3)].map((_, i) => (
+                  <div key={`cw_gap_${i}`} className="flex flex-wrap items-center gap-3 text-slate-900 font-bold text-lg border-t border-slate-50 pt-6">
+                    <span className="text-sm text-slate-400 w-full mb-2 uppercase tracking-widest font-mono">{i+23}. Fill the gap:</span>
+                    <span>Is there</span>
+                    <div className="w-40">
+                      <Exercise id={`cw23_${i}`} mode="cw" placeholder="Enter answer" correctAnswer="anything" progressItem={progress.cw?.[`cw23_${i}`]} onUpdate={updateProgress} variant="inline" />
+                    </div>
+                    <span>wrong?</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Block 5: Core Logic (Text Inputs) */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h3 className="text-xl font-bold mb-6">Блок 5: Напишите верное слово</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {[
+                    { id: 'cw26', q: "All people {'->'}", ans: 'everyone|everybody' },
+                    { id: 'cw27', q: "No thing {'->'}", ans: 'nothing' },
+                    { id: 'cw28', q: "All places {'->'}", ans: 'everywhere' },
+                    { id: 'cw29', q: "Not any thing {'->'}", ans: 'nothing|anything' },
+                    { id: 'cw30', q: "One person (some) {'->'}", ans: 'somebody|someone' },
+                  ].map(ex => (
+                    <Exercise
+                      key={ex.id}
+                      id={ex.id}
+                      mode="cw"
+                      type="text"
+                      label={ex.q}
+                      correctAnswer={ex.ans}
+                      placeholder="Enter answer"
+                      progressItem={progress.cw?.[ex.id]}
+                      onUpdate={updateProgress}
+                    />
+                  ))}
+                </div>
             </div>
           </div>
         </section>
@@ -193,85 +369,112 @@ export default function IndefinitePronounsPage() {
                 </h2>
               </div>
               
-              <p className="text-slate-400 mb-8 max-w-xl">
+              <p className="text-slate-400 mb-12 max-w-xl">
                 {variant === 1 
-                  ? "Самостоятельная практика. Внимательно следите за типом предложения (вопрос/отрицание/утверждение)."
-                  : "Второй шанс! Решите новые задания, чтобы улучшить результат."}
+                  ? "Самостоятельная практика. Внимательно следите за типом предложения и отсутствием двойных отрицаний."
+                  : "Второй шанс! Решите новые задания, чтобы улучшить результат. Будьте внимательны к деталям."}
               </p>
 
-              <div className="space-y-8">
+              <div className="space-y-12">
                 {variant === 1 ? (
                   <>
-                    <div className="grid gap-4">
-                        <Exercise id="hw1" mode="hw" label="1. Is there _______ in the fridge?" correctAnswer="anything" progressItem={progress.hw?.hw1} onUpdate={updateProgress} />
-                        <Exercise id="hw2" mode="hw" label="2. I didn't say _______!" correctAnswer="anything" progressItem={progress.hw?.hw2} onUpdate={updateProgress} />
-                        <Exercise id="hw3" mode="hw" label="3. I said _______." correctAnswer="nothing" progressItem={progress.hw?.hw3} onUpdate={updateProgress} />
-                        
-                        <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 mt-4">
-                            <div className="text-[10px] font-black uppercase tracking-widest text-blue-400 mb-4">4. Трансформация (Gap fill)</div>
-                            <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
+                    {/* VARIANT 1 - 20 ITEMS */}
+                    <div className="space-y-6">
+                        {[
+                          { id: 'hw1', q: "1. Is there _______ in the fridge?", a: "anything" },
+                          { id: 'hw2', q: "2. I didn't say _______!", a: "anything" },
+                          { id: 'hw3', q: "3. I said _______.", a: "nothing" },
+                          { id: 'hw4', q: "4. _______ is knocking at the door.", a: "somebody|someone" },
+                          { id: 'hw5', q: "5. I've looked for my glasses _______.", a: "everywhere" },
+                          { id: 'hw6', q: "6. Does _______ have a pen?", a: "anybody|anyone" },
+                          { id: 'hw7', q: "7. There is _______ more important than health.", a: "nothing" },
+                          { id: 'hw8', q: "8. I want to go _______ quiet.", a: "somewhere" },
+                          { id: 'hw9', q: "9. How many apples? — _______.", a: "none" },
+                        ].map(ex => (
+                          <Exercise key={ex.id} id={ex.id} mode="hw" label={ex.q} correctAnswer={ex.a} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} />
+                        ))}
+
+                        {/* Gap fill transformation */}
+                        <div className="bg-slate-800/50 p-8 rounded-[2rem] border border-slate-700/50 my-10">
+                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400 mb-8 flex items-center gap-3">
+                                <div className="w-2 h-2 bg-blue-500 rounded-full"></div> 10. Sentence Logic
+                            </div>
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-lg">
                                 <span>I have</span>
                                 <div className="w-40">
-                                    <Exercise id="hw4" mode="hw" placeholder="Enter answer" correctAnswer="nothing" progressItem={progress.hw?.hw4} onUpdate={updateProgress} variant="inline" />
+                                    <Exercise id="hw10" mode="hw" placeholder="Enter answer" correctAnswer="nothing" progressItem={progress.hw?.hw10} onUpdate={updateProgress} variant="inline" />
                                 </div>
-                                <span>to wear today.</span>
+                                <span>to wear today, because</span>
+                                <div className="w-40">
+                                    <Exercise id="hw11" mode="hw" placeholder="Enter answer" correctAnswer="everyone|everybody" progressItem={progress.hw?.hw11} onUpdate={updateProgress} variant="inline" />
+                                </div>
+                                <span>took my clothes.</span>
                             </div>
                         </div>
 
-                        {[...Array(11)].map((_, i) => {
-                            const id = `hw${i + 5}`;
-                            const questions = [
-                                { q: "5. _______ is knocking at the door.", a: "somebody|someone" },
-                                { q: "6. I've looked for my glasses _______.", a: "everywhere" },
-                                { q: "7. Does _______ have a pen?", a: "anybody|anyone" },
-                                { q: "8. There is _______ more important than health.", a: "nothing" },
-                                { q: "9. I want to go _______ quiet.", a: "somewhere" },
-                                { q: "10. Everything _______ (be) going to be alright.", a: "is" },
-                                { q: "11. How many apples? — _______.", a: "none" },
-                                { q: "12. I don't know _______ in this city.", a: "anybody|anyone" },
-                                { q: "13. There is _______ interesting on TV tonight.", a: "nothing|something" },
-                                { q: "14. _______ is better than being alone.", a: "anything|something" },
-                                { q: "15. I've found _______ in my soup!", a: "something" }
-                            ];
-                            return <Exercise key={id} id={id} mode="hw" label={questions[i].q} correctAnswer={questions[i].a} progressItem={progress.hw?.[id]} onUpdate={updateProgress} />
-                        })}
-
-                        <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 mt-4">
-                            <div className="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-4">16. Сложная структура</div>
-                            <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
-                                <span>I haven't told</span>
-                                <div className="w-40">
-                                    <Exercise id="hw16" mode="hw" placeholder="Enter answer" correctAnswer="anybody|anyone" progressItem={progress.hw?.hw16} onUpdate={updateProgress} variant="inline" />
-                                </div>
-                                <span>about</span>
-                                <div className="w-40">
-                                    <Exercise id="hw17" mode="hw" placeholder="Enter answer" correctAnswer="anything" progressItem={progress.hw?.hw17} onUpdate={updateProgress} variant="inline" />
-                                </div>
-                                <span>yet.</span>
-                            </div>
-                        </div>
-
-                        <Exercise id="hw18" mode="hw" label="18. We can sit _______ you like." correctAnswer="anywhere" progressItem={progress.hw?.hw18} onUpdate={updateProgress} />
-                        <Exercise id="hw19" mode="hw" label="19. There's _______ under the bed. I'm scared!" correctAnswer="something|somebody|someone" progressItem={progress.hw?.hw19} onUpdate={updateProgress} />
-                        <Exercise id="hw20" mode="hw" label="20. _______ is waiting for you in the hall." correctAnswer="somebody|someone" progressItem={progress.hw?.hw20} onUpdate={updateProgress} />
+                        {[
+                          { id: 'hw12', q: "12. I don't know _______ in this city.", a: "anybody|anyone" },
+                          { id: 'hw13', q: "13. There is _______ interesting on TV tonight.", a: "nothing|something" },
+                          { id: 'hw14', q: "14. _______ is better than being alone.", a: "anything|something" },
+                          { id: 'hw15', q: "15. I've found _______ in my soup!", a: "something" },
+                          { id: 'hw16', q: "16. We can sit _______ you like.", a: "anywhere" },
+                          { id: 'hw17', q: "17. There's _______ under the bed. I'm scared!", a: "something|somebody|someone" },
+                          { id: 'hw18', q: "18. _______ is waiting for you in the hall.", a: "somebody|someone" },
+                          { id: 'hw19', q: "19. The room was empty. _______ was there.", a: "nobody|no one" },
+                          { id: 'hw20', q: "20. I didn't go _______ last night.", a: "anywhere" },
+                        ].map(ex => (
+                          <Exercise key={ex.id} id={ex.id} mode="hw" label={ex.q} correctAnswer={ex.a} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} />
+                        ))}
                     </div>
                   </>
                 ) : (
                   <>
-                    <div className="grid gap-4">
-                        <Exercise id="hw1_v2" mode="hw" label="1. Can _______ help me?" correctAnswer="anybody|anyone" progressItem={progress.hw?.hw1_v2} onUpdate={updateProgress} />
-                        <Exercise id="hw2_v2" mode="hw" label="2. I have _______ to say." correctAnswer="nothing" progressItem={progress.hw?.hw2_v2} onUpdate={updateProgress} />
-                        <Exercise id="hw3_v2" mode="hw" label="3. Does _______ know what time it is?" correctAnswer="anybody|anyone" progressItem={progress.hw?.hw3_v2} onUpdate={updateProgress} />
-                        <Exercise id="hw4_v2" mode="hw" label="4. I put my phone _______ and now I can't find it." correctAnswer="somewhere" progressItem={progress.hw?.hw4_v2} onUpdate={updateProgress} />
-                        <Exercise id="hw5_v2" mode="hw" label="5. I didn't see _______ at the station." correctAnswer="anybody|anyone" progressItem={progress.hw?.hw5_v2} onUpdate={updateProgress} />
-                        <Exercise id="hw6_v2" mode="hw" label="6. _______ is perfect." correctAnswer="nobody|no one" progressItem={progress.hw?.hw6_v2} onUpdate={updateProgress} />
-                        <Exercise id="hw7_v2" mode="hw" label="7. I've eaten _______ today. I'm so full!" correctAnswer="everything" progressItem={progress.hw?.hw7_v2} onUpdate={updateProgress} />
-                        <Exercise id="hw8_v2" mode="hw" label="8. Is there _______ interesting in the news?" correctAnswer="anything" progressItem={progress.hw?.hw8_v2} onUpdate={updateProgress} />
-                        <Exercise id="hw9_v2" mode="hw" label="9. _______ is possible." correctAnswer="everything|anything" progressItem={progress.hw?.hw9_v2} onUpdate={updateProgress} />
-                        <Exercise id="hw10_v2" mode="hw" label="10. I'm sure I left my keys _______ here." correctAnswer="somewhere" progressItem={progress.hw?.hw10_v2} onUpdate={updateProgress} />
-                        <p className="text-center text-slate-500 py-4 text-xs italic">Variant 2 contains full 20 items for retake...</p>
-                        {[...Array(10)].map((_, i) => (
-                           <Exercise key={i} id={`hw${i+11}_v2`} mode="hw" label={`${i+11}. New practice item for variant 2.`} correctAnswer="something" progressItem={progress.hw?.[`hw${i+11}_v2`]} onUpdate={updateProgress} />
+                    {/* VARIANT 2 - 20 ITEMS */}
+                    <div className="space-y-6">
+                        {[
+                          { id: 'hw1_v2', q: "1. Can _______ help me with this box?", a: "anybody|anyone|somebody|someone" },
+                          { id: 'hw2_v2', q: "2. I have _______ to say to you.", a: "nothing" },
+                          { id: 'hw3_v2', q: "3. Does _______ know what time it is?", a: "anybody|anyone" },
+                          { id: 'hw4_v2', q: "4. I put my phone _______ and now I can't find it.", a: "somewhere" },
+                          { id: 'hw5_v2', q: "5. I didn't see _______ at the station.", a: "anybody|anyone" },
+                          { id: 'hw6_v2', q: "6. _______ is perfect, so don't worry.", a: "nobody|no one" },
+                          { id: 'hw7_v2', q: "7. I've eaten _______ today. I'm so full!", a: "everything" },
+                          { id: 'hw8_v2', q: "8. Is there _______ interesting in the news?", a: "anything" },
+                          { id: 'hw9_v2', q: "9. _______ is possible if you try.", a: "everything|anything" },
+                        ].map(ex => (
+                          <Exercise key={ex.id} id={ex.id} mode="hw" label={ex.q} correctAnswer={ex.a} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} />
+                        ))}
+
+                        {/* Gap fill transformation */}
+                        <div className="bg-slate-800/50 p-8 rounded-[2rem] border border-slate-700/50 my-10">
+                            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-400 mb-8 flex items-center gap-3">
+                                <div className="w-2 h-2 bg-amber-500 rounded-full"></div> 10. Sentence Logic V2
+                            </div>
+                            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-6 text-white font-bold text-lg">
+                                <span>I looked</span>
+                                <div className="w-40">
+                                    <Exercise id="hw10_v2" mode="hw" placeholder="Enter answer" correctAnswer="everywhere" progressItem={progress.hw?.hw10_v2} onUpdate={updateProgress} variant="inline" />
+                                </div>
+                                <span>but found</span>
+                                <div className="w-40">
+                                    <Exercise id="hw11_v2" mode="hw" placeholder="Enter answer" correctAnswer="nothing" progressItem={progress.hw?.hw11_v2} onUpdate={updateProgress} variant="inline" />
+                                </div>
+                                <span>.</span>
+                            </div>
+                        </div>
+
+                        {[
+                          { id: 'hw12_v2', q: "12. I'm sure I left my keys _______ here.", a: "somewhere" },
+                          { id: 'hw13_v2', q: "13. I didn't do _______ wrong.", a: "anything" },
+                          { id: 'hw14_v2', q: "14. _______ knows that the Earth is round.", a: "everyone|everybody" },
+                          { id: 'hw15_v2', q: "15. I've never been _______ as beautiful as this.", a: "anywhere" },
+                          { id: 'hw16_v2', q: "16. The party was great. _______ had a good time.", a: "everyone|everybody" },
+                          { id: 'hw17_v2', q: "17. There's _______ at the door. Go check.", a: "somebody|someone" },
+                          { id: 'hw18_v2', q: "18. I have _______ more to add.", a: "nothing" },
+                          { id: 'hw19_v2', q: "19. Did you see _______ you liked?", a: "anything" },
+                          { id: 'hw20_v2', q: "20. _______ is waiting for you upstairs.", a: "somebody|someone" },
+                        ].map(ex => (
+                          <Exercise key={ex.id} id={ex.id} mode="hw" label={ex.q} correctAnswer={ex.a} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} />
                         ))}
                     </div>
                   </>
@@ -283,7 +486,7 @@ export default function IndefinitePronounsPage() {
       </div>
 
       <footer className="text-center text-slate-400 text-xs mt-20 unbounded opacity-50">
-        © 2026 AG Academy · Indefinite Pronouns V2.0
+        © 2026 AG Academy · Indefinite Pronouns V2.5
       </footer>
     </div>
   )
