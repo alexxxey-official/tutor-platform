@@ -3,13 +3,16 @@ const { exec } = require('child_process');
 const util = require('util');
 const execPromise = util.promisify(exec);
 const fs = require('fs/promises');
-const path = require('path');
 
-// Инициализация API клиента (совместимо с OpenAI, OpenRouter, OpenClaw и др.)
+// Настройка для OpenClaw / OpenAI / OpenRouter
+// API Ключ берется из OPENAI_API_KEY, а базовый URL из OPENAI_BASE_URL
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
   baseURL: process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1',
 });
+
+// Имя модели. Если в .env ничего нет, по умолчанию пробуем gemini-pro (или другую, которую поддерживает OpenClaw)
+const LLM_MODEL = process.env.LLM_MODEL || 'gemini-1.5-pro'; 
 
 const PROJECT_ROOT = process.env.PROJECT_ROOT_PATH || process.cwd();
 
@@ -20,13 +23,13 @@ You are autonomous. You have access to the server's terminal and file system.
 Your current working directory is: ${PROJECT_ROOT}
 
 Follow these rules:
-1. When asked to fix or implement something, USE YOUR TOOLS (functions) to explore the codebase, edit files, and run commands.
+1. When asked to fix or implement something, USE YOUR TOOLS (functions) to explore the codebase, edit files, and run bash commands.
 2. If you need to build the project, run 'npm run build'.
 3. Always verify your changes before reporting back.
 4. Keep your final response to the user concise and report what you did.
 `;
 
-// Доступные инструменты (Functions)
+// Инструменты (Tools)
 const tools = [
   {
     type: 'function',
@@ -59,7 +62,6 @@ const tools = [
   }
 ];
 
-// Основной цикл Агента
 async function handleDevAgentRequest(task, bot, chatId) {
   let messages = [
     { role: 'system', content: SYSTEM_PROMPT },
@@ -68,7 +70,7 @@ async function handleDevAgentRequest(task, bot, chatId) {
 
   let isTaskComplete = false;
   let loopCount = 0;
-  const MAX_LOOPS = 10; // Защита от бесконечного цикла
+  const MAX_LOOPS = 8;
 
   while (!isTaskComplete && loopCount < MAX_LOOPS) {
     loopCount++;
@@ -76,7 +78,7 @@ async function handleDevAgentRequest(task, bot, chatId) {
 
     try {
       const response = await openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview', // Замени на нужную модель твоего провайдера
+        model: LLM_MODEL,
         messages: messages,
         tools: tools,
         tool_choice: 'auto'
@@ -85,13 +87,18 @@ async function handleDevAgentRequest(task, bot, chatId) {
       const message = response.choices[0].message;
       messages.push(message);
 
-      // Если модель хочет использовать инструмент
-      if (message.tool_calls) {
-        bot.sendMessage(chatId, `🛠 Выполняю инструмент: ${message.tool_calls[0].function.name}...`);
+      if (message.tool_calls && message.tool_calls.length > 0) {
+        bot.sendMessage(chatId, `🛠 Выполняю: ${message.tool_calls[0].function.name}...`);
         
         for (const toolCall of message.tool_calls) {
           const functionName = toolCall.function.name;
-          const args = JSON.parse(toolCall.function.arguments);
+          let args;
+          try {
+             args = JSON.parse(toolCall.function.arguments);
+          } catch(e) {
+             args = {};
+          }
+          
           let toolResult = "";
 
           if (functionName === 'run_bash') {
@@ -111,29 +118,27 @@ async function handleDevAgentRequest(task, bot, chatId) {
             }
           }
 
-          // Возвращаем результат инструмента обратно модели
           messages.push({
             tool_call_id: toolCall.id,
             role: 'tool',
             name: functionName,
-            content: toolResult.substring(0, 4000) // Ограничиваем длину вывода
+            content: toolResult.substring(0, 4000)
           });
         }
       } else {
-        // Если инструментов нет, значит агент сформировал финальный текстовый ответ
         isTaskComplete = true;
-        bot.sendMessage(chatId, `✅ Отчет Dev-Агента:\n\n${message.content}`);
+        bot.sendMessage(chatId, `✅ Отчет:\n\n${message.content || 'Задача выполнена.'}`);
       }
 
     } catch (error) {
       console.error('[Dev Agent Error]:', error);
-      bot.sendMessage(chatId, `❌ Ошибка в цикле агента: ${error.message}`);
+      bot.sendMessage(chatId, `❌ Ошибка API (${LLM_MODEL}): ${error.message}`);
       isTaskComplete = true;
     }
   }
 
   if (loopCount >= MAX_LOOPS) {
-    bot.sendMessage(chatId, '⚠️ Агент остановлен: превышен лимит шагов (предотвращение зацикливания).');
+    bot.sendMessage(chatId, '⚠️ Агент остановлен: превышен лимит шагов.');
   }
 }
 
