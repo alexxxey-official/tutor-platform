@@ -491,7 +491,7 @@ export default function ArticlesLessonPage() {
 
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-6">Часть 3: Множественное число (Напишите слово с определенным артиклем)</div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                           {[
                             { id: 'hw14', q: "14. el gato →", ans: "los gatos" },
                             { id: 'hw15', q: "15. la habitación →", ans: "las habitaciones" },
@@ -558,7 +558,7 @@ export default function ArticlesLessonPage() {
 
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-6">Часть 3: Множественное число [Вариант 2]</div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                           {[
                             { id: 'hw14_v2', q: "14. el zapato →", ans: "los zapatos" },
                             { id: 'hw15_v2', q: "15. la mujer →", ans: "las mujeres" },

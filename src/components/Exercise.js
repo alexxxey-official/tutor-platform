@@ -159,7 +159,7 @@ export default function Exercise({
         
         <div className="flex flex-col gap-3">
           {type === 'text' && (
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <input
                 type="text"
                 value={input}
@@ -176,7 +176,7 @@ export default function Exercise({
                 <button 
                   onClick={() => checkAnswer()} 
                   disabled={isInputEmpty}
-                  className="px-8 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-widest text-xs shadow-lg active:scale-95 disabled:opacity-50"
+                  className="px-8 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-widest text-xs shadow-lg active:scale-95 disabled:opacity-50 flex-shrink-0"
                 >
                   Check
                 </button>

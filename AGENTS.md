@@ -49,6 +49,8 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you learn a lesson → update AGENTS.md, TOOLS.md, or the relevant skill
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
+- **UI Verification:** Always check how parent styles (especially dark mode containers like `bg-slate-900`) affect reusable components like `Exercise.js`. Ensure text contrast is explicitly handled.
+- **Prop vs JSX:** Remember that string props in React components do not evaluate JSX-style escaping (like `{'->'}`). Use literal symbols or template literals if dynamic.
 
 ## Red Lines
 
