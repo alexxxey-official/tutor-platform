@@ -3,6 +3,7 @@ const { exec } = require('child_process');
 const util = require('util');
 const execPromise = util.promisify(exec);
 const fs = require('fs/promises');
+const path = require('path');
 
 // Инициализация Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -20,9 +21,11 @@ Your current working directory is: ${PROJECT_ROOT}
 
 Follow these rules:
 1. When asked to fix or implement something, USE YOUR TOOLS (functions) to explore the codebase, edit files, and run bash commands.
-2. If you need to build the project, run 'npm run build'.
-3. Always verify your changes before reporting back.
-4. Keep your final response to the user concise and report what you did.
+2. If you need to write or edit a file, use the 'run_bash' tool with commands like 'cat << 'EOF' > file.js' or 'echo "..." > file.js', or use 'sed'.
+3. If you need to build the project, run 'npm run build'.
+4. Always verify your changes before reporting back.
+5. If an operation takes multiple steps, just keep going until the entire user request is completely fulfilled.
+6. Keep your final response to the user concise and report what you did.
 `;
 
 // Определение инструментов (Tools) в формате Gemini
@@ -60,8 +63,27 @@ const readFileDeclaration = {
   },
 };
 
+const write_file_declaration = {
+  name: "write_file",
+  description: "Write content to a file. Overwrites the file if it exists.",
+  parameters: {
+    type: "OBJECT",
+    properties: {
+      filePath: {
+        type: "STRING",
+        description: "Absolute path to the file",
+      },
+      content: {
+        type: "STRING",
+        description: "The content to write",
+      },
+    },
+    required: ["filePath", "content"],
+  },
+};
+
 const tools = {
-  functionDeclarations: [runBashDeclaration, readFileDeclaration],
+  functionDeclarations: [runBashDeclaration, readFileDeclaration, write_file_declaration],
 };
 
 async function handleDevAgentRequest(task, bot, chatId) {
@@ -84,7 +106,9 @@ async function handleDevAgentRequest(task, bot, chatId) {
 
   let isTaskComplete = false;
   let loopCount = 0;
-  const MAX_LOOPS = 8;
+  // Увеличиваем лимит шагов. Сложные задачи (вроде переписывания урока) 
+  // требуют больше циклов: чтение стандартов, чтение старого кода, создание нового, билд, фикс ошибок.
+  const MAX_LOOPS = 25; 
   let currentInput = task;
 
   while (!isTaskComplete && loopCount < MAX_LOOPS) {
@@ -119,6 +143,15 @@ async function handleDevAgentRequest(task, bot, chatId) {
             toolResult = await fs.readFile(call.args.filePath, 'utf-8');
           } catch (err) {
             toolResult = `Error reading file: ${err.message}`;
+          }
+        }
+        else if (call.name === 'write_file') {
+          try {
+            await fs.mkdir(path.dirname(call.args.filePath), { recursive: true });
+            await fs.writeFile(call.args.filePath, call.args.content, 'utf-8');
+            toolResult = `Successfully wrote to ${call.args.filePath}`;
+          } catch (err) {
+            toolResult = `Error writing file: ${err.message}`;
           }
         }
 
