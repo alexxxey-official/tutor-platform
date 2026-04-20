@@ -8,7 +8,7 @@ const fs = require('fs/promises');
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // Выбор модели берем из .env, если нет - используем по умолчанию
-const LLM_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash'; 
+const LLM_MODEL = process.env.GEMINI_MODEL || 'gemini-3.1-pro-preview'; 
 
 const PROJECT_ROOT = process.env.PROJECT_ROOT_PATH || process.cwd();
 
