@@ -1,18 +1,14 @@
-const OpenAI = require('openai');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { exec } = require('child_process');
 const util = require('util');
 const execPromise = util.promisify(exec);
 const fs = require('fs/promises');
 
-// Настройка для OpenClaw / OpenAI / OpenRouter
-// API Ключ берется из OPENAI_API_KEY, а базовый URL из OPENAI_BASE_URL
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-  baseURL: process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1',
-});
+// Инициализация Gemini API
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Имя модели. Если в .env ничего нет, по умолчанию пробуем gemini-pro (или другую, которую поддерживает OpenClaw)
-const LLM_MODEL = process.env.LLM_MODEL || 'gemini-1.5-pro'; 
+// Выбор модели. gemini-1.5-pro отлично справляется с кодом и вызовом функций
+const LLM_MODEL = 'gemini-1.5-pro'; 
 
 const PROJECT_ROOT = process.env.PROJECT_ROOT_PATH || process.cwd();
 
@@ -29,110 +25,122 @@ Follow these rules:
 4. Keep your final response to the user concise and report what you did.
 `;
 
-// Инструменты (Tools)
-const tools = [
-  {
-    type: 'function',
-    function: {
-      name: 'run_bash',
-      description: 'Run a shell command on the server.',
-      parameters: {
-        type: 'object',
-        properties: {
-          command: { type: 'string', description: 'The bash command to run' },
-          workdir: { type: 'string', description: 'Working directory (optional)' }
-        },
-        required: ['command']
-      }
-    }
+// Определение инструментов (Tools) в формате Gemini
+const runBashDeclaration = {
+  name: "run_bash",
+  description: "Run a shell command on the server.",
+  parameters: {
+    type: "OBJECT",
+    properties: {
+      command: {
+        type: "STRING",
+        description: "The bash command to run",
+      },
+      workdir: {
+        type: "STRING",
+        description: "Working directory (optional)",
+      },
+    },
+    required: ["command"],
   },
-  {
-    type: 'function',
-    function: {
-      name: 'read_file',
-      description: 'Read contents of a file.',
-      parameters: {
-        type: 'object',
-        properties: {
-          filePath: { type: 'string', description: 'Absolute path to the file' }
-        },
-        required: ['filePath']
-      }
-    }
-  }
-];
+};
+
+const readFileDeclaration = {
+  name: "read_file",
+  description: "Read contents of a file.",
+  parameters: {
+    type: "OBJECT",
+    properties: {
+      filePath: {
+        type: "STRING",
+        description: "Absolute path to the file",
+      },
+    },
+    required: ["filePath"],
+  },
+};
+
+const tools = {
+  functionDeclarations: [runBashDeclaration, readFileDeclaration],
+};
 
 async function handleDevAgentRequest(task, bot, chatId) {
-  let messages = [
-    { role: 'system', content: SYSTEM_PROMPT },
-    { role: 'user', content: task }
-  ];
+  // Настраиваем модель с системным промптом и инструментами
+  const model = genAI.getGenerativeModel({
+    model: LLM_MODEL,
+    systemInstruction: SYSTEM_PROMPT,
+    tools: [tools],
+  });
+
+  // Инициализируем сессию чата
+  const chat = model.startChat({
+    history: [
+      {
+        role: "user",
+        parts: [{ text: task }],
+      },
+    ],
+  });
 
   let isTaskComplete = false;
   let loopCount = 0;
   const MAX_LOOPS = 8;
+  let currentInput = task;
 
   while (!isTaskComplete && loopCount < MAX_LOOPS) {
     loopCount++;
     console.log(`[Dev Agent] Loop ${loopCount}...`);
 
     try {
-      const response = await openai.chat.completions.create({
-        model: LLM_MODEL,
-        messages: messages,
-        tools: tools,
-        tool_choice: 'auto'
-      });
+      // Отправляем сообщение в Gemini
+      const result = await chat.sendMessage(currentInput);
+      const response = result.response;
+      
+      // Проверяем, вызвала ли Gemini функцию
+      const functionCalls = response.functionCalls();
 
-      const message = response.choices[0].message;
-      messages.push(message);
-
-      if (message.tool_calls && message.tool_calls.length > 0) {
-        bot.sendMessage(chatId, `🛠 Выполняю: ${message.tool_calls[0].function.name}...`);
+      if (functionCalls && functionCalls.length > 0) {
+        const call = functionCalls[0]; // Обрабатываем первый вызов
+        bot.sendMessage(chatId, `🛠 Выполняю: ${call.name}...`);
         
-        for (const toolCall of message.tool_calls) {
-          const functionName = toolCall.function.name;
-          let args;
+        let toolResult = "";
+        
+        if (call.name === 'run_bash') {
+          const cwd = call.args.workdir || PROJECT_ROOT;
           try {
-             args = JSON.parse(toolCall.function.arguments);
-          } catch(e) {
-             args = {};
+            const { stdout, stderr } = await execPromise(call.args.command, { cwd });
+            toolResult = stdout || stderr || "Command executed successfully (no output).";
+          } catch (err) {
+            toolResult = `Error: ${err.message}`;
           }
-          
-          let toolResult = "";
-
-          if (functionName === 'run_bash') {
-            const cwd = args.workdir || PROJECT_ROOT;
-            try {
-              const { stdout, stderr } = await execPromise(args.command, { cwd });
-              toolResult = stdout || stderr || "Command executed successfully (no output).";
-            } catch (err) {
-              toolResult = `Error: ${err.message}`;
-            }
-          } 
-          else if (functionName === 'read_file') {
-            try {
-              toolResult = await fs.readFile(args.filePath, 'utf-8');
-            } catch (err) {
-              toolResult = `Error reading file: ${err.message}`;
-            }
+        } 
+        else if (call.name === 'read_file') {
+          try {
+            toolResult = await fs.readFile(call.args.filePath, 'utf-8');
+          } catch (err) {
+            toolResult = `Error reading file: ${err.message}`;
           }
-
-          messages.push({
-            tool_call_id: toolCall.id,
-            role: 'tool',
-            name: functionName,
-            content: toolResult.substring(0, 4000)
-          });
         }
+
+        // Подготавливаем результат выполнения функции для отправки обратно в Gemini
+        currentInput = [{
+          functionResponse: {
+            name: call.name,
+            response: {
+              result: toolResult.substring(0, 8000) // Ограничиваем вывод
+            }
+          }
+        }];
+
       } else {
+        // Если функций нет, значит Gemini прислала текстовый ответ
         isTaskComplete = true;
-        bot.sendMessage(chatId, `✅ Отчет:\n\n${message.content || 'Задача выполнена.'}`);
+        bot.sendMessage(chatId, `✅ Отчет:\n\n${response.text() || 'Задача выполнена.'}`);
       }
 
     } catch (error) {
       console.error('[Dev Agent Error]:', error);
-      bot.sendMessage(chatId, `❌ Ошибка API (${LLM_MODEL}): ${error.message}`);
+      bot.sendMessage(chatId, `❌ Ошибка Gemini API: ${error.message}`);
       isTaskComplete = true;
     }
   }
