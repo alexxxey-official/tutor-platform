@@ -135,7 +135,16 @@ async function handleDevAgentRequest(task, bot, chatId) {
       } else {
         // Если функций нет, значит Gemini прислала текстовый ответ
         isTaskComplete = true;
-        bot.sendMessage(chatId, `✅ Отчет:\n\n${response.text() || 'Задача выполнена.'}`);
+        const replyText = `✅ Отчет:\n\n${response.text() || 'Задача выполнена.'}`;
+        
+        // Включаем поддержку MarkdownV2 или обычного Markdown для Telegram
+        try {
+          await bot.sendMessage(chatId, replyText, { parse_mode: 'Markdown' });
+        } catch (markdownError) {
+          console.warn("Markdown parsing failed, sending as plain text:", markdownError.message);
+          // Fallback, если Telegram ругнется на кривой Markdown (такое бывает у ИИ)
+          await bot.sendMessage(chatId, replyText);
+        }
       }
 
     } catch (error) {
