@@ -334,12 +334,12 @@ export default function ArticlesLessonPage() {
                   { id: 'cw20', word: "televisión (телевидение)", ans: "la" },
                   { id: 'cw21', word: "canción (песня)", ans: "la" },
                 ].map((ex, i) => (
-                  <div key={ex.id} className="flex items-center gap-3 text-slate-900 font-bold text-lg bg-white p-3 rounded-xl shadow-sm border border-rose-200">
+                  <div key={ex.id} className="flex flex-wrap items-center gap-3 text-slate-900 font-bold text-lg bg-white p-3 rounded-xl shadow-sm border border-rose-200">
                     <span className="text-sm text-rose-400 font-mono min-w-[24px]">{i+14}.</span>
-                    <div className="w-24">
+                    <div className="w-24 flex-shrink-0">
                       <Exercise id={ex.id} mode="cw" placeholder="..." correctAnswer={ex.ans} progressItem={progress.cw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
                     </div>
-                    <span>{ex.word}</span>
+                    <span className="flex-1">{ex.word}</span>
                   </div>
                 ))}
               </div>
@@ -491,7 +491,7 @@ export default function ArticlesLessonPage() {
 
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-6">Часть 3: Множественное число (Напишите слово с определенным артиклем)</div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           {[
                             { id: 'hw14', q: "14. el gato →", ans: "los gatos" },
                             { id: 'hw15', q: "15. la habitación →", ans: "las habitaciones" },
@@ -558,7 +558,7 @@ export default function ArticlesLessonPage() {
 
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-6">Часть 3: Множественное число [Вариант 2]</div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           {[
                             { id: 'hw14_v2', q: "14. el zapato →", ans: "los zapatos" },
                             { id: 'hw15_v2', q: "15. la mujer →", ans: "las mujeres" },
