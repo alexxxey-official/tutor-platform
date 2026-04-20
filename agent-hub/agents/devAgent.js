@@ -7,8 +7,8 @@ const fs = require('fs/promises');
 // Инициализация Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Выбор модели. gemini-1.5-pro отлично справляется с кодом и вызовом функций
-const LLM_MODEL = 'gemini-1.5-pro'; 
+// Выбор модели берем из .env, если нет - используем по умолчанию
+const LLM_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash'; 
 
 const PROJECT_ROOT = process.env.PROJECT_ROOT_PATH || process.cwd();
 
