@@ -1,0 +1,15 @@
+{
+  "name": "agent-hub",
+  "version": "1.0.0",
+  "description": "Multi-agent Telegram dispatcher for autonomous AI assistants",
+  "main": "dispatcher.js",
+  "scripts": {
+    "start": "node dispatcher.js",
+    "dev": "nodemon dispatcher.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-telegram-bot-api": "^0.65.1",
+    "openai": "^4.38.1"
+  }
+}
