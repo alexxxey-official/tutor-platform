@@ -29,7 +29,7 @@ Every English lesson MUST contain these four specific sections:
 ## 4. UI Patterns (Gap Fill & Transformation)
 - **Flex-Wrap Containers:** Use `<div className="flex flex-wrap items-center gap-3 ...">` for inline inputs within sentences.
 - **Strict Placeholders:** ALWAYS use `placeholder="Enter answer"`. NO hints, NO ellipses in the placeholder.
-- **JSX Escaping:** When using arrows in text or code blocks, ALWAYS escape them like this: `{'->'}` to prevent build errors.
+- **JSX Escaping:** When using arrows in DIRECT JSX text nodes, escape them like this: `{'->'}`. However, in component props (like `label` or `q`), use the literal arrow `→` to ensure correct rendering.
 
 ## 5. File Naming & Registry
 Keep English lessons under `src/app/lessons/english/[topic]/page.js`. Ensure `src/lib/lessons.js` has correct `totalCW` and `totalHW` counts that perfectly match the number of rendered `<Exercise>` components.

@@ -217,9 +217,9 @@ export default function ArticlesLessonPage() {
                   <div className="text-emerald-400 font-bold uppercase tracking-widest text-xs mb-2">Regla №2: Вода и Орлы (El Agua)</div>
                   <p className="text-slate-300 text-sm mb-3">Если существительное <strong className="text-rose-400">женского рода</strong> начинается с ударной буквы <strong>A</strong> (или <strong>HA</strong>), то в единственном числе оно получает мужской артикль <strong className="text-blue-400">EL / UN</strong>, чтобы избежать слияния двух звуков "А".</p>
                   <ul className="text-sm text-slate-400 space-y-2 font-mono bg-black/30 p-4 rounded-lg">
-                    <li><span className="line-through text-rose-400 opacity-50">la a</span>gua {'->'} <strong className="text-emerald-400">el agua</strong> (вода)</li>
-                    <li><span className="line-through text-rose-400 opacity-50">una á</span>guila {'->'} <strong className="text-emerald-400">un águila</strong> (орёл)</li>
-                    <li><span className="line-through text-rose-400 opacity-50">la ha</span>cha {'->'} <strong className="text-emerald-400">el hacha</strong> (топор)</li>
+                    <li><span className="line-through text-rose-400 opacity-50">la a</span>gua → <strong className="text-emerald-400">el agua</strong> (вода)</li>
+                    <li><span className="line-through text-rose-400 opacity-50">una á</span>guila → <strong className="text-emerald-400">un águila</strong> (орёл)</li>
+                    <li><span className="line-through text-rose-400 opacity-50">la ha</span>cha → <strong className="text-emerald-400">el hacha</strong> (топор)</li>
                     <li className="mt-2 text-rose-300 italic">*Во множественном числе артикль возвращается к женскому: <strong className="text-rose-400 font-bold">las</strong> aguas.</li>
                   </ul>
                 </div>
@@ -235,15 +235,15 @@ export default function ArticlesLessonPage() {
               <ul className="space-y-3 text-amber-900 font-medium">
                 <li className="flex items-center gap-3">
                   <span className="bg-rose-500 text-white w-7 h-7 flex items-center justify-center rounded-full text-sm font-black shadow-sm">1</span>
-                  Если слово оканчивается на <strong>гласную (a, e, i, o, u)</strong> ➡️ добавляем <strong>-S</strong> <span className="text-amber-700/80 font-normal italic ml-2">(el chico {'->'} los chico<strong className="text-rose-600">s</strong>)</span>
+                  Если слово оканчивается на <strong>гласную (a, e, i, o, u)</strong> ➡️ добавляем <strong>-S</strong> <span className="text-amber-700/80 font-normal italic ml-2">(el chico → los chico<strong className="text-rose-600">s</strong>)</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="bg-rose-500 text-white w-7 h-7 flex items-center justify-center rounded-full text-sm font-black shadow-sm">2</span>
-                  Если слово оканчивается на <strong>согласную</strong> ➡️ добавляем <strong>-ES</strong> <span className="text-amber-700/80 font-normal italic ml-2">(el doctor {'->'} los doctor<strong className="text-rose-600">es</strong>)</span>
+                  Если слово оканчивается на <strong>согласную</strong> ➡️ добавляем <strong>-ES</strong> <span className="text-amber-700/80 font-normal italic ml-2">(el doctor → los doctor<strong className="text-rose-600">es</strong>)</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="bg-rose-500 text-white w-7 h-7 flex items-center justify-center rounded-full text-sm font-black shadow-sm">3</span>
-                  Если оканчивается на <strong>Z</strong> ➡️ меняем Z на C и добавляем <strong>-ES</strong> <span className="text-amber-700/80 font-normal italic ml-2">(el lápiz {'->'} los lápi<strong className="text-rose-600">ces</strong>)</span>
+                  Если оканчивается на <strong>Z</strong> ➡️ меняем Z на C и добавляем <strong>-ES</strong> <span className="text-amber-700/80 font-normal italic ml-2">(el lápiz → los lápi<strong className="text-rose-600">ces</strong>)</span>
                 </li>
               </ul>
             </div>
@@ -331,7 +331,7 @@ export default function ArticlesLessonPage() {
                   { id: 'cw17', word: "agua (вода)", ans: "el" },
                   { id: 'cw18', word: "foto (фото)", ans: "la" },
                   { id: 'cw19', word: "mapa (карта)", ans: "el" },
-                  { id: 'cw20', word: "televisión (ТВ)", ans: "la" },
+                  { id: 'cw20', word: "televisión (телевидение)", ans: "la" },
                   { id: 'cw21', word: "canción (песня)", ans: "la" },
                 ].map((ex, i) => (
                   <div key={ex.id} className="flex items-center gap-3 text-slate-900 font-bold text-lg bg-white p-3 rounded-xl shadow-sm border border-rose-200">
@@ -351,11 +351,11 @@ export default function ArticlesLessonPage() {
               <p className="text-sm text-slate-500 mb-6">Измените артикль и добавьте окончание -s или -es к слову.</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
-                  { id: 'cw22', q: "el perro {'->'}", ans: "los perros" },
-                  { id: 'cw23', q: "la casa {'->'}", ans: "las casas" },
-                  { id: 'cw24', q: "el hotel {'->'}", ans: "los hoteles" },
-                  { id: 'cw25', q: "la flor {'->'}", ans: "las flores" },
-                  { id: 'cw26', q: "el lápiz {'->'}", ans: "los lápices" },
+                  { id: 'cw22', q: "el perro →", ans: "los perros" },
+                  { id: 'cw23', q: "la casa →", ans: "las casas" },
+                  { id: 'cw24', q: "el hotel →", ans: "los hoteles" },
+                  { id: 'cw25', q: "la flor →", ans: "las flores" },
+                  { id: 'cw26', q: "el lápiz →", ans: "los lápices" },
                 ].map((ex, i) => (
                   <Exercise
                     key={ex.id}
@@ -462,7 +462,7 @@ export default function ArticlesLessonPage() {
                               <div className="w-24">
                                 <Exercise id={ex.id} mode="hw" placeholder="el/la..." correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="truncate">{ex.post}</span>
+                              <span className="flex-1">{ex.post}</span>
                             </div>
                           ))}
                         </div>
@@ -493,13 +493,13 @@ export default function ArticlesLessonPage() {
                         <div className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-6">Часть 3: Множественное число (Напишите слово с определенным артиклем)</div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                           {[
-                            { id: 'hw14', q: "14. el gato {'->'}", ans: "los gatos" },
-                            { id: 'hw15', q: "15. la habitación {'->'}", ans: "las habitaciones" },
-                            { id: 'hw16', q: "16. el televisor {'->'}", ans: "los televisores" },
-                            { id: 'hw17', q: "17. el pez {'->'}", ans: "los peces" },
-                            { id: 'hw18', q: "18. la actriz {'->'}", ans: "las actrices" },
-                            { id: 'hw19', q: "19. la verdad {'->'}", ans: "las verdades" },
-                            { id: 'hw20', q: "20. el agua {'->'}", ans: "las aguas" },
+                            { id: 'hw14', q: "14. el gato →", ans: "los gatos" },
+                            { id: 'hw15', q: "15. la habitación →", ans: "las habitaciones" },
+                            { id: 'hw16', q: "16. el televisor →", ans: "los televisores" },
+                            { id: 'hw17', q: "17. el pez →", ans: "los peces" },
+                            { id: 'hw18', q: "18. la actriz →", ans: "las actrices" },
+                            { id: 'hw19', q: "19. la verdad →", ans: "las verdades" },
+                            { id: 'hw20', q: "20. el agua →", ans: "las aguas" },
                           ].map(ex => (
                             <Exercise key={ex.id} id={ex.id} mode="hw" label={ex.q} type="text" placeholder="Enter answer" correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} />
                           ))}
@@ -529,7 +529,7 @@ export default function ArticlesLessonPage() {
                               <div className="w-24">
                                 <Exercise id={ex.id} mode="hw" placeholder="el/la..." correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
                               </div>
-                              <span className="truncate">{ex.post}</span>
+                              <span className="flex-1">{ex.post}</span>
                             </div>
                           ))}
                         </div>
@@ -560,13 +560,13 @@ export default function ArticlesLessonPage() {
                         <div className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-6">Часть 3: Множественное число [Вариант 2]</div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                           {[
-                            { id: 'hw14_v2', q: "14. el zapato {'->'}", ans: "los zapatos" },
-                            { id: 'hw15_v2', q: "15. la mujer {'->'}", ans: "las mujeres" },
-                            { id: 'hw16_v2', q: "16. el león {'->'}", ans: "los leones" },
-                            { id: 'hw17_v2', q: "17. el rey {'->'}", ans: "los reyes" },
-                            { id: 'hw18_v2', q: "18. la luz {'->'}", ans: "las luces" },
-                            { id: 'hw19_v2', q: "19. la pared {'->'}", ans: "las paredes" },
-                            { id: 'hw20_v2', q: "20. el águila {'->'}", ans: "las águilas" },
+                            { id: 'hw14_v2', q: "14. el zapato →", ans: "los zapatos" },
+                            { id: 'hw15_v2', q: "15. la mujer →", ans: "las mujeres" },
+                            { id: 'hw16_v2', q: "16. el león →", ans: "los leones" },
+                            { id: 'hw17_v2', q: "17. el rey →", ans: "los reyes" },
+                            { id: 'hw18_v2', q: "18. la luz →", ans: "las luces" },
+                            { id: 'hw19_v2', q: "19. la pared →", ans: "las paredes" },
+                            { id: 'hw20_v2', q: "20. el águila →", ans: "las águilas" },
                           ].map(ex => (
                             <Exercise key={ex.id} id={ex.id} mode="hw" label={ex.q} type="text" placeholder="Enter answer" correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} />
                           ))}

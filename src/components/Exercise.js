@@ -192,7 +192,7 @@ export default function Exercise({
                   key={i}
                   disabled={isLocked}
                   onClick={() => { setInput(opt); checkAnswer(opt); }}
-                  className={`p-4 text-left rounded-xl border-2 transition-all text-lg font-semibold ${
+                  className={`p-4 text-left rounded-xl border-2 transition-all text-lg font-semibold text-slate-900 ${
                     input === opt && isError ? 'border-amber-400 bg-amber-100/50' : 
                     input === opt ? 'border-indigo-500 bg-indigo-50' : 'border-slate-100 bg-slate-50/50 hover:border-slate-300'
                   } ${isLocked && opt === correctAnswer ? 'border-emerald-500 bg-emerald-100 text-emerald-900 shadow-inner' : ''}`}

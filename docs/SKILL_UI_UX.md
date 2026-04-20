@@ -28,6 +28,7 @@ This skill defines the visual identity, user experience principles, and styling 
 - **Buttons:**
   - Bold, uppercase, tracking-widest (`uppercase tracking-widest font-black`).
   - Active states must feel tactile (`active:scale-[0.98]`, `active:scale-95`).
+  - **MCQ Buttons:** Always ensure `text-slate-900` or similar high-contrast color is applied to text, even when buttons are on dark backgrounds (since MCQ button backgrounds are usually light).
 
 ## 4. Layout Patterns & Features
 - **Student Dashboard (Skill Tree):** A visual map (Duolingo style) utilizing `framer-motion` for node animations. Lessons are presented as points on a path (Locked, Current, Completed) rather than a boring list.
