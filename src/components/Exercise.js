@@ -159,14 +159,14 @@ export default function Exercise({
         
         <div className="flex flex-col gap-3">
           {type === 'text' && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-stretch gap-2 h-14">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLocked}
                 placeholder={placeholder}
-                className={`flex-1 p-3 text-lg rounded-xl border-2 focus:outline-none transition-all text-slate-900 ${
+                className={`flex-1 px-4 text-lg rounded-xl border-2 focus:outline-none transition-all text-slate-900 h-full ${
                   isLocked ? 'bg-slate-100 border-slate-200 text-slate-500' : 
                   isError ? 'border-amber-300 focus:border-amber-500 bg-white' : 'border-slate-200 focus:border-indigo-400 bg-white'
                 }`}
@@ -176,7 +176,7 @@ export default function Exercise({
                 <button 
                   onClick={() => checkAnswer()} 
                   disabled={isInputEmpty}
-                  className="px-8 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-widest text-xs shadow-lg active:scale-95 disabled:opacity-50 flex-shrink-0"
+                  className="px-8 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-widest text-xs shadow-lg active:scale-95 disabled:opacity-50 flex-shrink-0 h-full flex items-center justify-center"
                 >
                   Check
                 </button>
@@ -204,12 +204,12 @@ export default function Exercise({
           )}
 
           {type === 'dropdown' && (
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-stretch h-14">
               <select
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLocked}
-                className={`p-3.5 text-lg rounded-xl border-2 outline-none transition-all flex-1 md:flex-none md:min-w-[200px] text-slate-900 ${
+                className={`px-4 text-lg rounded-xl border-2 outline-none transition-all flex-1 md:flex-none md:min-w-[200px] text-slate-900 h-full ${
                   isError ? 'border-amber-300 bg-white' : 'border-slate-200 focus:border-indigo-400 bg-white'
                 }`}
               >
@@ -220,7 +220,7 @@ export default function Exercise({
                 <button 
                   onClick={() => checkAnswer()} 
                   disabled={isInputEmpty}
-                  className="px-8 py-4 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-widest text-xs shadow-lg disabled:opacity-50"
+                  className="px-8 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase tracking-widest text-xs shadow-lg disabled:opacity-50 flex-shrink-0 h-full flex items-center justify-center"
                 >
                   Check
                 </button>
