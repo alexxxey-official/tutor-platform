@@ -126,7 +126,14 @@ async function handleDevAgentRequest(task, bot, chatId) {
 
       if (functionCalls && functionCalls.length > 0) {
         const call = functionCalls[0]; // Обрабатываем первый вызов
-        bot.sendMessage(chatId, `🛠 Выполняю: ${call.name}...`);
+        
+        // Сохраняем ID сообщения, чтобы потом его удалить или отредактировать
+        let statusMessage = null;
+        try {
+          statusMessage = await bot.sendMessage(chatId, `🛠 Выполняю: ${call.name}...`);
+        } catch (e) {
+          console.error("Failed to send status message", e);
+        }
         
         let toolResult = "";
         
@@ -165,6 +172,16 @@ async function handleDevAgentRequest(task, bot, chatId) {
             }
           }
         }];
+
+        // Удаляем статусное сообщение после выполнения инструмента, чтобы не засорять чат
+        if (statusMessage) {
+          try {
+            await bot.deleteMessage(chatId, statusMessage.message_id);
+          } catch (e) {
+             // Игнорируем ошибку (например, сообщение уже было удалено или прошло слишком много времени)
+             console.error("Failed to delete status message", e.message);
+          }
+        }
 
       } else {
         // Если функций нет, значит Gemini прислала текстовый ответ
