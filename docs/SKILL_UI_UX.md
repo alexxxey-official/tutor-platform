@@ -29,6 +29,8 @@ This skill defines the visual identity, user experience principles, and styling 
   - Bold, uppercase, tracking-widest (`uppercase tracking-widest font-black`).
   - Active states must feel tactile (`active:scale-[0.98]`, `active:scale-95`).
   - **MCQ Buttons:** Always ensure `text-slate-900` or similar high-contrast color is applied to text, even when buttons are on dark backgrounds (since MCQ button backgrounds are usually light).
+  - **Button Alignment (Inputs):** When placing a button next to an input field (e.g., "Check" button), ALWAYS use the robust Block pattern (`flex-col sm:flex-row`) with identical padding (`p-3.5`). Do NOT rely on `items-stretch` and `h-full` to align them, as browser rendering differences between inputs and buttons cause overflows.
+  - **Button Text Wrapping:** Use `whitespace-nowrap` on action buttons to ensure the text (like "CHECK") never breaks into multiple lines on small screens.
 
 ## 4. Layout Patterns & Features
 - **Student Dashboard (Skill Tree):** A visual map (Duolingo style) utilizing `framer-motion` for node animations. Lessons are presented as points on a path (Locked, Current, Completed) rather than a boring list.
