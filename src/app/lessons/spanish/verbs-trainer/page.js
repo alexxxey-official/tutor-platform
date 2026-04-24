@@ -161,10 +161,34 @@ export default function VerbsTrainer() {
       </header>
 
       <div className="max-w-4xl mx-auto px-6 -mt-8 relative z-20">
-        <AdvancedProgressBar
-          statsHW={stats}
-          variant={1}
-        />
+        {/* Progress Bar - HW only for trainers */}
+        <div className="bg-white border-2 border-slate-200 rounded-2xl p-6 mb-8 shadow-lg">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <Zap className="text-rose-600" size={24} />
+              <h3 className="text-xl font-bold unbounded text-slate-900">Прогресс тренажёра</h3>
+            </div>
+            <div className="text-right">
+              <div className="text-3xl font-black unbounded text-slate-900">{stats.pct}%</div>
+              <div className="text-xs text-slate-500">{stats.correct} / {total}</div>
+            </div>
+          </div>
+
+          <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-rose-500 to-rose-600 transition-all duration-500 rounded-full"
+              style={{ width: `${stats.pct}%` }}
+            ></div>
+          </div>
+
+          {stats.isComplete && (
+            <div className={`mt-4 p-4 rounded-xl text-center font-bold ${
+              stats.pct >= 85 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
+            }`}>
+              {stats.pct >= 85 ? '🎉 ¡Excelente! Тренажёр пройден!' : '💪 Попробуй ещё раз для лучшего результата'}
+            </div>
+          )}
+        </div>
 
         {/* Navigation */}
         <nav className="flex flex-wrap gap-2 mb-12">
