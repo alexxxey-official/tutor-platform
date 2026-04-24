@@ -33,3 +33,10 @@ Every English lesson MUST contain these four specific sections:
 
 ## 5. File Naming & Registry
 Keep English lessons under `src/app/lessons/english/[topic]/page.js`. Ensure `src/lib/lessons.js` has correct `totalCW` and `totalHW` counts that perfectly match the number of rendered `<Exercise>` components.
+
+## 6. Builder Component Requirements (Updated 2026-04-24)
+When using `type="builder"` in Exercise components:
+- **Critical:** The Exercise component MUST have `handleBuilderClick(word, fromBank)` function defined
+- **State Management:** Builder requires three state variables: `builderBank`, `builderZone`, and proper `useEffect` to sync zone with input
+- **Testing:** Always test word dragging functionality before deployment — verify words move between bank and construction zone
+- **Progress Tracking:** Builder state must serialize to string format for `progress_data` storage

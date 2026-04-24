@@ -42,3 +42,8 @@ To support deep analytics and tracking, the database follows this relational str
 ## 5. Decision Making
 - When adding a feature, ask: Does this improve the student's learning loop? Does it give the admin/teacher better data?
 - Prefer robust, tested patterns over clever hacks. If a component is getting too complex, break it down.
+
+## 6. Common Pitfalls & Solutions (Updated 2026-04-24)
+- **Builder Type Missing Handler:** Always ensure `handleBuilderClick` function exists in Exercise component when using `type="builder"`. This function manages word movement between bank and construction zone.
+- **Builder State Sync:** Use `useEffect` to sync `builderZone` array with `input` string for proper progress tracking.
+- **Missing Functions:** Before deploying, verify all event handlers referenced in JSX are actually defined in the component.

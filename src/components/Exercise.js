@@ -68,6 +68,43 @@ export default function Exercise({
 
   const normalize = (s) => s.toString().toLowerCase().replace(/\s+/g,' ').trim();
 
+  const handleBuilderClick = (word, fromBank) => {
+    if (isLocked) return;
+
+    if (fromBank) {
+      // Move from bank to zone
+      setBuilderZone(prev => [...prev, word]);
+      setBuilderBank(prev => {
+        const idx = prev.indexOf(word);
+        if (idx > -1) {
+          const newBank = [...prev];
+          newBank.splice(idx, 1);
+          return newBank;
+        }
+        return prev;
+      });
+    } else {
+      // Move from zone back to bank
+      setBuilderZone(prev => {
+        const idx = prev.indexOf(word);
+        if (idx > -1) {
+          const newZone = [...prev];
+          newZone.splice(idx, 1);
+          return newZone;
+        }
+        return prev;
+      });
+      setBuilderBank(prev => [...prev, word]);
+    }
+  };
+
+  useEffect(() => {
+    if (type === 'builder') {
+      const sentence = builderZone.join(' ');
+      setInput(sentence);
+    }
+  }, [builderZone, type]);
+
   const checkAnswer = (customVal = null) => {
     if (feedback === 'correct' || feedback === 'revealed') return;
     const valToCheck = customVal !== null ? customVal : input;
