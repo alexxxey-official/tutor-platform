@@ -48,6 +48,20 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When someone says "remember this" → update `memory/YYYY-MM-DD.md` or relevant file
 - When you learn a lesson → update AGENTS.md, TOOLS.md, or the relevant skill
 - When you make a mistake → document it so future-you doesn't repeat it
+
+## Lessons Learned (2026-04-24)
+
+### Builder Component Bug Pattern
+**Problem:** Word builder exercises weren't working — words couldn't be dragged between bank and construction zone.
+
+**Root Cause:** Missing `handleBuilderClick` function in Exercise component. The JSX referenced `onClick={() => handleBuilderClick(...)}` but the function didn't exist.
+
+**Solution Pattern:**
+1. Always verify event handlers exist before deploying
+2. Builder type requires: `handleBuilderClick(word, fromBank)`, `builderBank`, `builderZone` state
+3. Use `useEffect` to sync `builderZone` array → `input` string for progress tracking
+
+**Prevention:** Updated SKILL docs with builder requirements checklist. Always test interactive components in browser before claiming completion.
 - **Text > Brain** 📝
 - **UI Verification:** Always check how parent styles (especially dark mode containers like `bg-slate-900`) affect reusable components like `Exercise.js`. Ensure text contrast is explicitly handled.
 - **Prop vs JSX:** Remember that string props in React components do not evaluate JSX-style escaping (like `{'->'}`). Use literal symbols or template literals if dynamic.
