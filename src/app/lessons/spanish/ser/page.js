@@ -353,27 +353,30 @@ export default function SerLessonPage() {
             <div className="bg-rose-50 p-8 rounded-3xl border border-rose-100 shadow-sm">
               <h3 className="text-xl font-bold mb-6 text-rose-900">Блок 3: Напишите форму глагола SER</h3>
               <p className="text-sm text-rose-700 mb-6">Впишите правильную форму (soy, eres, es, somos, sois, son). Будьте внимательны к подлежащему!</p>
-              <div className="space-y-8">
+              <div className="space-y-4">
                 {[
-                  { id: 'cw16', pre: "Hola, yo", post: "Antonio.", ans: "soy" },
-                  { id: 'cw17', pre: "¿Tú", post: "de Argentina?", ans: "eres" },
-                  { id: 'cw18', pre: "La casa", post: "muy grande y bonita.", ans: "es" },
-                  { id: 'cw19', pre: "Mis padres", post: "doctores.", ans: "son" },
-                  { id: 'cw20', pre: "Nosotras", post: "amigas desde la infancia.", ans: "somos" },
-                  { id: 'cw21', pre: "Chicos, ¿vosotros", post: "listos para la fiesta?", ans: "sois" },
-                  { id: 'cw22', pre: "El café", post: "caliente.", ans: "es" },
-                  { id: 'cw23', pre: "Ustedes", post: "muy amables.", ans: "son" },
-                  { id: 'cw24', pre: "¿Quién", post: "el director aquí?", ans: "es" },
-                  { id: 'cw25', pre: "Tú y yo", post: "un buen equipo.", ans: "somos" },
-                ].map((ex, i) => (
-                  <div key={ex.id} className="flex flex-wrap items-center gap-3 text-slate-900 font-bold text-lg border-b border-rose-200/50 pb-6 last:border-0 last:pb-0">
-                    <span className="text-sm text-rose-400 w-full mb-2 uppercase tracking-widest font-mono">{i+16}.</span>
-                    <span>{ex.pre}</span>
-                    <div className="w-32">
-                      <Exercise id={ex.id} mode="cw" placeholder="Enter answer" correctAnswer={ex.ans} progressItem={progress.cw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
-                    </div>
-                    <span>{ex.post}</span>
-                  </div>
+                  { id: 'cw16', q: "16. Hola, yo ___ Antonio.", ans: "soy" },
+                  { id: 'cw17', q: "17. ¿Tú ___ de Argentina?", ans: "eres" },
+                  { id: 'cw18', q: "18. La casa ___ muy grande y bonita.", ans: "es" },
+                  { id: 'cw19', q: "19. Mis padres ___ doctores.", ans: "son" },
+                  { id: 'cw20', q: "20. Nosotras ___ amigas desde la infancia.", ans: "somos" },
+                  { id: 'cw21', q: "21. Chicos, ¿vosotros ___ listos para la fiesta?", ans: "sois" },
+                  { id: 'cw22', q: "22. El café ___ caliente.", ans: "es" },
+                  { id: 'cw23', q: "23. Ustedes ___ muy amables.", ans: "son" },
+                  { id: 'cw24', q: "24. ¿Quién ___ el director aquí?", ans: "es" },
+                  { id: 'cw25', q: "25. Tú y yo ___ un buen equipo.", ans: "somos" },
+                ].map((ex) => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="text"
+                    label={ex.q}
+                    placeholder="Enter answer"
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
                 ))}
               </div>
             </div>
@@ -456,53 +459,60 @@ export default function SerLessonPage() {
                     <div className="space-y-8">
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-6">Часть 1: Впишите глагол SER</div>
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                           {[
-                            { id: 'hw1', pre: "1. Yo", post: "muy cansado hoy.", ans: "soy" }, // Technically estar is better for cansado, but let's stick to ser for description. Wait, cansado is ESTAR. Let's use alto.
-                            { id: 'hw1', pre: "1. Yo", post: "muy alto.", ans: "soy" },
-                            { id: 'hw2', pre: "2. Mis amigos", post: "de Colombia.", ans: "son" },
-                            { id: 'hw3', pre: "3. ¿De dónde", post: "tú?", ans: "eres" },
-                            { id: 'hw4', pre: "4. Nosotros", post: "hermanos.", ans: "somos" },
-                            { id: 'hw5', pre: "5. Esta pizza", post: "fantástica.", ans: "es" },
-                            { id: 'hw6', pre: "6. Vosotros", post: "muy simpáticos.", ans: "sois" },
-                            { id: 'hw7', pre: "7. Usted", post: "el jefe.", ans: "es" },
-                            { id: 'hw8', pre: "8. El libro", post: "interesante.", ans: "es" },
-                            { id: 'hw9', pre: "9. ¿Quién", post: "la chica rubia?", ans: "es" },
-                            { id: 'hw10', pre: "10. Ellos", post: "profesores de inglés.", ans: "son" },
+                            { id: 'hw1', q: "1. Yo ___ muy alto.", ans: "soy" },
+                            { id: 'hw2', q: "2. Mis amigos ___ de Colombia.", ans: "son" },
+                            { id: 'hw3', q: "3. ¿De dónde ___ tú?", ans: "eres" },
+                            { id: 'hw4', q: "4. Nosotros ___ hermanos.", ans: "somos" },
+                            { id: 'hw5', q: "5. Esta pizza ___ fantástica.", ans: "es" },
+                            { id: 'hw6', q: "6. Vosotros ___ muy simpáticos.", ans: "sois" },
+                            { id: 'hw7', q: "7. Usted ___ el jefe.", ans: "es" },
+                            { id: 'hw8', q: "8. El libro ___ interesante.", ans: "es" },
+                            { id: 'hw9', q: "9. ¿Quién ___ la chica rubia?", ans: "es" },
+                            { id: 'hw10', q: "10. Ellos ___ profesores de inglés.", ans: "son" },
                           ].map((ex) => (
-                            <div key={ex.id} className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
-                              <span>{ex.pre}</span>
-                              <div className="w-32">
-                                <Exercise id={ex.id} mode="hw" placeholder="Enter answer" correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
-                              </div>
-                              <span>{ex.post}</span>
-                            </div>
+                            <Exercise
+                              key={ex.id}
+                              id={ex.id}
+                              mode="hw"
+                              type="text"
+                              label={ex.q}
+                              placeholder="Enter answer"
+                              correctAnswer={ex.ans}
+                              progressItem={progress.hw?.[ex.id]}
+                              onUpdate={updateProgress}
+                            />
                           ))}
                         </div>
                       </div>
 
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-rose-400 mb-6">Часть 2: Впишите местоимение (Yo, tú, él, ella, nosotros, vosotros, ellos, ellas, usted)</div>
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                           {[
-                            { id: 'hw11', pre: "11.", post: "somos de México.", ans: "Nosotros|Nosotras" },
-                            { id: 'hw12', pre: "12.", post: "es mi hermano Pablo.", ans: "Él|El" }, // Accept el to not be overly brutal on first try, but él is correct
-                            { id: 'hw13', pre: "13.", post: "eres mi mejor amiga.", ans: "Tú|Tu" },
-                            { id: 'hw14', pre: "14.", post: "soy estudiante de medicina.", ans: "Yo" },
-                            { id: 'hw15', pre: "15.", post: "sois turistas, ¿verdad?", ans: "Vosotros|Vosotras" },
-                            { id: 'hw16', pre: "16.", post: "son mis padres.", ans: "Ellos" },
-                            { id: 'hw17', pre: "17.", post: "es la profesora nueva (она).", ans: "Ella" },
-                            { id: 'hw18', pre: "18. ¿De dónde es", post: "? (Вы, вежливо)", ans: "usted" },
-                            { id: 'hw19', pre: "19.", post: "son estudiantes (девочки).", ans: "Ellas" },
-                            { id: 'hw20', pre: "20.", post: "son muy amables (Вы, группа вежливо).", ans: "Ustedes" },
+                            { id: 'hw11', q: "11. ___ somos de México.", ans: "Nosotros|Nosotras" },
+                            { id: 'hw12', q: "12. ___ es mi hermano Pablo.", ans: "Él" },
+                            { id: 'hw13', q: "13. ___ eres mi mejor amiga.", ans: "Tú" },
+                            { id: 'hw14', q: "14. ___ soy estudiante de medicina.", ans: "Yo" },
+                            { id: 'hw15', q: "15. ___ sois turistas, ¿verdad?", ans: "Vosotros|Vosotras" },
+                            { id: 'hw16', q: "16. ___ son mis padres.", ans: "Ellos" },
+                            { id: 'hw17', q: "17. ___ es la profesora nueva (она).", ans: "Ella" },
+                            { id: 'hw18', q: "18. ¿De dónde es ___ ? (Вы, вежливо)", ans: "usted" },
+                            { id: 'hw19', q: "19. ___ son estudiantes (девочки).", ans: "Ellas" },
+                            { id: 'hw20', q: "20. ___ son muy amables (Вы, группа вежливо).", ans: "Ustedes" },
                           ].map((ex) => (
-                            <div key={ex.id} className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
-                              <span>{ex.pre}</span>
-                              <div className="w-36">
-                                <Exercise id={ex.id} mode="hw" placeholder="Enter answer" correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
-                              </div>
-                              <span>{ex.post}</span>
-                            </div>
+                            <Exercise
+                              key={ex.id}
+                              id={ex.id}
+                              mode="hw"
+                              type="text"
+                              label={ex.q}
+                              placeholder="Enter answer"
+                              correctAnswer={ex.ans}
+                              progressItem={progress.hw?.[ex.id]}
+                              onUpdate={updateProgress}
+                            />
                           ))}
                         </div>
                       </div>
@@ -514,58 +524,61 @@ export default function SerLessonPage() {
                     <div className="space-y-8">
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-6">Часть 1: Впишите глагол SER (Вариант 2)</div>
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                           {[
-                            { id: 'hw1_v2', pre: "1. Ustedes", post: "de Perú, ¿no?", ans: "son" },
-                            { id: 'hw2_v2', pre: "2. La película", post: "muy aburrida.", ans: "es" },
-                            { id: 'hw3_v2', pre: "3. Yo", post: "una persona feliz.", ans: "soy" },
-                            { id: 'hw4_v2', pre: "4. ¿Qué hora", post: "?", ans: "es" },
-                            { id: 'hw5_v2', pre: "5. Hoy", post: "lunes.", ans: "es" },
-                            { id: 'hw6_v2', pre: "6. Tú y yo", post: "primos.", ans: "somos" },
-                            { id: 'hw7_v2', pre: "7. Vosotras", post: "españolas.", ans: "sois" },
-                            { id: 'hw8_v2', pre: "8. Él", post: "mi novio.", ans: "es" },
-                            { id: 'hw9_v2', pre: "9. Los perros", post: "animales leales.", ans: "son" },
-                            { id: 'hw10_v2', pre: "10. ¿Tú", post: "policía?", ans: "eres" },
+                            { id: 'hw1_v2', q: "1. Ustedes ___ de Perú, ¿no?", ans: "son" },
+                            { id: 'hw2_v2', q: "2. La película ___ muy aburrida.", ans: "es" },
+                            { id: 'hw3_v2', q: "3. Yo ___ una persona feliz.", ans: "soy" },
+                            { id: 'hw4_v2', q: "4. ¿Qué hora ___ ?", ans: "es" },
+                            { id: 'hw5_v2', q: "5. Hoy ___ lunes.", ans: "es" },
+                            { id: 'hw6_v2', q: "6. Tú y yo ___ primos.", ans: "somos" },
+                            { id: 'hw7_v2', q: "7. Vosotras ___ españolas.", ans: "sois" },
+                            { id: 'hw8_v2', q: "8. Él ___ mi novio.", ans: "es" },
+                            { id: 'hw9_v2', q: "9. Los perros ___ animales leales.", ans: "son" },
+                            { id: 'hw10_v2', q: "10. ¿Tú ___ policía?", ans: "eres" },
                           ].map((ex) => (
-                            <div key={ex.id} className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
-                              <span>{ex.pre}</span>
-                              <div className="w-32">
-                                <Exercise id={ex.id} mode="hw" placeholder="Enter answer" correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
-                              </div>
-                              <span>{ex.post}</span>
-                            </div>
+                            <Exercise
+                              key={ex.id}
+                              id={ex.id}
+                              mode="hw"
+                              type="text"
+                              label={ex.q}
+                              placeholder="Enter answer"
+                              correctAnswer={ex.ans}
+                              progressItem={progress.hw?.[ex.id]}
+                              onUpdate={updateProgress}
+                            />
                           ))}
                         </div>
                       </div>
 
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-rose-400 mb-6">Часть 2: Впишите местоимение (Вариант 2)</div>
-                        <div className="space-y-6">
+                        <div className="space-y-4">
                           {[
-                            { id: 'hw11_v2', pre: "11. ¿De dónde sois", post: "?", ans: "vosotros|vosotras" },
-                            { id: 'hw12_v2', pre: "12.", post: "es mi coche nuevo.", ans: "Él|Este" }, // Let's simplify
-                            { id: 'hw12_v2', pre: "12.", post: "es mi padre.", ans: "Él|El" },
-                            { id: 'hw13_v2', pre: "13.", post: "eres inteligente.", ans: "Tú|Tu" },
-                            { id: 'hw14_v2', pre: "14.", post: "son mis abuelos.", ans: "Ellos" },
-                            { id: 'hw15_v2', pre: "15.", post: "soy el capitán.", ans: "Yo" },
-                            { id: 'hw16_v2', pre: "16.", post: "somos un equipo.", ans: "Nosotros|Nosotras" },
-                            { id: 'hw17_v2', pre: "17.", post: "es un buen hombre (Вы, вежливо).", ans: "Usted" },
-                            { id: 'hw18_v2', pre: "18.", post: "son amigas.", ans: "Ellas" },
-                            { id: 'hw19_v2', pre: "19.", post: "es mi hermana menor.", ans: "Ella" },
-                            { id: 'hw20_v2', pre: "20.", post: "son doctores (Вы, группа вежливо).", ans: "Ustedes" },
-                          ].filter(e => e.id !== 'hw12_v2' || e.ans.includes('padre')).map((ex, i) => {
-                            // Fixing the duplicate hw12_v2 issue above
-                            const item = i === 1 ? { id: 'hw12_v2', pre: "12.", post: "es mi padre.", ans: "Él|El" } : ex;
-                            return (
-                            <div key={item.id} className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
-                              <span>{item.pre}</span>
-                              <div className="w-36">
-                                <Exercise id={item.id} mode="hw" placeholder="Enter answer" correctAnswer={item.ans} progressItem={progress.hw?.[item.id]} onUpdate={updateProgress} variant="inline" />
-                              </div>
-                              <span>{item.post}</span>
-                            </div>
-                            )
-                          })}
+                            { id: 'hw11_v2', q: "11. ¿De dónde sois ___ ?", ans: "vosotros|vosotras" },
+                            { id: 'hw12_v2', q: "12. ___ es mi padre.", ans: "Él" },
+                            { id: 'hw13_v2', q: "13. ___ eres inteligente.", ans: "Tú" },
+                            { id: 'hw14_v2', q: "14. ___ son mis abuelos.", ans: "Ellos" },
+                            { id: 'hw15_v2', q: "15. ___ soy el capitán.", ans: "Yo" },
+                            { id: 'hw16_v2', q: "16. ___ somos un equipo.", ans: "Nosotros|Nosotras" },
+                            { id: 'hw17_v2', q: "17. ___ es un buen hombre (Вы, вежливо).", ans: "Usted" },
+                            { id: 'hw18_v2', q: "18. ___ son amigas.", ans: "Ellas" },
+                            { id: 'hw19_v2', q: "19. ___ es mi hermana menor.", ans: "Ella" },
+                            { id: 'hw20_v2', q: "20. ___ son doctores (Вы, группа вежливо).", ans: "Ustedes" },
+                          ].map((ex) => (
+                            <Exercise
+                              key={ex.id}
+                              id={ex.id}
+                              mode="hw"
+                              type="text"
+                              label={ex.q}
+                              placeholder="Enter answer"
+                              correctAnswer={ex.ans}
+                              progressItem={progress.hw?.[ex.id]}
+                              onUpdate={updateProgress}
+                            />
+                          ))}
                         </div>
                       </div>
                     </div>
