@@ -1,543 +1,324 @@
 'use client'
-import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useLessonProgress } from '../../../../hooks/useLessonProgress'
+import AdvancedProgressBar from '../../../../components/AdvancedProgressBar'
+import Exercise from '../../../../components/Exercise'
+import { Home, BookOpen, PenTool, CheckCircle, Info, Star, AlertTriangle } from 'lucide-react'
+import Link from 'next/link'
 
-export default function FamilyLesson() {
-  const total = 25;
-  const { progress, updateProgress, getStats, loading } = useLessonProgress('spa_family', total, 0);
-  const stats = getStats('cw');
-  const correctCount = stats.correct;
-  const pct = stats.pct;
+export default function FamilyLessonPage() {
+  const lessonId = 'spa_family'
+  // CW: 10 items, HW: 15 items per variant
+  const totalCW = 10
+  const totalHW = 15
 
-  const speakSpanish = (text) => {
-    if (typeof window !== 'undefined' && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-      const cleanText = text.replace(/\[.*?\]/g, '').replace(/\(.*?\)/g, '').trim();
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      utterance.lang = 'es-ES';
-      utterance.rate = 0.85;
-      window.speechSynthesis.speak(utterance);
-    }
-  };
+  const { progress, updateProgress, resetHW, variant, getStats, loading } =
+    useLessonProgress(lessonId, totalCW, totalHW)
 
-  const AudioWord = ({ spanish, russian, example }) => (
-    <tr>
-      <td className="border border-[#e5e0d5] p-3 text-left">
-        <span className="cursor-pointer hover:opacity-70 text-lg mr-2 inline-block align-middle" onClick={() => speakSpanish(spanish)} title="Прослушать">🔊</span>
-        <span className="font-bold text-[#e63946]">{spanish}</span>
-      </td>
-      <td className="border border-[#e5e0d5] p-3 text-left text-gray-700">{russian}</td>
-      <td className="border border-[#e5e0d5] p-3 text-left">
-        <span className="cursor-pointer text-[#e63946] mr-2" onClick={() => speakSpanish(example.split('(')[0])}>🔊</span>
-        {example}
-      </td>
-    </tr>
-  );
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-  const McqExercise = ({ id, num, problem, options, correctIdx, audioWord }) => {
-    const [selected, setSelected] = useState(null);
-    const [status, setStatus] = useState('attempting');
-    const [attempts, setAttempts] = useState(0);
-
-    useEffect(() => {
-      if (!loading && progress.cw?.[id]) {
-        const item = progress.cw[id];
-        setStatus(item.status || 'attempting');
-        setAttempts(item.attempts || 0);
-        if (item.value !== undefined) setSelected(parseInt(item.value));
-      }
-    }, [loading, progress.cw, id]);
-
-    const check = () => {
-      if (selected === null || status !== 'attempting') return;
-      const curAttempts = attempts + 1;
-      setAttempts(curAttempts);
-      const isCorrect = selected === correctIdx;
-      
-      let newStatus = 'attempting';
-      if (isCorrect) newStatus = 'correct';
-      else if (curAttempts >= 2) newStatus = 'revealed';
-
-      setStatus(newStatus);
-      if (newStatus !== 'attempting') {
-        updateProgress(id, 'cw', newStatus, curAttempts, String(selected));
-      }
-    };
-
-    const isDone = status === 'correct' || status === 'revealed';
-
-    return (
-      <div className={`border-b border-dashed border-[#e5e0d5] py-6 flex flex-col gap-3 last:border-none transition-colors ${status === 'correct' ? 'bg-emerald-50/30' : status === 'revealed' ? 'bg-rose-50/30' : ''}`}>
-        <div className="flex items-center gap-3 text-[16px] font-medium mb-1">
-          {num} {problem}
-          {audioWord && (
-            <button 
-              onClick={() => speakSpanish(audioWord)}
-              className="w-10 h-10 rounded-full bg-[#2a9d8f] text-white flex items-center justify-center text-lg hover:scale-105 transition-transform"
-            >🔊</button>
-          )}
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
-          {options.map((opt, idx) => {
-            let btnClass = "bg-white border-[1.5px] rounded-xl p-4 text-[15px] text-left transition-all font-sans flex items-center gap-3 ";
-            if (status === 'correct' && selected === idx) {
-              btnClass += "border-[#2a9d8f] bg-[#f0faf8] text-[#2a9d8f] font-bold pointer-events-none";
-            } else if (status === 'revealed' && idx === correctIdx) {
-              btnClass += "border-[#2a9d8f] bg-[#f0faf8] text-[#2a9d8f]";
-            } else if (status === 'revealed' && selected === idx) {
-              btnClass += "border-[#e63946] bg-[#fff5f5] text-[#e63946] pointer-events-none opacity-70";
-            } else if (selected === idx) {
-              btnClass += "border-[#e63946] bg-[#fff5f5] text-[#1a1a2e]";
-            } else {
-              btnClass += "border-[#e5e0d5] hover:border-[#e63946] hover:bg-gray-50";
-            }
-            
-            return (
-              <button 
-                key={idx} 
-                onClick={() => { if(!isDone) { setSelected(idx); } }}
-                className={btnClass}
-                disabled={isDone}
-              >
-                {opt}
-              </button>
-            )
-          })}
-        </div>
-        {!isDone && (
-            <button onClick={check} className="bg-[#1a1a2e] text-white rounded-lg px-5 py-2.5 text-[14px] font-bold w-fit mt-2 hover:bg-[#2d2d4e] transition-colors">
-            Проверить
-            </button>
-        )}
-        {status !== 'attempting' && (
-          <div className={`mt-2 p-3 rounded-lg text-[14px] font-medium border-l-4 ${status === 'correct' ? 'bg-[#f0faf8] text-[#2a9d8f] border-[#2a9d8f]' : 'bg-[#fff5f5] text-[#e63946] border-[#e63946]'}`}>
-            {status === 'correct' ? '✓ ¡Muy bien!' : `✗ Решение: ${options[correctIdx]}`}
-          </div>
-        )}
+  if (loading || !mounted) return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="font-bold text-slate-400 animate-pulse">CARGANDO...</div>
       </div>
-    )
-  }
+    </div>
+  )
 
-  const DropdownExercise = ({ id, num, prefix, suffix, options, correctVal }) => {
-    const [val, setVal] = useState('');
-    const [status, setStatus] = useState('attempting');
-    const [attempts, setAttempts] = useState(0);
-
-    useEffect(() => {
-      if (!loading && progress.cw?.[id]) {
-        const item = progress.cw[id];
-        setVal(item.value || '');
-        setStatus(item.status || 'attempting');
-        setAttempts(item.attempts || 0);
-      }
-    }, [loading, progress.cw, id]);
-
-    const check = () => {
-      if (!val || status !== 'attempting') return;
-      const curAttempts = attempts + 1;
-      setAttempts(curAttempts);
-      const isCorrect = val === correctVal;
-      
-      let newStatus = 'attempting';
-      if (isCorrect) newStatus = 'correct';
-      else if (curAttempts >= 2) newStatus = 'revealed';
-
-      setStatus(newStatus);
-      if (newStatus !== 'attempting') {
-        updateProgress(id, 'cw', newStatus, curAttempts, val);
-      }
-    }
-
-    const isDone = status === 'correct' || status === 'revealed';
-
-    let selectClass = "appearance-none bg-gray-50 border-[1.5px] rounded-lg py-1.5 pl-3 pr-8 font-mono text-[15px] font-bold outline-none transition-colors mx-2 cursor-pointer ";
-    if (status === 'correct') selectClass += "border-[#2a9d8f] text-[#2a9d8f] bg-[#f0faf8]";
-    else if (status === 'revealed') selectClass += "border-[#e63946] text-[#e63946] bg-[#fff5f5]";
-    else selectClass += "border-[#e5e0d5] text-[#e63946] focus:border-[#e63946]";
-
-    const arrowSvg = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`;
-
-    return (
-      <div className={`border-b border-dashed border-[#e5e0d5] py-6 flex flex-col gap-3 last:border-none ${status === 'correct' ? 'bg-emerald-50/20' : ''}`}>
-        <div className="text-[16px] font-medium mb-1 flex items-center flex-wrap">
-          {num} {prefix}
-          <select 
-            value={val} 
-            onChange={e => setVal(e.target.value)}
-            className={selectClass}
-            style={{ backgroundImage: arrowSvg, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center' }}
-            disabled={isDone}
-          >
-            <option value="" disabled>выбери</option>
-            {options.map(o => <option key={o} value={o}>{o}</option>)}
-          </select>
-          {suffix}
-        </div>
-        {!isDone && (
-            <button onClick={check} className="bg-[#1a1a2e] text-white rounded-lg px-5 py-2.5 text-[14px] font-bold w-fit mt-2 hover:bg-[#2d2d4e] transition-colors">
-            Проверить
-            </button>
-        )}
-        {status === 'revealed' && (
-          <div className="mt-2 p-3 rounded-lg text-[14px] font-medium border-l-4 bg-[#f0faf8] text-[#2a9d8f] border-[#2a9d8f]">
-            ✓ Правильный ответ: {correctVal}
-          </div>
-        )}
-      </div>
-    )
-  }
-
-  const BuilderExercise = ({ id, num, problem, initialWords, correctAns }) => {
-    const [bank, setBank] = useState(initialWords);
-    const [zone, setZone] = useState([]);
-    const [status, setStatus] = useState('attempting');
-    const [attempts, setAttempts] = useState(0);
-
-    useEffect(() => {
-      if (!loading && progress.cw?.[id]) {
-        const item = progress.cw[id];
-        setStatus(item.status || 'attempting');
-        setAttempts(item.attempts || 0);
-        if ((item.status === 'correct' || item.status === 'revealed') && item.value) {
-            const words = item.value.split(' ');
-            setZone(words);
-            let currentBank = [...initialWords];
-            words.forEach(w => {
-                const idx = currentBank.indexOf(w);
-                if (idx > -1) currentBank.splice(idx, 1);
-            });
-            setBank(currentBank);
-        }
-      }
-    }, [loading, progress.cw, id, initialWords]);
-
-    const check = () => {
-      if (status !== 'attempting') return;
-      const curAttempts = attempts + 1;
-      setAttempts(curAttempts);
-      const userAns = zone.join(' ');
-      const isCorrect = userAns === correctAns;
-      
-      let newStatus = 'attempting';
-      if (isCorrect) newStatus = 'correct';
-      else if (curAttempts >= 2) newStatus = 'revealed';
-
-      setStatus(newStatus);
-      if (newStatus !== 'attempting') {
-        updateProgress(id, 'cw', newStatus, curAttempts, isCorrect ? userAns : correctAns);
-        if (!isCorrect && curAttempts >= 2) {
-            setZone(correctAns.split(' '));
-            setBank([]);
-        }
-      }
-    }
-
-    const moveToZone = (word, idx) => {
-      if (status === 'correct') return;
-      setBank(bank.filter((_, i) => i !== idx));
-      setZone([...zone, word]);
-      setStatus(null);
-    }
-
-    const moveToBank = (word, idx) => {
-      if (status === 'correct') return;
-      setZone(zone.filter((_, i) => i !== idx));
-      setBank([...bank, word]);
-      setStatus(null);
-    }
-
-    return (
-      <div className="border-b border-dashed border-[#e5e0d5] py-6 flex flex-col gap-3 last:border-none w-full">
-        <div className="text-[16px] font-medium mb-2">{num} {problem}</div>
-        
-        <div className="w-full">
-          <div className={`min-h-[60px] bg-gray-50 border-2 border-dashed rounded-xl p-3 flex flex-wrap gap-2 items-center mb-4 transition-colors ${status === 'correct' ? 'border-[#2a9d8f] bg-[#f0faf8]' : status === 'wrong' ? 'border-[#e63946] bg-[#fff5f5]' : 'border-[#e5e0d5]'}`}>
-            {zone.map((word, idx) => (
-              <div 
-                key={`zone-${idx}`} 
-                onClick={() => moveToBank(word, idx)}
-                className="bg-white border-[1.5px] border-[#e5e0d5] rounded-lg px-4 py-2 text-[15px] font-medium cursor-pointer shadow-sm hover:scale-95 transition-transform select-none"
-              >
-                {word}
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-2 min-h-[50px]">
-            {bank.map((word, idx) => (
-              <div 
-                key={`bank-${idx}`} 
-                onClick={() => moveToZone(word, idx)}
-                className="bg-white border-[1.5px] border-[#e5e0d5] rounded-lg px-4 py-2 text-[15px] font-medium cursor-pointer shadow-sm hover:scale-105 transition-transform select-none"
-              >
-                {word}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <button onClick={check} className="bg-[#1a1a2e] text-white rounded-lg px-5 py-2.5 text-[14px] font-bold w-fit mt-2 hover:bg-[#2d2d4e] transition-colors">
-          Проверить
-        </button>
-        {status && (
-          <div className={`mt-2 p-3 rounded-lg text-[14px] font-medium border-l-4 ${status === 'correct' ? 'bg-[#f0faf8] text-[#2a9d8f] border-[#2a9d8f]' : 'bg-[#fff5f5] text-[#e63946] border-[#e63946]'}`}>
-            {status === 'correct' ? '✓ Идеально собрано!' : '✗ Неправильный порядок. Попробуй переставить слова.'}
-          </div>
-        )}
-      </div>
-    )
-  }
-
-  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
+  const statsCW = getStats('cw')
+  const statsHW = getStats('hw')
 
   return (
-    <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">
-      <div className="bg-[#1a1a2e] text-white px-10 py-12 pb-10 relative overflow-hidden">
-        <div className="text-[11px] font-semibold tracking-[3px] uppercase text-[#e63946] mb-3">
-          🇪🇸 Урок 8 · Грамматика A1
+    <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] font-sans pb-20">
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800;900&display=swap');
+        .unbounded { font-family: 'Unbounded', sans-serif; }
+      `}} />
+
+      {/* Header */}
+      <header className="bg-rose-600 text-white py-16 px-6 text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 text-[150px] font-black opacity-10 pointer-events-none select-none unbounded translate-x-10 -translate-y-10 uppercase">FAMILIA</div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="inline-block px-3 py-1 bg-rose-800 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase mb-6 shadow-md">
+            🇪🇸 Lección 8 · Vocabulario A1
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black unbounded uppercase mb-6 tracking-tighter leading-tight drop-shadow-lg">
+            La <span className="text-amber-300 italic">Familia</span>
+          </h1>
+          <p className="text-rose-100 text-lg max-w-2xl mx-auto font-medium">
+            Учим слова о семье и внешности! Рассказываем о родственниках по-испански. 👨‍👩‍👧‍👦
+          </p>
         </div>
-        <h1 className="font-extrabold text-[clamp(32px,5vw,52px)] leading-[1.1] mb-4 unbounded relative z-10">
-          Семья и<br />
-          <em className="text-[#f4a261] not-italic font-normal font-serif">Внешность</em>
-        </h1>
-        <p className="text-white/60 text-[15px] max-w-[500px] relative z-10">
-          Как рассказать о своих родственниках, описать, как они выглядят, и правильно сказать «мой», «твой» или «наш».
-        </p>
-        <div className="absolute right-[-20px] top-[10px] text-[130px] text-white/5 font-extrabold leading-none tracking-[-5px] uppercase unbounded select-none pointer-events-none z-0">
-          FAMILIA
-        </div>
-      </div>
+      </header>
 
-      <div className="max-w-[1100px] mx-auto px-6">
-        <div className="flex flex-col md:flex-row gap-8 items-start relative">
-          
-          <div className="flex-1 w-full">
-            <nav className="bg-white border border-[#e5e0d5] rounded-xl px-6 py-5 mt-8 flex flex-wrap gap-2.5 items-center shadow-sm">
-              <Link href="/dashboard" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] font-bold transition-colors hover:bg-[#e63946] hover:text-white">
-                ← На главную
-              </Link>
-              <a href="#theory" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#e63946] hover:text-white">📖 Теория</a>
-              <a href="#exercises-mcq" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#e63946] hover:text-white">🎯 Блок 1 (Тест)</a>
-              <a href="#exercises-dropdown" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#e63946] hover:text-white">🎯 Блок 2 (Окончания)</a>
-              <a href="#exercises-drag" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#e63946] hover:text-white">🧩 Блок 3 (Конструктор)</a>
-              <a href="#exercises-audio" className="bg-[#1a1a2e] text-white no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#e63946]">🎧 Аудио-Диктант</a>
-            </nav>
+      <div className="max-w-4xl mx-auto px-6 -mt-8 relative z-20">
+        <AdvancedProgressBar
+          statsCW={statsCW}
+          statsHW={statsHW}
+          onReset={resetHW}
+          variant={variant}
+        />
 
-            {/* THEORY */}
-            <div id="theory">
-              <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[2.5px] uppercase text-[#e63946] my-12 mb-5">
-                Теория
-                <div className="w-[40px] h-[2px] bg-[#e63946]"></div>
+        {/* Navigation */}
+        <nav className="flex flex-wrap gap-2 mb-12">
+          <Link href="/dashboard" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all text-slate-700">
+            <Home size={16} /> Inicio
+          </Link>
+          <a href="#theory" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all text-slate-700">
+            <BookOpen size={16} /> Teoría
+          </a>
+          <a href="#classwork" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all text-slate-700">
+            <PenTool size={16} /> Práctica
+          </a>
+          <a href="#homework" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all text-slate-700">
+            <CheckCircle size={16} /> Tareas
+          </a>
+        </nav>
+
+        {/* THEORY SECTION */}
+        <section id="theory" className="mb-20 scroll-mt-10">
+          <div className="flex items-center gap-3 text-rose-600 font-bold tracking-[0.2em] uppercase text-xs mb-4">
+            Teoría <div className="h-[2px] w-12 bg-rose-600"></div>
+          </div>
+          <h2 className="text-3xl font-black unbounded mb-8 text-slate-900">Vocabulario: La Familia</h2>
+
+          <div className="grid gap-6">
+            {/* Card 1: Family Members */}
+            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-rose-500"></div>
+              <div className="flex justify-between items-start mb-6">
+                <h3 className="text-xl font-bold flex items-center gap-2 text-slate-900">
+                  <Info size={20} className="text-rose-500" /> Члены семьи
+                </h3>
               </div>
-              <h2 className="font-bold text-[28px] text-[#1a1a2e] mb-5 unbounded">Чьё это? И как они выглядят?</h2>
 
-              {/* VOCAB: FAMILY */}
-              <div className="bg-white border border-[#e5e0d5] rounded-2xl p-8 pl-10 mb-4 relative shadow-sm">
-                <div className="absolute left-0 top-5 bottom-5 w-1 rounded-r-sm bg-[#e63946]"></div>
-                <h3 className="font-bold text-[20px] mb-3 unbounded text-[#1a1a2e]">1. La familia (Семья)</h3>
-                <p className="text-gray-700 text-[15px] mb-4">
-                  В испанском языке мужской и женский род в семье образуют пары. А если мы говорим о них во множественном числе (например, "родители"), мы берём <strong>слово мужского рода и ставим -s</strong>.
-                </p>
-
-                <div className="overflow-x-auto mb-6">
-                  <table className="w-full border-collapse text-[15px]">
-                    <thead>
-                      <tr>
-                        <th className="border border-[#e5e0d5] p-3 text-left bg-gray-50 font-semibold text-[#1a1a2e]">Мужчина (el)</th>
-                        <th className="border border-[#e5e0d5] p-3 text-left bg-gray-50 font-semibold text-[#1a1a2e]">Женщина (la)</th>
-                        <th className="border border-[#e5e0d5] p-3 text-left bg-gray-50 font-semibold text-[#1a1a2e]">Вместе (los)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('el padre')}>🔊</span> el padre (отец)</td>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('la madre')}>🔊</span> la madre (мать)</td>
-                        <td className="border border-[#e5e0d5] p-3 font-bold"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('los padres')}>🔊</span> los padres (родители)</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('el hermano')}>🔊</span> el hermano (брат)</td>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('la hermana')}>🔊</span> la hermana (сестра)</td>
-                        <td className="border border-[#e5e0d5] p-3 font-bold"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('los hermanos')}>🔊</span> los hermanos (братья и сестры)</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('el hijo')}>🔊</span> el hijo (сын)</td>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('la hija')}>🔊</span> la hija (дочь)</td>
-                        <td className="border border-[#e5e0d5] p-3 font-bold"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('los hijos')}>🔊</span> los hijos (дети)</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('el abuelo')}>🔊</span> el abuelo (дедушка)</td>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('la abuela')}>🔊</span> la abuela (бабушка)</td>
-                        <td className="border border-[#e5e0d5] p-3 font-bold"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('los abuelos')}>🔊</span> los abuelos (бабушка и дедушка)</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('el tío')}>🔊</span> el tío (дядя)</td>
-                        <td className="border border-[#e5e0d5] p-3"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('la tía')}>🔊</span> la tía (тётя)</td>
-                        <td className="border border-[#e5e0d5] p-3 font-bold"><span className="cursor-pointer text-[#e63946]" onClick={() => speakSpanish('los tíos')}>🔊</span> los tíos (дяди и тёти)</td>
-                      </tr>
-                    </tbody>
-                  </table>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-rose-600 font-mono text-lg">padre</strong>
+                  <p className="text-sm text-slate-700 mt-1">отец</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-rose-600 font-mono text-lg">madre</strong>
+                  <p className="text-sm text-slate-700 mt-1">мать</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-rose-600 font-mono text-lg">hermano</strong>
+                  <p className="text-sm text-slate-700 mt-1">брат</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-rose-600 font-mono text-lg">hermana</strong>
+                  <p className="text-sm text-slate-700 mt-1">сестра</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-rose-600 font-mono text-lg">hijo</strong>
+                  <p className="text-sm text-slate-700 mt-1">сын</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-rose-600 font-mono text-lg">hija</strong>
+                  <p className="text-sm text-slate-700 mt-1">дочь</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-rose-600 font-mono text-lg">abuelo</strong>
+                  <p className="text-sm text-slate-700 mt-1">дедушка</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-rose-600 font-mono text-lg">abuela</strong>
+                  <p className="text-sm text-slate-700 mt-1">бабушка</p>
                 </div>
               </div>
+            </div>
 
-              {/* GRAMMAR: POSSESSIVES */}
-              <div className="bg-white border border-[#e5e0d5] rounded-2xl p-8 pl-10 mb-4 relative shadow-sm">
-                <div className="absolute left-0 top-5 bottom-5 w-1 rounded-r-sm bg-[#f4a261]"></div>
-                <h3 className="font-bold text-[20px] mb-3 unbounded text-[#1a1a2e]">2. Притяжательные местоимения (Чьё?)</h3>
-                <p className="text-gray-700 text-[15px] mb-4">
-                  В испанском слова "мой, твой, его" <strong>должны совпадать в числе</strong> с тем предметом, о котором мы говорим! 
-                  Если предмет один — говорим <i>mi</i>. Если предметов много — добавляем "s": <i>mis</i>.
-                </p>
+            {/* Card 2: Appearance */}
+            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500"></div>
+              <div className="flex justify-between items-start mb-6">
+                <h3 className="text-xl font-bold flex items-center gap-2 text-slate-900">
+                  <Star size={20} className="text-amber-500" /> Внешность
+                </h3>
+              </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-                    <span className="block font-bold mb-2">Один предмет (Singular)</span>
-                    <ul className="text-[15px] space-y-1">
-                      <li><strong>mi</strong> (мой/моя)</li>
-                      <li><strong>tu</strong> (твой/твоя)</li>
-                      <li><strong>su</strong> (его/её/их/Ваш)</li>
-                      <li><strong>nuestro / nuestra</strong> (наш / наша) <span className="text-xs text-gray-500">← Меняется род!</span></li>
-                      <li><strong>vuestro / vuestra</strong> (ваш / ваша)</li>
-                    </ul>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-amber-600 font-mono text-lg">alto/a</strong>
+                  <p className="text-sm text-slate-700 mt-1">высокий/ая</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-amber-600 font-mono text-lg">bajo/a</strong>
+                  <p className="text-sm text-slate-700 mt-1">низкий/ая</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-amber-600 font-mono text-lg">guapo/a</strong>
+                  <p className="text-sm text-slate-700 mt-1">красивый/ая</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <strong className="text-amber-600 font-mono text-lg">joven</strong>
+                  <p className="text-sm text-slate-700 mt-1">молодой</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Las Reglas */}
+            <div className="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
+              <h3 className="text-2xl font-black mb-8 text-rose-400 unbounded text-center flex justify-center items-center gap-3">
+                <AlertTriangle size={28} /> LAS REGLAS (ПРАВИЛА)
+              </h3>
+
+              <div className="space-y-6">
+                <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <div className="text-rose-400 font-bold uppercase tracking-widest text-xs mb-2">Regla №1: Род прилагательных</div>
+                  <p className="text-slate-300 text-sm mb-3">Прилагательные согласуются с существительным по роду и числу.</p>
+                  <div className="bg-black/30 p-4 rounded-lg font-mono text-sm space-y-1">
+                    <p className="text-emerald-400">Mi padre es alto. (мужской род)</p>
+                    <p className="text-emerald-400">Mi madre es alta. (женский род)</p>
                   </div>
-                  <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-                    <span className="block font-bold mb-2">Много предметов (Plural)</span>
-                    <ul className="text-[15px] space-y-1">
-                      <li><strong>mis</strong> (мои) — <i>mis amigos</i></li>
-                      <li><strong>tus</strong> (твои) — <i>tus gatos</i></li>
-                      <li><strong>sus</strong> (его/её/их/Ваши) — <i>sus hijos</i></li>
-                      <li><strong>nuestros / nuestras</strong> (наши)</li>
-                      <li><strong>vuestros / vuestras</strong> (ваши)</li>
-                    </ul>
-                  </div>
                 </div>
-
-                <div className="bg-gradient-to-br from-[#fff8f0] to-[#fff3e6] border border-[#f4a261] border-l-4 border-l-[#f4a261] rounded-lg p-4 mb-2 text-[14px] text-[#7c4a00]">
-                  <strong className="text-[#5c3300] block mb-2 text-[12px] tracking-[1px] uppercase">⚠️ Важно:</strong>
-                  Местоимение <strong>su</strong> — это шпион. Оно может значить "его", "её", "их" или вежливое "Ваш". Поймём мы это только по контексту!<br/>
-                  <i>Su casa</i> = Его дом / Её дом / Их дом / Ваш дом.
-                </div>
-              </div>
-
-              {/* GRAMMAR: DESCRIPTIONS */}
-              <div className="bg-white border border-[#e5e0d5] rounded-2xl p-8 pl-10 mb-4 relative shadow-sm">
-                <div className="absolute left-0 top-5 bottom-5 w-1 rounded-r-sm bg-[#2a9d8f]"></div>
-                <h3 className="font-bold text-[20px] mb-3 unbounded text-[#1a1a2e]">3. Описание внешности (SER vs TENER)</h3>
-                <p className="text-gray-700 text-[15px] mb-4">
-                  Когда мы описываем человека в целом (какой он есть) — мы используем глагол <strong>SER (быть)</strong>. А когда говорим о том, что у него "приклеено" к телу (волосы, глаза, борода) — используем <strong>TENER (иметь)</strong>.
-                </p>
-                
-                <ul className="ml-5 leading-[1.8] list-disc mb-6 text-[15px] text-gray-700">
-                  <li><strong className="text-[#e63946]">SER (быть):</strong> alto (высокий), bajo (низкий), rubio (блондин), moreno (брюнет/смуглый), delgado (худой), gordo (толстый), pelirrojo (рыжий).</li>
-                  <br/>
-                  <li><strong className="text-[#2a9d8f]">TENER (иметь):</strong><br/>
-                    - <i>el pelo largo / corto</i> (длинные / короткие волосы)<br/>
-                    - <i>el pelo liso / rizado</i> (прямые / кудрявые волосы)<br/>
-                    - <i>los ojos azules / verdes / marrones</i> (голубые / зеленые / карие глаза)<br/>
-                    - <i>barba / bigote</i> (борода / усы)
-                  </li>
-                </ul>
-
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-[15px]">
-                  <span className="font-bold text-[#1a1a2e] block mb-1">Пример:</span>
-                  Mi padre <strong>es</strong> alto y moreno. Él <strong>tiene</strong> los ojos marrones y <strong>tiene</strong> barba.<br/>
-                  <i>(Мой папа высокий и брюнет. У него карие глаза и у него есть борода).</i>
-                </div>
-              </div>
-            </div>
-
-            {/* EXERCISES */}
-            <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[2.5px] uppercase text-[#e63946] my-12 mb-5">
-              Огромная практика (25 заданий)
-              <div className="w-[40px] h-[2px] bg-[#e63946]"></div>
-            </div>
-
-            <div id="exercises-mcq" className="bg-white border border-[#e5e0d5] rounded-2xl overflow-hidden mb-8 shadow-sm">
-              <div className="px-6 py-4 flex items-center gap-3 border-b border-[#e5e0d5] bg-gray-50">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#2a9d8f]"></div>
-                <h3 className="text-[16px] font-bold m-0">Блок 1: Семья и Внешность</h3>
-                <span className="ml-auto text-[12px] text-gray-500 bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-sm hidden sm:inline-block">Выбери правильный перевод</span>
-              </div>
-              <div className="px-6 py-2">
-                <McqExercise id="q1" num="1." problem="Отец" options={['el tío', 'el padre', 'el abuelo', 'el hijo']} correctIdx={1} />
-                <McqExercise id="q2" num="2." problem="Дедушка и Бабушка (вместе)" options={['los abuelos', 'los padres', 'los hermanos', 'los tíos']} correctIdx={0} />
-                <McqExercise id="q3" num="3." problem="Мои братья и сестры" options={['mis hijos', 'mi hermano', 'mis hermanos', 'los primos']} correctIdx={2} />
-                <McqExercise id="q4" num="4." problem="Мой кузен (двоюродный брат)" options={['mi sobrino', 'mi hermano', 'mi hijo', 'mi primo']} correctIdx={3} />
-                <McqExercise id="q5" num="5." problem="Блондин" options={['moreno', 'rubio', 'pelirrojo', 'delgado']} correctIdx={1} />
-                <McqExercise id="q6" num="6." problem="Короткие волосы" options={['el pelo liso', 'el pelo largo', 'el pelo rizado', 'el pelo corto']} correctIdx={3} />
-                <McqExercise id="q7" num="7." problem="У него карие глаза" options={['Tiene los ojos verdes', 'Es los ojos marrones', 'Tiene los ojos marrones', 'Tiene el pelo marrón']} correctIdx={2} />
-                <McqExercise id="q8" num="8." problem="Она худая и высокая" options={['Ella es gorda y baja', 'Ella es delgada y alta', 'Ella tiene delgada y alta', 'Ella es morena y alta']} correctIdx={1} />
-              </div>
-            </div>
-
-            <div id="exercises-dropdown" className="bg-white border border-[#e5e0d5] rounded-2xl overflow-hidden mb-8 shadow-sm">
-              <div className="px-6 py-4 flex items-center gap-3 border-b border-[#e5e0d5] bg-gray-50">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#f4a261]"></div>
-                <h3 className="text-[16px] font-bold m-0">Блок 2: Окончания местоимений (mi vs mis)</h3>
-                <span className="ml-auto text-[12px] text-gray-500 bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-sm hidden sm:inline-block">Следи за числом!</span>
-              </div>
-              <div className="px-6 py-2">
-                <DropdownExercise id="q9" num="9." prefix="" suffix="madre es doctora. (Моя мама — врач)" options={['mi', 'mis', 'tu']} correctVal="mi" />
-                <DropdownExercise id="q10" num="10." prefix="¿Dónde viven" suffix="abuelos? (Где живут твои бабушка и дедушка?)" options={['tu', 'tus', 'su']} correctVal="tus" />
-                <DropdownExercise id="q11" num="11." prefix="" suffix="padres son simpáticos. (Его родители милые)" options={['su', 'sus', 'mis']} correctVal="sus" />
-                <DropdownExercise id="q12" num="12." prefix="" suffix="familia es grande. (Наша семья большая)" options={['nuestro', 'nuestra', 'nuestros']} correctVal="nuestra" />
-                <DropdownExercise id="q13" num="13." prefix="" suffix="amigos estudian ruso. (Наши друзья учат русский)" options={['nuestro', 'nuestros', 'nuestras']} correctVal="nuestros" />
-                <DropdownExercise id="q14" num="14." prefix="" suffix="tío trabaja en un banco. (Её дядя работает в банке)" options={['su', 'sus', 'tu']} correctVal="su" />
-              </div>
-            </div>
-
-            <div id="exercises-drag" className="bg-white border border-[#e5e0d5] rounded-2xl overflow-hidden mb-8 shadow-sm">
-              <div className="px-6 py-4 flex items-center gap-3 border-b border-[#e5e0d5] bg-gray-50">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#e63946]"></div>
-                <h3 className="text-[16px] font-bold m-0">Блок 3: Собери предложение</h3>
-              </div>
-              <div className="px-6 py-2">
-                <BuilderExercise id="q15" num="15." problem="Моя сестра — блондинка." initialWords={['rubia', 'Mi', 'es', 'hermana']} correctAns="Mi hermana es rubia" />
-                <BuilderExercise id="q16" num="16." problem="У твоего брата зелёные глаза." initialWords={['Tu', 'los', 'verdes', 'hermano', 'tiene', 'ojos']} correctAns="Tu hermano tiene los ojos verdes" />
-                <BuilderExercise id="q17" num="17." problem="Наши дети не высокие." initialWords={['no', 'hijos', 'Nuestros', 'son', 'altos']} correctAns="Nuestros hijos no son altos" />
-                <BuilderExercise id="q18" num="18." problem="Его отец имеет бороду и усы." initialWords={['bigote', 'y', 'tiene', 'padre', 'barba', 'Su']} correctAns="Su padre tiene barba y bigote" />
-                <BuilderExercise id="q19" num="19." problem="Где твои родители?" initialWords={['¿', 'padres', 'Dónde', 'tus', 'están', '?']} correctAns="¿ Dónde están tus padres ?" />
-                <BuilderExercise id="q20" num="20." problem="Моя мама имеет кудрявые волосы." initialWords={['rizado', 'madre', 'el', 'tiene', 'pelo', 'Mi']} correctAns="Mi madre tiene el pelo rizado" />
-              </div>
-            </div>
-
-            <div id="exercises-audio" className="bg-white border border-[#e5e0d5] rounded-2xl overflow-hidden mb-8 shadow-sm">
-              <div className="px-6 py-4 flex items-center gap-3 border-b border-[#e5e0d5] bg-gray-50">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#1a1a2e]"></div>
-                <h3 className="text-[16px] font-bold m-0">Блок 4: Аудио-диктант</h3>
-                <span className="ml-auto text-[12px] text-gray-500 bg-white border border-gray-200 px-2.5 py-1 rounded-full shadow-sm hidden sm:inline-block">Включи звук!</span>
-              </div>
-              <div className="px-6 py-2">
-                <McqExercise id="q21" num="21." problem="Кого упомянул диктор?" audioWord="El abuelo" options={['Дядя', 'Дедушка', 'Отец', 'Брат']} correctIdx={1} />
-                <McqExercise id="q22" num="22." problem="О ком идёт речь?" audioWord="La hija" options={['Тётя', 'Бабушка', 'Сестра', 'Дочь']} correctIdx={3} />
-                <McqExercise id="q23" num="23." problem="Какая деталь внешности прозвучала?" audioWord="Rubio" options={['Брюнет', 'Блондин', 'Толстый', 'Низкий']} correctIdx={1} />
-                <McqExercise id="q24" num="24." problem="Какая деталь внешности прозвучала?" audioWord="Pelo rizado" options={['Прямые волосы', 'Карие глаза', 'Кудрявые волосы', 'Борода']} correctIdx={2} />
-                <McqExercise id="q25" num="25." problem="Какая фраза прозвучала?" audioWord="Tus padres son altos" options={['Твои родители высокие', 'Мои родители низкие', 'Его родители толстые', 'Её брат высокий']} correctIdx={0} />
               </div>
             </div>
 
           </div>
+        </section>
 
-          {/* RIGHT SIDEBAR (PROGRESS) */}
-          <div className="md:w-[280px] w-full flex-shrink-0 md:sticky md:top-24 mb-8 mt-8">
-            <div className="bg-white border border-[#e5e0d5] rounded-2xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
-              <div className="flex justify-between items-center mb-3">
-                <span className="font-semibold text-[15px]">Твой прогресс</span>
-                <span className="font-bold text-[#1a1a2e] bg-gray-100 px-3 py-1 rounded-full text-sm">{correctCount} / {total}</span>
+        {/* CLASSWORK SECTION */}
+        <section id="classwork" className="mb-20 scroll-mt-10">
+          <div className="flex items-center gap-3 text-rose-600 font-bold tracking-[0.2em] uppercase text-xs mb-4">
+            Práctica <div className="h-[2px] w-12 bg-rose-600"></div>
+          </div>
+          <h2 className="text-3xl font-black unbounded mb-4 text-slate-900">Classwork</h2>
+          <p className="text-slate-500 mb-8">Тренируем слова о семье.</p>
+
+          <div className="space-y-12">
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-rose-500 rounded-full"></div> Блок 1: Vocabulario
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { id: 'cw1', q: "1. El ___ de mi madre es mi abuelo. (отец)", ans: 'padre' },
+                  { id: 'cw2', q: "2. La ___ de mi padre es mi tía. (сестра)", ans: 'hermana' },
+                  { id: 'cw3', q: "3. Mi ___ es muy alto. (брат)", ans: 'hermano' },
+                  { id: 'cw4', q: "4. Mi ___ tiene 60 años. (бабушка)", ans: 'abuela' },
+                  { id: 'cw5', q: "5. Tengo dos ___. (сыновья)", ans: 'hijos' },
+                  { id: 'cw6', q: "6. Mi madre es muy ___. (красивая)", ans: 'guapa' },
+                  { id: 'cw7', q: "7. Mi hermano es ___. (молодой)", ans: 'joven' },
+                  { id: 'cw8', q: "8. Mi padre es ___. (высокий)", ans: 'alto' },
+                  { id: 'cw9', q: "9. Tengo una ___ pequeña. (дочь)", ans: 'hija' },
+                  { id: 'cw10', q: "10. Mi ___ es doctor. (дедушка)", ans: 'abuelo' },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="text"
+                    label={ex.q}
+                    placeholder="Enter answer"
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
               </div>
-              <div className="bg-gray-200 rounded-full h-2 mt-2 overflow-hidden">
-                <div className="h-full bg-[#e63946] rounded-full transition-all duration-400 ease-out" style={{ width: `${pct}%` }}></div>
-              </div>
-              {pct === 100 && (
-                <div className="mt-4 p-3 bg-[#f0faf8] text-[#2a9d8f] font-bold text-center rounded-lg border border-[#2a9d8f]/30 text-sm">
-                  🎉 ¡Genial! Ты выучил семью и местоимения!
-                </div>
-              )}
             </div>
           </div>
+        </section>
 
-        </div>
+        {/* HOMEWORK SECTION */}
+        <section id="homework" className="mb-20 scroll-mt-10">
+          <div className="flex items-center gap-3 text-slate-900 font-bold tracking-[0.2em] uppercase text-xs mb-4">
+            Tareas <div className="h-[2px] w-12 bg-slate-900"></div>
+          </div>
+          <div className="bg-slate-900 text-white p-8 rounded-3xl relative overflow-hidden shadow-2xl border-t-8 border-rose-600">
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl font-black unbounded uppercase text-rose-400">
+                  Homework {variant === 2 && <span className="text-sm bg-white/10 px-3 py-1 rounded-full text-white align-middle ml-4">Variant 2</span>}
+                </h2>
+              </div>
+
+              <p className="text-slate-400 mb-12 max-w-xl">
+                {variant === 1
+                  ? "Самостоятельная практика. Впишите правильное слово о семье."
+                  : "Второй шанс! Решите новые задания."}
+              </p>
+
+              <div className="space-y-12">
+                {variant === 1 ? (
+                  <div className="space-y-4">
+                    {[
+                      { id: 'hw1', q: "1. Mi ___ es profesora. (мать)", ans: "madre" },
+                      { id: 'hw2', q: "2. Tengo un ___ mayor. (брат)", ans: "hermano" },
+                      { id: 'hw3', q: "3. Mi ___ trabaja en un banco. (отец)", ans: "padre" },
+                      { id: 'hw4', q: "4. Mi ___ tiene 5 años. (дочь)", ans: "hija" },
+                      { id: 'hw5', q: "5. Mi ___ es muy vieja. (бабушка)", ans: "abuela" },
+                      { id: 'hw6', q: "6. Tengo dos ___. (сестры)", ans: "hermanas" },
+                      { id: 'hw7', q: "7. Mi ___ es ingeniero. (дедушка)", ans: "abuelo" },
+                      { id: 'hw8', q: "8. Mi hermana es muy ___. (красивая)", ans: "guapa" },
+                      { id: 'hw9', q: "9. Mi padre es ___. (высокий)", ans: "alto" },
+                      { id: 'hw10', q: "10. Mi hermano es ___. (молодой)", ans: "joven" },
+                      { id: 'hw11', q: "11. Tengo tres ___. (сыновья)", ans: "hijos" },
+                      { id: 'hw12', q: "12. Mi madre es ___. (низкая)", ans: "baja" },
+                      { id: 'hw13', q: "13. Mi ___ menor tiene 3 años. (сын)", ans: "hijo" },
+                      { id: 'hw14', q: "14. Mi ___ es enfermera. (сестра)", ans: "hermana" },
+                      { id: 'hw15', q: "15. Mis ___ viven en Madrid. (родители)", ans: "padres" },
+                    ].map((ex) => (
+                      <Exercise
+                        key={ex.id}
+                        id={ex.id}
+                        mode="hw"
+                        type="text"
+                        label={ex.q}
+                        placeholder="Enter answer"
+                        correctAnswer={ex.ans}
+                        progressItem={progress.hw?.[ex.id]}
+                        onUpdate={updateProgress}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {[
+                      { id: 'hw1_v2', q: "1. Mi ___ es doctor. (отец)", ans: "padre" },
+                      { id: 'hw2_v2', q: "2. Tengo una ___ pequeña. (сестра)", ans: "hermana" },
+                      { id: 'hw3_v2', q: "3. Mi ___ cocina muy bien. (мать)", ans: "madre" },
+                      { id: 'hw4_v2', q: "4. Mi ___ tiene 8 años. (сын)", ans: "hijo" },
+                      { id: 'hw5_v2', q: "5. Mi ___ tiene 80 años. (дедушка)", ans: "abuelo" },
+                      { id: 'hw6_v2', q: "6. Tengo dos ___. (братья)", ans: "hermanos" },
+                      { id: 'hw7_v2', q: "7. Mi ___ es muy amable. (бабушка)", ans: "abuela" },
+                      { id: 'hw8_v2', q: "8. Mi padre es muy ___. (красивый)", ans: "guapo" },
+                      { id: 'hw9_v2', q: "9. Mi hermana es ___. (высокая)", ans: "alta" },
+                      { id: 'hw10_v2', q: "10. Mi madre es ___. (молодая)", ans: "joven" },
+                      { id: 'hw11_v2', q: "11. Tengo dos ___. (дочери)", ans: "hijas" },
+                      { id: 'hw12_v2', q: "12. Mi hermano es ___. (низкий)", ans: "bajo" },
+                      { id: 'hw13_v2', q: "13. Mi ___ mayor estudia medicina. (дочь)", ans: "hija" },
+                      { id: 'hw14_v2', q: "14. Mi ___ trabaja en casa. (брат)", ans: "hermano" },
+                      { id: 'hw15_v2', q: "15. Mis ___ son profesores. (родители)", ans: "padres" },
+                    ].map((ex) => (
+                      <Exercise
+                        key={ex.id}
+                        id={ex.id}
+                        mode="hw"
+                        type="text"
+                        label={ex.q}
+                        placeholder="Enter answer"
+                        correctAnswer={ex.ans}
+                        progressItem={progress.hw?.[ex.id]}
+                        onUpdate={updateProgress}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
+
+      <footer className="text-center text-slate-400 text-xs mt-20 unbounded opacity-50">
+        © 2026 AG Academy · La Familia V1.2
+      </footer>
     </div>
   )
 }
