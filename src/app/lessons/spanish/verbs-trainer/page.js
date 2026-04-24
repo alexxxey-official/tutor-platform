@@ -3,11 +3,17 @@ import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
 import { useLessonProgress } from '../../../../hooks/useLessonProgress'
 import AdvancedProgressBar from '../../../../components/AdvancedProgressBar'
+import { Home, Zap } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
 export default function VerbsTrainer() {
   const [answers, setAnswers] = useState({})
   const inputRefs = useRef([])
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const exercises = [
     { id: 'ex1', problem: 'Él/Ella/Ud. ________. (estudiar - учиться)', ans: 'estudia' },
@@ -79,8 +85,8 @@ export default function VerbsTrainer() {
       Object.keys(progress.hw).forEach(key => {
         const item = progress.hw[key];
         if (item) {
-          restored[key] = { 
-            value: item.value || '', 
+          restored[key] = {
+            value: item.value || '',
             status: item.status,
             attempts: item.attempts || 0
           };
@@ -98,7 +104,7 @@ export default function VerbsTrainer() {
 
     const curAttempts = (saved.attempts || 0) + 1
     const isCorrect = normalize(value) === normalize(correctAns) && value !== ''
-    
+
     let newStatus = 'attempting'
     if (isCorrect) {
         newStatus = 'correct'
@@ -106,9 +112,9 @@ export default function VerbsTrainer() {
         newStatus = 'revealed'
     }
 
-    setAnswers(prev => ({ 
-        ...prev, 
-        [id]: { value, status: newStatus, attempts: curAttempts } 
+    setAnswers(prev => ({
+        ...prev,
+        [id]: { value, status: newStatus, attempts: curAttempts }
     }))
 
     if (newStatus !== 'attempting') {
@@ -122,28 +128,65 @@ export default function VerbsTrainer() {
     }
   }
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center font-mono">LOADING...</div>
+  if (loading || !mounted) return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-12 h-12 border-4 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
+        <div className="font-bold text-slate-400 animate-pulse">CARGANDO...</div>
+      </div>
+    </div>
+  )
 
   return (
-    <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">
-      <div className="bg-[#e63946] text-white px-10 py-12 pb-10 relative overflow-hidden">
-        <h1 className="font-extrabold text-[clamp(32px,5vw,52px)] leading-[1.1] mb-4 unbounded">50 глаголов</h1>
-      </div>
+    <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] font-sans pb-20">
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800;900&display=swap');
+        .unbounded { font-family: 'Unbounded', sans-serif; }
+      `}} />
 
-      <div className="max-w-[860px] mx-auto px-6">
-        <AdvancedProgressBar data={progress.hw} total={total} title="Тренажёр" mode="hw" />
+      {/* Header */}
+      <header className="bg-rose-600 text-white py-16 px-6 text-center relative overflow-hidden">
+        <div className="absolute top-0 right-0 text-[150px] font-black opacity-10 pointer-events-none select-none unbounded translate-x-10 -translate-y-10 uppercase">VERBOS</div>
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="inline-block px-3 py-1 bg-rose-800 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase mb-6 shadow-md">
+            🇪🇸 Тренажёр · Práctica Intensiva
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black unbounded uppercase mb-6 tracking-tighter leading-tight drop-shadow-lg">
+            50 <span className="text-amber-300 italic">Глаголов</span>
+          </h1>
+          <p className="text-rose-100 text-lg max-w-2xl mx-auto font-medium">
+            Интенсивная практика спряжения правильных глаголов -AR, -ER, -IR. Прокачай автоматизм! ⚡
+          </p>
+        </div>
+      </header>
 
-        <div className="bg-white border border-[#e5e0d5] rounded-2xl overflow-hidden mb-4 shadow-sm mt-8">
+      <div className="max-w-4xl mx-auto px-6 -mt-8 relative z-20">
+        <AdvancedProgressBar
+          statsHW={stats}
+          variant={1}
+        />
+
+        {/* Navigation */}
+        <nav className="flex flex-wrap gap-2 mb-12">
+          <Link href="/dashboard" className="px-4 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-sm font-bold flex items-center gap-2 hover:bg-slate-50 transition-all text-slate-700">
+            <Home size={16} /> Inicio
+          </Link>
+          <div className="px-4 py-2 bg-rose-50 rounded-xl shadow-sm border border-rose-200 text-sm font-bold flex items-center gap-2 text-rose-700">
+            <Zap size={16} /> Тренажёр активен
+          </div>
+        </nav>
+
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden mb-4 shadow-sm">
           <div className="px-6 py-4">
             {exercises.map((ex, index) => {
               const state = answers[ex.id] || { value: '', status: 'attempting', attempts: 0 }
               const isDone = state.status === 'correct' || state.status === 'revealed'
-              
+
               return (
-                <div key={ex.id} className={`border-b border-dashed border-[#e5e0d5] py-5 flex gap-4 items-start last:border-none transition-colors ${state.status === 'correct' ? 'bg-emerald-50/30' : state.status === 'revealed' ? 'bg-rose-50/30' : ''}`}>
-                  <div className="font-mono text-[13px] text-gray-500 min-w-[28px] pt-1">{index + 1}.</div>
+                <div key={ex.id} className={`border-b border-slate-100 py-5 flex gap-4 items-start last:border-none transition-colors ${state.status === 'correct' ? 'bg-emerald-50/50' : state.status === 'revealed' ? 'bg-rose-50/50' : ''}`}>
+                  <div className="font-mono text-sm text-slate-400 min-w-[32px] pt-1 font-bold">{index + 1}.</div>
                   <div className="flex-1">
-                    <div className="text-[15px] px-3.5 py-2.5 bg-gray-50 rounded-lg mb-2.5">
+                    <div className="text-[15px] px-4 py-3 bg-slate-50 rounded-xl mb-3 border border-slate-100">
                       {ex.problem}
                     </div>
                     <div className="flex items-center gap-2 flex-wrap">
@@ -153,28 +196,28 @@ export default function VerbsTrainer() {
                         disabled={isDone}
                         value={state.value}
                         onChange={(e) => setAnswers(prev => ({...prev, [ex.id]: { ...state, value: e.target.value }}))}
-                        className={`border-[1.5px] rounded-lg px-3 py-1.5 font-mono text-[14px] w-[200px] outline-none transition-colors ${
+                        className={`border-2 rounded-xl px-4 py-2 font-mono text-sm w-[220px] outline-none transition-all ${
                           isDone
                             ? state.status === 'correct'
-                              ? 'border-[#2a9d8f] bg-[#f0faf8] text-[#2a9d8f]'
-                              : 'border-[#e63946] bg-[#fff5f5] text-[#e63946]'
-                            : 'border-[#e5e0d5] focus:border-[#e63946]'
+                              ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-bold'
+                              : 'border-rose-500 bg-rose-50 text-rose-700'
+                            : 'border-slate-200 focus:border-rose-500 focus:ring-2 focus:ring-rose-100'
                         }`}
-                        onKeyDown={(e) => { 
-                          if (e.key === 'Enter') checkItem(ex.id, ex.ans, state.value, index) 
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') checkItem(ex.id, ex.ans, state.value, index)
                         }}
                       />
                       {!isDone && (
                         <button
                           onClick={() => checkItem(ex.id, ex.ans, state.value, index)}
-                          className="bg-[#1a1a2e] text-white border-none rounded-lg px-4 py-1.5 text-[13px] font-sans cursor-pointer hover:bg-[#2d2d4e] transition-colors"
+                          className="bg-rose-600 text-white border-none rounded-xl px-5 py-2 text-sm font-bold cursor-pointer hover:bg-rose-700 transition-colors shadow-sm"
                         >
                           Check
                         </button>
                       )}
                     </div>
                     {isDone && (
-                      <div className={`mt-1.5 text-[13px] font-medium ${state.status === 'correct' ? 'text-[#2a9d8f]' : 'text-[#e63946]'}`}>
+                      <div className={`mt-2 text-sm font-bold ${state.status === 'correct' ? 'text-emerald-600' : 'text-rose-600'}`}>
                         {state.status === 'correct' ? '✓ ¡Perfecto!' : `✗ Правильный ответ: ${ex.ans}`}
                       </div>
                     )}
