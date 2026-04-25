@@ -8,8 +8,8 @@ import Link from 'next/link'
 
 export default function FamilyLessonPage() {
   const lessonId = 'spa_family'
-  // CW: 10 items, HW: 15 items per variant
-  const totalCW = 10
+  // CW: 20 items, HW: 15 items per variant
+  const totalCW = 20
   const totalHW = 15
 
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
@@ -207,6 +207,16 @@ export default function FamilyLessonPage() {
                   { id: 'cw8', q: "8. Mi padre es ___. (высокий)", ans: 'alto' },
                   { id: 'cw9', q: "9. Tengo una ___ pequeña. (дочь)", ans: 'hija' },
                   { id: 'cw10', q: "10. Mi ___ es doctor. (дедушка)", ans: 'abuelo' },
+                  { id: 'cw11', q: "11. Mi ___ es profesora. (мама)", ans: 'madre' },
+                  { id: 'cw12', q: "12. El hijo de mi hermano es mi ___. (племянник)", ans: 'sobrino' },
+                  { id: 'cw13', q: "13. Mi ___ es rubia. (жена)", ans: 'esposa' },
+                  { id: 'cw14', q: "14. Mi ___ trabaja en un banco. (муж)", ans: 'esposo' },
+                  { id: 'cw15', q: "15. Tengo tres ___. (внуки)", ans: 'nietos' },
+                  { id: 'cw16', q: "16. Mi hermana es muy ___. (умная)", ans: 'inteligente' },
+                  { id: 'cw17', q: "17. Mi padre es ___. (старый)", ans: 'viejo' },
+                  { id: 'cw18', q: "18. Mi ___ es morena. (тетя)", ans: 'tía' },
+                  { id: 'cw19', q: "19. El hermano de mi padre es mi ___. (дядя)", ans: 'tío' },
+                  { id: 'cw20', q: "20. Mi familia es muy ___. (большая)", ans: 'grande' },
                 ].map(ex => (
                   <Exercise
                     key={ex.id}
