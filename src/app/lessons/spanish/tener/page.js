@@ -8,8 +8,8 @@ import Link from 'next/link'
 
 export default function TenerLessonPage() {
   const lessonId = 'spa_tener'
-  // CW: 7 items, HW: 8 items per variant
-  const totalCW = 7
+  // CW: 20 items, HW: 8 items per variant
+  const totalCW = 20
   const totalHW = 8
 
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
@@ -241,6 +241,86 @@ export default function TenerLessonPage() {
                     type="text"
                     label={ex.q}
                     placeholder="Enter answer"
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 2: Age expressions */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-rose-500 rounded-full"></div> Блок 2: Возраст (Tener + años)
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { id: 'cw8', q: "Yo ___ 25 años. (Мне 25 лет)", ans: 'tengo', opts: ['tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen'] },
+                  { id: 'cw9', q: "Mi hermano ___ 18 años.", ans: 'tiene', opts: ['tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen'] },
+                  { id: 'cw10', q: "¿Cuántos años ___ tú?", ans: 'tienes', opts: ['tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen'] },
+                  { id: 'cw11', q: "Nosotros ___ 30 años.", ans: 'tenemos', opts: ['tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen'] },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="dropdown"
+                    label={ex.q}
+                    options={ex.opts}
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 3: Tener que + infinitive */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div> Блок 3: Tener que + инфинитив (Должен)
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { id: 'cw12', q: "12. Yo ___ que estudiar. (Я должен учиться)", ans: 'tengo que' },
+                  { id: 'cw13', q: "13. Tú ___ que trabajar. (Ты должен работать)", ans: 'tienes que' },
+                  { id: 'cw14', q: "14. Ella ___ que cocinar. (Она должна готовить)", ans: 'tiene que' },
+                  { id: 'cw15', q: "15. Nosotros ___ que salir. (Мы должны выйти)", ans: 'tenemos que' },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="text"
+                    label={ex.q}
+                    placeholder="tengo/tienes/tiene... que"
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 4: Expressions with tener */}
+            <div className="bg-slate-900 p-8 rounded-3xl text-white shadow-xl">
+              <h3 className="text-xl font-bold mb-6 unbounded text-amber-400">Блок 4: Устойчивые выражения</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { id: 'cw16', q: "Yo ___ hambre. (Я голоден)", ans: 'tengo', opts: ['tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen'] },
+                  { id: 'cw17', q: "Tú ___ sed. (Ты хочешь пить)", ans: 'tienes', opts: ['tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen'] },
+                  { id: 'cw18', q: "Él ___ frío. (Ему холодно)", ans: 'tiene', opts: ['tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen'] },
+                  { id: 'cw19', q: "Nosotros ___ calor. (Нам жарко)", ans: 'tenemos', opts: ['tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen'] },
+                  { id: 'cw20', q: "Ellos ___ miedo. (Они боятся)", ans: 'tienen', opts: ['tengo', 'tienes', 'tiene', 'tenemos', 'tenéis', 'tienen'] },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="dropdown"
+                    label={ex.q}
+                    options={ex.opts}
                     correctAnswer={ex.ans}
                     progressItem={progress.cw?.[ex.id]}
                     onUpdate={updateProgress}
