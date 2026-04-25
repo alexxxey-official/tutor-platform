@@ -323,24 +323,28 @@ export default function ArticlesLessonPage() {
             <div className="bg-rose-50 p-8 rounded-3xl border border-rose-100 shadow-sm">
               <h3 className="text-xl font-bold mb-6 text-rose-900">Блок 3: Исключения! (Впишите el или la)</h3>
               <p className="text-sm text-rose-700 mb-6">Вспомните "трансгендеров" и правило "El agua". Впишите определенный артикль.</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
-                  { id: 'cw14', word: "día (день)", ans: "el" },
-                  { id: 'cw15', word: "mano (рука)", ans: "la" },
-                  { id: 'cw16', word: "problema (проблема)", ans: "el" },
-                  { id: 'cw17', word: "agua (вода)", ans: "el" },
-                  { id: 'cw18', word: "foto (фото)", ans: "la" },
-                  { id: 'cw19', word: "mapa (карта)", ans: "el" },
-                  { id: 'cw20', word: "televisión (телевидение)", ans: "la" },
-                  { id: 'cw21', word: "canción (песня)", ans: "la" },
-                ].map((ex, i) => (
-                  <div key={ex.id} className="flex flex-wrap items-center gap-3 text-slate-900 font-bold text-lg bg-white p-3 rounded-xl shadow-sm border border-rose-200">
-                    <span className="text-sm text-rose-400 font-mono min-w-[24px]">{i+14}.</span>
-                    <div className="w-24 flex-shrink-0">
-                      <Exercise id={ex.id} mode="cw" placeholder="..." correctAnswer={ex.ans} progressItem={progress.cw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
-                    </div>
-                    <span className="flex-1">{ex.word}</span>
-                  </div>
+                  { id: 'cw14', q: "____ día (день)", ans: "el", opts: ['el', 'la'] },
+                  { id: 'cw15', q: "____ mano (рука)", ans: "la", opts: ['el', 'la'] },
+                  { id: 'cw16', q: "____ problema (проблема)", ans: "el", opts: ['el', 'la'] },
+                  { id: 'cw17', q: "____ agua (вода)", ans: "el", opts: ['el', 'la'] },
+                  { id: 'cw18', q: "____ foto (фото)", ans: "la", opts: ['el', 'la'] },
+                  { id: 'cw19', q: "____ mapa (карта)", ans: "el", opts: ['el', 'la'] },
+                  { id: 'cw20', q: "____ televisión (телевидение)", ans: "la", opts: ['el', 'la'] },
+                  { id: 'cw21', q: "____ canción (песня)", ans: "la", opts: ['el', 'la'] },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="dropdown"
+                    label={ex.q}
+                    options={ex.opts}
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
                 ))}
               </div>
             </div>
@@ -375,23 +379,27 @@ export default function ArticlesLessonPage() {
             {/* Block 5: Context Logic */}
             <div className="bg-slate-900 p-8 rounded-3xl text-white shadow-xl">
               <h3 className="text-xl font-bold mb-6 unbounded text-amber-400">Блок 5: Контекст</h3>
-              <div className="space-y-6">
-                <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg border-b border-slate-700 pb-6">
-                  <span className="text-sm text-slate-400 w-full mb-2 uppercase tracking-widest font-mono">27. (Девушки пьют воду)</span>
-                  <span>Las chicas beben</span>
-                  <div className="w-24">
-                    <Exercise id="cw27" mode="cw" placeholder="el/la" correctAnswer="el" progressItem={progress.cw?.cw27} onUpdate={updateProgress} variant="inline" />
-                  </div>
-                  <span>agua.</span>
-                </div>
-                <div className="flex flex-wrap items-center gap-3 text-white font-bold text-lg border-b border-slate-700 pb-6">
-                  <span className="text-sm text-slate-400 w-full mb-2 uppercase tracking-widest font-mono">28. (Это хорошая песня)</span>
-                  <span>Es</span>
-                  <div className="w-24">
-                    <Exercise id="cw28" mode="cw" placeholder="un/una" correctAnswer="una" progressItem={progress.cw?.cw28} onUpdate={updateProgress} variant="inline" />
-                  </div>
-                  <span>buena canción.</span>
-                </div>
+              <div className="grid grid-cols-1 gap-4">
+                <Exercise
+                  id="cw27"
+                  mode="cw"
+                  type="dropdown"
+                  label="27. Las chicas beben ____ agua. (Девушки пьют воду)"
+                  options={['el', 'la']}
+                  correctAnswer="el"
+                  progressItem={progress.cw?.cw27}
+                  onUpdate={updateProgress}
+                />
+                <Exercise
+                  id="cw28"
+                  mode="cw"
+                  type="dropdown"
+                  label="28. Es ____ buena canción. (Это хорошая песня)"
+                  options={['un', 'una']}
+                  correctAnswer="una"
+                  progressItem={progress.cw?.cw28}
+                  onUpdate={updateProgress}
+                />
                 
                 <Exercise
                   id="cw29"
@@ -446,45 +454,53 @@ export default function ArticlesLessonPage() {
                     <div className="space-y-8">
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-6">Часть 1: Определенные артикли (el, la, los, las)</div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {[
-                            { id: 'hw1', pre: "1.", post: "mundo (мир)", ans: "el" },
-                            { id: 'hw2', pre: "2.", post: "puerta (дверь)", ans: "la" },
-                            { id: 'hw3', pre: "3.", post: "estudiantes (студенты, м.р.)", ans: "los" },
-                            { id: 'hw4', pre: "4.", post: "madres (матери)", ans: "las" },
-                            { id: 'hw5', pre: "5.", post: "mano (рука - искл.)", ans: "la" },
-                            { id: 'hw6', pre: "6.", post: "día (день - искл.)", ans: "el" },
-                            { id: 'hw7', pre: "7.", post: "ciudad (город)", ans: "la" },
-                            { id: 'hw8', pre: "8.", post: "profesor (учитель)", ans: "el" },
+                            { id: 'hw1', q: "____ mundo (мир)", ans: "el", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw2', q: "____ puerta (дверь)", ans: "la", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw3', q: "____ estudiantes (студенты, м.р.)", ans: "los", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw4', q: "____ madres (матери)", ans: "las", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw5', q: "____ mano (рука - искл.)", ans: "la", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw6', q: "____ día (день - искл.)", ans: "el", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw7', q: "____ ciudad (город)", ans: "la", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw8', q: "____ profesor (учитель)", ans: "el", opts: ['el', 'la', 'los', 'las'] },
                           ].map((ex) => (
-                            <div key={ex.id} className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
-                              <span>{ex.pre}</span>
-                              <div className="w-24">
-                                <Exercise id={ex.id} mode="hw" placeholder="el/la..." correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
-                              </div>
-                              <span className="flex-1">{ex.post}</span>
-                            </div>
+                            <Exercise
+                              key={ex.id}
+                              id={ex.id}
+                              mode="hw"
+                              type="dropdown"
+                              label={ex.q}
+                              options={ex.opts}
+                              correctAnswer={ex.ans}
+                              progressItem={progress.hw?.[ex.id]}
+                              onUpdate={updateProgress}
+                            />
                           ))}
                         </div>
                       </div>
 
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-rose-400 mb-6">Часть 2: Неопределенные артикли (un, una, unos, unas)</div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {[
-                            { id: 'hw9', pre: "9.", post: "coche", ans: "un" },
-                            { id: 'hw10', pre: "10.", post: "niña", ans: "una" },
-                            { id: 'hw11', pre: "11.", post: "problema", ans: "un" },
-                            { id: 'hw12', pre: "12.", post: "fotos", ans: "unas" },
-                            { id: 'hw13', pre: "13.", post: "libros", ans: "unos" },
+                            { id: 'hw9', q: "____ coche", ans: "un", opts: ['un', 'una', 'unos', 'unas'] },
+                            { id: 'hw10', q: "____ niña", ans: "una", opts: ['un', 'una', 'unos', 'unas'] },
+                            { id: 'hw11', q: "____ problema", ans: "un", opts: ['un', 'una', 'unos', 'unas'] },
+                            { id: 'hw12', q: "____ fotos", ans: "unas", opts: ['un', 'una', 'unos', 'unas'] },
+                            { id: 'hw13', q: "____ libros", ans: "unos", opts: ['un', 'una', 'unos', 'unas'] },
                           ].map((ex) => (
-                            <div key={ex.id} className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
-                              <span>{ex.pre}</span>
-                              <div className="w-24">
-                                <Exercise id={ex.id} mode="hw" placeholder="un/una..." correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
-                              </div>
-                              <span className="truncate">{ex.post}</span>
-                            </div>
+                            <Exercise
+                              key={ex.id}
+                              id={ex.id}
+                              mode="hw"
+                              type="dropdown"
+                              label={ex.q}
+                              options={ex.opts}
+                              correctAnswer={ex.ans}
+                              progressItem={progress.hw?.[ex.id]}
+                              onUpdate={updateProgress}
+                            />
                           ))}
                         </div>
                       </div>
@@ -513,45 +529,53 @@ export default function ArticlesLessonPage() {
                     <div className="space-y-8">
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-6">Часть 1: Определенные артикли (el, la, los, las) [Вариант 2]</div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {[
-                            { id: 'hw1_v2', pre: "1.", post: "chico", ans: "el" },
-                            { id: 'hw2_v2', pre: "2.", post: "noche", ans: "la" },
-                            { id: 'hw3_v2', pre: "3.", post: "amigos", ans: "los" },
-                            { id: 'hw4_v2', pre: "4.", post: "chicas", ans: "las" },
-                            { id: 'hw5_v2', pre: "5.", post: "moto", ans: "la" },
-                            { id: 'hw6_v2', pre: "6.", post: "planeta", ans: "el" },
-                            { id: 'hw7_v2', pre: "7.", post: "universidad", ans: "la" },
-                            { id: 'hw8_v2', pre: "8.", post: "hospital", ans: "el" },
+                            { id: 'hw1_v2', q: "____ chico", ans: "el", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw2_v2', q: "____ noche", ans: "la", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw3_v2', q: "____ amigos", ans: "los", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw4_v2', q: "____ chicas", ans: "las", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw5_v2', q: "____ moto", ans: "la", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw6_v2', q: "____ planeta", ans: "el", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw7_v2', q: "____ universidad", ans: "la", opts: ['el', 'la', 'los', 'las'] },
+                            { id: 'hw8_v2', q: "____ hospital", ans: "el", opts: ['el', 'la', 'los', 'las'] },
                           ].map((ex) => (
-                            <div key={ex.id} className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
-                              <span>{ex.pre}</span>
-                              <div className="w-24">
-                                <Exercise id={ex.id} mode="hw" placeholder="el/la..." correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
-                              </div>
-                              <span className="flex-1">{ex.post}</span>
-                            </div>
+                            <Exercise
+                              key={ex.id}
+                              id={ex.id}
+                              mode="hw"
+                              type="dropdown"
+                              label={ex.q}
+                              options={ex.opts}
+                              correctAnswer={ex.ans}
+                              progressItem={progress.hw?.[ex.id]}
+                              onUpdate={updateProgress}
+                            />
                           ))}
                         </div>
                       </div>
 
                       <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
                         <div className="text-[10px] font-black uppercase tracking-widest text-rose-400 mb-6">Часть 2: Неопределенные артикли [Вариант 2]</div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {[
-                            { id: 'hw9_v2', pre: "9.", post: "restaurante", ans: "un" },
-                            { id: 'hw10_v2', pre: "10.", post: "canción", ans: "una" },
-                            { id: 'hw11_v2', pre: "11.", post: "mapa", ans: "un" },
-                            { id: 'hw12_v2', pre: "12.", post: "radios", ans: "unas" },
-                            { id: 'hw13_v2', pre: "13.", post: "días", ans: "unos" },
+                            { id: 'hw9_v2', q: "____ restaurante", ans: "un", opts: ['un', 'una', 'unos', 'unas'] },
+                            { id: 'hw10_v2', q: "____ canción", ans: "una", opts: ['un', 'una', 'unos', 'unas'] },
+                            { id: 'hw11_v2', q: "____ mapa", ans: "un", opts: ['un', 'una', 'unos', 'unas'] },
+                            { id: 'hw12_v2', q: "____ radios", ans: "unas", opts: ['un', 'una', 'unos', 'unas'] },
+                            { id: 'hw13_v2', q: "____ días", ans: "unos", opts: ['un', 'una', 'unos', 'unas'] },
                           ].map((ex) => (
-                            <div key={ex.id} className="flex flex-wrap items-center gap-3 text-white font-bold text-lg">
-                              <span>{ex.pre}</span>
-                              <div className="w-24">
-                                <Exercise id={ex.id} mode="hw" placeholder="un/una..." correctAnswer={ex.ans} progressItem={progress.hw?.[ex.id]} onUpdate={updateProgress} variant="inline" />
-                              </div>
-                              <span className="truncate">{ex.post}</span>
-                            </div>
+                            <Exercise
+                              key={ex.id}
+                              id={ex.id}
+                              mode="hw"
+                              type="dropdown"
+                              label={ex.q}
+                              options={ex.opts}
+                              correctAnswer={ex.ans}
+                              progressItem={progress.hw?.[ex.id]}
+                              onUpdate={updateProgress}
+                            />
                           ))}
                         </div>
                       </div>
