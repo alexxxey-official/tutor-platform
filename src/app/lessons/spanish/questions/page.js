@@ -8,9 +8,9 @@ import Link from 'next/link'
 
 export default function QuestionsLessonPage() {
   const lessonId = 'spa_questions'
-  // CW: 10 items, HW: 13 items per variant
-  const totalCW = 10
-  const totalHW = 13
+  // CW: 20 items, HW: 15 items per variant
+  const totalCW = 20
+  const totalHW = 15
 
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
     useLessonProgress(lessonId, totalCW, totalHW)
@@ -225,6 +225,11 @@ export default function QuestionsLessonPage() {
                   { id: 'cw3', q: "3. ___ vives? (Где ты живешь?)", ans: 'Dónde', opts: ['Dónde', 'Cuándo', 'Cómo'] },
                   { id: 'cw4', q: "4. ___ es tu nombre? (Как твое имя?)", ans: 'Cuál', opts: ['Cuál', 'Qué', 'Quién'] },
                   { id: 'cw5', q: "5. ___ estudias español? (Почему ты учишь испанский?)", ans: 'Por qué', opts: ['Por qué', 'Porque', 'Qué'] },
+                  { id: 'cw6', q: "6. ___ es tu profesora? (Кто твоя учительница?)", ans: 'Quién', opts: ['Quién', 'Qué', 'Cuál'] },
+                  { id: 'cw7', q: "7. ___ trabajas? (Когда ты работаешь?)", ans: 'Cuándo', opts: ['Cuándo', 'Dónde', 'Cómo'] },
+                  { id: 'cw8', q: "8. ___ cuesta? (Сколько стоит?)", ans: 'Cuánto', opts: ['Cuánto', 'Cuántos', 'Qué'] },
+                  { id: 'cw9', q: "9. ___ haces? (Что ты делаешь?)", ans: 'Qué', opts: ['Qué', 'Cuál', 'Quién'] },
+                  { id: 'cw10', q: "10. ___ estás? (Как дела?)", ans: 'Cómo', opts: ['Cómo', 'Qué', 'Dónde'] },
                 ].map(ex => (
                   <Exercise
                     key={ex.id}
@@ -246,11 +251,16 @@ export default function QuestionsLessonPage() {
               <h3 className="text-xl font-bold mb-6 unbounded text-blue-400">Блок 2: Порядок слов</h3>
               <div className="space-y-4">
                 {[
-                  { id: 'cw6', q: "6. ¿___ tú español? (Говоришь ли ты по-испански?)", ans: 'Hablas' },
-                  { id: 'cw7', q: "7. ¿___ está tu hermano? (Где твой брат?)", ans: 'Dónde' },
-                  { id: 'cw8', q: "8. ¿___ es tu profesora? (Кто твоя учительница?)", ans: 'Quién' },
-                  { id: 'cw9', q: "9. ¿___ años tiene ella? (Сколько ей лет?)", ans: 'Cuántos' },
-                  { id: 'cw10', q: "10. ¿___ te llamas? (Как тебя зовут?)", ans: 'Cómo' },
+                  { id: 'cw11', q: "11. ¿___ tú español? (Говоришь ли ты по-испански?)", ans: 'Hablas' },
+                  { id: 'cw12', q: "12. ¿___ está tu hermano? (Где твой брат?)", ans: 'Dónde' },
+                  { id: 'cw13', q: "13. ¿___ es tu profesora? (Кто твоя учительница?)", ans: 'Quién' },
+                  { id: 'cw14', q: "14. ¿___ años tiene ella? (Сколько ей лет?)", ans: 'Cuántos' },
+                  { id: 'cw15', q: "15. ¿___ te llamas? (Как тебя зовут?)", ans: 'Cómo' },
+                  { id: 'cw16', q: "16. ¿___ vive tu amigo? (Где живет твой друг?)", ans: 'Dónde' },
+                  { id: 'cw17', q: "17. ¿___ estudias? (Что ты изучаешь?)", ans: 'Qué' },
+                  { id: 'cw18', q: "18. ¿___ es tu cumpleaños? (Когда твой день рождения?)", ans: 'Cuándo' },
+                  { id: 'cw19', q: "19. ¿___ hermanos tienes? (Сколько у тебя братьев/сестер?)", ans: 'Cuántos' },
+                  { id: 'cw20', q: "20. ¿___ no vienes? (Почему ты не приходишь?)", ans: 'Por qué' },
                 ].map(ex => (
                   <Exercise
                     key={ex.id}
@@ -305,6 +315,8 @@ export default function QuestionsLessonPage() {
                       { id: 'hw11', q: "11. ¿___ está tu casa? (Где твой дом?)", ans: "Dónde" },
                       { id: 'hw12', q: "12. ¿___ hermanos tienes? (Сколько у тебя братьев/сестер?)", ans: "Cuántos" },
                       { id: 'hw13', q: "13. ¿___ es esto? (Что это?)", ans: "Qué" },
+                      { id: 'hw14', q: "14. ¿___ te sientes? (Как ты себя чувствуешь?)", ans: "Cómo" },
+                      { id: 'hw15', q: "15. ¿___ personas hay? (Сколько людей?)", ans: "Cuántas" },
                     ].map((ex) => (
                       <Exercise
                         key={ex.id}
@@ -335,6 +347,8 @@ export default function QuestionsLessonPage() {
                       { id: 'hw11_v2', q: "11. ¿___ está el baño? (Где туалет?)", ans: "Dónde" },
                       { id: 'hw12_v2', q: "12. ¿___ idiomas hablas? (Сколько языков ты знаешь?)", ans: "Cuántos" },
                       { id: 'hw13_v2', q: "13. ¿___ quieres? (Что ты хочешь?)", ans: "Qué" },
+                      { id: 'hw14_v2', q: "14. ¿___ es tu color favorito? (Какой твой любимый цвет?)", ans: "Cuál" },
+                      { id: 'hw15_v2', q: "15. ¿___ llegas? (Когда ты приедешь?)", ans: "Cuándo" },
                     ].map((ex) => (
                       <Exercise
                         key={ex.id}
