@@ -227,9 +227,9 @@ export default function DashboardPage() {
         lessons: []
       }
     }
-    
+
     const isComplete = (a.status === 'completed') || (a.total_score && a.total_score > 0 && a.score >= a.total_score)
-    
+
     subjectsMap[meta.subject].lessons.push({
       id: a.id,
       title: meta.title,
@@ -238,7 +238,17 @@ export default function DashboardPage() {
       score: a.score,
       total_score: a.total_score,
       meta: meta,
-      original: a
+      original: a,
+      assigned_at: a.assigned_at
+    })
+  })
+
+  // Сортируем уроки внутри каждого предмета по дате добавления (старые первые)
+  Object.values(subjectsMap).forEach(subject => {
+    subject.lessons.sort((a, b) => {
+      const dateA = new Date(a.assigned_at)
+      const dateB = new Date(b.assigned_at)
+      return dateA - dateB
     })
   })
 
