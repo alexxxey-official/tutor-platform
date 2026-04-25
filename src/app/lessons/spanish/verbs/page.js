@@ -8,9 +8,9 @@ import Link from 'next/link'
 
 export default function VerbsLessonPage() {
   const lessonId = 'spa_verbs'
-  // CW: 7 items, HW: 8 items per variant
-  const totalCW = 7
-  const totalHW = 8
+  // CW: 20 items, HW: 15 items per variant
+  const totalCW = 20
+  const totalHW = 15
 
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
     useLessonProgress(lessonId, totalCW, totalHW)
@@ -306,6 +306,86 @@ export default function VerbsLessonPage() {
                 ))}
               </div>
             </div>
+
+            {/* Block 2: -AR verbs */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-rose-500 rounded-full"></div> Блок 2: Глаголы на -AR
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { id: 'cw8', q: "Yo ___ música. (escuchar - слушать)", ans: 'escucho', opts: ['escucho', 'escuchas', 'escucha', 'escuchamos', 'escucháis', 'escuchan'] },
+                  { id: 'cw9', q: "Tú ___ en casa. (cocinar - готовить)", ans: 'cocinas', opts: ['cocino', 'cocinas', 'cocina', 'cocinamos', 'cocináis', 'cocinan'] },
+                  { id: 'cw10', q: "Él ___ la puerta. (cerrar - закрывать)", ans: 'cierra', opts: ['cierro', 'cierras', 'cierra', 'cerramos', 'cerráis', 'cierran'] },
+                  { id: 'cw11', q: "Nosotros ___ español. (hablar - говорить)", ans: 'hablamos', opts: ['hablo', 'hablas', 'habla', 'hablamos', 'habláis', 'hablan'] },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="dropdown"
+                    label={ex.q}
+                    options={ex.opts}
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 3: -ER verbs */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div> Блок 3: Глаголы на -ER
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { id: 'cw12', q: "12. Yo ___ café. (beber - пить)", ans: 'bebo' },
+                  { id: 'cw13', q: "13. Tú ___ el periódico. (leer - читать)", ans: 'lees' },
+                  { id: 'cw14', q: "14. Ella ___ mucho. (correr - бегать)", ans: 'corre' },
+                  { id: 'cw15', q: "15. Nosotros ___ en un restaurante. (comer - есть)", ans: 'comemos' },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="text"
+                    label={ex.q}
+                    placeholder="Enter answer"
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 4: -IR verbs */}
+            <div className="bg-slate-900 p-8 rounded-3xl text-white shadow-xl">
+              <h3 className="text-xl font-bold mb-6 unbounded text-emerald-400">Блок 4: Глаголы на -IR</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { id: 'cw16', q: "Yo ___ en Madrid. (vivir - жить)", ans: 'vivo', opts: ['vivo', 'vives', 'vive', 'vivimos', 'vivís', 'viven'] },
+                  { id: 'cw17', q: "Tú ___ una carta. (escribir - писать)", ans: 'escribes', opts: ['escribo', 'escribes', 'escribe', 'escribimos', 'escribís', 'escriben'] },
+                  { id: 'cw18', q: "Él ___ la ventana. (abrir - открывать)", ans: 'abre', opts: ['abro', 'abres', 'abre', 'abrimos', 'abrís', 'abren'] },
+                  { id: 'cw19', q: "Nosotros ___ en Barcelona. (vivir - жить)", ans: 'vivimos', opts: ['vivo', 'vives', 'vive', 'vivimos', 'vivís', 'viven'] },
+                  { id: 'cw20', q: "Ellos ___ emails. (recibir - получать)", ans: 'reciben', opts: ['recibo', 'recibes', 'recibe', 'recibimos', 'recibís', 'reciben'] },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="dropdown"
+                    label={ex.q}
+                    options={ex.opts}
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -340,6 +420,13 @@ export default function VerbsLessonPage() {
                       { id: 'hw6', q: "6. Ellas ___ el periódico. (leer)", ans: "leen" },
                       { id: 'hw7', q: "7. Usted ___ bien. (cantar)", ans: "canta" },
                       { id: 'hw8', q: "8. Yo ___ correos. (escribir)", ans: "escribo" },
+                      { id: 'hw9', q: "9. Tú ___ en Madrid. (vivir)", ans: "vives" },
+                      { id: 'hw10', q: "10. Ella ___ mucho. (correr)", ans: "corre" },
+                      { id: 'hw11', q: "11. Nosotros ___ español. (hablar)", ans: "hablamos" },
+                      { id: 'hw12', q: "12. Vosotros ___ pizza. (comer)", ans: "coméis" },
+                      { id: 'hw13', q: "13. Ellos ___ cartas. (recibir)", ans: "reciben" },
+                      { id: 'hw14', q: "14. Yo ___ libros. (leer)", ans: "leo" },
+                      { id: 'hw15', q: "15. Tú ___ la ventana. (cerrar)", ans: "cierras" },
                     ].map((ex) => (
                       <Exercise
                         key={ex.id}
@@ -365,6 +452,13 @@ export default function VerbsLessonPage() {
                       { id: 'hw6_v2', q: "6. Ellos ___ en Madrid. (vivir)", ans: "viven" },
                       { id: 'hw7_v2', q: "7. Ustedes ___ español. (hablar)", ans: "hablan" },
                       { id: 'hw8_v2', q: "8. Yo ___ en la biblioteca. (estudiar)", ans: "estudio" },
+                      { id: 'hw9_v2', q: "9. Tú ___ la puerta. (cerrar)", ans: "cierras" },
+                      { id: 'hw10_v2', q: "10. Él ___ emails. (escribir)", ans: "escribe" },
+                      { id: 'hw11_v2', q: "11. Nosotras ___ en casa. (cocinar)", ans: "cocinamos" },
+                      { id: 'hw12_v2', q: "12. Vosotros ___ rápido. (correr)", ans: "corréis" },
+                      { id: 'hw13_v2', q: "13. Ellas ___ cartas. (recibir)", ans: "reciben" },
+                      { id: 'hw14_v2', q: "14. Yo ___ música. (escuchar)", ans: "escucho" },
+                      { id: 'hw15_v2', q: "15. Tú ___ en Barcelona. (vivir)", ans: "vives" },
                     ].map((ex) => (
                       <Exercise
                         key={ex.id}
