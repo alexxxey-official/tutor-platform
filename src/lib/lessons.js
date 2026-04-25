@@ -26,9 +26,9 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/ser',
       color: '#e63946',
-      totalCW: 7,
-      totalHW: 8,
-      totalScore: 15,
+      totalCW: 30,
+      totalHW: 20,
+      totalScore: 50,
     },
     {
       id: 'spa_articles',
