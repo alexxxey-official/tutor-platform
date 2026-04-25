@@ -120,9 +120,6 @@ export const LESSONS = {
       totalHW: 10,
       totalScore: 25,
     },
-      totalHW: 5,
-      totalScore: 5,
-    },
     {
       id: 'spa_reading_hola',
       title: 'Чтение: Hola, me llamo...',
