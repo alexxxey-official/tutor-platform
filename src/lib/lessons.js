@@ -79,11 +79,6 @@ export const LESSONS = {
       totalCW: 20,
       totalHW: 15,
       totalScore: 35,
-    },s',
-      color: '#f4a261',
-      totalCW: 10,
-      totalHW: 13,
-      totalScore: 23,
     },
     {
       id: 'spa_family',
