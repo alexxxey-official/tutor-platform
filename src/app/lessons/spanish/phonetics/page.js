@@ -495,20 +495,20 @@ export default function PhoneticsLesson() {
                   id="hw2"
                   mode="hw"
                   type="dropdown"
-                  label="2. música → Ударение на:"
-                  options={['mú', 'si', 'ca']}
-                  correctAnswer="mú"
+                  label="2. teléfono → Ударение на:"
+                  options={['te', 'lé', 'fo', 'no']}
+                  correctAnswer="lé"
                   progressItem={progress.hw?.hw2}
                   onUpdate={updateProgress}
                 />
-                
+
                 <Exercise
                   id="hw3"
                   mode="hw"
                   type="dropdown"
-                  label="3. español → Ударение на:"
-                  options={['es', 'pa', 'ñol']}
-                  correctAnswer="ñol"
+                  label="3. francés → Ударение на:"
+                  options={['fran', 'cés']}
+                  correctAnswer="cés"
                   progressItem={progress.hw?.hw3}
                   onUpdate={updateProgress}
                 />
