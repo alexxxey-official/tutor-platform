@@ -96,9 +96,9 @@ export const LESSONS = {
       subject: 'Español',
       path: '/lessons/spanish/gustar',
       color: '#f4a261',
-      totalCW: 10,
+      totalCW: 20,
       totalHW: 15,
-      totalScore: 25,
+      totalScore: 35,
     },
     {
       id: 'spa_verbs_trainer',

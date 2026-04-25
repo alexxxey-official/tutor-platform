@@ -8,8 +8,8 @@ import Link from 'next/link'
 
 export default function GustarLessonPage() {
   const lessonId = 'spa_gustar'
-  // CW: 10 items, HW: 15 items per variant
-  const totalCW = 10
+  // CW: 20 items, HW: 15 items per variant
+  const totalCW = 20
   const totalHW = 15
 
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
@@ -201,6 +201,16 @@ export default function GustarLessonPage() {
                   { id: 'cw8', q: "8. Les ___ viajar.", ans: 'gusta', opts: ['gusta', 'gustan'] },
                   { id: 'cw9', q: "9. Me ___ las manzanas.", ans: 'gustan', opts: ['gusta', 'gustan'] },
                   { id: 'cw10', q: "10. Te ___ estudiar.", ans: 'gusta', opts: ['gusta', 'gustan'] },
+                  { id: 'cw11', q: "11. Nos ___ el café.", ans: 'gusta', opts: ['gusta', 'gustan'] },
+                  { id: 'cw12', q: "12. Me ___ los gatos.", ans: 'gustan', opts: ['gusta', 'gustan'] },
+                  { id: 'cw13', q: "13. Le ___ bailar.", ans: 'gusta', opts: ['gusta', 'gustan'] },
+                  { id: 'cw14', q: "14. Os ___ las películas.", ans: 'gustan', opts: ['gusta', 'gustan'] },
+                  { id: 'cw15', q: "15. Les ___ la música.", ans: 'gusta', opts: ['gusta', 'gustan'] },
+                  { id: 'cw16', q: "16. Te ___ los deportes.", ans: 'gustan', opts: ['gusta', 'gustan'] },
+                  { id: 'cw17', q: "17. Me ___ cocinar.", ans: 'gusta', opts: ['gusta', 'gustan'] },
+                  { id: 'cw18', q: "18. Nos ___ las vacaciones.", ans: 'gustan', opts: ['gusta', 'gustan'] },
+                  { id: 'cw19', q: "19. Le ___ el chocolate.", ans: 'gusta', opts: ['gusta', 'gustan'] },
+                  { id: 'cw20', q: "20. Os ___ nadar.", ans: 'gusta', opts: ['gusta', 'gustan'] },
                 ].map(ex => (
                   <Exercise
                     key={ex.id}
