@@ -8,9 +8,9 @@ import Link from 'next/link'
 
 export default function TenerLessonPage() {
   const lessonId = 'spa_tener'
-  // CW: 20 items, HW: 8 items per variant
+  // CW: 20 items, HW: 15 items per variant
   const totalCW = 20
-  const totalHW = 8
+  const totalHW = 15
 
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
     useLessonProgress(lessonId, totalCW, totalHW)
@@ -353,7 +353,7 @@ export default function TenerLessonPage() {
               <div className="space-y-12">
                 {variant === 1 ? (
                   <>
-                    {/* VARIANT 1 - 8 ITEMS */}
+                    {/* VARIANT 1 - 15 ITEMS */}
                     <div className="space-y-4">
                       {[
                         { id: 'hw1', q: "1. Yo ___ sed.", ans: "tengo" },
@@ -364,6 +364,13 @@ export default function TenerLessonPage() {
                         { id: 'hw6', q: "6. Ellos ___ miedo.", ans: "tienen" },
                         { id: 'hw7', q: "7. Usted ___ razón.", ans: "tiene" },
                         { id: 'hw8', q: "8. Yo ___ sueño.", ans: "tengo" },
+                        { id: 'hw9', q: "9. Tú ___ que cocinar.", ans: "tienes" },
+                        { id: 'hw10', q: "10. Ella ___ 22 años.", ans: "tiene" },
+                        { id: 'hw11', q: "11. Nosotros ___ hambre.", ans: "tenemos" },
+                        { id: 'hw12', q: "12. Vosotros ___ suerte.", ans: "tenéis" },
+                        { id: 'hw13', q: "13. Ellos ___ que salir.", ans: "tienen" },
+                        { id: 'hw14', q: "14. Yo ___ prisa.", ans: "tengo" },
+                        { id: 'hw15', q: "15. Tú ___ un perro.", ans: "tienes" },
                       ].map((ex) => (
                         <Exercise
                           key={ex.id}
@@ -381,7 +388,7 @@ export default function TenerLessonPage() {
                   </>
                 ) : (
                   <>
-                    {/* VARIANT 2 - 8 ITEMS */}
+                    {/* VARIANT 2 - 15 ITEMS */}
                     <div className="space-y-4">
                       {[
                         { id: 'hw1_v2', q: "1. Yo ___ calor.", ans: "tengo" },
@@ -392,6 +399,13 @@ export default function TenerLessonPage() {
                         { id: 'hw6_v2', q: "6. Ellas ___ que trabajar.", ans: "tienen" },
                         { id: 'hw7_v2', q: "7. Ustedes ___ hambre.", ans: "tienen" },
                         { id: 'hw8_v2', q: "8. Yo ___ un problema.", ans: "tengo" },
+                        { id: 'hw9_v2', q: "9. Tú ___ que leer.", ans: "tienes" },
+                        { id: 'hw10_v2', q: "10. Ella ___ 35 años.", ans: "tiene" },
+                        { id: 'hw11_v2', q: "11. Nosotros ___ sed.", ans: "tenemos" },
+                        { id: 'hw12_v2', q: "12. Vosotros ___ miedo.", ans: "tenéis" },
+                        { id: 'hw13_v2', q: "13. Ellos ___ que venir.", ans: "tienen" },
+                        { id: 'hw14_v2', q: "14. Yo ___ frío.", ans: "tengo" },
+                        { id: 'hw15_v2', q: "15. Tú ___ una casa.", ans: "tienes" },
                       ].map((ex) => (
                         <Exercise
                           key={ex.id}
