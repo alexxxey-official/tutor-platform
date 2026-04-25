@@ -8,9 +8,10 @@ import Link from 'next/link'
 
 export default function EstarLessonPage() {
   const lessonId = 'spa_estar'
-  // CW: 4 items, HW: 4 items per variant
-  const totalCW = 4
-  const totalHW = 4
+  // CW: 20 items (6 conjugation + 6 SER vs ESTAR + 5 prepositions + 3 translation)
+  // HW: 15 items per variant
+  const totalCW = 20
+  const totalHW = 15
 
   const { progress, updateProgress, resetHW, variant, getStats, loading } =
     useLessonProgress(lessonId, totalCW, totalHW)
@@ -144,6 +145,104 @@ export default function EstarLessonPage() {
               </div>
             </div>
 
+            {/* Card 2: Prepositions of Place */}
+            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-blue-500"></div>
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-slate-900">
+                <Info size={20} className="text-blue-500" /> Предлоги места (Preposiciones de lugar)
+              </h3>
+              <p className="mb-6 leading-relaxed text-slate-600">
+                ESTAR часто используется с предлогами для описания местоположения объектов.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                  <strong className="text-blue-600 block mb-2">en</strong>
+                  <p className="text-slate-600 text-sm">в, на</p>
+                  <p className="text-slate-500 text-xs italic mt-1">El libro está en la mesa.</p>
+                </div>
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                  <strong className="text-blue-600 block mb-2">sobre</strong>
+                  <p className="text-slate-600 text-sm">на (поверх)</p>
+                  <p className="text-slate-500 text-xs italic mt-1">El gato está sobre la silla.</p>
+                </div>
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                  <strong className="text-blue-600 block mb-2">debajo de</strong>
+                  <p className="text-slate-600 text-sm">под</p>
+                  <p className="text-slate-500 text-xs italic mt-1">El perro está debajo de la mesa.</p>
+                </div>
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                  <strong className="text-blue-600 block mb-2">al lado de</strong>
+                  <p className="text-slate-600 text-sm">рядом с</p>
+                  <p className="text-slate-500 text-xs italic mt-1">Estoy al lado de María.</p>
+                </div>
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                  <strong className="text-blue-600 block mb-2">delante de</strong>
+                  <p className="text-slate-600 text-sm">перед</p>
+                  <p className="text-slate-500 text-xs italic mt-1">Estoy delante de la puerta.</p>
+                </div>
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                  <strong className="text-blue-600 block mb-2">detrás de</strong>
+                  <p className="text-slate-600 text-sm">за, позади</p>
+                  <p className="text-slate-500 text-xs italic mt-1">El coche está detrás de la casa.</p>
+                </div>
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                  <strong className="text-blue-600 block mb-2">cerca de</strong>
+                  <p className="text-slate-600 text-sm">близко к</p>
+                  <p className="text-slate-500 text-xs italic mt-1">La escuela está cerca de mi casa.</p>
+                </div>
+                <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                  <strong className="text-blue-600 block mb-2">lejos de</strong>
+                  <p className="text-slate-600 text-sm">далеко от</p>
+                  <p className="text-slate-500 text-xs italic mt-1">Madrid está lejos de Barcelona.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Temporary States */}
+            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-purple-500"></div>
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-slate-900">
+                <Star size={20} className="text-purple-500" /> Временные состояния (Estados temporales)
+              </h3>
+              <p className="mb-6 leading-relaxed text-slate-600">
+                ESTAR используется для описания временных эмоций и физических состояний.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <h4 className="font-bold text-purple-600 mb-3 text-sm uppercase tracking-wider">Эмоции</h4>
+                  <ul className="space-y-2 text-sm text-slate-600">
+                    <li><strong>feliz</strong> — счастливый</li>
+                    <li><strong>triste</strong> — грустный</li>
+                    <li><strong>enojado</strong> — злой</li>
+                    <li><strong>nervioso</strong> — нервный</li>
+                    <li><strong>tranquilo</strong> — спокойный</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-bold text-purple-600 mb-3 text-sm uppercase tracking-wider">Физические</h4>
+                  <ul className="space-y-2 text-sm text-slate-600">
+                    <li><strong>cansado</strong> — уставший</li>
+                    <li><strong>enfermo</strong> — больной</li>
+                    <li><strong>ocupado</strong> — занятый</li>
+                    <li><strong>libre</strong> — свободный</li>
+                    <li><strong>listo</strong> — готовый</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-bold text-purple-600 mb-3 text-sm uppercase tracking-wider">Примеры</h4>
+                  <ul className="space-y-2 text-xs text-slate-500 italic">
+                    <li>Estoy feliz hoy.</li>
+                    <li>Estás muy cansado.</li>
+                    <li>Ella está enferma.</li>
+                    <li>Estamos ocupados.</li>
+                    <li>¿Estás listo?</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
             {/* Las Reglas */}
             <div className="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-xl relative overflow-hidden">
               <h3 className="text-2xl font-black mb-8 text-amber-400 unbounded text-center flex justify-center items-center gap-3">
@@ -162,6 +261,38 @@ export default function EstarLessonPage() {
                     <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-lg">
                       <strong className="text-emerald-400 block mb-2">ESTAR (временное)</strong>
                       <p className="text-white text-sm">Estoy cansado. <span className="text-slate-400">(Я устал)</span></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <div className="text-amber-400 font-bold uppercase tracking-widest text-xs mb-2">Regla №2: Местоположение = ESTAR</div>
+                  <p className="text-slate-300 text-sm mb-4">Для описания местоположения ВСЕГДА используется ESTAR, даже если это постоянное место.</p>
+                  <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-lg">
+                    <p className="text-white text-sm mb-2">Madrid está en España. <span className="text-slate-400">(Мадрид находится в Испании)</span></p>
+                    <p className="text-white text-sm">Estoy en casa. <span className="text-slate-400">(Я дома)</span></p>
+                  </div>
+                </div>
+
+                <div className="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <div className="text-amber-400 font-bold uppercase tracking-widest text-xs mb-2">Regla №3: Прилагательные меняют значение</div>
+                  <p className="text-slate-300 text-sm mb-4">Некоторые прилагательные имеют разное значение с SER и ESTAR.</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-rose-500/10 border border-rose-500/20 p-4 rounded-lg">
+                      <strong className="text-rose-400 block mb-2">ser listo</strong>
+                      <p className="text-white text-sm">умный (характеристика)</p>
+                    </div>
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-lg">
+                      <strong className="text-emerald-400 block mb-2">estar listo</strong>
+                      <p className="text-white text-sm">готовый (состояние)</p>
+                    </div>
+                    <div className="bg-rose-500/10 border border-rose-500/20 p-4 rounded-lg">
+                      <strong className="text-rose-400 block mb-2">ser aburrido</strong>
+                      <p className="text-white text-sm">скучный (человек)</p>
+                    </div>
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-lg">
+                      <strong className="text-emerald-400 block mb-2">estar aburrido</strong>
+                      <p className="text-white text-sm">скучающий (состояние)</p>
                     </div>
                   </div>
                 </div>
@@ -193,16 +324,102 @@ export default function EstarLessonPage() {
           <p className="text-slate-500 mb-8">Тренируем спряжение глагола ESTAR.</p>
 
           <div className="space-y-12">
+            {/* Block 1: ESTAR Conjugation */}
             <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
               <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <div className="w-2 h-2 bg-amber-500 rounded-full"></div> Блок 1: Формы ESTAR
+                <div className="w-2 h-2 bg-amber-500 rounded-full"></div> Блок 1: Формы ESTAR (6 упражнений)
               </h3>
               <div className="space-y-4">
                 {[
-                  { id: 'cw1', q: "1. Yo ___ en el parque.", ans: 'estoy' },
-                  { id: 'cw2', q: "2. ¿Dónde ___ tú?", ans: 'estás' },
-                  { id: 'cw3', q: "3. Nosotros ___ cansados.", ans: 'estamos' },
-                  { id: 'cw4', q: "4. Ellos ___ en casa.", ans: 'están' },
+                  { id: 'cw1', q: "1. Yo ___ en el parque.", opts: ['estoy', 'estás', 'está'], ans: 'estoy' },
+                  { id: 'cw2', q: "2. ¿Dónde ___ tú?", opts: ['estoy', 'estás', 'está'], ans: 'estás' },
+                  { id: 'cw3', q: "3. Ella ___ en casa.", opts: ['estoy', 'estás', 'está'], ans: 'está' },
+                  { id: 'cw4', q: "4. Nosotros ___ cansados.", opts: ['estamos', 'estáis', 'están'], ans: 'estamos' },
+                  { id: 'cw5', q: "5. Vosotros ___ ocupados.", opts: ['estamos', 'estáis', 'están'], ans: 'estáis' },
+                  { id: 'cw6', q: "6. Ellos ___ en Madrid.", opts: ['estamos', 'estáis', 'están'], ans: 'están' },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="dropdown"
+                    label={ex.q}
+                    options={ex.opts}
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 2: SER vs ESTAR */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-rose-500 rounded-full"></div> Блок 2: SER vs ESTAR (6 упражнений)
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { id: 'cw7', q: "1. María ___ profesora.", opts: ['es', 'está'], ans: 'es' },
+                  { id: 'cw8', q: "2. María ___ enferma hoy.", opts: ['es', 'está'], ans: 'está' },
+                  { id: 'cw9', q: "3. El libro ___ interesante.", opts: ['es', 'está'], ans: 'es' },
+                  { id: 'cw10', q: "4. El libro ___ sobre la mesa.", opts: ['es', 'está'], ans: 'está' },
+                  { id: 'cw11', q: "5. Yo ___ alto.", opts: ['soy', 'estoy'], ans: 'soy' },
+                  { id: 'cw12', q: "6. Yo ___ cansado.", opts: ['soy', 'estoy'], ans: 'estoy' },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="dropdown"
+                    label={ex.q}
+                    options={ex.opts}
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 3: Prepositions */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div> Блок 3: Предлоги места (5 упражнений)
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { id: 'cw13', q: "1. El gato está ___ la mesa.", opts: ['sobre', 'debajo de', 'cerca de'], ans: 'sobre' },
+                  { id: 'cw14', q: "2. El perro está ___ la silla.", opts: ['sobre', 'debajo de', 'al lado de'], ans: 'debajo de' },
+                  { id: 'cw15', q: "3. Estoy ___ María.", opts: ['al lado de', 'lejos de', 'detrás de'], ans: 'al lado de' },
+                  { id: 'cw16', q: "4. La escuela está ___ mi casa.", opts: ['cerca de', 'debajo de', 'sobre'], ans: 'cerca de' },
+                  { id: 'cw17', q: "5. El coche está ___ la casa.", opts: ['delante de', 'en', 'sobre'], ans: 'delante de' },
+                ].map(ex => (
+                  <Exercise
+                    key={ex.id}
+                    id={ex.id}
+                    mode="cw"
+                    type="dropdown"
+                    label={ex.q}
+                    options={ex.opts}
+                    correctAnswer={ex.ans}
+                    progressItem={progress.cw?.[ex.id]}
+                    onUpdate={updateProgress}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Block 4: Translation */}
+            <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div> Блок 4: Перевод (3 упражнения)
+              </h3>
+              <div className="space-y-4">
+                {[
+                  { id: 'cw18', q: "1. Я в школе.", ans: 'Estoy en la escuela' },
+                  { id: 'cw19', q: "2. Они устали.", ans: 'Están cansados' },
+                  { id: 'cw20', q: "3. Мы счастливы.", ans: 'Estamos felices' },
                 ].map(ex => (
                   <Exercise
                     key={ex.id}
@@ -248,14 +465,26 @@ export default function EstarLessonPage() {
                       { id: 'hw2', q: "2. Tú ___ en Madrid.", ans: "estás" },
                       { id: 'hw3', q: "3. Ella ___ ocupada.", ans: "está" },
                       { id: 'hw4', q: "4. Nosotros ___ aquí.", ans: "estamos" },
+                      { id: 'hw5', q: "5. Ellos ___ cansados.", ans: "están" },
+                      { id: 'hw6', q: "6. María ___ estudiante.", opts: ['es', 'está'], ans: "es" },
+                      { id: 'hw7', q: "7. María ___ triste.", opts: ['es', 'está'], ans: "está" },
+                      { id: 'hw8', q: "8. El libro ___ nuevo.", opts: ['es', 'está'], ans: "es" },
+                      { id: 'hw9', q: "9. El libro ___ en la mesa.", opts: ['es', 'está'], ans: "está" },
+                      { id: 'hw10', q: "10. Yo ___ inteligente.", opts: ['soy', 'estoy'], ans: "soy" },
+                      { id: 'hw11', q: "11. El gato está ___ la cama.", opts: ['sobre', 'debajo de', 'cerca de'], ans: "sobre" },
+                      { id: 'hw12', q: "12. La escuela está ___ mi casa.", opts: ['cerca de', 'lejos de', 'sobre'], ans: "cerca de" },
+                      { id: 'hw13', q: "13. Estoy ___ la puerta.", opts: ['delante de', 'debajo de', 'sobre'], ans: "delante de" },
+                      { id: 'hw14', q: "14. Я дома.", ans: "Estoy en casa" },
+                      { id: 'hw15', q: "15. Они счастливы.", ans: "Están felices" },
                     ].map((ex) => (
                       <Exercise
                         key={ex.id}
                         id={ex.id}
                         mode="hw"
-                        type="text"
+                        type={ex.opts ? "dropdown" : "text"}
                         label={ex.q}
-                        placeholder="Enter answer"
+                        placeholder={ex.opts ? undefined : "Enter answer"}
+                        options={ex.opts}
                         correctAnswer={ex.ans}
                         progressItem={progress.hw?.[ex.id]}
                         onUpdate={updateProgress}
@@ -269,14 +498,26 @@ export default function EstarLessonPage() {
                       { id: 'hw2_v2', q: "2. Tú ___ en Barcelona.", ans: "estás" },
                       { id: 'hw3_v2', q: "3. Él ___ enfermo.", ans: "está" },
                       { id: 'hw4_v2', q: "4. Nosotras ___ listas.", ans: "estamos" },
+                      { id: 'hw5_v2', q: "5. Ellas ___ nerviosas.", ans: "están" },
+                      { id: 'hw6_v2', q: "6. Pedro ___ médico.", opts: ['es', 'está'], ans: "es" },
+                      { id: 'hw7_v2', q: "7. Pedro ___ ocupado.", opts: ['es', 'está'], ans: "está" },
+                      { id: 'hw8_v2', q: "8. La casa ___ grande.", opts: ['es', 'está'], ans: "es" },
+                      { id: 'hw9_v2', q: "9. La casa ___ cerca del parque.", opts: ['es', 'está'], ans: "está" },
+                      { id: 'hw10_v2', q: "10. Tú ___ simpático.", opts: ['eres', 'estás'], ans: "eres" },
+                      { id: 'hw11_v2', q: "11. El perro está ___ la mesa.", opts: ['sobre', 'debajo de', 'cerca de'], ans: "debajo de" },
+                      { id: 'hw12_v2', q: "12. Madrid está ___ Barcelona.", opts: ['cerca de', 'lejos de', 'sobre'], ans: "lejos de" },
+                      { id: 'hw13_v2', q: "13. El coche está ___ la casa.", opts: ['delante de', 'debajo de', 'sobre'], ans: "delante de" },
+                      { id: 'hw14_v2', q: "14. Я в школе.", ans: "Estoy en la escuela" },
+                      { id: 'hw15_v2', q: "15. Мы устали.", ans: "Estamos cansados" },
                     ].map((ex) => (
                       <Exercise
                         key={ex.id}
                         id={ex.id}
                         mode="hw"
-                        type="text"
+                        type={ex.opts ? "dropdown" : "text"}
                         label={ex.q}
-                        placeholder="Enter answer"
+                        placeholder={ex.opts ? undefined : "Enter answer"}
+                        options={ex.opts}
                         correctAnswer={ex.ans}
                         progressItem={progress.hw?.[ex.id]}
                         onUpdate={updateProgress}
