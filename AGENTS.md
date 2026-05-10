@@ -233,8 +233,14 @@ The goal: Be helpful without being annoying. Check in a few times a day, do usef
 
 - **Always test locally before deploying:** Before committing changes intended for production, run the local build command (e.g., `npm run build`) to ensure there are no compilation errors.
 - **Auto-Deploy on Success:** After making changes and verifying them (including `npm run build`), automatically commit and push to `main` to trigger Vercel deployment.
-- **Mandatory Reporting:** Create a detailed log in `отчеты/YYYY-MM-DD/log.md` after every significant fix, refactor, or feature implementation.
+- **Mandatory Reporting (CRITICAL):** 
+  - **ALWAYS create a detailed report** in `reports/YYYY-MM-DD/log.md` after EVERY deployment to GitHub/Vercel
+  - Reports must include: what was changed, why, files modified, testing done, and next steps
+  - Use the template structure from previous reports
+  - Reports directory: `/Users/alexxxey_official/my-project/tutor-platform/reports/`
+  - **This is NOT optional** — every git push must have a corresponding report
 - **Self-Documentation:** Always update `AGENTS.md` or relevant `docs/SKILL_*.md` files when new permanent workflows are adopted.
+- **Skills Updates:** When creating new lesson types or features, update or create corresponding `SKILL_*.md` files in `docs/`
 
 ## Make It Yours
 
