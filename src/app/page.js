@@ -1,30 +1,8 @@
-'use client'
 import Link from 'next/link'
-import { useAuth } from '../lib/auth'
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  const { user, loading } = useAuth()
-  const router = useRouter()
-
-  useEffect(() => {
-    if (!loading && user) {
-      router.push('/dashboard')
-    }
-  }, [user, loading, router])
-
-  if (loading) return (
-    <div className="min-h-screen bg-[#faf8f3] flex items-center justify-center">
-      <div className="w-12 h-12 border-4 border-[#2a9d8f] border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  )
-
-  if (user) return null
-
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] font-sans flex flex-col relative overflow-hidden">
-      {/* Decorative background elements */}
       <div className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] bg-[#e63946]/5 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] bg-[#2a9d8f]/5 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -73,7 +51,6 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Feature Cards below */}
         <div className="mt-20 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1000px] w-full text-left">
           <div className="bg-white border border-[#e5e0d5] p-8 rounded-2xl shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
             <div className="absolute top-0 left-0 w-full h-1.5 bg-[#e63946] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
