@@ -10,13 +10,13 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const router = useRouter()
-  const { signIn, user, loading: authLoading } = useAuth()
+  const { signIn, user } = useAuth()
 
   useEffect(() => {
-    if (!authLoading && user) {
+    if (user) {
       router.push('/dashboard')
     }
-  }, [user, authLoading, router])
+  }, [user, router])
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -30,11 +30,7 @@ export default function LoginPage() {
     }
   }
 
-  if (authLoading || user) return (
-    <div className="min-h-screen bg-[#faf8f3] flex items-center justify-center">
-      <div className="w-12 h-12 border-4 border-[#e63946] border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  )
+  if (user) return null
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#faf8f3] text-[#1a1a2e] p-6 font-sans">
