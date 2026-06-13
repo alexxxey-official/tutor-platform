@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { useAuth } from '../../lib/auth'
+import { supabase } from '../../lib/supabase'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -10,27 +10,28 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const router = useRouter()
-  const { signIn, user } = useAuth()
 
   useEffect(() => {
-    if (user) {
-      router.push('/dashboard')
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session) router.push('/dashboard')
     }
-  }, [user, router])
+    checkSession()
+  }, [router])
 
   const handleLogin = async (e) => {
     e.preventDefault()
     setLoading(true)
     setMessage('')
     try {
-      await signIn(email, password)
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) throw error
+      router.push('/dashboard')
     } catch (error) {
       setMessage(error.message)
       setLoading(false)
     }
   }
-
-  if (user) return null
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#faf8f3] text-[#1a1a2e] p-6 font-sans">

@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { getLessonById } from '../../lib/lessons'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, PlayCircle, CheckCircle2, Circle } from 'lucide-react'
-import { useAuth } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
 
 const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) => {
@@ -139,7 +138,7 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
 }
 
 export default function DashboardPage() {
-  const { user, profile, isAdmin, loading: authLoading, signOut } = useAuth()
+  const [user, setUser] = useState(null)
   const [assignments, setAssignments] = useState([])
   const [loading, setLoading] = useState(true)
   const [openSubject, setOpenSubject] = useState(null)
@@ -152,19 +151,20 @@ export default function DashboardPage() {
   }, [])
 
   useEffect(() => {
-    if (authLoading) return
-    
-    if (!user) {
-      router.push('/login')
-      return
-    }
-
-    const fetchAssignments = async () => {
+    const checkUser = async () => {
       try {
+        const { data, error: authError } = await supabase.auth.getUser()
+        if (authError || !data?.user) {
+          router.push('/login')
+          return
+        }
+        
+        setUser(data.user)
+        
         const { data: assignedData, error: dbError } = await supabase
           .from('student_lessons')
           .select('*')
-          .eq('student_id', user.id)
+          .eq('student_id', data.user.id)
           .order('assigned_at', { ascending: false })
         
         if (dbError) throw dbError
@@ -185,12 +185,11 @@ export default function DashboardPage() {
         setLoading(false)
       }
     }
-
-    fetchAssignments()
-  }, [user, authLoading, router])
+    checkUser()
+  }, [router])
 
   const handleLogout = async () => {
-    await signOut()
+    await supabase.auth.signOut()
     router.push('/login')
   }
 
@@ -247,11 +246,7 @@ export default function DashboardPage() {
     }
   }, [loading, mounted, renderSubjects.length, hasAutoOpened])
 
-  if (authLoading || loading || !mounted) return (
-    <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] flex items-center justify-center font-bold font-mono">
-      LOADING...
-    </div>
-  )
+  if (loading || !mounted) return <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] flex items-center justify-center font-bold font-mono">LOADING...</div>
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] pb-20 font-sans">
@@ -268,11 +263,11 @@ export default function DashboardPage() {
             </div>
             <h1 className="font-black text-3xl sm:text-4xl leading-[1.1] mb-2 unbounded">
               Привет,<br />
-              <em className="text-emerald-400 not-italic font-normal">{profile?.email?.split('@')[0] || 'ученик'}</em>!
+              <em className="text-emerald-400 not-italic font-normal">{user?.email?.split('@')[0] || 'ученик'}</em>!
             </h1>
           </div>
           <div className="flex gap-3">
-             {isAdmin && (
+             {user?.email === 'gulaevl068@gmail.com' && (
               <Link href="/admin" className="px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-[13px] font-bold uppercase tracking-widest hover:bg-indigo-500 transition-colors shadow-lg">
                 Admin Panel
               </Link>

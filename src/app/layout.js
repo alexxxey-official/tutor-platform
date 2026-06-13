@@ -1,5 +1,4 @@
 import './globals.css'
-import { AuthProvider } from '../lib/auth'
 
 export const metadata = {
   title: 'AG Academy',
@@ -9,11 +8,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
-      <body>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
+      <body>{children}</body>
     </html>
   )
 }
