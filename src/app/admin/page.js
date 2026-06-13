@@ -14,6 +14,7 @@ export default function AdminPage() {
   const [expandedId, setExpandedId] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [stats, setStats] = useState({ totalStudents: 0, totalAssigned: 0, completedCount: 0, avgScore: 0 })
+  const [allLessons, setAllLessons] = useState([])
   const router = useRouter()
 
   useEffect(() => {
@@ -59,6 +60,7 @@ export default function AdminPage() {
       : 0
 
     setStudents(profilesData || [])
+    setAllLessons(allLessons)
     setStats({
       totalStudents: (profilesData || []).length,
       totalAssigned,
@@ -125,7 +127,10 @@ export default function AdminPage() {
     setExpandedId(expandedId === id ? null : id)
   }
 
-  const filteredStudents = students.filter(s =>
+  const filteredStudents = students.map(s => {
+    const studentLessons = allLessons.filter(l => l.student_id === s.id)
+    return { ...s, lessonCount: studentLessons.length, completedCount: studentLessons.filter(l => l.status === 'completed').length }
+  }).filter(s =>
     s.email.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
@@ -215,7 +220,14 @@ export default function AdminPage() {
                 <div className="divide-y divide-[#e5e0d5] max-h-[500px] overflow-y-auto">
                     {filteredStudents.map(s => (
                         <button key={s.id} onClick={() => selectStudent(s)} className={`w-full text-left p-4 hover:bg-gray-50 transition-all ${selectedStudent?.id === s.id ? 'bg-[#f0faf8] border-l-4 border-[#2a9d8f]' : 'border-l-4 border-transparent'}`}>
-                            <div className="font-bold text-sm truncate">{s.email}</div>
+                            <div className="flex items-center justify-between">
+                              <div className="font-bold text-sm truncate">{s.email}</div>
+                              {s.lessonCount > 0 && (
+                                <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+                                  {s.completedCount}/{s.lessonCount}
+                                </span>
+                              )}
+                            </div>
                             <div className="text-[10px] text-gray-400 uppercase mt-1">{s.role}</div>
                         </button>
                     ))}
@@ -229,7 +241,41 @@ export default function AdminPage() {
         <div className="md:w-2/3 w-full">
             {selectedStudent ? (
                 <div className="bg-white border border-[#e5e0d5] rounded-2xl shadow-sm overflow-hidden p-8">
-                    <h2 className="text-2xl font-bold mb-6">{selectedStudent.email}</h2>
+                    <h2 className="text-2xl font-bold mb-2">{selectedStudent.email}</h2>
+                    <div className="text-[10px] uppercase tracking-widest text-gray-400 mb-6">
+                      Зарегистрирован: {new Date(selectedStudent.created_at).toLocaleDateString('ru-RU')}
+                    </div>
+
+                    {assignments.length > 0 && (() => {
+                      const total = assignments.length
+                      const completed = assignments.filter(a => a.status === 'completed').length
+                      const inProgress = assignments.filter(a => a.status === 'in_progress').length
+                      const scoresWithTotal = assignments.filter(a => a.total_score > 0)
+                      const avgPct = scoresWithTotal.length > 0
+                        ? Math.round(scoresWithTotal.reduce((sum, a) => sum + (a.score / a.total_score) * 100, 0) / scoresWithTotal.length)
+                        : 0
+                      
+                      return (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+                          <div className="bg-gray-50 rounded-xl p-3 text-center">
+                            <div className="text-lg font-black">{total}</div>
+                            <div className="text-[9px] font-bold uppercase text-gray-400">Уроков</div>
+                          </div>
+                          <div className="bg-emerald-50 rounded-xl p-3 text-center">
+                            <div className="text-lg font-black text-emerald-600">{completed}</div>
+                            <div className="text-[9px] font-bold uppercase text-emerald-400">Пройдено</div>
+                          </div>
+                          <div className="bg-amber-50 rounded-xl p-3 text-center">
+                            <div className="text-lg font-black text-amber-600">{inProgress}</div>
+                            <div className="text-[9px] font-bold uppercase text-amber-400">В процессе</div>
+                          </div>
+                          <div className="bg-blue-50 rounded-xl p-3 text-center">
+                            <div className="text-lg font-black text-blue-600">{avgPct}%</div>
+                            <div className="text-[9px] font-bold uppercase text-blue-400">Средний балл</div>
+                          </div>
+                        </div>
+                      )
+                    })()}
                     
                     <div className="mb-8 flex gap-3">
                         <select id="lSelect" className="flex-1 border rounded-xl p-2.5 text-sm outline-none bg-gray-50">
