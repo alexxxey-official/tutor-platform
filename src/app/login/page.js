@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '../../lib/auth'
@@ -10,7 +10,13 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const router = useRouter()
-  const { signIn } = useAuth()
+  const { signIn, user, loading: authLoading } = useAuth()
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push('/dashboard')
+    }
+  }, [user, authLoading, router])
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -18,13 +24,17 @@ export default function LoginPage() {
     setMessage('')
     try {
       await signIn(email, password)
-      router.push('/dashboard')
     } catch (error) {
       setMessage(error.message)
-    } finally {
       setLoading(false)
     }
   }
+
+  if (authLoading || user) return (
+    <div className="min-h-screen bg-[#faf8f3] flex items-center justify-center">
+      <div className="w-12 h-12 border-4 border-[#e63946] border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  )
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#faf8f3] text-[#1a1a2e] p-6 font-sans">
