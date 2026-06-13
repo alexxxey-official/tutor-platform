@@ -3,7 +3,20 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder-url.supabase.co'
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key'
 
-console.log('Supabase URL:', supabaseUrl)
-console.log('Supabase Key:', supabaseAnonKey ? supabaseAnonKey.substring(0, 20) + '...' : 'MISSING')
+let client = null
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+function getClient() {
+  if (!client) {
+    client = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        lockDelay: 500,
+      }
+    })
+  }
+  return client
+}
+
+export const supabase = getClient()

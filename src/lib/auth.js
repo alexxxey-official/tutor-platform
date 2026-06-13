@@ -14,9 +14,7 @@ export function AuthProvider({ children }) {
 
     const getInitialSession = async () => {
       try {
-        console.log('Auth: connecting to', process.env.NEXT_PUBLIC_SUPABASE_URL)
         const { data: { session }, error } = await supabase.auth.getSession()
-        if (error) console.error('Auth: session error', error.message)
 
         if (!cancelled && session?.user) {
           setUser(session.user)
@@ -71,9 +69,7 @@ export function AuthProvider({ children }) {
   }
 
   const signIn = async (email, password) => {
-    console.log('Auth: signing in to', process.env.NEXT_PUBLIC_SUPABASE_URL)
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    console.log('Auth: sign in result', error ? error.message : 'success')
     if (error) throw error
     return data
   }
