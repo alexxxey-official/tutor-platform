@@ -1,12 +1,14 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { supabase } from '../../lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { LESSONS, getLessonById } from '../../lib/lessons'
 import { ChevronDown, ChevronUp, CheckCircle, XCircle, HelpCircle } from 'lucide-react'
+import { useAuth } from '../../lib/auth'
+import { supabase } from '../../lib/supabase'
 
 export default function AdminPage() {
+  const { user, profile, isAdmin, loading: authLoading } = useAuth()
   const [students, setStudents] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedStudent, setSelectedStudent] = useState(null)
@@ -15,22 +17,15 @@ export default function AdminPage() {
   const router = useRouter()
 
   useEffect(() => {
-    const checkAdmin = async () => {
-      try {
-        const { data, error: authError } = await supabase.auth.getUser()
-        const user = data?.user
-        if (authError || !user || user.email !== 'gulaevl068@gmail.com') {
-          router.push('/dashboard')
-          return
-        }
-        fetchStudents()
-      } catch (err) {
-        console.error("Admin check error:", err)
-        router.push('/dashboard')
-      }
+    if (authLoading) return
+
+    if (!user || !isAdmin) {
+      router.push('/dashboard')
+      return
     }
-    checkAdmin()
-  }, [router])
+
+    fetchStudents()
+  }, [user, isAdmin, authLoading, router])
 
   const fetchStudents = async () => {
     const { data, error } = await supabase
@@ -115,7 +110,11 @@ export default function AdminPage() {
     )
   }
 
-  if (loading) return <div className="min-h-screen flex justify-center items-center font-mono">LOADING...</div>
+  if (authLoading || loading) return (
+    <div className="min-h-screen flex justify-center items-center font-mono">LOADING...</div>
+  )
+
+  if (!isAdmin) return null
 
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] font-sans pb-20">

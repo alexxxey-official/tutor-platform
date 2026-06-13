@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { supabase } from '../../lib/supabase'
 import Link from 'next/link'
+import { useAuth } from '../../lib/auth'
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('')
@@ -9,23 +9,22 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
+  const { signUp } = useAuth()
 
   const handleRegister = async (e) => {
     e.preventDefault()
     setLoading(true)
-    const { error } = await supabase.auth.signUp({ 
-      email, 
-      password,
-      options: { emailRedirectTo: window.location.origin + '/auth/callback' }
-    })
-    if (error) {
-      setMessage(error.message)
-      setIsSuccess(false)
-    } else {
+    setMessage('')
+    try {
+      await signUp(email, password)
       setMessage('Проверь почту для подтверждения регистрации!')
       setIsSuccess(true)
+    } catch (error) {
+      setMessage(error.message)
+      setIsSuccess(false)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (

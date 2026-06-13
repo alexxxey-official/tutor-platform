@@ -1,17 +1,16 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { supabase } from '../../lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { getLessonById } from '../../lib/lessons'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, PlayCircle, CheckCircle2, Circle } from 'lucide-react'
+import { useAuth } from '../../lib/auth'
+import { supabase } from '../../lib/supabase'
 
-// Компонент аккордеона для каждого предмета
 const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) => {
   return (
     <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mb-6 transition-all">
-      {/* Шапка Аккордеона */}
       <div 
         onClick={onToggle}
         className="w-full px-6 py-6 sm:px-8 sm:py-8 flex items-center justify-between hover:bg-slate-50 transition-colors cursor-pointer"
@@ -32,7 +31,6 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
         </div>
       </div>
 
-      {/* Тело Аккордеона */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -43,10 +41,8 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
           >
             <div className="p-4 sm:p-8 flex flex-col gap-3">
               {lessons.map((lesson, idx) => {
-                // Safely access progress_data
                 const progressData = lesson.original?.progress_data || {}
                 
-                // Helper to calculate stats safely
                 const calcStats = (mode, total) => {
                   try {
                     const data = progressData ? progressData[mode] : {}
@@ -67,7 +63,6 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                 const cwStats = calcStats('cw', safeTotalCW)
                 const hwStats = calcStats('hw', safeTotalHW)
                 
-                // Fallback to original score calculation if meta is missing
                 const isComplete = (safeTotalCW + safeTotalHW > 0) 
                   ? (cwStats.isComplete && hwStats.isComplete) 
                   : (lesson.status === 'completed' || (lesson.total_score && lesson.total_score > 0 && lesson.score >= lesson.total_score))
@@ -80,7 +75,6 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                     key={lesson.id}
                     className="group bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6"
                   >
-                    {/* Иконка статуса */}
                     <div className="flex-shrink-0 self-start sm:self-center">
                       {isComplete ? (
                         <CheckCircle2 size={32} className="text-emerald-500" />
@@ -91,7 +85,6 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                       )}
                     </div>
 
-                    {/* Название и прогресс */}
                     <div className="flex-1 min-w-0 w-full">
                       <div className="flex items-baseline justify-between mb-3">
                         <h3 className="font-bold text-base sm:text-lg text-slate-900 truncate pr-4">
@@ -100,10 +93,8 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                         </h3>
                       </div>
                       
-                      {/* Полоски прогресса */}
                       {(safeTotalCW > 0 || safeTotalHW > 0) ? (
                         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-3">
-                          {/* Classwork */}
                           {safeTotalCW > 0 && (
                             <div className="flex-1">
                               <div className="flex justify-between items-center mb-1.5">
@@ -117,7 +108,6 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
                             </div>
                           )}
                           
-                          {/* Homework */}
                           {safeTotalHW > 0 && (
                             <div className="flex-1">
                               <div className="flex justify-between items-center mb-1.5">
@@ -149,7 +139,7 @@ const SubjectAccordion = ({ subject, level, lessons, color, isOpen, onToggle }) 
 }
 
 export default function DashboardPage() {
-  const [user, setUser] = useState(null)
+  const { user, profile, isAdmin, loading: authLoading, signOut } = useAuth()
   const [assignments, setAssignments] = useState([])
   const [loading, setLoading] = useState(true)
   const [openSubject, setOpenSubject] = useState(null)
@@ -162,17 +152,15 @@ export default function DashboardPage() {
   }, [])
 
   useEffect(() => {
-    const checkUser = async () => {
+    if (authLoading) return
+    
+    if (!user) {
+      router.push('/login')
+      return
+    }
+
+    const fetchAssignments = async () => {
       try {
-        const { data, error: authError } = await supabase.auth.getUser()
-        if (authError || !data?.user) {
-          router.push('/login')
-          return
-        }
-        
-        const user = data.user
-        setUser(user)
-        
         const { data: assignedData, error: dbError } = await supabase
           .from('student_lessons')
           .select('*')
@@ -184,9 +172,8 @@ export default function DashboardPage() {
         const fixedAssignments = (assignedData || []).map(a => {
           const meta = getLessonById(a.lesson_id)
           if (meta && meta.totalScore && (!a.total_score || a.total_score === 0)) {
-              // Фоновое обновление, не блокируем рендер
-              supabase.from('student_lessons').update({ total_score: meta.totalScore }).eq('id', a.id).then(() => {})
-              return { ...a, total_score: meta.totalScore }
+            supabase.from('student_lessons').update({ total_score: meta.totalScore }).eq('id', a.id).then(() => {})
+            return { ...a, total_score: meta.totalScore }
           }
           return a
         })
@@ -198,15 +185,15 @@ export default function DashboardPage() {
         setLoading(false)
       }
     }
-    checkUser()
-  }, [router])
+
+    fetchAssignments()
+  }, [user, authLoading, router])
 
   const handleLogout = async () => {
-    await supabase.auth.signOut()
+    await signOut()
     router.push('/login')
   }
 
-  // Настройка уровней и цветов для предметов
   const subjectConfig = {
     'Español': { level: 'Уровень A1', color: 'bg-rose-500' },
     'English': { level: 'Уровень B1', color: 'bg-indigo-600' },
@@ -214,7 +201,6 @@ export default function DashboardPage() {
     'Physics': { level: 'Общий курс', color: 'bg-violet-500' }
   }
 
-  // Группировка
   const subjectsMap = {}
   assignments.forEach(a => {
     const meta = getLessonById(a.lesson_id)
@@ -243,7 +229,6 @@ export default function DashboardPage() {
     })
   })
 
-  // Сортируем уроки внутри каждого предмета по дате добавления (старые первые)
   Object.values(subjectsMap).forEach(subject => {
     subject.lessons.sort((a, b) => {
       const dateA = new Date(a.assigned_at)
@@ -255,7 +240,6 @@ export default function DashboardPage() {
   const hasLessons = assignments.length > 0
   const renderSubjects = hasLessons ? Object.values(subjectsMap) : []
 
-  // По умолчанию открываем первый предмет только один раз после загрузки
   useEffect(() => {
     if (!loading && mounted && renderSubjects.length > 0 && !hasAutoOpened) {
       setOpenSubject(renderSubjects[0].name)
@@ -263,7 +247,11 @@ export default function DashboardPage() {
     }
   }, [loading, mounted, renderSubjects.length, hasAutoOpened])
 
-  if (loading || !mounted) return <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] flex items-center justify-center font-bold font-mono">LOADING...</div>
+  if (authLoading || loading || !mounted) return (
+    <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] flex items-center justify-center font-bold font-mono">
+      LOADING...
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#1e1b4b] pb-20 font-sans">
@@ -280,11 +268,11 @@ export default function DashboardPage() {
             </div>
             <h1 className="font-black text-3xl sm:text-4xl leading-[1.1] mb-2 unbounded">
               Привет,<br />
-              <em className="text-emerald-400 not-italic font-normal">{(user?.email?.split('@') || [])[0] || 'ученик'}</em>!
+              <em className="text-emerald-400 not-italic font-normal">{profile?.email?.split('@')[0] || 'ученик'}</em>!
             </h1>
           </div>
           <div className="flex gap-3">
-             {user?.email === 'gulaevl068@gmail.com' && (
+             {isAdmin && (
               <Link href="/admin" className="px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-[13px] font-bold uppercase tracking-widest hover:bg-indigo-500 transition-colors shadow-lg">
                 Admin Panel
               </Link>

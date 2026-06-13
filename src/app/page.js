@@ -1,6 +1,27 @@
+'use client'
 import Link from 'next/link'
+import { useAuth } from '../lib/auth'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const { user, loading } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push('/dashboard')
+    }
+  }, [user, loading, router])
+
+  if (loading) return (
+    <div className="min-h-screen bg-[#faf8f3] flex items-center justify-center">
+      <div className="w-12 h-12 border-4 border-[#2a9d8f] border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  )
+
+  if (user) return null
+
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] font-sans flex flex-col relative overflow-hidden">
       {/* Decorative background elements */}
