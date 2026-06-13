@@ -27,22 +27,13 @@ export async function middleware(request) {
 
   const pathname = request.nextUrl.pathname
 
-  const publicRoutes = ['/', '/login', '/register', '/auth/callback']
-  const isPublicRoute = publicRoutes.some(route => pathname === route)
-
-  if (!user && !isPublicRoute) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
-  }
-
-  if (user && isPublicRoute) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
-    return NextResponse.redirect(url)
-  }
-
   if (pathname.startsWith('/admin')) {
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      return NextResponse.redirect(url)
+    }
+
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
@@ -61,6 +52,6 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/admin/:path*',
   ],
 }
