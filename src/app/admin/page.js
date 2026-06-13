@@ -247,32 +247,50 @@ export default function AdminPage() {
                     </div>
 
                     {assignments.length > 0 && (() => {
-                      const total = assignments.length
-                      const completed = assignments.filter(a => a.status === 'completed').length
-                      const inProgress = assignments.filter(a => a.status === 'in_progress').length
-                      const scoresWithTotal = assignments.filter(a => a.total_score > 0)
-                      const avgPct = scoresWithTotal.length > 0
-                        ? Math.round(scoresWithTotal.reduce((sum, a) => sum + (a.score / a.total_score) * 100, 0) / scoresWithTotal.length)
-                        : 0
-                      
+                      const bySubject = {}
+                      assignments.forEach(a => {
+                        const meta = getLessonById(a.lesson_id)
+                        const subject = meta?.subject || 'Другое'
+                        if (!bySubject[subject]) bySubject[subject] = { total: 0, completed: 0, scores: [] }
+                        bySubject[subject].total++
+                        if (a.status === 'completed') bySubject[subject].completed++
+                        if (a.total_score > 0) bySubject[subject].scores.push((a.score / a.total_score) * 100)
+                      })
+
+                      const subjectColors = {
+                        'Español': 'bg-rose-50 text-rose-700',
+                        'English': 'bg-indigo-50 text-indigo-700',
+                        'Math': 'bg-emerald-50 text-emerald-700',
+                        'Physics': 'bg-violet-50 text-violet-700',
+                        'עברית': 'bg-cyan-50 text-cyan-700',
+                      }
+
                       return (
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-                          <div className="bg-gray-50 rounded-xl p-3 text-center">
-                            <div className="text-lg font-black">{total}</div>
-                            <div className="text-[9px] font-bold uppercase text-gray-400">Уроков</div>
-                          </div>
-                          <div className="bg-emerald-50 rounded-xl p-3 text-center">
-                            <div className="text-lg font-black text-emerald-600">{completed}</div>
-                            <div className="text-[9px] font-bold uppercase text-emerald-400">Пройдено</div>
-                          </div>
-                          <div className="bg-amber-50 rounded-xl p-3 text-center">
-                            <div className="text-lg font-black text-amber-600">{inProgress}</div>
-                            <div className="text-[9px] font-bold uppercase text-amber-400">В процессе</div>
-                          </div>
-                          <div className="bg-blue-50 rounded-xl p-3 text-center">
-                            <div className="text-lg font-black text-blue-600">{avgPct}%</div>
-                            <div className="text-[9px] font-bold uppercase text-blue-400">Средний балл</div>
-                          </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
+                          {Object.entries(bySubject).map(([subject, data]) => {
+                            const avgPct = data.scores.length > 0
+                              ? Math.round(data.scores.reduce((a, b) => a + b, 0) / data.scores.length)
+                              : 0
+                            const colorClass = subjectColors[subject] || 'bg-gray-50 text-gray-700'
+                            return (
+                              <div key={subject} className={`${colorClass} rounded-xl p-4`}>
+                                <div className="font-bold text-sm mb-2">{subject}</div>
+                                <div className="flex justify-between items-end">
+                                  <div>
+                                    <div className="text-[10px] uppercase opacity-60">Уроков</div>
+                                    <div className="text-lg font-black">{data.completed}/{data.total}</div>
+                                  </div>
+                                  <div className="text-right">
+                                    <div className="text-[10px] uppercase opacity-60">Балл</div>
+                                    <div className="text-lg font-black">{avgPct}%</div>
+                                  </div>
+                                </div>
+                                <div className="mt-2 h-1.5 bg-black/10 rounded-full overflow-hidden">
+                                  <div className="h-full bg-current rounded-full transition-all" style={{ width: `${data.total > 0 ? (data.completed / data.total) * 100 : 0}%` }}></div>
+                                </div>
+                              </div>
+                            )
+                          })}
                         </div>
                       )
                     })()}
