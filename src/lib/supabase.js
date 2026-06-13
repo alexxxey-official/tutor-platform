@@ -7,14 +7,7 @@ let client = null
 
 function getClient() {
   if (!client) {
-    client = createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-        lockDelay: 500,
-      }
-    })
+    client = createClient(supabaseUrl, supabaseAnonKey)
   }
   return client
 }
