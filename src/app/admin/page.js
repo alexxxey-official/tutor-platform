@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { LESSONS, getLessonById } from '../../lib/lessons'
-import { ChevronDown, ChevronUp, CheckCircle, XCircle, HelpCircle } from 'lucide-react'
+import { ChevronDown, ChevronUp, CheckCircle, XCircle, HelpCircle, Trash2, Search, Users, BookOpen, BarChart3 } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 
 export default function AdminPage() {
@@ -12,6 +12,8 @@ export default function AdminPage() {
   const [selectedStudent, setSelectedStudent] = useState(null)
   const [assignments, setAssignments] = useState([])
   const [expandedId, setExpandedId] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [stats, setStats] = useState({ totalStudents: 0, totalAssigned: 0, completedCount: 0, avgScore: 0 })
   const router = useRouter()
 
   useEffect(() => {
@@ -33,13 +35,36 @@ export default function AdminPage() {
   }, [router])
 
   const fetchStudents = async () => {
-    const { data, error } = await supabase
+    const { data: profilesData, error: profilesError } = await supabase
       .from('profiles')
       .select('*')
       .order('created_at', { ascending: false })
     
-    if (error) console.error("Error fetching students:", error)
-    else setStudents(data || [])
+    if (profilesError) {
+      console.error("Error fetching students:", profilesError)
+      setLoading(false)
+      return
+    }
+
+    const { data: lessonsData } = await supabase
+      .from('student_lessons')
+      .select('*')
+
+    const allLessons = lessonsData || []
+    const totalAssigned = allLessons.length
+    const completedCount = allLessons.filter(l => l.status === 'completed').length
+    const scoresWithTotal = allLessons.filter(l => l.total_score > 0)
+    const avgScore = scoresWithTotal.length > 0
+      ? Math.round(scoresWithTotal.reduce((sum, l) => sum + (l.score / l.total_score) * 100, 0) / scoresWithTotal.length)
+      : 0
+
+    setStudents(profilesData || [])
+    setStats({
+      totalStudents: (profilesData || []).length,
+      totalAssigned,
+      completedCount,
+      avgScore
+    })
     setLoading(false)
   }
 
@@ -76,12 +101,33 @@ export default function AdminPage() {
       else alert('Ошибка: ' + error.message)
     } else {
       setAssignments([data[0], ...assignments])
+      setStats(prev => ({ ...prev, totalAssigned: prev.totalAssigned + 1 }))
+    }
+  }
+
+  const removeLesson = async (assignmentId) => {
+    if (!confirm('Убрать этот урок?')) return
+    
+    const { error } = await supabase
+      .from('student_lessons')
+      .delete()
+      .eq('id', assignmentId)
+    
+    if (error) {
+      alert('Ошибка: ' + error.message)
+    } else {
+      setAssignments(prev => prev.filter(a => a.id !== assignmentId))
+      setStats(prev => ({ ...prev, totalAssigned: Math.max(0, prev.totalAssigned - 1) }))
     }
   }
 
   const toggleExpand = (id) => {
     setExpandedId(expandedId === id ? null : id)
   }
+
+  const filteredStudents = students.filter(s =>
+    s.email.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   const ProgressDetails = ({ progress }) => {
     if (!progress) return <p className="text-gray-400 italic text-xs">Нет подробных данных.</p>;
@@ -126,19 +172,59 @@ export default function AdminPage() {
         </div>
       </div>
 
-      <div className="max-w-[1100px] mx-auto px-6 mt-8 flex flex-col md:flex-row gap-8">
-        <div className="md:w-1/3 w-full">
+      <div className="max-w-[1100px] mx-auto px-6 mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white border border-[#e5e0d5] rounded-2xl p-5 text-center">
+            <Users size={20} className="text-[#2a9d8f] mx-auto mb-2" />
+            <div className="text-2xl font-black unbounded">{stats.totalStudents}</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Учеников</div>
+          </div>
+          <div className="bg-white border border-[#e5e0d5] rounded-2xl p-5 text-center">
+            <BookOpen size={20} className="text-[#e63946] mx-auto mb-2" />
+            <div className="text-2xl font-black unbounded">{stats.totalAssigned}</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Назначено уроков</div>
+          </div>
+          <div className="bg-white border border-[#e5e0d5] rounded-2xl p-5 text-center">
+            <CheckCircle size={20} className="text-emerald-500 mx-auto mb-2" />
+            <div className="text-2xl font-black unbounded">{stats.completedCount}</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Пройдено</div>
+          </div>
+          <div className="bg-white border border-[#e5e0d5] rounded-2xl p-5 text-center">
+            <BarChart3 size={20} className="text-[#f4a261] mx-auto mb-2" />
+            <div className="text-2xl font-black unbounded">{stats.avgScore}%</div>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Средний балл</div>
+          </div>
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="md:w-1/3 w-full">
             <div className="bg-white border border-[#e5e0d5] rounded-2xl shadow-sm overflow-hidden">
-                <div className="bg-gray-50 border-b border-[#e5e0d5] px-5 py-4 font-bold">Студенты</div>
-                <div className="divide-y divide-[#e5e0d5]">
-                    {students.map(s => (
+                <div className="bg-gray-50 border-b border-[#e5e0d5] px-5 py-4">
+                  <div className="font-bold mb-3">Студенты ({filteredStudents.length})</div>
+                  <div className="relative">
+                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="Поиск по email..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-8 pr-3 py-2 text-sm border border-gray-200 rounded-lg outline-none focus:border-[#2a9d8f] transition-colors"
+                    />
+                  </div>
+                </div>
+                <div className="divide-y divide-[#e5e0d5] max-h-[500px] overflow-y-auto">
+                    {filteredStudents.map(s => (
                         <button key={s.id} onClick={() => selectStudent(s)} className={`w-full text-left p-4 hover:bg-gray-50 transition-all ${selectedStudent?.id === s.id ? 'bg-[#f0faf8] border-l-4 border-[#2a9d8f]' : 'border-l-4 border-transparent'}`}>
                             <div className="font-bold text-sm truncate">{s.email}</div>
+                            <div className="text-[10px] text-gray-400 uppercase mt-1">{s.role}</div>
                         </button>
                     ))}
+                    {filteredStudents.length === 0 && (
+                      <div className="p-4 text-center text-gray-400 text-sm italic">Не найдено</div>
+                    )}
                 </div>
             </div>
-        </div>
+          </div>
 
         <div className="md:w-2/3 w-full">
             {selectedStudent ? (
@@ -150,25 +236,38 @@ export default function AdminPage() {
                             <option value="">Назначить урок...</option>
                             {Object.values(LESSONS).flat().map(l => <option key={l.id} value={l.id}>{l.title}</option>)}
                         </select>
-                        <button onClick={() => assignLesson(document.getElementById('lSelect').value)} className="bg-slate-900 text-white px-6 rounded-xl text-sm font-bold">Add</button>
+                        <button onClick={() => assignLesson(document.getElementById('lSelect').value)} className="bg-slate-900 text-white px-6 rounded-xl text-sm font-bold hover:bg-slate-800 transition-colors">Add</button>
                     </div>
 
                     <div className="space-y-4">
+                        {assignments.length === 0 && (
+                          <div className="text-center py-10 text-gray-400 italic">Уроки не назначены</div>
+                        )}
                         {assignments.map(a => {
                             const meta = getLessonById(a.lesson_id);
                             const isExpanded = expandedId === a.id;
-                            const pct = a.total_score > 0 ? Math.round((a.score / a.total_score) * 100) : 0;
 
                             return (
                                 <div key={a.id} className="flex flex-col">
-                                    <div onClick={() => toggleExpand(a.id)} className="border border-[#e5e0d5] rounded-xl p-4 flex items-center justify-between hover:bg-gray-50 cursor-pointer transition-colors">
-                                        <div className="flex-1">
+                                    <div className="border border-[#e5e0d5] rounded-xl p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+                                        <div onClick={() => toggleExpand(a.id)} className="flex-1 cursor-pointer">
                                             <div className="text-[10px] font-bold text-[#2a9d8f] uppercase">{meta?.subject}</div>
                                             <div className="font-bold">{meta?.title || a.lesson_id}</div>
+                                            <div className="text-[10px] text-gray-400 mt-1">
+                                              {a.status} • {a.score}/{a.total_score}
+                                            </div>
                                         </div>
-                                        <div className="text-right flex items-center gap-4">
-                                            <div className="text-sm font-bold">{a.score} / {a.total_score}</div>
-                                            {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                                        <div className="flex items-center gap-3">
+                                            <button 
+                                              onClick={() => removeLesson(a.id)} 
+                                              className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                                              title="Убрать урок"
+                                            >
+                                              <Trash2 size={16} />
+                                            </button>
+                                            <button onClick={() => toggleExpand(a.id)} className="text-gray-400">
+                                              {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                                            </button>
                                         </div>
                                     </div>
                                     {isExpanded && <ProgressDetails progress={a.progress_data} />}
@@ -182,6 +281,7 @@ export default function AdminPage() {
             )}
         </div>
       </div>
+    </div>
     </div>
   )
 }
