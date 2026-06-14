@@ -11,14 +11,38 @@ This skill outlines the architectural vision, technical standards, and developme
 - **Framework:** Next.js 14 (App Router).
 - **Styling:** Tailwind CSS.
 - **State Management:** Custom React Hooks (e.g., `useLessonProgress.js`) to handle complex logic (attempts, modes, scoring, variants).
-- **Backend/DB:** Supabase. We utilize a Service Role Key (stored in `.env.local` as `SUPABASE_SERVICE_ROLE_KEY`) for admin-level database operations and migrations.
+- **Backend/DB:** Supabase with Service Role Key for admin DB operations.
 - **Animations/Charts:** `framer-motion` for gamified UI elements (Skill Tree), `recharts` for admin analytics.
+- **Deployment:** Vercel (auto-deploy on push to `main`).
 
-## 2.1 Database Schema (Planned)
-To support deep analytics and tracking, the database follows this relational structure:
-- `users`: Core user data (`id`, `role`, `name`).
-- `lessons`: Metadata for lessons (`id`, `subject`, `title`, `order_index`).
-- `user_progress`: Tracking completion (`user_id`, `lesson_id`, `score`, `status`, `attempts`, `variant_used`).
+## 2.1 Authentication Architecture
+- **Client-side auth:** Each page uses `supabase` client directly from `src/lib/supabase.js`.
+- **NO AuthProvider/Context:** React Strict Mode conflicts with Supabase gotrue-js locks.
+- **Login flow:** `supabase.auth.signInWithPassword()` → `router.push('/dashboard')`
+- **Session check:** `supabase.auth.getUser()` in each protected page's `useEffect`.
+- **Middleware:** Only protects `/admin` route (checks role via `get_user_role()` function).
+- **Registration:** `supabase.auth.signUp()` → email confirmation → trigger creates profile.
+
+### Auth Anti-Patterns (DO NOT)
+- ❌ Don't create AuthProvider/useAuth context — breaks with React Strict Mode
+- ❌ Don't use `router.push()` immediately after `signIn()` — race condition with auth state
+- ❌ Don't redirect in useEffect based on `authLoading` — blocks login form rendering
+
+## 2.2 Database Schema
+- **profiles:** `id` (uuid, FK auth.users), `email`, `role` (student/admin), `created_at`
+- **student_lessons:** `id`, `student_id`, `lesson_id`, `status`, `score`, `total_score`, `progress_data` (JSONB), `variant_id`, `assigned_at`, `updated_at`
+- **user_progress:** Detailed exercise-level progress (RLS enabled, policies for user access)
+
+### RLS Policies
+- Use `SECURITY DEFINER` functions to avoid infinite recursion when checking roles
+- `get_user_role(uid)` function returns role without recursive policy check
+- Admin access: `public.get_user_role(auth.uid()) = 'admin'`
+- User access: `auth.uid() = id` (own data only)
+
+### Trigger: handle_new_user
+- Fires on `auth.users` INSERT
+- Creates matching row in `profiles` with role='student' (or 'admin' for gulaevl068@gmail.com)
+- If trigger is missing, new registrations won't appear in admin panel
 
 ## 3. Tactical Execution Standards
 - **Core Business Logic (Strict Separation):**
@@ -43,7 +67,19 @@ To support deep analytics and tracking, the database follows this relational str
 - When adding a feature, ask: Does this improve the student's learning loop? Does it give the admin/teacher better data?
 - Prefer robust, tested patterns over clever hacks. If a component is getting too complex, break it down.
 
-## 6. Common Pitfalls & Solutions (Updated 2026-04-24)
+## 6. Common Pitfalls & Solutions
 - **Builder Type Missing Handler:** Always ensure `handleBuilderClick` function exists in Exercise component when using `type="builder"`. This function manages word movement between bank and construction zone.
 - **Builder State Sync:** Use `useEffect` to sync `builderZone` array with `input` string for proper progress tracking.
 - **Missing Functions:** Before deploying, verify all event handlers referenced in JSX are actually defined in the component.
+- **React Strict Mode + Supabase:** Never use AuthProvider pattern. Use supabase client directly in each page.
+- **RLS Recursion:** Never reference the same table in a SELECT subquery within its own RLS policy. Use SECURITY DEFINER functions.
+- **Next Lesson Links:** Always check if the next lesson is assigned before showing navigation links.
+- **npm cache permissions:** Use `npm install --cache /tmp/npm-cache-tutor` to bypass root-owned cache files.
+
+## 7. Environment Variables (Vercel)
+Required in Vercel Dashboard → Settings → Environment Variables:
+- `NEXT_PUBLIC_SUPABASE_URL` — Project URL from Supabase
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — anon public key
+- `SUPABASE_SERVICE_ROLE_KEY` — service_role key (server-side only)
+
+Note: `NEXT_PUBLIC_` vars are inlined at build time. If changed AFTER deploy, must trigger redeploy.

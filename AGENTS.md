@@ -66,6 +66,42 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - **UI Verification:** Always check how parent styles (especially dark mode containers like `bg-slate-900`) affect reusable components like `Exercise.js`. Ensure text contrast is explicitly handled.
 - **Prop vs JSX:** Remember that string props in React components do not evaluate JSX-style escaping (like `{'->'}`). Use literal symbols or template literals if dynamic.
 
+## Lessons Learned (2026-06-14)
+
+### Auth & React Strict Mode Conflict
+**Problem:** Supabase auth hangs with "Lock was not released within 5000ms" error in React Strict Mode.
+
+**Root Cause:** React 18 Strict Mode mounts → unmounts → remounts components. Supabase gotrue-js uses a lock that gets orphaned during unmount, blocking subsequent auth calls.
+
+**Solution:** Don't use AuthProvider/context pattern for Supabase auth. Instead, use `supabase` client directly in each page component. AuthProvider creates a singleton that conflicts with React's lifecycle.
+
+**Pattern:** Each page imports `supabase` from `src/lib/supabase.js` and calls `supabase.auth.getUser()`, `supabase.auth.signInWithPassword()` directly.
+
+### Supabase RLS Infinite Recursion
+**Problem:** RLS policy `auth.uid() in (select id from profiles where role = 'admin')` causes infinite recursion because the policy references the same table it protects.
+
+**Solution:** Create a `SECURITY DEFINER` function to break the recursion:
+```sql
+CREATE OR REPLACE FUNCTION public.get_user_role(uid uuid)
+RETURNS text AS $$
+  SELECT role FROM profiles WHERE id = uid;
+$$ LANGUAGE sql SECURITY DEFINER STABLE;
+```
+Then use `public.get_user_role(auth.uid()) = 'admin'` in policies.
+
+### Profile Trigger Not Firing
+**Problem:** New users registered in Supabase Auth but `profiles` table didn't get a row because the `on_auth_user_created` trigger was missing/broken.
+
+**Solution:** Recreate the trigger in SQL Editor. Also manually insert missing profiles for existing users:
+```sql
+INSERT INTO profiles (id, email, role) VALUES ('user-uuid', 'email', 'student');
+```
+
+### Next Lesson Visibility
+**Problem:** Intro lessons had hardcoded "Next Lesson" links visible even when the next lesson wasn't assigned to the student.
+
+**Solution:** Query `student_lessons` table to check if the next lesson is assigned before showing the navigation link. Show "Lesson not assigned" placeholder if not.
+
 ## Red Lines
 
 - Don't exfiltrate private data. Ever.
@@ -140,6 +176,8 @@ Skills provide your tools and context. Check `docs/` for specialized knowledge:
 - `SKILL_ENGLISH_LESSON.md`: Content creation for English.
 - `SKILL_UI_UX.md`: Visual design, styling, and UX principles.
 - `SKILL_PLATFORM_DEV.md`: Technical architecture and development workflow.
+- `SKILL_SPANISH_LESSON.md`: Spanish lesson creation standards.
+- `SKILL_HEBREW_LESSON.md`: Hebrew lesson creation with RTL support.
 
 **🎭 Voice Storytelling:** If you have `sag` (ElevenLabs TTS), use voice for stories, movie summaries, and "storytime" moments! Way more engaging than walls of text. Surprise people with funny voices.
 

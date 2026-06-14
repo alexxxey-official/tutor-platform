@@ -1,40 +1,49 @@
-# TOOLS.md - Local Notes
+# TOOLS.md - Project Tools & Configuration
 
-Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
+## Supabase
+- **Project URL:** `https://wwdnddpuodfldbdykjmu.supabase.co`
+- **Anon Key:** in `.env.local` and Vercel env vars
+- **Service Role Key:** in `.env.local` and Vercel env vars (server-side only)
+- **Dashboard:** https://supabase.com/dashboard/project/wwdnddpuodfldbdykjmu
 
-## What Goes Here
+### Key Tables
+- `profiles` — user accounts (id, email, role)
+- `student_lessons` — assigned lessons with progress (progress_data JSONB)
+- `user_progress` — detailed exercise-level tracking
 
-Things like:
+### SQL Functions
+- `get_user_role(uid uuid)` — SECURITY DEFINER, returns role without RLS recursion
 
-- Camera names and locations
-- SSH hosts and aliases
-- Preferred voices for TTS
-- Speaker/room names
-- Device nicknames
-- Anything environment-specific
+### Triggers
+- `on_auth_user_created` — creates profile on new user registration
 
-## Examples
+## Vercel
+- **Project:** tutor-platform-seven
+- **URL:** https://tutor-platform-seven.vercel.app
+- **Auto-deploy:** on push to `main` branch
+- **Framework:** Next.js 14
 
-```markdown
-### Cameras
+## GitHub
+- **Repo:** https://github.com/alexxxey-official/tutor-platform
+- **Branch:** `main` (production)
+- **Auth:** `gh` CLI authenticated as alexxxey-official
 
-- living-room → Main area, 180° wide angle
-- front-door → Entrance, motion-triggered
-
-### SSH
-
-- home-server → 192.168.1.100, user: admin
-
-### TTS
-
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
+## npm Workaround
+On Alexei's machine, npm cache may have root-owned files:
+```bash
+npm install --cache /tmp/npm-cache-tutor
+npm run build --cache /tmp/npm-cache-tutor
 ```
 
-## Why Separate?
+## Admin Access
+- **Admin email:** gulaevl068@gmail.com (hardcoded in admin page + dashboard)
+- **Admin role:** stored in `profiles.role = 'admin'`
+- **Admin panel:** `/admin` route (middleware-protected)
 
-Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
-
----
-
-Add whatever helps you do your job. This is your cheat sheet.
+## Key Files
+- `src/lib/supabase.js` — singleton Supabase client
+- `src/lib/lessons.js` — lesson metadata registry (LESSONS object)
+- `src/hooks/useLessonProgress.js` — progress tracking hook
+- `src/components/Exercise.js` — universal exercise component
+- `src/components/AdvancedProgressBar.js` — CW/HW progress bars
+- `middleware.js` — server-side route protection (admin only)
