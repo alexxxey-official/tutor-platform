@@ -204,6 +204,47 @@ export default function AdminPage() {
                   Зарегистрирован: {new Date(selectedStudent.created_at).toLocaleDateString('ru-RU')}
                 </div>
 
+                {assignments.length > 0 && (() => {
+                  const bySubject = {}
+                  assignments.forEach(a => {
+                    const meta = getLessonById(a.lesson_id)
+                    const subject = meta?.subject || 'Другое'
+                    if (!bySubject[subject]) bySubject[subject] = { total: 0, completed: 0, scores: [] }
+                    bySubject[subject].total++
+                    if (a.status === 'completed') bySubject[subject].completed++
+                    if (a.total_score > 0) bySubject[subject].scores.push((a.score / a.total_score) * 100)
+                  })
+
+                  return (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
+                      {Object.entries(bySubject).map(([subject, data]) => {
+                        const avgPct = data.scores.length > 0
+                          ? Math.round(data.scores.reduce((a, b) => a + b, 0) / data.scores.length)
+                          : 0
+                        const cfg = subjectConfig[subject] || { light: 'bg-gray-50 text-gray-700' }
+                        return (
+                          <div key={subject} className={`${cfg.light} rounded-xl p-4`}>
+                            <div className="font-bold text-sm mb-2">{subject}</div>
+                            <div className="flex justify-between items-end">
+                              <div>
+                                <div className="text-[10px] uppercase opacity-60">Уроков</div>
+                                <div className="text-lg font-black">{data.completed}/{data.total}</div>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-[10px] uppercase opacity-60">Балл</div>
+                                <div className="text-lg font-black">{avgPct}%</div>
+                              </div>
+                            </div>
+                            <div className="mt-2 h-1.5 bg-black/10 rounded-full overflow-hidden">
+                              <div className="h-full bg-current rounded-full transition-all" style={{ width: `${data.total > 0 ? (data.completed / data.total) * 100 : 0}%` }}></div>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )
+                })()}
+
                 <div className="mb-8">
                   <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">Назначить урок</div>
                   <div className="space-y-3">
