@@ -1,7 +1,20 @@
 'use client'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import { supabase } from '../../../../lib/supabase'
 
 export default function SpanishIntroLesson() {
+  const [nextAssigned, setNextAssigned] = useState(false)
+
+  useEffect(() => {
+    const check = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+      const { data } = await supabase.from('student_lessons').select('id').eq('student_id', user.id).eq('lesson_id', 'spa_ser').maybeSingle()
+      setNextAssigned(!!data)
+    }
+    check()
+  }, [])
   return (
     <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-20 font-sans">
       <div className="bg-[#1a1a2e] text-white px-10 py-12 pb-10 relative overflow-hidden">
@@ -31,9 +44,11 @@ export default function SpanishIntroLesson() {
           <Link href="/dashboard" className="bg-gray-100 text-[#1a1a2e] no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#e63946] hover:text-white">
             ← Дашборд
           </Link>
-          <Link href="/lessons/spanish/ser" className="bg-[#1a1a2e] text-white no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#e63946]">
-            Перейти к Уроку 1 👉
-          </Link>
+          {nextAssigned && (
+            <Link href="/lessons/spanish/ser" className="bg-[#1a1a2e] text-white no-underline px-3.5 py-1.5 rounded-full text-[13px] transition-colors hover:bg-[#e63946]">
+              Перейти к Уроку 1 👉
+            </Link>
+          )}
         </nav>
 
         <div id="theory">
@@ -299,9 +314,15 @@ export default function SpanishIntroLesson() {
         </div>
 
         <div className="text-center my-16">
-          <Link href="/lessons/spanish/ser" className="inline-block bg-[#e63946] text-white no-underline px-8 py-4 rounded-xl font-bold text-[16px] shadow-[0_4px_12px_rgba(230,57,70,0.3)] hover:bg-[#d62839] hover:-translate-y-0.5 transition-all">
-            Начать Урок 1: Местоимения и глагол SER
-          </Link>
+          {nextAssigned ? (
+            <Link href="/lessons/spanish/ser" className="inline-block bg-[#e63946] text-white no-underline px-8 py-4 rounded-xl font-bold text-[16px] shadow-[0_4px_12px_rgba(230,57,70,0.3)] hover:bg-[#d62839] hover:-translate-y-0.5 transition-all">
+              Начать Урок 1: Местоимения и глагол SER
+            </Link>
+          ) : (
+            <div className="inline-block bg-gray-200 text-gray-500 px-8 py-4 rounded-xl font-bold text-[16px] cursor-not-allowed">
+              Урок 1 ещё не назначен
+            </div>
+          )}
         </div>
       </div>
     </div>

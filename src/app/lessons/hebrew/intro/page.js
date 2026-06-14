@@ -3,13 +3,22 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Home, BookOpen, Zap } from 'lucide-react';
+import { supabase } from '../../../../lib/supabase';
 
 export default function HebrewIntro() {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
+  const [nextAssigned, setNextAssigned] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    const check = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase.from('student_lessons').select('id').eq('student_id', user.id).eq('lesson_id', 'heb_alphabet_1').maybeSingle();
+      setNextAssigned(!!data);
+    };
+    check();
   }, []);
 
   if (!mounted) {
@@ -323,12 +332,18 @@ export default function HebrewIntro() {
           <p className="text-xl mb-6 text-blue-100">
             Впереди увлекательное путешествие в мир иврита!
           </p>
-          <button
-            onClick={() => router.push('/lessons/hebrew/alphabet-1')}
-            className="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all text-lg"
-          >
-            Начать Урок 1: Алфавит →
-          </button>
+          {nextAssigned ? (
+            <button
+              onClick={() => router.push('/lessons/hebrew/alphabet-1')}
+              className="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all text-lg"
+            >
+              Начать Урок 1: Алфавит →
+            </button>
+          ) : (
+            <div className="px-8 py-4 bg-gray-200 text-gray-500 font-bold rounded-xl cursor-not-allowed text-lg">
+              Урок 1 ещё не назначен
+            </div>
+          )}
         </div>
 
       </div>
