@@ -18,10 +18,9 @@ import {
   Printer,
   Play,
   ArrowRight,
-  Filter,
   AlertCircle,
-  FileCheck,
   Sparkles,
+  RotateCcw,
 } from 'lucide-react';
 
 export default function MathBankPage() {
@@ -108,7 +107,7 @@ export default function MathBankPage() {
     });
   }, [activeTopicFilter, selectedSource, searchQuery, activePrototypeFilter]);
 
-  // Сформировать список ID задач для созданного варианта
+  // Сформировать вариант
   const generatedVariant = useMemo(() => {
     return generateCustomVariant(quantities);
   }, [quantities]);
@@ -127,44 +126,45 @@ export default function MathBankPage() {
     }));
   };
 
-  // Нажать "Аналогичные задачи"
+  // Фильтр «Аналогичные задачи»
   const handleFilterSimilar = (prototypeId) => {
     setActivePrototypeFilter(prototypeId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] font-sans">
+    <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] font-sans antialiased">
       {/* Top Banner */}
-      <header className="bg-[#1a1a2e] text-white pt-8 pb-10 px-4 sm:px-8 border-b border-slate-800">
+      <header className="bg-slate-900 text-white pt-8 pb-10 px-4 sm:px-8 border-b border-slate-800 shadow-md">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-widest text-[#2a9d8f] block mb-1">
-              ЕГЭ по математике • Профильный уровень 2026
-            </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold font-sans tracking-tight">
-              Банк Заданий и Конструктор Вариантов
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-800 text-emerald-400 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 border border-slate-700">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>ЕГЭ 2026 • Профильный уровень</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight font-sans">
+              Банк Заданий & Конструктор Вариантов
             </h1>
           </div>
 
           <div className="flex items-center gap-3">
             <Link
               href="/"
-              className="text-xs text-slate-300 hover:text-white underline"
+              className="text-xs text-slate-300 hover:text-white font-medium underline"
             >
-              На главную
+              Вернуться на главную
             </Link>
           </div>
         </div>
       </header>
 
       {/* Main 2-Column Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* LEFT COLUMN: Constructor (Table + Quick Box) */}
-        <aside className="lg:col-span-5 space-y-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* LEFT COLUMN: Floating / Sticky Constructor Panel */}
+        <aside className="lg:col-span-5 lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] overflow-y-auto space-y-5 pr-1">
           {/* Main Constructor Table Card */}
-          <div className="bg-white rounded-2xl border border-[#e5e0d5] shadow-sm overflow-hidden">
-            <div className="px-6 py-4 border-b border-[#e5e0d5] bg-slate-50 flex items-center justify-between">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="px-5 py-3.5 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                 Количество
               </span>
@@ -173,14 +173,14 @@ export default function MathBankPage() {
               </span>
             </div>
 
-            <div className="p-4 sm:p-6 space-y-6 text-sm">
+            <div className="p-4 sm:p-5 space-y-5 text-sm">
               {/* --- SECTION 1: Краткий ответ (#1-12) --- */}
               <div>
-                <div className="text-xs font-bold italic text-indigo-900 mb-3 border-b border-slate-100 pb-1">
+                <div className="text-xs font-bold italic text-indigo-950 mb-2.5 border-b border-slate-100 pb-1">
                   Краткий ответ
                 </div>
 
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   {Array.from({ length: 12 }, (_, i) => i + 1).map((num) => {
                     const topic = TASK_TOPICS[num];
                     const q = quantities[num] || 0;
@@ -190,20 +190,20 @@ export default function MathBankPage() {
                         className="flex items-center justify-between gap-3 text-xs"
                       >
                         {/* Counter Controls [ - N + ] */}
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1">
                           <button
                             onClick={() => handleQuantityChange(num, -1)}
                             disabled={q === 0}
-                            className="w-6 h-6 rounded-md bg-slate-100 border border-slate-200 hover:bg-slate-200 disabled:opacity-30 text-slate-700 flex items-center justify-center font-bold"
+                            className="w-5 h-5 rounded bg-slate-100 border border-slate-200 hover:bg-slate-200 disabled:opacity-30 text-slate-700 flex items-center justify-center font-bold transition"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
-                          <span className="w-7 text-center font-mono font-bold text-slate-900 bg-slate-50 py-0.5 rounded border border-slate-200">
+                          <span className="w-6 text-center font-mono font-bold text-slate-900 bg-slate-50 py-0.5 rounded border border-slate-200 text-[11px]">
                             {q}
                           </span>
                           <button
                             onClick={() => handleQuantityChange(num, 1)}
-                            className="w-6 h-6 rounded-md bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold"
+                            className="w-5 h-5 rounded bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold transition"
                           >
                             <Plus className="w-3 h-3" />
                           </button>
@@ -228,11 +228,11 @@ export default function MathBankPage() {
 
               {/* --- SECTION 2: Развернутый ответ (#13-19) --- */}
               <div>
-                <div className="text-xs font-bold italic text-indigo-900 mb-3 border-b border-slate-100 pb-1">
+                <div className="text-xs font-bold italic text-indigo-950 mb-2.5 border-b border-slate-100 pb-1">
                   Развернутый ответ
                 </div>
 
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   {Array.from({ length: 7 }, (_, i) => i + 13).map((num) => {
                     const topic = TASK_TOPICS[num];
                     const q = quantities[num] || 0;
@@ -242,20 +242,20 @@ export default function MathBankPage() {
                         className="flex items-center justify-between gap-3 text-xs"
                       >
                         {/* Counter Controls [ - N + ] */}
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1">
                           <button
                             onClick={() => handleQuantityChange(num, -1)}
                             disabled={q === 0}
-                            className="w-6 h-6 rounded-md bg-slate-100 border border-slate-200 hover:bg-slate-200 disabled:opacity-30 text-slate-700 flex items-center justify-center font-bold"
+                            className="w-5 h-5 rounded bg-slate-100 border border-slate-200 hover:bg-slate-200 disabled:opacity-30 text-slate-700 flex items-center justify-center font-bold transition"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
-                          <span className="w-7 text-center font-mono font-bold text-slate-900 bg-slate-50 py-0.5 rounded border border-slate-200">
+                          <span className="w-6 text-center font-mono font-bold text-slate-900 bg-slate-50 py-0.5 rounded border border-slate-200 text-[11px]">
                             {q}
                           </span>
                           <button
                             onClick={() => handleQuantityChange(num, 1)}
-                            className="w-6 h-6 rounded-md bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold"
+                            className="w-5 h-5 rounded bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-bold transition"
                           >
                             <Plus className="w-3 h-3" />
                           </button>
@@ -280,11 +280,11 @@ export default function MathBankPage() {
             </div>
           </div>
 
-          {/* Side Floating Box (Matching Image 1 Right Box) */}
-          <div className="bg-blue-50/80 border border-blue-200 p-6 rounded-2xl shadow-sm space-y-4">
+          {/* Floating Action Box (Matching Image 1 Right Box) */}
+          <div className="bg-blue-50/90 border border-blue-200/90 p-5 rounded-2xl shadow-sm space-y-3.5">
             <Link
               href={generatedTaskIds.length > 0 ? `/math-bank/test${queryParams}` : '#'}
-              className={`w-full py-3.5 px-4 rounded-xl text-center font-bold text-sm transition block shadow-sm ${
+              className={`w-full py-3 px-4 rounded-xl text-center font-bold text-xs sm:text-sm transition block shadow-sm ${
                 generatedTaskIds.length > 0
                   ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-300'
                   : 'bg-blue-300 text-white cursor-not-allowed'
@@ -293,7 +293,7 @@ export default function MathBankPage() {
               Составить вариант {totalSelectedCount > 0 && `(${totalSelectedCount})`}
             </Link>
 
-            <div className="space-y-2 text-xs text-slate-700 font-medium pt-2">
+            <div className="space-y-2 text-xs text-slate-700 font-medium">
               <label className="flex items-center gap-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
@@ -339,10 +339,10 @@ export default function MathBankPage() {
           </div>
         </aside>
 
-        {/* RIGHT COLUMN: Task List & Solution Cards (Matching Image 2 Clean Shkolkovo Style) */}
+        {/* RIGHT COLUMN: Task List Cards (Clean Shkolkovo Style) */}
         <main className="lg:col-span-7 space-y-6">
-          {/* Top Filter Bar (Sources + Search) */}
-          <div className="bg-white p-4 rounded-2xl border border-[#e5e0d5] shadow-sm space-y-3">
+          {/* Top Filter Controls */}
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               {/* Search */}
               <div className="relative w-full sm:w-80">
@@ -410,7 +410,7 @@ export default function MathBankPage() {
             )}
           </div>
 
-          {/* Tasks Container */}
+          {/* Tasks Cards Container */}
           <div className="space-y-6">
             {filteredTasks.length === 0 ? (
               <div className="bg-white rounded-2xl p-12 text-center border border-slate-200">
@@ -427,9 +427,9 @@ export default function MathBankPage() {
                 return (
                   <div
                     key={task.id}
-                    className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-4"
+                    className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-4 transition hover:border-slate-300"
                   >
-                    {/* Header Line (Matching Image 2): "Задача X #133122 Максимум баллов: 1" + Source on the right */}
+                    {/* Header Line (Matching Image 2): "Задача X #133120 Максимум баллов: 1" + Source on the right */}
                     <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-slate-100 pb-3">
                       <div className="flex items-center gap-3 text-xs">
                         <span className="font-bold text-slate-900 text-sm">
@@ -460,7 +460,7 @@ export default function MathBankPage() {
                         {/* Black Button: Ответ и решение */}
                         <button
                           onClick={() => toggleSolution(task.id)}
-                          className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition shadow-sm"
+                          className="px-4 py-2 bg-[#1a1a2e] hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition shadow-sm"
                         >
                           Ответ и решение
                         </button>
@@ -483,7 +483,7 @@ export default function MathBankPage() {
                       </button>
                     </div>
 
-                    {/* Expanded Solution Panel (Pure Text Shkolkovo Style Matching Image 2) */}
+                    {/* Expanded Solution Panel (Pure Clean Text Shkolkovo Style) */}
                     {isExpanded && (
                       <div className="mt-4 p-6 bg-slate-50 border border-slate-200 rounded-2xl relative space-y-4 text-slate-900 text-sm">
                         <button
@@ -497,8 +497,8 @@ export default function MathBankPage() {
                           Ответ и решение
                         </div>
 
-                        <div className="space-y-3">
-                          <MathText text={task.solution} className="text-slate-900 leading-relaxed font-sans" />
+                        <div className="space-y-3 leading-relaxed">
+                          <MathText text={task.solution} className="text-slate-900 font-sans" />
                         </div>
 
                         <div className="pt-3 border-t border-slate-200 font-bold text-slate-900 text-base">

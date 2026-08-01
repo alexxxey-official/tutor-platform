@@ -4,6 +4,47 @@ import React, { useMemo } from 'react';
 import katex from 'katex';
 
 /**
+ * Helper to render plain text containing simple markdown formatting like **bold**
+ */
+function renderFormattedText(text) {
+  if (!text) return null;
+
+  // Split lines
+  const lines = text.split('\n');
+
+  return lines.map((line, lineIdx) => {
+    // Parse **bold** inside line
+    const boldParts = [];
+    let lastIdx = 0;
+    const boldRegex = /\*\*(.*?)\*\*/g;
+    let match;
+
+    while ((match = boldRegex.exec(line)) !== null) {
+      if (match.index > lastIdx) {
+        boldParts.push(line.slice(lastIdx, match.index));
+      }
+      boldParts.push(
+        <strong key={match.index} className="font-bold text-slate-900">
+          {match[1]}
+        </strong>
+      );
+      lastIdx = boldRegex.lastIndex;
+    }
+
+    if (lastIdx < line.length) {
+      boldParts.push(line.slice(lastIdx));
+    }
+
+    return (
+      <React.Fragment key={lineIdx}>
+        {boldParts}
+        {lineIdx < lines.length - 1 && <br />}
+      </React.Fragment>
+    );
+  });
+}
+
+/**
  * MathText renders text containing LaTeX formulas using KaTeX.
  * - Inline formulas: $E = mc^2$
  * - Display/Block formulas: $$ \int_{0}^{\infty} x^2 dx $$
@@ -12,7 +53,6 @@ export default function MathText({ text = '', className = '', inline = false }) 
   const renderedContent = useMemo(() => {
     if (!text) return null;
 
-    // If whole string is meant to be inline formula without delimiters
     if (inline) {
       try {
         return (
@@ -65,22 +105,12 @@ export default function MathText({ text = '', className = '', inline = false }) 
 
     return parts.map((part, idx) => {
       if (part.type === 'text') {
-        const lines = part.content.split('\n');
-        return (
-          <React.Fragment key={idx}>
-            {lines.map((line, lineIdx) => (
-              <React.Fragment key={lineIdx}>
-                {line}
-                {lineIdx < lines.length - 1 && <br />}
-              </React.Fragment>
-            ))}
-          </React.Fragment>
-        );
+        return <React.Fragment key={idx}>{renderFormattedText(part.content)}</React.Fragment>;
       }
 
       try {
         const isDisplay = part.type === 'block-math';
-        const html = katex.renderToString(part.content, {
+        const html = katex.renderToString(part.content.trim(), {
           throwOnError: false,
           displayMode: isDisplay,
         });
@@ -89,7 +119,7 @@ export default function MathText({ text = '', className = '', inline = false }) 
           return (
             <div
               key={idx}
-              className="my-3 overflow-x-auto text-center py-2 bg-slate-50/70 rounded-lg border border-slate-100"
+              className="my-4 text-center overflow-x-auto py-1.5"
               dangerouslySetInnerHTML={{ __html: html }}
             />
           );
@@ -98,7 +128,7 @@ export default function MathText({ text = '', className = '', inline = false }) 
         return (
           <span
             key={idx}
-            className="inline-block px-1 font-sans"
+            className="inline-block px-0.5"
             dangerouslySetInnerHTML={{ __html: html }}
           />
         );
@@ -108,5 +138,5 @@ export default function MathText({ text = '', className = '', inline = false }) 
     });
   }, [text, inline]);
 
-  return <div className={`math-text ${className}`}>{renderedContent}</div>;
+  return <div className={`math-text leading-relaxed ${className}`}>{renderedContent}</div>;
 }
