@@ -8,19 +8,15 @@ import {
   EGE_MATH_TASKS,
   TASK_TOPICS,
   calculateScores,
-  generateStandardVariant,
+  generateCustomVariant,
 } from '../../../lib/ege-math-bank';
 import {
   Clock,
   CheckCircle2,
   XCircle,
-  Award,
   ArrowLeft,
   RotateCcw,
-  Eye,
-  FileCheck,
   Send,
-  Sparkles,
   Printer,
   ChevronRight,
   ChevronLeft,
@@ -37,18 +33,19 @@ function MathTestContent() {
       const selected = EGE_MATH_TASKS.filter((t) => ids.includes(t.id));
       if (selected.length > 0) return selected;
     }
-    return generateStandardVariant();
+    // Если вариант пуст, выбираем по 1 задаче из #1-19
+    const defaultMap = {};
+    for (let i = 1; i <= 19; i++) defaultMap[i] = 1;
+    return generateCustomVariant(defaultMap);
   }, [idsParam]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [secondsRemaining, setSecondsRemaining] = useState(3 * 3600 + 55 * 60); // 3ч 55мин
-  const [timerRunning, setTimerRunning] = useState(true);
+  const [secondsRemaining, setSecondsRemaining] = useState(3 * 3600 + 55 * 60);
 
-  // Обратный отсчет времени
   useEffect(() => {
-    if (!timerRunning || isSubmitted) return;
+    if (isSubmitted) return;
     const interval = setInterval(() => {
       setSecondsRemaining((prev) => {
         if (prev <= 1) {
@@ -60,9 +57,8 @@ function MathTestContent() {
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [timerRunning, isSubmitted]);
+  }, [isSubmitted]);
 
-  // Форматирование времени (ЧЧ:ММ:СС)
   const formatTime = (secs) => {
     const h = Math.floor(secs / 3600);
     const m = Math.floor((secs % 3600) / 60);
@@ -73,9 +69,8 @@ function MathTestContent() {
   };
 
   const currentTask = tasks[currentIndex] || tasks[0];
-  const isPart2 = currentTask ? currentTask.number >= 12 : false;
+  const isPart2 = currentTask ? currentTask.number >= 13 : false;
 
-  // Изменение ответа для краткого ответа (1 часть)
   const handleInputChange = (val) => {
     setUserAnswers((prev) => ({
       ...prev,
@@ -86,7 +81,6 @@ function MathTestContent() {
     }));
   };
 
-  // Изменение баллов самопроверки (2 часть)
   const handlePart2PointsChange = (pts) => {
     setUserAnswers((prev) => ({
       ...prev,
@@ -97,16 +91,15 @@ function MathTestContent() {
     }));
   };
 
-  // Расчет итогов
   const scores = useMemo(() => {
     if (!isSubmitted) return null;
     return calculateScores(userAnswers);
   }, [isSubmitted, userAnswers]);
 
   return (
-    <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-24">
+    <div className="min-h-screen bg-[#faf8f3] text-[#1a1a2e] pb-24 font-sans">
       {/* Top Navbar */}
-      <header className="bg-slate-900 text-white sticky top-0 z-40 shadow-lg border-b border-slate-800">
+      <header className="bg-[#1a1a2e] text-white sticky top-0 z-40 shadow-lg border-b border-slate-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between">
           <Link
             href="/math-bank"
@@ -116,17 +109,16 @@ function MathTestContent() {
             <span>Вернуться к Банку Заданий</span>
           </Link>
 
-          {/* Timer Display */}
-          <div className="flex items-center gap-2 px-3.5 py-1.5 bg-slate-800/90 rounded-xl border border-slate-700 font-mono text-sm font-semibold text-emerald-400">
+          {/* Timer */}
+          <div className="flex items-center gap-2 px-3.5 py-1.5 bg-slate-800 rounded-xl font-mono text-sm font-semibold text-emerald-400 border border-slate-700">
             <Clock className="w-4 h-4 text-emerald-400 animate-pulse" />
             <span>{formatTime(secondsRemaining)}</span>
           </div>
 
-          {/* Finish Button */}
           {!isSubmitted ? (
             <button
               onClick={() => setIsSubmitted(true)}
-              className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition shadow-md shadow-emerald-900/30"
+              className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition shadow-md"
             >
               <Send className="w-3.5 h-3.5" />
               <span>Завершить и проверить</span>
@@ -141,9 +133,9 @@ function MathTestContent() {
 
       {/* Main Container */}
       <main className="max-w-4xl mx-auto px-4 sm:px-8 pt-8">
-        {/* Results Banner (If Submitted) */}
+        {/* Results Banner */}
         {isSubmitted && scores && (
-          <div className="mb-8 p-6 sm:p-8 bg-slate-900 text-white rounded-3xl shadow-xl border border-slate-800 relative overflow-hidden">
+          <div className="mb-8 p-6 sm:p-8 bg-slate-900 text-white rounded-2xl shadow-xl border border-slate-800">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 block mb-1">
@@ -172,7 +164,7 @@ function MathTestContent() {
                     setUserAnswers({});
                     setSecondsRemaining(3 * 3600 + 55 * 60);
                   }}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-emerald-900/40"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition shadow-lg"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span>Пройти заново</span>
@@ -182,8 +174,8 @@ function MathTestContent() {
           </div>
         )}
 
-        {/* Task Navigation Bar */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-4 mb-6 shadow-sm">
+        {/* Task Nav Pills */}
+        <div className="bg-white rounded-2xl border border-[#e5e0d5] p-4 mb-6 shadow-sm">
           <div className="flex items-center justify-between mb-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">
             <span>Задания варианта ({tasks.length}):</span>
             <span>Задание {currentIndex + 1} из {tasks.length}</span>
@@ -193,10 +185,9 @@ function MathTestContent() {
             {tasks.map((t, idx) => {
               const isActive = idx === currentIndex;
               const hasAnswer = Boolean(userAnswers[t.id]?.value || userAnswers[t.id]?.points !== undefined);
-              const isTaskPart2 = t.number >= 12;
+              const isTaskPart2 = t.number >= 13;
 
               let statusColor = 'bg-slate-100 text-slate-700 hover:bg-slate-200';
-
               if (isActive) {
                 statusColor = 'bg-slate-900 text-white ring-2 ring-slate-900/20';
               } else if (hasAnswer) {
@@ -219,39 +210,36 @@ function MathTestContent() {
           </div>
         </div>
 
-        {/* Current Task Card */}
+        {/* Current Task Display (Clean Shkolkovo Card Style) */}
         {currentTask && (
-          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-md overflow-hidden mb-6">
-            {/* Header */}
-            <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <span
-                  className={`px-3.5 py-1 rounded-xl text-xs font-bold ${
-                    isPart2 ? 'bg-amber-100 text-amber-900' : 'bg-emerald-100 text-emerald-900'
-                  }`}
-                >
-                  Задание №{currentTask.number}
+          <div className="bg-white rounded-2xl border border-[#e5e0d5] shadow-sm overflow-hidden mb-6 p-6 sm:p-8 space-y-6">
+            {/* Header Line */}
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-3 text-xs">
+                <span className="font-bold text-slate-900 text-sm">
+                  Задача {currentTask.number}
                 </span>
-
-                <span className="text-sm font-semibold text-slate-800">
-                  {currentTask.topic} {currentTask.subtopic && `• ${currentTask.subtopic}`}
+                <span className="text-slate-400 font-mono">
+                  {currentTask.taskCode}
+                </span>
+                <span className="text-slate-400">
+                  Максимум баллов за задание: {currentTask.number <= 12 ? 1 : TASK_TOPICS[currentTask.number]?.maxPoints || 2}
                 </span>
               </div>
 
-              <span className="text-xs text-slate-500 font-medium">
-                Макс. балл: {currentTask.number <= 11 ? 1 : TASK_TOPICS[currentTask.number]?.maxPoints || 2}
-              </span>
+              <div className="text-xs text-slate-400 italic">
+                <strong>Источники:</strong> {currentTask.source}
+              </div>
             </div>
 
             {/* Statement */}
-            <div className="p-6 sm:p-8 text-slate-900 text-lg leading-relaxed border-b border-slate-100">
+            <div className="text-slate-900 text-base leading-relaxed py-2">
               <MathText text={currentTask.statement} />
             </div>
 
-            {/* Answer & Self-Check Area */}
-            <div className="p-6 sm:p-8 bg-slate-50/80">
+            {/* Answer Section */}
+            <div className="pt-4 border-t border-slate-100">
               {!isPart2 ? (
-                /* Part 1 Short Answer */
                 <div className="max-w-md">
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
                     Ваш ответ (краткий):
@@ -262,37 +250,30 @@ function MathTestContent() {
                       disabled={isSubmitted}
                       value={userAnswers[currentTask.id]?.value || ''}
                       onChange={(e) => handleInputChange(e.target.value)}
-                      placeholder="Введите число (например, 7.2)"
-                      className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl font-mono text-base focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                      placeholder="Введите число"
+                      className="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl font-mono text-base focus:outline-none focus:ring-2 focus:ring-slate-400"
                     />
 
                     {isSubmitted && (
-                      <div className="flex items-center gap-1 font-semibold text-sm">
+                      <div className="flex items-center gap-1 font-semibold text-xs whitespace-nowrap">
                         {String(userAnswers[currentTask.id]?.value || '').trim().replace(',', '.') ===
-                          String(currentTask.answer).trim().replace(',', '.') ||
-                        (currentTask.answerAlt &&
-                          String(userAnswers[currentTask.id]?.value || '').trim().replace(',', '.') ===
-                            String(currentTask.answerAlt).trim().replace(',', '.')) ? (
-                          <span className="text-emerald-600 flex items-center gap-1">
-                            <CheckCircle2 className="w-5 h-5" /> Верно (+1)
+                        String(currentTask.answer).trim().replace(',', '.') ? (
+                          <span className="text-emerald-600 flex items-center gap-1 font-bold">
+                            <CheckCircle2 className="w-4 h-4" /> Верно (+1)
                           </span>
                         ) : (
-                          <span className="text-rose-600 flex items-center gap-1">
-                            <XCircle className="w-5 h-5" /> Ошибка (Ответ: {currentTask.answer})
+                          <span className="text-rose-600 flex items-center gap-1 font-bold">
+                            <XCircle className="w-4 h-4" /> Ответ: {currentTask.answer}
                           </span>
                         )}
                       </div>
                     )}
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-1.5">
-                    В качестве разделителя дробной части можно использовать точку или запятую.
-                  </p>
                 </div>
               ) : (
-                /* Part 2 Self Check Points */
                 <div>
                   <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
-                    Оценка решения 2-й части (Самопроверка по критериям):
+                    Оценка решения 2-й части (Самопроверка):
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -305,7 +286,7 @@ function MathTestContent() {
                           className={`px-4 py-2 rounded-xl font-bold text-xs transition ${
                             (userAnswers[currentTask.id]?.points ?? 0) === p
                               ? 'bg-amber-600 text-white shadow-md'
-                              : 'bg-white border border-slate-300 text-slate-700 hover:bg-slate-100'
+                              : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                           }`}
                         >
                           {p} {p === 1 ? 'балл' : p > 1 ? 'балла' : 'баллов'}
@@ -316,30 +297,26 @@ function MathTestContent() {
                 </div>
               )}
 
-              {/* Solution display if submitted or requested */}
+              {/* Solution Preview on submit */}
               {isSubmitted && (
-                <div className="mt-6 pt-6 border-t border-slate-200">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-emerald-400 rounded-lg font-mono text-xs font-semibold mb-3">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Правильный ответ: {currentTask.answer}</span>
+                <div className="mt-6 p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+                  <div className="font-bold text-slate-900 text-xs uppercase tracking-wider">
+                    Ответ и решение:
                   </div>
-
-                  <div className="p-5 bg-slate-900 text-slate-100 rounded-2xl space-y-3">
-                    <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                      Пошаговое решение:
-                    </div>
-                    <MathText text={currentTask.solution} className="text-sm leading-relaxed" />
+                  <MathText text={currentTask.solution} className="text-slate-900 text-sm leading-relaxed" />
+                  <div className="pt-2 font-bold text-slate-900">
+                    Ответ: {currentTask.answer}
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Navigation Footer */}
-            <div className="p-5 bg-white border-t border-slate-100 flex items-center justify-between">
+            {/* Nav Footer */}
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
               <button
                 disabled={currentIndex === 0}
                 onClick={() => setCurrentIndex((prev) => prev - 1)}
-                className="flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-40 rounded-xl text-xs font-semibold transition"
+                className="flex items-center gap-1.5 px-4 py-2 bg-slate-100 hover:bg-slate-200 disabled:opacity-30 rounded-xl text-xs font-semibold transition"
               >
                 <ChevronLeft className="w-4 h-4" /> Назад
               </button>
@@ -347,7 +324,7 @@ function MathTestContent() {
               <button
                 disabled={currentIndex === tasks.length - 1}
                 onClick={() => setCurrentIndex((prev) => prev + 1)}
-                className="flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white disabled:opacity-40 rounded-xl text-xs font-semibold transition shadow-sm"
+                className="flex items-center gap-1.5 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white disabled:opacity-30 rounded-xl text-xs font-semibold transition shadow-sm"
               >
                 Вперед <ChevronRight className="w-4 h-4" />
               </button>
@@ -361,7 +338,7 @@ function MathTestContent() {
 
 export default function MathTestPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#faf8f3] flex items-center justify-center text-slate-500 font-medium">Загрузка теста...</div>}>
+    <Suspense fallback={<div className="p-8 text-center text-slate-500 font-medium">Загрузка теста...</div>}>
       <MathTestContent />
     </Suspense>
   );

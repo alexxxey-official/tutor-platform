@@ -3,7 +3,7 @@
 import React, { useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import MathText from '../../../components/MathText';
-import { EGE_MATH_TASKS, generateStandardVariant } from '../../../lib/ege-math-bank';
+import { EGE_MATH_TASKS, generateCustomVariant } from '../../../lib/ege-math-bank';
 import { Printer, FileText, UserCheck, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
@@ -19,11 +19,13 @@ function PrintVariantContent() {
       const selected = EGE_MATH_TASKS.filter((t) => ids.includes(t.id));
       if (selected.length > 0) return selected;
     }
-    return generateStandardVariant();
+    const defaultMap = {};
+    for (let i = 1; i <= 19; i++) defaultMap[i] = 1;
+    return generateCustomVariant(defaultMap);
   }, [idsParam]);
 
-  const part1Tasks = tasks.filter((t) => t.number <= 11);
-  const part2Tasks = tasks.filter((t) => t.number >= 12);
+  const part1Tasks = tasks.filter((t) => t.number <= 12);
+  const part2Tasks = tasks.filter((t) => t.number >= 13);
 
   const handlePrint = () => {
     window.print();
@@ -87,7 +89,7 @@ function PrintVariantContent() {
           <div className="flex justify-between items-start mb-2">
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-slate-500 block">
-                ЕГЭ по математике • Профильный уровень
+                ЕГЭ по математике • Профильный уровень 2026
               </span>
               <h1 className="text-2xl font-bold font-serif">
                 {modeParam === 'teacher'
@@ -109,11 +111,11 @@ function PrintVariantContent() {
           )}
         </div>
 
-        {/* Part 1 (Short Answer) */}
+        {/* Part 1 (Short Answer: #1-12) */}
         {part1Tasks.length > 0 && (
           <section className="mb-10">
             <h2 className="text-lg font-bold uppercase tracking-wider text-slate-800 border-b border-slate-300 pb-2 mb-6">
-              Часть 1 (Задания № 1–11)
+              Часть 1 (Задания № 1–12)
             </h2>
 
             <div className="space-y-8">
@@ -153,11 +155,11 @@ function PrintVariantContent() {
           </section>
         )}
 
-        {/* Part 2 (Detailed Solution) */}
+        {/* Part 2 (Detailed Solution: #13-19) */}
         {part2Tasks.length > 0 && (
           <section className="mb-10">
             <h2 className="text-lg font-bold uppercase tracking-wider text-slate-800 border-b border-slate-300 pb-2 mb-6">
-              Часть 2 (Задания № 12–18)
+              Часть 2 (Задания № 13–19)
             </h2>
 
             <div className="space-y-10">
@@ -179,7 +181,7 @@ function PrintVariantContent() {
                   {modeParam === 'student' && (
                     <div className="my-4 border border-dashed border-slate-300 rounded-xl h-44 bg-slate-50/30 p-3 text-[11px] text-slate-400 flex items-start justify-between">
                       <span>Место для решения задания №{task.number} на Бланке №2</span>
-                      <span className="font-mono">Макс: {task.number === 12 || task.number === 14 || task.number === 15 ? '2 б.' : task.number === 13 || task.number === 16 ? '3 б.' : '4 б.'}</span>
+                      <span className="font-mono">Макс: {task.number === 13 || task.number === 15 || task.number === 16 ? '2 б.' : task.number === 14 || task.number === 17 ? '3 б.' : '4 б.'}</span>
                     </div>
                   )}
 
