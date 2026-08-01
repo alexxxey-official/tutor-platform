@@ -71,9 +71,12 @@ export default function Home() {
           <div className="bg-white border border-[#e5e0d5] p-8 rounded-2xl shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
             <div className="absolute top-0 left-0 w-full h-1.5 bg-[#2a9d8f] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 delay-150"></div>
             <div className="absolute top-0 left-0 w-full h-1.5 bg-[#2a9d8f]/20"></div>
-            <div className="text-4xl mb-4">📊</div>
-            <h3 className="font-bold text-[18px] mb-3 unbounded">Мониторинг</h3>
-            <p className="text-gray-500 text-[14px] leading-relaxed">Преподаватель назначает уроки и видит твои успехи. Твой дашборд сохраняет всё, что ты прошёл.</p>
+            <div className="text-4xl mb-4">📐</div>
+            <h3 className="font-bold text-[18px] mb-3 unbounded">Банк Заданий ЕГЭ</h3>
+            <p className="text-gray-500 text-[14px] leading-relaxed mb-4">Конструктор вариантов профильной математики, KaTeX-формулы, онлайн-тест и печать бланков.</p>
+            <Link href="/math-bank" className="inline-flex items-center text-xs font-bold text-[#2a9d8f] hover:underline uppercase tracking-wider">
+              Перейти к Банку Заданий →
+            </Link>
           </div>
         </div>
 

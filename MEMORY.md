@@ -1,4 +1,4 @@
-# MEMORY.md - Tutor Platform Long-Term Memory
+![alt text](image.png)# MEMORY.md - Tutor Platform Long-Term Memory
 
 ## Rules
 - Never present new features with "tech-labels" (e.g., "Duolingo mechanic", "MCQ format"). Just implement them naturally — Alexei sees and appreciates them without presentation. [ses_Telegram_2026-04-14]
@@ -11,8 +11,6 @@
 ## Architecture decisions
 - **Framework:** Next.js 14 (App Router) with Tailwind CSS, deployed on Vercel (tutor-platform-seven.vercel.app). [2026-04-14]
 - **Backend:** Supabase with Service Role Key for admin DB operations. Placeholder values in `src/lib/supabase.js` when no `.env.local`. [2026-04-14, ses_13d2a40a]
-- **Auth:** NO AuthProvider/useAuth context — use `supabase` client directly in each page. React Strict Mode conflicts with gotrue-js locks. [2026-06-14]
-- **Middleware:** Only protects `/admin` route. Client-side auth handles login/dashboard. [2026-06-14]
 - **State management:** Custom `useLessonProgress` hook handles attempts, modes, scoring, variants. [SKILL_PLATFORM_DEV.md]
 - **Lesson anatomy (Fiesta Standard v1.2):** Header (unbounded font + floating text) → Theory (color-coded tables, Las Reglas, Cheat Sheet) → Classwork (min 25-30, CW 2 attempts) → Homework (min 15-20, HW 3 attempts, Variant 2 if < 60%). [SKILL_SPANISH_LESSON.md]
 - **Trainer standard:** No theory, no CW, HW-only 30-50+ exercises, max 3 attempts, confetti at 85%+. [SKILL_SPANISH_LESSON.md v1.2]
@@ -37,7 +35,3 @@
 - `canvas-confetti` is used for celebrations — ensure it's imported only client-side (dynamic import or `'use client'`). [package.json]
 - Supabase placeholders in `src/lib/supabase.js`: `'https://placeholder-url.supabase.co'` and `'placeholder-key'`. Real keys go in `.env.local` which is gitignored. [ses_13d2a40a]
 - Legacy HTML files in `english/`, `math/`, `physics/`, `spanish/` directories are originals before Next.js migration. They still exist but routes are served by React pages. [file structure]
-- **React Strict Mode + Supabase auth:** NEVER use AuthProvider pattern. Supabase gotrue-js lock mechanism conflicts with React 18's mount/unmount/remount cycle. Use supabase client directly. [2026-06-14]
-- **RLS infinite recursion:** Never use `auth.uid() in (select id from profiles where role = 'admin')` in RLS policy — causes infinite recursion. Use SECURITY DEFINER function instead. [2026-06-14]
-- **Profile trigger:** If `on_auth_user_created` trigger is missing, new users won't appear in admin. Recreate in SQL Editor. [2026-06-14]
-- **NEXT_PUBLIC_ vars on Vercel:** These are inlined at build time. If changed after deploy, must trigger redeploy (empty commit or manual redeploy). [2026-06-14]

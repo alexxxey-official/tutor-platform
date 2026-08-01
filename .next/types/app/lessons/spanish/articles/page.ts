@@ -1,4 +1,4 @@
-// File: /Users/alexxxey_official/my-project/tutor-platform/src/app/lessons/spanish/articles/page.js
+// File: /Users/alexxxey/Desktop/projects/tutor-platform/src/app/lessons/spanish/articles/page.js
 import * as entry from '../../../../../../src/app/lessons/spanish/articles/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

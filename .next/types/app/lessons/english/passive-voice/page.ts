@@ -1,4 +1,4 @@
-// File: /Users/alexxxey_official/my-project/tutor-platform/src/app/lessons/english/passive-voice/page.js
+// File: /Users/alexxxey/Desktop/projects/tutor-platform/src/app/lessons/english/passive-voice/page.js
 import * as entry from '../../../../../../src/app/lessons/english/passive-voice/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

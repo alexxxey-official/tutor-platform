@@ -1,4 +1,4 @@
-// File: /Users/alexxxey_official/my-project/tutor-platform/src/app/lessons/math/quadratic-equations/page.js
+// File: /Users/alexxxey/Desktop/projects/tutor-platform/src/app/lessons/math/quadratic-equations/page.js
 import * as entry from '../../../../../../src/app/lessons/math/quadratic-equations/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
